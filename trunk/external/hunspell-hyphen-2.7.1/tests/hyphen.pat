@@ -1,0 +1,6 @@
+UTF-8
+NOHYPHEN -,',’
+1-1
+1'1
+1’1
+NEXTLEVEL

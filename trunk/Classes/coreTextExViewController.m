@@ -10,6 +10,7 @@
 #import "ColumnsView.h"
 #import "OHAttributedLabel.h"
 #import "FontViewController.h"
+#import "NSString+Hyphenate.h"
 
 #define kDefaultFontSize 24
 
@@ -57,9 +58,12 @@
 	// load the text. 
 	NSError* error = nil;
 	NSURL* url = [[NSBundle mainBundle] URLForResource:@"sampleText" withExtension:@"txt"];
-	NSString* text = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
+	NSString* rawText = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
+
+	NSLocale* en = [[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"] autorelease];
+    NSString* preparedText = [rawText stringByHyphenatingWithLocale:en];
 	
-	self.text = [[[NSMutableAttributedString alloc] initWithString:text] autorelease];
+	self.text = [[[NSMutableAttributedString alloc] initWithString:preparedText] autorelease];
 	
 	
 	//NSRange range = [self.columnsView rangeOfStringFromLocation:0];

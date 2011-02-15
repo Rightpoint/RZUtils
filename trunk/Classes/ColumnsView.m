@@ -93,10 +93,40 @@
     for (column = 0; column < pathCount; column++) {
         CGPathRef path = (CGPathRef)CFArrayGetValueAtIndex(columnPaths, column);
 		
-        // Create a frame for this column and draw it.
+        // Create a frame for this column.
         CTFrameRef frame = CTFramesetterCreateFrame(framesetter,
 													CFRangeMake(startIndex, 0), path, NULL);
-        CTFrameDraw(frame, context);
+		
+
+		// Handle display of soft hyphenation.
+		// Technique adopted from Frank Zheng, detailed at: http://frankzblog.appspot.com/?p=7001
+		NSArray *lines = (NSArray *)CTFrameGetLines(frame);
+		CGFloat textOffset = 0;
+		for (int lineNumber = 0; lineNumber < [lines count]; lineNumber++) {
+			CTLineRef line = (CTLineRef)[lines objectAtIndex:lineNumber];
+			CGFloat ascent, descent, leading = 0;
+			double width = CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
+			double height = ascent + descent + leading;
+			textOffset += height;
+			CGContextSetTextPosition(context, 0, textOffset);
+			
+			CFRange cfLineRange = CTLineGetStringRange(line);
+			NSRange lineRange = NSMakeRange(cfLineRange.location, cfLineRange.length);
+			NSString* lineString = [[_text string] substringWithRange:lineRange];
+			static const unichar softHypen = 0x00AD;
+			unichar lastChar = [lineString characterAtIndex:lineString.length-1];
+			if(softHypen == lastChar) {
+				NSMutableAttributedString* lineAttrString = [[_text attributedSubstringFromRange:lineRange] mutableCopy];
+				NSRange replaceRange = NSMakeRange(lineRange.length-1, 1);
+				[lineAttrString replaceCharactersInRange:replaceRange withString:@"-"];
+				
+				CTLineRef hyphenatedLine = CTLineCreateWithAttributedString((CFAttributedStringRef)lineAttrString);
+				CTLineRef justifiedLine = CTLineCreateJustifiedLine(hyphenatedLine, 1.0, width);
+				CTLineDraw(justifiedLine, context);
+			} else {
+				CTLineDraw(line, context);
+			}
+		}
 		
         // Start the next frame at the first character not visible in this frame.
         CFRange frameRange = CTFrameGetVisibleStringRange(frame);
