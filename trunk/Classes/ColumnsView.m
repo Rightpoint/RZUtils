@@ -97,16 +97,15 @@
 		CGRect boundingBox = CGPathGetBoundingBox(path);
 		
 		// Handle display of soft hyphenation.
-		// Technique adopted from Frank Zheng, detailed at: http://frankzblog.appspot.com/?p=7001
+		// Technique adapted from Frank Zheng, detailed at: http://frankzblog.appspot.com/?p=7001
 		NSArray *lines = (NSArray *)CTFrameGetLines(frame);
-		CGFloat textOffset = CGRectGetMaxY(boundingBox);
+
+		CGPoint* origins  = (CGPoint*)calloc([lines count], sizeof(CGPointZero));
+		CTFrameGetLineOrigins(frame, CFRangeMake(0, [lines count]), origins);
+
 		for (int lineNumber = 0; lineNumber < [lines count]; lineNumber++) {
 			CTLineRef line = (CTLineRef)[lines objectAtIndex:lineNumber];
-			CGFloat ascent, descent, leading = 0;
-			CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
-			double height = ascent + descent + leading;
-			textOffset -= height;
-			CGContextSetTextPosition(context, boundingBox.origin.x, textOffset);
+			CGContextSetTextPosition(context, boundingBox.origin.x + origins[lineNumber].x, origins[lineNumber].y);
 			
 			CFRange cfLineRange = CTLineGetStringRange(line);
 			NSRange lineRange = NSMakeRange(cfLineRange.location, cfLineRange.length);
@@ -127,7 +126,8 @@
 				CTLineDraw(line, context);
 			}
 		}
-		
+		free(origins);
+
         // Start the next frame at the first character not visible in this frame.
         CFRange frameRange = CTFrameGetVisibleStringRange(frame);
         startIndex += frameRange.length;
