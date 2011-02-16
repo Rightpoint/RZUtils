@@ -33,6 +33,7 @@
     }
     return self;	
 }
+
 - (CFArrayRef)createColumns
 {
     int column;
@@ -81,16 +82,13 @@
 	// Set the usual "flipped" Core Text draw matrix
 	CGContextTranslateCTM(context, 0, ([self bounds]).size.height );
 	CGContextScaleCTM(context, 1.0, -1.0);
-    
-	
-    CTFramesetterRef framesetter =
-	CTFramesetterCreateWithAttributedString((CFAttributedStringRef) self.text);
+
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef) self.text);
     CFArrayRef columnPaths = [self createColumns];
 	
     CFIndex pathCount = CFArrayGetCount(columnPaths);
     CFIndex startIndex = _startPosition;
-    int column;
-    for (column = 0; column < pathCount; column++) {
+    for (int column = 0; column < pathCount; column++) {
         CGPathRef path = (CGPathRef)CFArrayGetValueAtIndex(columnPaths, column);
 		
         // Create a frame for this column.

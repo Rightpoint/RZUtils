@@ -12,7 +12,7 @@
 #import "FontViewController.h"
 #import "NSString+Hyphenate.h"
 
-#define kDefaultFontSize 24
+#define kDefaultFontSize 17
 
 @interface coreTextExViewController()
 
@@ -52,8 +52,7 @@
 {
     [super viewDidLoad];
 
-	_selectedFont = [[UIFont systemFontOfSize:kDefaultFontSize] retain];
-
+	_selectedFont = [[UIFont fontWithName:@"Didot" size:kDefaultFontSize] retain];
 	
 	// load the text. 
 	NSError* error = nil;
