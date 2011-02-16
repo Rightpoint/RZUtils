@@ -20,6 +20,7 @@
 		62BFCC67130B1F8700DC761F /* NSString+Hyphenate.m in Sources */ = {isa = PBXBuildFile; fileRef = 62BFCC63130B1F3500DC761F /* NSString+Hyphenate.m */; };
 		62BFCC75130B1F9900DC761F /* hyphen.c in Sources */ = {isa = PBXBuildFile; fileRef = 62BFCBE2130B1F3500DC761F /* hyphen.c */; };
 		62BFCC76130B1FA200DC761F /* hnjalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = 62BFCBDF130B1F3500DC761F /* hnjalloc.c */; };
+		62BFCF04130C30AB00DC761F /* Hyphenate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 62BFCF03130C30AB00DC761F /* Hyphenate.bundle */; };
 		CB2F77A01305F72C003D2AC0 /* ColumnsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CB2F779F1305F72C003D2AC0 /* ColumnsView.m */; };
 		CB2F77A61305F7BD003D2AC0 /* sampleText.txt in Resources */ = {isa = PBXBuildFile; fileRef = CB2F77A51305F7BD003D2AC0 /* sampleText.txt */; };
 		CB2F77AA1305F853003D2AC0 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB2F77A91305F853003D2AC0 /* CoreText.framework */; };
@@ -185,11 +186,11 @@
 		62BFCC5B130B1F3500DC761F /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
 		62BFCC5E130B1F3500DC761F /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		62BFCC5F130B1F3500DC761F /* TouchXML-setStringValue.patch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "TouchXML-setStringValue.patch"; sourceTree = "<group>"; };
-		62BFCC60130B1F3500DC761F /* Hyphenate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Hyphenate.bundle; sourceTree = "<group>"; };
 		62BFCC61130B1F3500DC761F /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		62BFCC62130B1F3500DC761F /* NSString+Hyphenate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Hyphenate.h"; sourceTree = "<group>"; };
 		62BFCC63130B1F3500DC761F /* NSString+Hyphenate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Hyphenate.m"; sourceTree = "<group>"; };
 		62BFCC64130B1F3500DC761F /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		62BFCF03130C30AB00DC761F /* Hyphenate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Hyphenate.bundle; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* coreTextEx-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "coreTextEx-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		CB2F779E1305F72C003D2AC0 /* ColumnsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColumnsView.h; sourceTree = "<group>"; };
 		CB2F779F1305F72C003D2AC0 /* ColumnsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColumnsView.m; sourceTree = "<group>"; };
@@ -463,7 +464,7 @@
 			isa = PBXGroup;
 			children = (
 				62BFCC5D130B1F3500DC761F /* extras */,
-				62BFCC60130B1F3500DC761F /* Hyphenate.bundle */,
+				62BFCF03130C30AB00DC761F /* Hyphenate.bundle */,
 				62BFCC61130B1F3500DC761F /* LICENSE */,
 				62BFCC62130B1F3500DC761F /* NSString+Hyphenate.h */,
 				62BFCC63130B1F3500DC761F /* NSString+Hyphenate.m */,
@@ -534,6 +535,7 @@
 				2899E5220DE3E06400AC0155 /* coreTextExViewController.xib in Resources */,
 				CB2F77A61305F7BD003D2AC0 /* sampleText.txt in Resources */,
 				446DA8671306D3F90012B8CA /* FontViewController.xib in Resources */,
+				62BFCF04130C30AB00DC761F /* Hyphenate.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
