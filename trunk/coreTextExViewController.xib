@@ -67,9 +67,10 @@
 								<reference key="IBUIToolbar" ref="901927735"/>
 							</object>
 							<object class="IBUIBarButtonItem" id="64579829">
+								<bool key="IBUIEnabled">NO</bool>
 								<string key="IBUITitle">Font</string>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-								<float key="IBUIWidth">54</float>
+								<float key="IBUIWidth">52</float>
 								<int key="IBUIStyle">1</int>
 								<reference key="IBUIToolbar" ref="901927735"/>
 							</object>
@@ -135,14 +136,6 @@
 						<reference key="destination" ref="841351856"/>
 					</object>
 					<int key="connectionID">13</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">fontPressed:</string>
-						<reference key="source" ref="64579829"/>
-						<reference key="destination" ref="841351856"/>
-					</object>
-					<int key="connectionID">15</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -229,7 +222,7 @@
 					<string>UIResponder</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>{{513, 4}, {783, 852}}</string>
+					<string>{{133, 4}, {768, 1024}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>

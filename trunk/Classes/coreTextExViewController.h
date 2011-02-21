@@ -11,7 +11,7 @@
 
 @class ColumnsView;
 
-@interface coreTextExViewController : UIViewController <FontViewControllerDelegate> {
+@interface coreTextExViewController : UIViewController { //<FontViewControllerDelegate> {
 	
 	ColumnsView* _columnsView;
 	
@@ -21,7 +21,7 @@
 	
 	NSMutableAttributedString* _text;
 	
-	UIFont* _selectedFont;
+	NSInteger _selectedPointSizeAdjustment;
 	
 	UIPopoverController* popoverController;
 }
@@ -30,7 +30,7 @@
 @property (nonatomic, retain) IBOutlet UIScrollView* scrollView;
 
 @property (nonatomic, retain) NSMutableAttributedString* text;
-@property (nonatomic, retain) UIPopoverController* popoverController;
+//@property (nonatomic, retain) UIPopoverController* popoverController;
 
 
 -(IBAction) minusPressed:(id)sender;

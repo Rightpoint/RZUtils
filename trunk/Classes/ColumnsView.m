@@ -140,8 +140,8 @@
 
 -(NSRange) rangeOfStringFromLocation:(NSUInteger)location
 {
-	CTFramesetterRef framesetter =
-	CTFramesetterCreateWithAttributedString((CFAttributedStringRef) self.text);
+	CTFramesetterRef framesetter = 
+	 CTFramesetterCreateWithAttributedString((CFAttributedStringRef) self.text);
     CFArrayRef columnPaths = [self createColumns];
 	
     CFIndex pathCount = CFArrayGetCount(columnPaths);
@@ -169,6 +169,21 @@
     CFRelease(columnPaths); // False analyzer positive.
 	
 	return range;
+}
+
+- (void)adjustPointSize:(NSInteger)points {
+	[self.text enumerateAttribute:(NSString *)kCTFontAttributeName
+						  inRange:NSMakeRange(0, [self.text length])
+						  options:0
+					   usingBlock:^(id value, NSRange range, BOOL *stop){
+						  // NSDictionary *attributes = [self.text attributesAtIndex:range.location effectiveRange:NULL];
+						   CTFontRef font = (CTFontRef)CFAttributedStringGetAttribute((CFAttributedStringRef)self.text, range.location, kCTFontAttributeName, NULL);
+						   if (font) {
+							   CTFontRef modifiedFont = CTFontCreateCopyWithAttributes(font, CTFontGetSize((CTFontRef)font) + points, NULL, NULL);
+							   [self.text addAttribute:(id)kCTFontAttributeName value:(id)modifiedFont range:range];
+							   CFRelease(modifiedFont);
+						   }
+					   }];
 }
 
 - (void)dealloc {

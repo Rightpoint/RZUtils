@@ -22,7 +22,7 @@
 @property (nonatomic, assign) NSUInteger startPosition;
 @property (nonatomic, assign) NSUInteger columnCount;
 
--(NSRange) rangeOfStringFromLocation:(NSUInteger)location;
-
+- (NSRange)rangeOfStringFromLocation:(NSUInteger)location;
+- (void)adjustPointSize:(NSInteger)points;
 
 @end

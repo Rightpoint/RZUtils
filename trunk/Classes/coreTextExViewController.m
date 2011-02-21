@@ -11,6 +11,7 @@
 #import "OHAttributedLabel.h"
 #import "FontViewController.h"
 #import "NSString+Hyphenate.h"
+#import "NSAttributedString+HTML.h"
 
 #define kDefaultFontSize 17
 
@@ -25,7 +26,7 @@
 @synthesize columnsView = _columnsView;
 @synthesize scrollView = _scrollView;
 @synthesize text = _text;
-@synthesize popoverController;
+//@synthesize popoverController;
 
 
 /*
@@ -52,18 +53,23 @@
 {
     [super viewDidLoad];
 
-	_selectedFont = [[UIFont fontWithName:@"Didot" size:kDefaultFontSize] retain];
-	
 	// load the text. 
 	NSError* error = nil;
-	NSURL* url = [[NSBundle mainBundle] URLForResource:@"sampleText" withExtension:@"txt"];
-	NSString* rawText = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
+	BOOL htmldemo = YES;
+	if (htmldemo) {
+		NSURL *url = [[NSBundle mainBundle] URLForResource:@"styles" withExtension:@"html"];
+		NSString* rawString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
+		NSMutableAttributedString* htmlString = [[NSMutableAttributedString alloc] initWithHTML:[rawString dataUsingEncoding:NSUTF8StringEncoding] options:nil documentAttributes:nil];
+		self.text = htmlString;
+	} else {
+		NSURL* url = [[NSBundle mainBundle] URLForResource:@"sampleText" withExtension:@"txt"];
+		NSString* rawText = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
 
-	NSLocale* en = [[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"] autorelease];
-    NSString* preparedText = [rawText stringByHyphenatingWithLocale:en];
-	
-	self.text = [[[NSMutableAttributedString alloc] initWithString:preparedText] autorelease];
-	
+		NSLocale* en = [[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"] autorelease];
+		NSString* preparedText = [rawText stringByHyphenatingWithLocale:en];
+		
+		self.text = [[[NSMutableAttributedString alloc] initWithString:preparedText] autorelease];
+	}	
 	
 	//NSRange range = [self.columnsView rangeOfStringFromLocation:0];
 	//NSLog(@"Range location:%d length:%d", range.location, range.length);
@@ -76,8 +82,6 @@
 
 -(void) layoutText
 {
-	[self.text setFont:_selectedFont];
-	
 	NSUInteger startPosition = 0;
 	NSUInteger pageNumber = 0;
 	
@@ -105,6 +109,7 @@
 		
 		columnsView.text = self.text;
 		columnsView.startPosition = startPosition;
+		[columnsView adjustPointSize:_selectedPointSizeAdjustment];
 		[columnsView setNeedsDisplay];
 
 		NSRange pageRange = [columnsView rangeOfStringFromLocation:startPosition];
@@ -126,39 +131,32 @@
 
 -(IBAction) minusPressed:(id)sender
 {
-	
-	UIFont* newFont = [_selectedFont fontWithSize:_selectedFont.pointSize - 1];
-	[_selectedFont release];
-	_selectedFont = [newFont retain];
-	
+	_selectedPointSizeAdjustment = -1;	
 	[self layoutText];
 }
 
 -(IBAction) plusPressed:(id)sender
 {
-	UIFont* newFont = [_selectedFont fontWithSize:_selectedFont.pointSize + 1];
-	[_selectedFont release];
-	_selectedFont = [newFont retain];
-	
+	_selectedPointSizeAdjustment = 1;	
 	[self layoutText];
 }
 
 -(IBAction) fontPressed:(id)sender
 {
-	UIBarButtonItem* button = (UIBarButtonItem*)sender;
-	
-	FontViewController* fontViewController = [[[FontViewController alloc] initWithNibName:@"FontViewController" bundle:nil] autorelease];
-	
-	
-	self.popoverController = [[[UIPopoverController alloc] initWithContentViewController:fontViewController] autorelease];
-	CGSize contentSize = fontViewController.view.frame.size;
-	
-	self.popoverController.popoverContentSize = contentSize;
-	fontViewController.selectedFont = _selectedFont;
-	fontViewController.delegate = self;
-	
-	[self.popoverController presentPopoverFromBarButtonItem:button permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
-	
+//	UIBarButtonItem* button = (UIBarButtonItem*)sender;
+//	
+//	FontViewController* fontViewController = [[[FontViewController alloc] initWithNibName:@"FontViewController" bundle:nil] autorelease];
+//	
+//	
+//	self.popoverController = [[[UIPopoverController alloc] initWithContentViewController:fontViewController] autorelease];
+//	CGSize contentSize = fontViewController.view.frame.size;
+//	
+//	self.popoverController.popoverContentSize = contentSize;
+////	fontViewController.selectedFont = _selectedFont;
+//	fontViewController.delegate = self;
+//	
+//	[self.popoverController presentPopoverFromBarButtonItem:button permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+//	
 }
 
 // Override to allow orientations other than the default portrait orientation.
@@ -187,20 +185,20 @@
 {
 	[_pageViews release];
 	[_text release];
-	[_selectedFont release];
+//	[_selectedFont release];
 	
     [super dealloc];
 }
 
-#pragma mark -
-#pragma mark FontViewControllerDelegate
--(void) fontSelected:(UIFont*)font
-{
-	[_selectedFont release];
-	_selectedFont = [font retain];
-	
-	[self layoutText];
-}
+//#pragma mark -
+//#pragma mark FontViewControllerDelegate
+//-(void) fontSelected:(UIFont*)font
+//{
+//	[_selectedFont release];
+//	_selectedFont = [font retain];
+//	
+//	[self layoutText];
+//}
 
 
 @end
