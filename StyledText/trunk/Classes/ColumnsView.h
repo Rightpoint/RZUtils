@@ -11,16 +11,15 @@
 
 @interface ColumnsView : UIView 
 {
-	NSMutableAttributedString* _text; 
-	
-	NSUInteger _columnCount;
-	
-	NSUInteger _startPosition;
+	NSMutableAttributedString	*_text; 
+	NSArray						*_columnPaths;
+	NSUInteger					_columnCount;
+	NSUInteger					_startPosition;
 }
 
-@property (nonatomic, retain) NSMutableAttributedString* text;
-@property (nonatomic, assign) NSUInteger startPosition;
-@property (nonatomic, assign) NSUInteger columnCount;
+@property (nonatomic, retain) NSMutableAttributedString		*text;
+@property (nonatomic, assign) NSUInteger					startPosition;
+@property (nonatomic, assign) NSUInteger					columnCount;
 
 - (NSRange)rangeOfStringFromLocation:(NSUInteger)location;
 - (void)adjustPointSize:(NSInteger)points;

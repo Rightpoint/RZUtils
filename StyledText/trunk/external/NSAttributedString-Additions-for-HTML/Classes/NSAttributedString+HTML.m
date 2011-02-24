@@ -15,7 +15,7 @@
 #import "NSScanner+HTML.h"
 #import "NSAttributedStringRunDelegates.h"
 #import "DTTextAttachment.h"
-#import "NSString+Hyphenate.h"
+#import "NSString+Hyphenate.h" // Raizlabs addition.
 
 #import "DTCoreTextFontDescriptor.h"
 
@@ -859,7 +859,7 @@ CTParagraphStyleRef createParagraphStyle(CGFloat paragraphSpacingBefore, CGFloat
 				if ([[tagContents stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]] length])
 				{
 					NSLocale *en = [[[NSLocale alloc] initWithLocaleIdentifier:@"En_US"] autorelease];
-					tagContents = [tagContents stringByHyphenatingWithLocale:en];
+					tagContents = [tagContents stringByHyphenatingWithLocale:en]; // Raizlabs addition.
 					tagContents = [tagContents stringByNormalizingWhitespace];
 					tagContents = [tagContents stringByReplacingHTMLEntities];
 					
