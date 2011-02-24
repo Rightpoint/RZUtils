@@ -1,0 +1,14 @@
+--- TouchXML/Common/Source/Creation/CXMLNode_CreationExtensions.m	2010-04-23 17:48:40.000000000 +0200
++++ TouchXML/Common/Source/Creation/CXMLNode_CreationExtensions.m	2010-06-21 11:39:30.000000000 +0200
+@@ -97,7 +97,10 @@
+ 
+ - (void)setStringValue:(NSString *)inStringValue
+ {
+-NSAssert(NO, @"TODO");
++if (_node->type == XML_TEXT_NODE) 
++    xmlNodeSetContent(_node, (const xmlChar *)[inStringValue UTF8String]);
++else 
++    NSAssert(NO, @"TODO");    
+ }
+ 
+ @end
