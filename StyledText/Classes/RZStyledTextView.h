@@ -20,6 +20,9 @@
 @property (readonly)	UIEdgeInsets		insets;
 @property (readonly)	NSRange				displayRange;
 
-- (id)initWithFrame:(CGRect)frame string:(NSAttributedString *)aString location:(NSInteger)aLocation;
+- (id)initWithFrame:(CGRect)frame
+			 string:(NSAttributedString *)aString
+		   location:(NSInteger)aLocation 
+		 edgeInsets:(UIEdgeInsets)someInsets;
 
 @end

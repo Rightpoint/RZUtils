@@ -16,18 +16,20 @@
 @synthesize insets			= _insets;
 @synthesize displayRange	= _displayRange;
 
-- (id)initWithFrame:(CGRect)aFrame string:(NSAttributedString *)aString location:(NSInteger)aLocation {
+- (id)initWithFrame:(CGRect)aFrame string:(NSAttributedString *)aString location:(NSInteger)aLocation edgeInsets:(UIEdgeInsets)someInsets {
 	if ((self = [super initWithFrame:aFrame])) {
 		_string = [aString retain];
 		_location = aLocation;
+		_insets = someInsets;
 	}
 	return self;
 }
 
-// The view's frame is immutable once initialized to prevent truncation, clipping, and other undesired behaviors.
-- (void)setFrame:(CGRect)rect {
-	// noop
-}
+//
+//// The view's frame is immutable once initialized to prevent truncation, clipping, and other undesired behaviors.
+//- (void)setFrame:(CGRect)rect {
+//	// noop
+//}
 
 - (void)drawRect:(CGRect)rect {
 	CGContextRef context = UIGraphicsGetCurrentContext();
@@ -40,13 +42,13 @@
 	CGContextSetTextMatrix(context, CGAffineTransformIdentity);
 	
 	// Set the usual "flipped" Core Text draw matrix
-	CGContextTranslateCTM(context, 0, ([self bounds]).size.height );
+	CGContextTranslateCTM(context, 0, self.bounds.size.height );
 	CGContextScaleCTM(context, 1.0, -1.0);
 
-	// Create a path of the drawable area.
-	CGRect drawableArea = UIEdgeInsetsInsetRect(rect, _insets);
+	// Create a path of the text area.
+	CGRect textArea = UIEdgeInsetsInsetRect(self.bounds, _insets);
 	CGMutablePathRef path = CGPathCreateMutable();
-	CGPathAddRect(path, NULL, drawableArea);
+	CGPathAddRect(path, NULL, textArea);
 
 	// Prepare frame.
 	NSInteger lengthRemaining = [self.string length] - _location;
@@ -61,7 +63,7 @@
 
 	for (int lineNumber = 0; lineNumber < [lines count]; lineNumber++) {
 		CTLineRef line = (CTLineRef)[lines objectAtIndex:lineNumber];
-		CGContextSetTextPosition(context, drawableArea.origin.x + origins[lineNumber].x, origins[lineNumber].y);
+		CGContextSetTextPosition(context, textArea.origin.x + origins[lineNumber].x, origins[lineNumber].y);
 		
 		CFRange cfLineRange = CTLineGetStringRange(line);
 		NSRange lineRange = NSMakeRange(cfLineRange.location, cfLineRange.length);
@@ -76,7 +78,7 @@
 			NSRange replaceRange = NSMakeRange(lineRange.length-1, 1);
 			[lineAttrString replaceCharactersInRange:replaceRange withString:@"-"];
 			CTLineRef hyphenatedLine = CTLineCreateWithAttributedString((CFAttributedStringRef)lineAttrString);
-			CTLineRef justifiedLine = CTLineCreateJustifiedLine(hyphenatedLine, 1.0, drawableArea.size.width);
+			CTLineRef justifiedLine = CTLineCreateJustifiedLine(hyphenatedLine, 1.0, textArea.size.width);
 			CTLineDraw(justifiedLine, context);
 			
 			[lineAttrString release];

@@ -87,47 +87,21 @@
 	
 	NSUInteger startPosition = 0;
 	NSUInteger pageNumber = 0;
+
+	CGRect rect = self.scrollView.bounds;
+	rect.origin.y = pageNumber * rect.size.height;
 	
-	while (startPosition < self.text.length)
-	{
-		// add a new columns view
-		CGRect rect = self.scrollView.bounds;
-		rect.origin.y = pageNumber * rect.size.height;
-		
-		RZStyledTextView* textView = nil;
-		
-		if (pageNumber < _pageViews.count) 
-		{
-			textView = [_pageViews objectAtIndex:pageNumber];
-		}
-		else 
-		{	
-			textView = [[RZStyledTextView alloc] initWithFrame:rect
-														string:self.text 
-													  location:startPosition];
-						[_pageViews addObject:textView];
-			[_scrollView addSubview:textView];
-			[textView autorelease];
-		}
-		
-		[textView drawRect:textView.frame];
-		[textView setNeedsDisplay];
-		
-		NSRange pageRange = textView.displayRange;
-		startPosition = pageRange.location + pageRange.length;
-		
-		pageNumber++;
-	}
+	RZStyledTextView* textView = [[RZStyledTextView alloc] initWithFrame:rect
+																  string:self.text 
+																location:startPosition
+																  edgeInsets:UIEdgeInsetsMake(150, 200, 100, 30)];
 	
-	// if there are pages we are no longer using, remove them
-	for (int pageIdx = _pageViews.count - 1; pageIdx >= pageNumber; pageIdx--)
-	{
-		RZStyledTextView* textView = [_pageViews objectAtIndex:pageIdx];
-		[textView removeFromSuperview];
-		[_pageViews removeObjectAtIndex:pageIdx];
-	}
-	self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, 
-											 self.scrollView.frame.size.height * pageNumber);
+	UIView* lastTextView = [[_scrollView subviews] objectAtIndex:0]; // Just for testing.
+	[lastTextView removeFromSuperview];
+
+	[_scrollView addSubview:textView];
+	[textView autorelease];
+	[textView setNeedsDisplay];
 }
 
 -(void) layoutText
