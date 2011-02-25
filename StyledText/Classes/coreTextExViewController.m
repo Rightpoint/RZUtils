@@ -12,12 +12,14 @@
 #import "FontViewController.h"
 #import "NSString+Hyphenate.h"
 #import "NSAttributedString+HTML.h"
+#import "RZStyledTextView.h"
 
 #define kDefaultFontSize 17
 
 @interface coreTextExViewController()
 
--(void) layoutText;
+- (void)layoutText;
+- (void)layoutRZText;
 
 @end
 
@@ -76,8 +78,56 @@
 	
 	_pageViews = [[NSMutableArray alloc] initWithCapacity:3];
 	
-	[self layoutText];
+//	[self layoutText];
+	[self layoutRZText];
 
+}
+
+- (void) layoutRZText {
+	
+	NSUInteger startPosition = 0;
+	NSUInteger pageNumber = 0;
+	
+	while (startPosition < self.text.length)
+	{
+		// add a new columns view
+		CGRect rect = self.scrollView.bounds;
+		rect.origin.y = pageNumber * rect.size.height;
+		
+		RZStyledTextView* textView = nil;
+		
+		if (pageNumber < _pageViews.count) 
+		{
+			textView = [_pageViews objectAtIndex:pageNumber];
+		}
+		else 
+		{	
+			textView = [[RZStyledTextView alloc] initWithFrame:rect
+														string:self.text 
+													  location:startPosition];
+						[_pageViews addObject:textView];
+			[_scrollView addSubview:textView];
+			[textView autorelease];
+		}
+		
+		[textView drawRect:textView.frame];
+		[textView setNeedsDisplay];
+		
+		NSRange pageRange = textView.displayRange;
+		startPosition = pageRange.location + pageRange.length;
+		
+		pageNumber++;
+	}
+	
+	// if there are pages we are no longer using, remove them
+	for (int pageIdx = _pageViews.count - 1; pageIdx >= pageNumber; pageIdx--)
+	{
+		RZStyledTextView* textView = [_pageViews objectAtIndex:pageIdx];
+		[textView removeFromSuperview];
+		[_pageViews removeObjectAtIndex:pageIdx];
+	}
+	self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, 
+											 self.scrollView.frame.size.height * pageNumber);
 }
 
 -(void) layoutText
@@ -132,13 +182,13 @@
 -(IBAction) minusPressed:(id)sender
 {
 	_selectedPointSizeAdjustment = -1;	
-	[self layoutText];
+	[self layoutRZText];
 }
 
 -(IBAction) plusPressed:(id)sender
 {
 	_selectedPointSizeAdjustment = 1;	
-	[self layoutText];
+	[self layoutRZText];
 }
 
 -(IBAction) fontPressed:(id)sender
@@ -166,7 +216,7 @@
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-	[self layoutText];
+	[self layoutRZText];
 }
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
