@@ -63,10 +63,10 @@
 		
 		NSLocale* en = [[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"] autorelease];
 		NSString* preparedText = [rawText stringByHyphenatingWithLocale:en];
-		aString = [[[NSAttributedString alloc] initWithString:preparedText] autorelease];
+		aString = [[NSAttributedString alloc] initWithString:preparedText];
 	}
 	
-	return aString;
+	return [aString autorelease];
 }
 
 - (void) layoutRZText {
