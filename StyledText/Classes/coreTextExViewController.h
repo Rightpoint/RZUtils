@@ -10,6 +10,7 @@
 #import "FontViewController.h"
 
 @class ColumnsView;
+@class RZStyledTextView;
 
 @interface coreTextExViewController : UIViewController { //<FontViewControllerDelegate> {
 	
@@ -19,17 +20,20 @@
 	
 	NSMutableArray* _pageViews;
 	
-	NSMutableAttributedString* _text;
+	NSAttributedString* _text;
 	
 	NSInteger _selectedPointSizeAdjustment;
 	
 	UIPopoverController* popoverController;
+	
+	RZStyledTextView *_textView;
 }
 
 @property (nonatomic, retain) IBOutlet ColumnsView* columnsView;
 @property (nonatomic, retain) IBOutlet UIScrollView* scrollView;
 
-@property (nonatomic, retain) NSMutableAttributedString* text;
+@property (nonatomic, retain) NSAttributedString* text;
+@property (nonatomic, retain) RZStyledTextView* textView;
 //@property (nonatomic, retain) UIPopoverController* popoverController;
 
 

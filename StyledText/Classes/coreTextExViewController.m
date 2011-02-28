@@ -20,6 +20,7 @@
 
 - (void)layoutText;
 - (void)layoutRZText;
+- (NSAttributedString *)testString:(int)which;
 
 @end
 
@@ -28,27 +29,8 @@
 @synthesize columnsView = _columnsView;
 @synthesize scrollView = _scrollView;
 @synthesize text = _text;
+@synthesize textView = _textView;
 //@synthesize popoverController;
-
-
-/*
-// The designated initializer. Override to perform setup that is required before the view is loaded.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-*/
-
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView {
-}
-*/
-
-
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad 
@@ -56,23 +38,8 @@
     [super viewDidLoad];
 
 	// load the text. 
-	NSError* error = nil;
-	BOOL htmldemo = YES;
-	if (htmldemo) {
-		NSURL *url = [[NSBundle mainBundle] URLForResource:@"styles" withExtension:@"html"];
-		NSString* rawString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
-		NSMutableAttributedString* htmlString = [[NSMutableAttributedString alloc] initWithHTML:[rawString dataUsingEncoding:NSUTF8StringEncoding] options:nil documentAttributes:nil];
-		self.text = htmlString;
-	} else {
-		NSURL* url = [[NSBundle mainBundle] URLForResource:@"sampleText" withExtension:@"txt"];
-		NSString* rawText = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
+	self.text = [self testString:0];
 
-		NSLocale* en = [[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"] autorelease];
-		NSString* preparedText = [rawText stringByHyphenatingWithLocale:en];
-		
-		self.text = [[[NSMutableAttributedString alloc] initWithString:preparedText] autorelease];
-	}	
-	
 	//NSRange range = [self.columnsView rangeOfStringFromLocation:0];
 	//NSLog(@"Range location:%d length:%d", range.location, range.length);
 	
@@ -83,25 +50,45 @@
 
 }
 
-- (void) layoutRZText {
+- (NSAttributedString *)testString:(int)which {
+	NSAttributedString *aString = nil;
+	NSError *error;
+	if (which) {
+		NSURL *url = [[NSBundle mainBundle] URLForResource:@"styles" withExtension:@"html"];
+		NSString* rawString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
+		aString = [[NSAttributedString alloc] initWithHTML:[rawString dataUsingEncoding:NSUTF8StringEncoding] options:nil documentAttributes:nil];
+	} else {
+		NSURL* url = [[NSBundle mainBundle] URLForResource:@"sampleText" withExtension:@"txt"];
+		NSString* rawText = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
+		
+		NSLocale* en = [[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"] autorelease];
+		NSString* preparedText = [rawText stringByHyphenatingWithLocale:en];
+		aString = [[[NSAttributedString alloc] initWithString:preparedText] autorelease];
+	}
 	
+	return aString;
+}
+
+- (void) layoutRZText {
+
 	NSUInteger startPosition = 0;
 	NSUInteger pageNumber = 0;
 
 	CGRect rect = self.scrollView.bounds;
 	rect.origin.y = pageNumber * rect.size.height;
-	
-	RZStyledTextView* textView = [[RZStyledTextView alloc] initWithFrame:rect
-																  string:self.text 
-																location:startPosition
-																  edgeInsets:UIEdgeInsetsMake(150, 200, 100, 30)];
-	
-	UIView* lastTextView = [[_scrollView subviews] objectAtIndex:0]; // Just for testing.
-	[lastTextView removeFromSuperview];
 
-	[_scrollView addSubview:textView];
-	[textView autorelease];
-	[textView setNeedsDisplay];
+	if (!self.textView) {
+		self.textView = [[RZStyledTextView alloc] initWithFrame:rect
+														 string:self.text 
+													   location:startPosition
+													 edgeInsets:UIEdgeInsetsMake(25, 25, 25, 25)];
+		[_scrollView addSubview:self.textView];
+	}
+	
+	if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
+		[self.textView setString:[self testString:0]];
+	else
+		[self.textView setString:[self testString:1]];
 }
 
 -(void) layoutText
@@ -131,7 +118,7 @@
 
 		columnsView.columnCount = UIInterfaceOrientationIsPortrait(self.interfaceOrientation) ? 2 : 3;
 		
-		columnsView.text = self.text;
+		columnsView.text = [[self.text mutableCopy] autorelease];
 		columnsView.startPosition = startPosition;
 		[columnsView adjustPointSize:_selectedPointSizeAdjustment];
 		[columnsView setNeedsDisplay];
