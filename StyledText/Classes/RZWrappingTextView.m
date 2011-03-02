@@ -12,8 +12,6 @@
 
 @implementation RZWrappingTextView
 
-CGFloat const kDefaultLeading = 0.5;
-
 @synthesize string = _string;
 @synthesize exclusionFrames = _exclusionFrames;
 @synthesize displayRange = _displayRange;
@@ -45,7 +43,7 @@ CGFloat const kDefaultLeading = 0.5;
 // As a first step, we simply fill rect with text, breaking at suggested points.
 - (void)drawRect:(CGRect)rect {
 	CGContextRef context = UIGraphicsGetCurrentContext();
-	
+
 	// Draw a white background.
 	CGContextSetFillColorWithColor(context, [[UIColor whiteColor] CGColor]);
 	CGContextFillRect(context, self.bounds);
@@ -59,17 +57,6 @@ CGFloat const kDefaultLeading = 0.5;
 	
 	CGRect drawableRect = UIEdgeInsetsInsetRect(self.bounds, _insets);
 
-	/*
-		Sweep rect, drawing one line at a time, checking for obstacles. If one encountered,
-		call CTLineGetStringIndexForPosition, create a substring, and then find a suggested breaking
-		point. Grab the new substring, replace any dangling soft-hyphens with a visible hyphen-minu
-		and display, taking note the line's UIFont's lineHeight. and continue horizontally until a 
-		boundary encountered, at which time the text position should be bumped down by the measured
-		height
-	 
-		NOTE: Current implementation ignores exclusion zones.
-	 */
-
 	// Create a typesetter using the complete attributed string.
  	CTTypesetterRef typesetter = CTTypesetterCreateWithAttributedString((CFAttributedStringRef)self.string);
 
@@ -78,35 +65,73 @@ CGFloat const kDefaultLeading = 0.5;
 
 	CGPoint currentAnchor = CGPointMake(0, drawableRect.size.height - drawableRect.origin.y);
 	CFIndex currentStart = 0;
-	BOOL charactersRemain = YES;
-	while (charactersRemain){
+	NSInteger currentCount = 0;
+	while (1){
 		
-		// Check if rendered line would exceed bounds.	
-		CGRect renderedBounds = CTLineGetImageBounds(currentLine, context);
+		// Bail if entire string was drawn.
+		BOOL charactersRemain = (currentStart <= self.string.length - 1);
+		if (!charactersRemain)
+			break;
+		
+		// Get metrics for line.
+		CGFloat ascent, descent, leading;
+		CGFloat width = CTLineGetTypographicBounds(currentLine, &ascent, &descent, &leading);
+		CGFloat height = ascent + descent;
 
-		if (renderedBounds.size.width > rect.size.width) {
+		// Find collision.
+		CGRect lineRect = CGRectMake(currentAnchor.x, currentAnchor.y, width, height);
+		CGFloat hCollision = CGRectGetMaxX(drawableRect);
+		CGRect obstacle;
+		for(NSDictionary *frameRep in _exclusionFrames) {
+			CGRect eFrame;
+			if(!CGRectMakeWithDictionaryRepresentation((CFDictionaryRef)frameRep, &eFrame))
+				continue;
 			
-			
-			
-			// Find character count of largest gramatically intact substring that fits within the given width.
-			CFIndex count = CTTypesetterSuggestLineBreak(typesetter, currentStart, drawableRect.size.width);
-			
-			// The substring that can be displayed in the available horizontal space.
-			NSAttributedString *substring = [[self.string attributedSubstringFromRange:NSMakeRange(currentStart, count)] attributedStringWithVisibleHyphen];
-			
-			CTLineRef line = CTLineCreateWithAttributedString((CFAttributedStringRef)substring);
-			CGRect lineRect = CTLineGetImageBounds(line, context);
-			CGContextSetTextPosition(context, currentAnchor.x, currentAnchor.y - lineRect.size.height);
-			CTLineDraw(line, context);
+			// Obstacle blocks horizontal segment.
+			if (CGRectIntersectsRect(lineRect, eFrame)) {
+				CGFloat edge = CGRectGetMinX(eFrame);
+				if (edge < hCollision) {
+					CGContextSaveGState(context);
+					CGContextSetFillColorWithColor(context, [[UIColor redColor] CGColor]);
+					CGContextSetBlendMode(context, kCGBlendModeScreen);
+					CGContextFillRect(context, eFrame);
+					CGContextRestoreGState(context);
 
-			// Update text location. Note that we could be rendering with irregular leading / line spacing. TODO: don't
-			currentAnchor.x = 0; // Sweeping down and right without regard for obstacles, right now.
-			currentAnchor.y -= lineRect.size.height + (kDefaultLeading * lineRect.size.height);
-
-			// Update the substring range
-			currentStart += count;
-			charactersRemain = (currentStart <= self.string.length - 1);
+					hCollision = edge;
+					obstacle = eFrame;
+					break;
+				}
+			}
 		}
+		
+		// Find character count of largest gramatically intact substring that fits within the given width.
+		currentCount = CTTypesetterSuggestLineBreak(typesetter, currentStart, hCollision);
+
+		// The substring that can be displayed in the available horizontal space.
+		NSAttributedString *substring = [[self.string attributedSubstringFromRange:NSMakeRange(currentStart, currentCount)] attributedStringWithVisibleHyphen];	
+		CTLineRef line = CTLineCreateWithAttributedString((CFAttributedStringRef)substring);
+
+		// Update metrics.
+		width = CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
+		height = ascent + descent;
+		
+		CGContextSetTextPosition(context, currentAnchor.x, currentAnchor.y - height - leading);
+		CTLineDraw(line, context);
+
+		// Update anchors for next text segment.
+		if (!CGRectIsNull(obstacle)) {
+			// Obstacle encountered, so slide text frame over.
+			currentAnchor.x = CGRectGetMaxX(obstacle);
+			obstacle = CGRectNull;
+		} else {
+			// Collision was right edge; push to next line.
+			currentAnchor.x = drawableRect.origin.x;
+			currentAnchor.y -= (height + leading);
+		}
+
+		// Update the substring range
+		currentStart += currentCount;
+
 
 	}	
 }
