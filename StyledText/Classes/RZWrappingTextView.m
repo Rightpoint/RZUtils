@@ -60,23 +60,22 @@
 	// Create a typesetter using the complete attributed string.
  	CTTypesetterRef typesetter = CTTypesetterCreateWithAttributedString((CFAttributedStringRef)self.string);
 
-	// Create a line containing the entire string.
-	CTLineRef currentLine = CTTypesetterCreateLine(typesetter, CFRangeMake(0, self.string.length));
 
 	CGPoint currentAnchor = CGPointMake(0, drawableRect.size.height - drawableRect.origin.y);
 	CFIndex currentStart = 0;
-	NSInteger currentCount = 0;
-	while (1){
-		
+	while (1) {
 		// Bail if entire string was drawn.
-		BOOL charactersRemain = (currentStart <= self.string.length - 1);
-		if (!charactersRemain)
+		NSInteger remainingChars = self.string.length - currentStart;
+		if (remainingChars <= 0)
 			break;
+
+		NSAttributedString *substring = [self.string attributedSubstringFromRange:NSMakeRange(currentStart, remainingChars)];	
+		CTLineRef line = CTLineCreateWithAttributedString((CFAttributedStringRef)substring);
 		
 		// Get metrics for line.
 		CGFloat ascent, descent, leading;
-		CGFloat width = CTLineGetTypographicBounds(currentLine, &ascent, &descent, &leading);
-		CGFloat height = ascent + descent;
+		CGFloat width = CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
+		CGFloat height = ascent + descent;		
 
 		// Find collision.
 		CGRect lineRect = CGRectMake(currentAnchor.x, currentAnchor.y, width, height);
@@ -90,13 +89,17 @@
 			// Obstacle blocks horizontal segment.
 			if (CGRectIntersectsRect(lineRect, eFrame)) {
 				CGFloat edge = CGRectGetMinX(eFrame);
+				CGContextSaveGState(context);
+				CGContextSetFillColorWithColor(context, [[UIColor greenColor] CGColor]);
+				CGContextSetBlendMode(context, kCGBlendModeMultiply);
+				CGContextFillRect(context, eFrame);
+				CGContextRestoreGState(context);
+				CGContextSaveGState(context);
+				CGContextSetFillColorWithColor(context, [[UIColor redColor] CGColor]);
+				CGContextSetBlendMode(context, kCGBlendModeScreen);
+				CGContextFillRect(context, eFrame);
+				CGContextRestoreGState(context);
 				if (edge < hCollision) {
-					CGContextSaveGState(context);
-					CGContextSetFillColorWithColor(context, [[UIColor redColor] CGColor]);
-					CGContextSetBlendMode(context, kCGBlendModeScreen);
-					CGContextFillRect(context, eFrame);
-					CGContextRestoreGState(context);
-
 					hCollision = edge;
 					obstacle = eFrame;
 					break;
@@ -105,18 +108,14 @@
 		}
 		
 		// Find character count of largest gramatically intact substring that fits within the given width.
-		currentCount = CTTypesetterSuggestLineBreak(typesetter, currentStart, hCollision);
-
+		NSInteger countThatFits = CTTypesetterSuggestLineBreak(typesetter, currentStart, hCollision);
+		
 		// The substring that can be displayed in the available horizontal space.
-		NSAttributedString *substring = [[self.string attributedSubstringFromRange:NSMakeRange(currentStart, currentCount)] attributedStringWithVisibleHyphen];	
-		CTLineRef line = CTLineCreateWithAttributedString((CFAttributedStringRef)substring);
-
-		// Update metrics.
-		width = CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
-		height = ascent + descent;
+		substring = [[self.string attributedSubstringFromRange:NSMakeRange(currentStart, countThatFits)] attributedStringWithVisibleHyphen];	
+		CTLineRef formattedLine = CTLineCreateWithAttributedString((CFAttributedStringRef)substring);
 		
 		CGContextSetTextPosition(context, currentAnchor.x, currentAnchor.y - height - leading);
-		CTLineDraw(line, context);
+		CTLineDraw(formattedLine, context);
 
 		// Update anchors for next text segment.
 		if (!CGRectIsNull(obstacle)) {
@@ -130,9 +129,7 @@
 		}
 
 		// Update the substring range
-		currentStart += currentCount;
-
-
+		currentStart += countThatFits;
 	}	
 }
 
