@@ -10,8 +10,8 @@
 
 /*!
  @class RZStyledTextView
- @abstract An RZStyledTextView object displays a sub-range of an NSAttributedString.
- @discussion An RZStyledTextView object displays a sub-range of an NSAttributedString, with support for layout settings
+ @abstract An RZStyledTextView object displays a range of an NSAttributedString.
+ @discussion An RZStyledTextView object displays a range of an NSAttributedString, with support for layout settings
  and runtime soft-hyphenation.
  */
 @interface RZStyledTextView : UIView {
@@ -55,7 +55,7 @@
  @param aFrame The view frame.
  @param aString The attributed string to be displayed.
  @param aLocation The starting index of the substring to be displayed.
- @param The insets within which the the attributed string is rendered.
+ @param someInsets The insets within which the attributed string is rendered.
  @returns A newly initialized object.
  */
 - (id)initWithFrame:(CGRect)aFrame
