@@ -13,6 +13,7 @@
 #import "NSString+Hyphenate.h"
 #import "NSAttributedString+HTML.h"
 #import "RZStyledTextView.h"
+#import "RZWrappingTextView.h"
 
 #define kDefaultFontSize 17
 
@@ -45,8 +46,25 @@
 	
 	_pageViews = [[NSMutableArray alloc] initWithCapacity:3];
 	
+// TEST ColumnsView
 //	[self layoutText];
-	[self layoutRZText];
+	
+// TEST RZStyledTextView
+//	[self layoutRZText];
+	
+// TEST RZWrappingTextView
+	NSDictionary *first = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(60, 840, 190, 100));
+	NSDictionary *second = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(350, 400, 10, 10));
+	NSDictionary *third = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(30, 700, 10, 100));
+	NSDictionary *fourth = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(500, 400, 100, 100));
+	NSSet *exclusionFrames = [NSSet setWithObjects: first, second, third, fourth, nil];
+	RZWrappingTextView *test = 
+	[[RZWrappingTextView alloc] initWithFrame:self.scrollView.frame 
+									   string:self.text
+									 location:0
+								   edgeInsets:UIEdgeInsetsZero
+							  exclusionFrames:exclusionFrames];
+	[[self view] addSubview:test];
 
 }
 
