@@ -66,6 +66,7 @@ typedef enum RZTextWrapMode {
 }
 
 @property (nonatomic, retain)			NSAttributedString	*string;
+@property (nonatomic, assign)			NSInteger			location;
 @property (nonatomic, retain)			NSSet				*exclusionFrames;
 @property (nonatomic, assign)			RZTextWrapMode		textWrapMode;
 @property (readonly)					NSRange				displayRange;

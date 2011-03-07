@@ -23,6 +23,7 @@
 @implementation RZWrappingTextView
 
 @synthesize string = _string;
+@synthesize location = _location;
 @synthesize exclusionFrames = _exclusionFrames;
 @synthesize textWrapMode = _textWrapMode;
 @synthesize displayRange = _displayRange;
@@ -61,9 +62,15 @@
 	[self setNeedsDisplay];
 }
 
-- (void)setString:(NSAttributedString *)aString {
+- (void)setLocation:(NSInteger)aLocation {
+	_location = aLocation;
+	self.needsReflow = YES;
+}
+
+- (void)setString:(NSAttributedString *)aString location:(NSInteger)aLocation {
 	[_string release];
 	_string = [aString retain];
+	_location = aLocation;
 	self.needsReflow = YES;
 }
 
