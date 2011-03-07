@@ -132,14 +132,25 @@
 																		 currentStart,
 																		 hCollision - currentAnchor.x,
 																		 0);
+	
+		NSInteger wordBoundary = [substring.string rangeOfCharacterFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].location;
+		NSInteger wordLength = wordBoundary == NSNotFound ? 0 : [[substring.string substringToIndex:wordBoundary] length];
 		
-		// The substring that can be displayed in the available horizontal space.
-		substring = [[self.string attributedSubstringFromRange:NSMakeRange(currentStart, countThatFits)]
-					 attributedStringWithVisibleHyphen];	
-		CTLineRef formattedLine = CTLineCreateWithAttributedString((CFAttributedStringRef)substring);
-		
-		CGContextSetTextPosition(context, currentAnchor.x, currentAnchor.y - height);
-		CTLineDraw(formattedLine, context);	
+		// If the suggested substring includes at least the entire next word, render the text.
+		if (wordLength < countThatFits) {
+			
+			// The substring that can be displayed in the available horizontal space.
+			substring = [[self.string attributedSubstringFromRange:NSMakeRange(currentStart, countThatFits)]
+						 attributedStringWithVisibleHyphen];
+	
+			// Draw the substring.
+			CTLineRef formattedLine = CTLineCreateWithAttributedString((CFAttributedStringRef)substring);
+			CGContextSetTextPosition(context, currentAnchor.x, currentAnchor.y - height);
+			CTLineDraw(formattedLine, context);
+
+			// Update the substring range.
+			currentStart += countThatFits;		
+		}
 		
 		// Update anchors for next text segment.
 		if (!CGRectIsNull(obstacle)) {
@@ -152,8 +163,6 @@
 			currentAnchor.y -= height;
 		}
 
-		// Update the substring range
-		currentStart += countThatFits;
 	}	
 }
 
