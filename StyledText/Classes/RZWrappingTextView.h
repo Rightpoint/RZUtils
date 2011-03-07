@@ -21,7 +21,7 @@ typedef enum RZTextWrapMode {
  @abstract An RZWrappingTextView object displays a range of an NSAttributedString within an irregular shape,
  breaking and wrapping text to fit the geometry.
  @discussion An RZStyledTextView object displays a range of an NSAttributedString, with support for layout settings
- and runtime soft-hyphenation.
+ and runtime hyphenation.
  */
 @interface RZWrappingTextView : UIView {
 	/**
@@ -60,11 +60,11 @@ typedef enum RZTextWrapMode {
 	CGRect _displayRect;
 }
 
-@property (nonatomic, retain) NSAttributedString *string;
-@property (nonatomic, retain) NSSet *exclusionFrames;
-@property (nonatomic, assign) RZTextWrapMode textWrapMode;
-@property (readonly) NSRange displayRange;
-@property (readonly) CGRect displayRect;
+@property (nonatomic, retain)	NSAttributedString	*string;
+@property (nonatomic, retain)	NSSet				*exclusionFrames;
+@property (nonatomic, assign)	RZTextWrapMode		textWrapMode;
+@property (readonly)			NSRange				displayRange;
+@property (readonly)			CGRect				displayRect;
 
 /**
  Initialize a new RZWrappingTextView object

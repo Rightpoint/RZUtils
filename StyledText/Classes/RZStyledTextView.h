@@ -41,14 +41,12 @@
 	CTFrameRef _textFrame;
 }
 
-// Settable properites.
+
 @property (nonatomic, retain)	NSAttributedString	*string;
 @property (nonatomic, assign)	UIEdgeInsets		insets;
-
-// Derived properties
-@property (readonly)	CTFrameRef			textFrame;
-@property (readonly)	NSRange				displayRange;
-@property (readonly)	CGRect				displayFrame;
+@property (readonly)			CTFrameRef			textFrame;
+@property (readonly)			NSRange				displayRange;
+@property (readonly)			CGRect				displayFrame;
 
 /**
  Initialize a new RZStyledTextView object
