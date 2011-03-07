@@ -53,7 +53,7 @@
 //	[self layoutRZText];
 	
 // TEST RZWrappingTextView
-	NSDictionary *first = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(60, 840, 190, 100));
+	NSDictionary *first = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(40, 839, 50, 10));
 	NSDictionary *second = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(350, 400, 10, 10));
 	NSDictionary *third = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(30, 700, 10, 100));
 	NSDictionary *fourth = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(500, 400, 100, 100));
