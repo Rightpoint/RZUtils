@@ -12,6 +12,14 @@
 
 #define DEBUG_BOUNDS 1
 
+@interface RZWrappingTextView ()
+- (void)perfomLayout;
+
+@property (readwrite, nonatomic, assign) BOOL needsReflow;
+
+@end
+
+
 @implementation RZWrappingTextView
 
 @synthesize string = _string;
@@ -19,6 +27,7 @@
 @synthesize textWrapMode = _textWrapMode;
 @synthesize displayRange = _displayRange;
 @synthesize displayRect = _displayRect;
+@synthesize needsReflow = _needsReflow;
 
 - (id)initWithFrame:(CGRect)aFrame
 			 string:(NSAttributedString *)aString
@@ -31,6 +40,7 @@
 		_location = aLocation;
 		_insets = someInsets;
 		_exclusionFrames = [someExclusionFrames retain];
+		_displayRect = UIEdgeInsetsInsetRect(self.bounds, _insets);
 	}
 
 	return self;
@@ -43,7 +53,46 @@
 	[super dealloc];
 }
 
-// As a first step, we simply fill rect with text, breaking at suggested points.
+- (void)setFrame:(CGRect)aFrame {
+	// Save frame, update display rect, and perform layout.
+	[super setFrame:aFrame];
+	_displayRect = UIEdgeInsetsInsetRect(aFrame, _insets);
+	self.needsReflow = YES; // Reflow will be performed upon display.
+	[self setNeedsDisplay];
+}
+
+- (void)setString:(NSAttributedString *)aString {
+	[_string release];
+	_string = [aString retain];
+	self.needsReflow = YES;
+}
+
+- (void)setExclusionFrames:(NSSet *)someExclusionFrames {
+	[_exclusionFrames release];
+	_exclusionFrames = [someExclusionFrames retain];
+	self.needsReflow = YES;
+}
+
+- (void)setTextWrapMode:(RZTextWrapMode)aWrappingMode {
+	_textWrapMode = aWrappingMode;
+	self.needsReflow = YES;
+}
+
+- (NSRange)displayRange {
+	if (_needsReflow)
+		[self perfomLayout];
+	return _displayRange;
+}
+
+// setNeedsReflow and computeLayout represent a chack, but will be left unless Instruments reveals a problem.
+- (void)setNeedsReflow:(BOOL)shouldReflow {
+	_needsReflow = shouldReflow;
+}
+
+- (void)perfomLayout {
+	[self drawRect:CGRectZero];
+}
+
 - (void)drawRect:(CGRect)rect {
 	CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -57,14 +106,11 @@
 	// Set the usual "flipped" Core Text draw matrix
 	CGContextTranslateCTM(context, 0, self.bounds.size.height);
 	CGContextScaleCTM(context, 1.0, -1.0);
-	
-	CGRect drawableRect = UIEdgeInsetsInsetRect(self.bounds, _insets);
 
 	// Create a typesetter using the complete attributed string.
  	CTTypesetterRef typesetter = CTTypesetterCreateWithAttributedString((CFAttributedStringRef)self.string);
 
-
-	CGPoint currentAnchor = CGPointMake(0, drawableRect.size.height - drawableRect.origin.y);
+	CGPoint currentAnchor = CGPointMake(0, _displayRect.size.height - _displayRect.origin.y);
 	CFIndex currentStart = 0;
 	while (1) {
 		// Bail if entire string was drawn.
@@ -92,11 +138,11 @@
 #endif
 		
 		// Bail if text would extend outside vertical bounds.
-		if (CGRectGetMinY(lineRect) < CGRectGetMinY(drawableRect))
+		if (CGRectGetMinY(lineRect) < CGRectGetMinY(_displayRect))
 			break;
 		
 		// Find text boundaries.
-		CGFloat hCollision = CGRectGetMaxX(drawableRect);
+		CGFloat hCollision = CGRectGetMaxX(_displayRect);
 		CGRect obstacle = CGRectNull;
 
 		// If wrapping is set to "behind," obstacles are ignored.
@@ -107,14 +153,14 @@
 				if(!CGRectMakeWithDictionaryRepresentation((CFDictionaryRef)frameRep, &eFrame))
 					continue;
 
-	#ifdef DEBUG_BOUNDS
+#ifdef DEBUG_BOUNDS
 				CGContextSaveGState(context);
 				CGContextSetStrokeColor(context, CGColorGetComponents([[UIColor redColor] CGColor]));
 				CGContextStrokeRectWithWidth(context, eFrame, 2);
 				CGContextSetFillColor(context, CGColorGetComponents([[UIColor whiteColor] CGColor]));
 				CGContextFillRect(context, eFrame);
 				CGContextRestoreGState(context);
-	#endif
+#endif
 				
 				// Candidate obstacle does block horizontal segment.
 				if (CGRectIntersectsRect(lineRect, eFrame)) {
@@ -134,8 +180,8 @@
 		// drawing below it.
 		if (self.textWrapMode == kRZTextWrapModeTopAndBottom && !CGRectIsNull(obstacle)) {
 			currentAnchor.y = CGRectGetMinY(obstacle);
-			currentAnchor.x = drawableRect.origin.x;
-			continue; // Bail on drawing the text.
+			currentAnchor.x = _displayRect.origin.x;
+			continue; // Bail on laying out the line.
 		}
 		
 		// Find character count of largest gramatically intact substring that fits within the given width.
@@ -160,7 +206,8 @@
 			CTLineDraw(formattedLine, context);
 
 			// Update the substring range.
-			currentStart += countThatFits;		
+			currentStart += countThatFits;
+			_displayRange = NSMakeRange(_location, currentStart - _location);
 		}
 		
 		// Update anchors for next text segment.
@@ -170,10 +217,12 @@
 			obstacle = CGRectNull; // Analyzer flags this correctly, but it's not a problem.
 		} else {
 			// Collision was right edge; push to next line.
-			currentAnchor.x = drawableRect.origin.x;
+			currentAnchor.x = _displayRect.origin.x;
 			currentAnchor.y -= height;
 		}
 
+		// Flag that layout was completed.
+		self.needsReflow = NO;
 	}	
 }
 

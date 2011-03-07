@@ -58,13 +58,19 @@ typedef enum RZTextWrapMode {
 	  The minimum bounding box that completely contains the rendered text.
 	 */
 	CGRect _displayRect;
+	
+	/**
+	 Dirty bit used to indicate that attributes have changed, but that re-layout has not completed.
+	 */
+	BOOL _needsReflow;
 }
 
-@property (nonatomic, retain)	NSAttributedString	*string;
-@property (nonatomic, retain)	NSSet				*exclusionFrames;
-@property (nonatomic, assign)	RZTextWrapMode		textWrapMode;
-@property (readonly)			NSRange				displayRange;
-@property (readonly)			CGRect				displayRect;
+@property (nonatomic, retain)			NSAttributedString	*string;
+@property (nonatomic, retain)			NSSet				*exclusionFrames;
+@property (nonatomic, assign)			RZTextWrapMode		textWrapMode;
+@property (readonly)					NSRange				displayRange;
+@property (readonly)					CGRect				displayRect;
+@property (readonly, nonatomic, assign)	BOOL				needsReflow;
 
 /**
  Initialize a new RZWrappingTextView object
