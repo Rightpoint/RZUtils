@@ -16,6 +16,7 @@
 
 @synthesize string = _string;
 @synthesize exclusionFrames = _exclusionFrames;
+@synthesize textWrapMode = _textWrapMode;
 @synthesize displayRange = _displayRange;
 @synthesize displayRect = _displayRect;
 
@@ -31,7 +32,7 @@
 		_insets = someInsets;
 		_exclusionFrames = [someExclusionFrames retain];
 	}
-	
+
 	return self;
 }
 
@@ -94,38 +95,48 @@
 		if (CGRectGetMinY(lineRect) < CGRectGetMinY(drawableRect))
 			break;
 		
-		// Find collision.
+		// Find text boundaries.
 		CGFloat hCollision = CGRectGetMaxX(drawableRect);
 		CGRect obstacle = CGRectNull;
-		for(NSDictionary *frameRep in _exclusionFrames) {
-			CGRect eFrame;
-			if(!CGRectMakeWithDictionaryRepresentation((CFDictionaryRef)frameRep, &eFrame))
-				continue;
-			
-			// Candidate obstacle does block horizontal segment.
-			if (CGRectIntersectsRect(lineRect, eFrame)) {
-				CGFloat edge = CGRectGetMinX(eFrame);
 
-				// Obstacle is the closest text boundary encountered so far.
-				if (edge < hCollision) {
-					hCollision = edge;
-					obstacle = eFrame;
-					break;
+		// If wrapping is set to "behind," obstacles are ignored.
+		if (self.textWrapMode != kRZTextWrapModeBehind) {
+			// Find collisions.
+			for(NSDictionary *frameRep in _exclusionFrames) {
+				CGRect eFrame;
+				if(!CGRectMakeWithDictionaryRepresentation((CFDictionaryRef)frameRep, &eFrame))
+					continue;
+
+	#ifdef DEBUG_BOUNDS
+				CGContextSaveGState(context);
+				CGContextSetStrokeColor(context, CGColorGetComponents([[UIColor redColor] CGColor]));
+				CGContextStrokeRectWithWidth(context, eFrame, 2);
+				CGContextSetFillColor(context, CGColorGetComponents([[UIColor whiteColor] CGColor]));
+				CGContextFillRect(context, eFrame);
+				CGContextRestoreGState(context);
+	#endif
+				
+				// Candidate obstacle does block horizontal segment.
+				if (CGRectIntersectsRect(lineRect, eFrame)) {
+					CGFloat edge = CGRectGetMinX(eFrame);
+
+					// Obstacle is the closest text boundary encountered so far.
+					if (edge < hCollision) {
+						hCollision = edge;
+						obstacle = eFrame;
+						break;
+					}
 				}
 			}
 		}
 		
-#ifdef DEBUG_BOUNDS
-		// This will be executed for each line that runs up against |obstacle|. Good enough for debug.
-		if (!CGRectIsNull(obstacle)) {
-			CGContextSaveGState(context);
-			CGContextSetStrokeColor(context, CGColorGetComponents([[UIColor redColor] CGColor]));
-			CGContextStrokeRectWithWidth(context, obstacle, 2);
-			CGContextSetFillColor(context, CGColorGetComponents([[UIColor whiteColor] CGColor]));
-			CGContextFillRect(context, obstacle);
-			CGContextRestoreGState(context);
+		// If wrapping mode is set to "top and bottom," we don't attempt to wrap the obstacle and instead continue our
+		// drawing below it.
+		if (self.textWrapMode == kRZTextWrapModeTopAndBottom && !CGRectIsNull(obstacle)) {
+			currentAnchor.y = CGRectGetMinY(obstacle);
+			currentAnchor.x = drawableRect.origin.x;
+			continue; // Bail on drawing the text.
 		}
-#endif
 		
 		// Find character count of largest gramatically intact substring that fits within the given width.
 		NSInteger countThatFits = CTTypesetterSuggestLineBreakWithOffset(typesetter, 

@@ -8,6 +8,15 @@
 #import <Foundation/Foundation.h>
 
 /**
+ An enumeration of text wrapping modes.
+ */
+typedef enum RZTextWrapMode {
+	kRZTextWrapModeBehind, /**< Display text underneath exclusion frames, effectively ignoring them. */
+	kRZTextWrapModeTopAndBottom, /**< Flow text above and below exclusion frames, leaving regions to the sides empty. */
+	kRZTextWrapModeSquare, /**< Flow text around exclusion frames. */
+} RZTextWrapMode;
+
+/**
  @class RZWrappingTextView
  @abstract An RZWrappingTextView object displays a range of an NSAttributedString within an irregular shape,
  breaking and wrapping text to fit the geometry.
@@ -36,6 +45,11 @@
 	NSSet *_exclusionFrames;
 	
 	/**
+	 The text wrapping mode applied to exclusion frames.
+	 */
+	RZTextWrapMode _textWrapMode;
+	
+	/**
 	  The range of the substring that fits within the shape defined by the exclusion frames and view frame.
 	 */
 	NSRange _displayRange;
@@ -46,11 +60,9 @@
 	CGRect _displayRect;
 }
 
-// Settable properties
 @property (nonatomic, retain) NSAttributedString *string;
 @property (nonatomic, retain) NSSet *exclusionFrames;
-
-// Derived properties
+@property (nonatomic, assign) RZTextWrapMode textWrapMode;
 @property (readonly) NSRange displayRange;
 @property (readonly) CGRect displayRect;
 
