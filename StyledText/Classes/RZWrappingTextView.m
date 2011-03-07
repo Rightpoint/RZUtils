@@ -80,7 +80,7 @@
 		// Find collision.
 		CGRect lineRect = CGRectMake(currentAnchor.x, currentAnchor.y, width, height);
 		CGFloat hCollision = CGRectGetMaxX(drawableRect);
-		CGRect obstacle;
+		CGRect obstacle = CGRectNull;
 		for(NSDictionary *frameRep in _exclusionFrames) {
 			CGRect eFrame;
 			if(!CGRectMakeWithDictionaryRepresentation((CFDictionaryRef)frameRep, &eFrame))
@@ -89,16 +89,20 @@
 			// Obstacle blocks horizontal segment.
 			if (CGRectIntersectsRect(lineRect, eFrame)) {
 				CGFloat edge = CGRectGetMinX(eFrame);
+				
 				CGContextSaveGState(context);
 				CGContextSetFillColorWithColor(context, [[UIColor greenColor] CGColor]);
 				CGContextSetBlendMode(context, kCGBlendModeMultiply);
 				CGContextFillRect(context, eFrame);
 				CGContextRestoreGState(context);
+
 				CGContextSaveGState(context);
 				CGContextSetFillColorWithColor(context, [[UIColor redColor] CGColor]);
 				CGContextSetBlendMode(context, kCGBlendModeScreen);
 				CGContextFillRect(context, eFrame);
 				CGContextRestoreGState(context);
+				
+				
 				if (edge < hCollision) {
 					hCollision = edge;
 					obstacle = eFrame;
@@ -108,15 +112,16 @@
 		}
 		
 		// Find character count of largest gramatically intact substring that fits within the given width.
-		NSInteger countThatFits = CTTypesetterSuggestLineBreak(typesetter, currentStart, hCollision);
+		NSInteger countThatFits = CTTypesetterSuggestLineBreakWithOffset(typesetter, currentStart, hCollision - currentAnchor.x, 0);
 		
 		// The substring that can be displayed in the available horizontal space.
 		substring = [[self.string attributedSubstringFromRange:NSMakeRange(currentStart, countThatFits)] attributedStringWithVisibleHyphen];	
 		CTLineRef formattedLine = CTLineCreateWithAttributedString((CFAttributedStringRef)substring);
 		
 		CGContextSetTextPosition(context, currentAnchor.x, currentAnchor.y - height - leading);
-		CTLineDraw(formattedLine, context);
+		CTLineDraw(formattedLine, context);	
 
+		
 		// Update anchors for next text segment.
 		if (!CGRectIsNull(obstacle)) {
 			// Obstacle encountered, so slide text frame over.
