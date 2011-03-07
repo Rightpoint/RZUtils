@@ -11,6 +11,7 @@
 
 @class ColumnsView;
 @class RZWrappingTextView;
+@class RZStyledTextView;
 
 @interface coreTextExViewController : UIViewController { //<FontViewControllerDelegate> {
 	
@@ -27,6 +28,7 @@
 	UIPopoverController* popoverController;
 	
 	RZWrappingTextView *_textView;
+	RZStyledTextView *_styledTextView;
 }
 
 @property (nonatomic, retain) IBOutlet ColumnsView* columnsView;
@@ -34,6 +36,7 @@
 
 @property (nonatomic, retain) NSAttributedString* text;
 @property (nonatomic, retain) RZWrappingTextView* textView;
+@property (nonatomic, retain) RZStyledTextView* styledTextView;
 //@property (nonatomic, retain) UIPopoverController* popoverController;
 
 

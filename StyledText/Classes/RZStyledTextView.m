@@ -47,6 +47,12 @@
 #pragma mark -
 #pragma mark Setters
 
+- (void)setFrame:(CGRect)aFrame {
+	[super setFrame:aFrame];
+	[self setNeedsReflow];
+	[self setNeedsDisplay];
+}
+
 - (void)setString:(NSAttributedString *)aString {
 	if (aString == self.string)
 		return;

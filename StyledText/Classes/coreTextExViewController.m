@@ -21,6 +21,7 @@
 
 - (void)layoutText;
 - (void)layoutRZText;
+- (void) layoutRZStyledText;
 - (NSAttributedString *)testString:(int)which;
 
 @end
@@ -31,6 +32,7 @@
 @synthesize scrollView = _scrollView;
 @synthesize text = _text;
 @synthesize textView = _textView;
+@synthesize styledTextView = _styledTextView;
 //@synthesize popoverController;
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -50,7 +52,9 @@
 //	[self layoutText];
 	
 // TEST RZWrappingTextView
-	[self layoutRZText];
+//	[self layoutRZText];
+	
+	[self layoutRZStyledText];
 
 }
 
@@ -73,6 +77,29 @@
 	return [aString autorelease];
 }
 
+- (void) layoutRZStyledText {
+	
+	NSUInteger startPosition = 0;
+	NSUInteger pageNumber = 0;
+	
+	CGRect rect = self.scrollView.bounds;
+	rect.origin.y = pageNumber * rect.size.height;
+	
+	if (!self.styledTextView) {
+		_styledTextView = 
+		[[RZStyledTextView alloc] initWithFrame:self.scrollView.frame 
+										   string:self.text
+										 location:startPosition
+									   edgeInsets:UIEdgeInsetsZero];
+		[[self view] addSubview:_styledTextView];
+	} else {
+		self.styledTextView.frame = rect;
+	}
+	
+}
+
+
+
 - (void) layoutRZText {
 
 	NSUInteger startPosition = 0;
@@ -94,7 +121,7 @@
 										  location:startPosition
 										edgeInsets:UIEdgeInsetsZero
 								   exclusionFrames:exclusionFrames];
-		_textView.textWrapMode = kRZTextWrapModeSquare;
+		_textView.textWrapMode = kRZTextWrapModeBehind;
 		[[self view] addSubview:_textView];
 	} else {
 		self.textView.frame = rect;
@@ -188,7 +215,8 @@
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-	[self layoutRZText];
+//	[self layoutRZText];
+	[self layoutRZStyledText];
 }
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
