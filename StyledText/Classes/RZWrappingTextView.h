@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-/*!
+/**
  @class RZWrappingTextView
  @abstract An RZWrappingTextView object displays a range of an NSAttributedString within an irregular shape,
  breaking and wrapping text to fit the geometry.

@@ -145,7 +145,7 @@
 		if (!CGRectIsNull(obstacle)) {
 			// Obstacle encountered, so slide text frame over.
 			currentAnchor.x = CGRectGetMaxX(obstacle);
-			obstacle = CGRectNull;
+			obstacle = CGRectNull; // Analyzer flags this correctly, but it's not a problem.
 		} else {
 			// Collision was right edge; push to next line.
 			currentAnchor.x = drawableRect.origin.x;

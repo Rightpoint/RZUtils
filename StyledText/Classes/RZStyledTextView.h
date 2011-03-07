@@ -8,7 +8,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreText/CoreText.h>
 
-/*!
+/**
  @class RZStyledTextView
  @abstract An RZStyledTextView object displays a range of an NSAttributedString.
  @discussion An RZStyledTextView object displays a range of an NSAttributedString, with support for layout settings

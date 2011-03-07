@@ -25,4 +25,28 @@
 	}
 }
 
+
+- (NSAttributedString *)attributedStringWithPointSizeAdjustment:(NSInteger)points {
+	NSMutableAttributedString *tmpString = [[self mutableCopy] autorelease];
+	[tmpString enumerateAttribute:(NSString *)kCTFontAttributeName
+						  inRange:NSMakeRange(0, [tmpString length])
+						  options:0
+					   usingBlock:^(id value, NSRange range, BOOL *stop) {
+						   CTFontRef font = (CTFontRef)CFAttributedStringGetAttribute((CFAttributedStringRef)tmpString, 
+																					  range.location,
+																					  kCTFontAttributeName, 
+																					  NULL);
+						   if (font) {
+							   CTFontRef modifiedFont = 
+								CTFontCreateCopyWithAttributes(font,
+															   CTFontGetSize((CTFontRef)font) + points, 
+															   NULL, 
+															   NULL);
+							   [tmpString addAttribute:(id)kCTFontAttributeName value:(id)modifiedFont range:range];
+							   CFRelease(modifiedFont);
+						   }
+					   }];
+	return [[tmpString copy] autorelease];
+}
+
 @end
