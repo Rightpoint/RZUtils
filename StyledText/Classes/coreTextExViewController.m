@@ -49,23 +49,8 @@
 // TEST ColumnsView
 //	[self layoutText];
 	
-// TEST RZStyledTextView
-//	[self layoutRZText];
-	
 // TEST RZWrappingTextView
-	NSDictionary *zeroth = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(3, 945, 50, 50));
-	NSDictionary *first = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(40, 839, 50, 10));
-	NSDictionary *second = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(350, 700, 10, 10));
-	NSDictionary *third = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(240, 839, 50, 10));
-	NSDictionary *fourth = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(230, 700, 100, 100));
-	NSSet *exclusionFrames = [NSSet setWithObjects: zeroth, first, second, third, fourth, nil];
-	RZWrappingTextView *test = 
-	[[RZWrappingTextView alloc] initWithFrame:self.scrollView.frame 
-									   string:self.text
-									 location:0
-								   edgeInsets:UIEdgeInsetsZero
-							  exclusionFrames:exclusionFrames];
-	[[self view] addSubview:test];
+	[self layoutRZText];
 
 }
 
@@ -97,17 +82,24 @@
 	rect.origin.y = pageNumber * rect.size.height;
 
 	if (!self.textView) {
-		self.textView = [[RZStyledTextView alloc] initWithFrame:rect
-														 string:self.text 
-													   location:startPosition
-													 edgeInsets:UIEdgeInsetsMake(25, 25, 25, 25)];
-		[_scrollView addSubview:self.textView];
+		NSDictionary *zeroth = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(3, 945, 50, 50));
+		NSDictionary *first = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(40, 839, 50, 10));
+		NSDictionary *second = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(350, 700, 10, 10));
+		NSDictionary *third = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(240, 839, 50, 10));
+		NSDictionary *fourth = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(230, 700, 100, 100));
+		NSSet *exclusionFrames = [NSSet setWithObjects: zeroth, first, second, third, fourth, nil];
+		_textView = 
+		 [[RZWrappingTextView alloc] initWithFrame:self.scrollView.frame 
+											string:self.text
+										  location:startPosition
+										edgeInsets:UIEdgeInsetsZero
+								   exclusionFrames:exclusionFrames];
+		_textView.textWrapMode = kRZTextWrapModeSquare;
+		[[self view] addSubview:_textView];
+	} else {
+		self.textView.frame = rect;
 	}
-	
-	if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
-		[self.textView setString:[self testString:0]];
-	else
-		[self.textView setString:[self testString:1]];
+
 }
 
 -(void) layoutText
