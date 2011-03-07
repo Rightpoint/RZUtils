@@ -53,11 +53,12 @@
 //	[self layoutRZText];
 	
 // TEST RZWrappingTextView
+	NSDictionary *zeroth = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(3, 945, 50, 50));
 	NSDictionary *first = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(40, 839, 50, 10));
-	NSDictionary *second = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(350, 400, 10, 10));
-	NSDictionary *third = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(30, 700, 10, 100));
-	NSDictionary *fourth = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(500, 400, 100, 100));
-	NSSet *exclusionFrames = [NSSet setWithObjects: first, second, third, fourth, nil];
+	NSDictionary *second = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(350, 700, 10, 10));
+	NSDictionary *third = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(240, 839, 50, 10));
+	NSDictionary *fourth = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(230, 700, 100, 100));
+	NSSet *exclusionFrames = [NSSet setWithObjects: zeroth, first, second, third, fourth, nil];
 	RZWrappingTextView *test = 
 	[[RZWrappingTextView alloc] initWithFrame:self.scrollView.frame 
 									   string:self.text
