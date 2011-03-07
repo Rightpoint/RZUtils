@@ -10,6 +10,8 @@
 #import "NSAttributedString+RZStyledText.h"
 #import "Macros.h"
 
+#define DEBUG_BOUNDS 1
+
 @implementation RZWrappingTextView
 
 @synthesize string = _string;
@@ -69,16 +71,30 @@
 		if (remainingChars <= 0)
 			break;
 
-		NSAttributedString *substring = [self.string attributedSubstringFromRange:NSMakeRange(currentStart, remainingChars)];	
+		NSAttributedString *substring = [self.string attributedSubstringFromRange:
+										 NSMakeRange(currentStart, remainingChars)];	
 		CTLineRef line = CTLineCreateWithAttributedString((CFAttributedStringRef)substring);
 		
 		// Get metrics for line.
 		CGFloat ascent, descent, leading;
 		CGFloat width = CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
-		CGFloat height = ascent + descent;		
-
+		CGFloat height = ascent + descent + leading;
+		CGRect lineRect = CGRectMake(currentAnchor.x,
+									 currentAnchor.y - height - descent, // Descent is redundant. Remove and fix.
+									 width,
+									 height);
+#ifdef DEBUG_BOUNDS
+		CGContextSaveGState(context);
+		CGContextSetStrokeColor(context, CGColorGetComponents([[UIColor greenColor] CGColor]));
+		CGContextStrokeRectWithWidth(context, lineRect, 0.5);
+		CGContextRestoreGState(context);
+#endif
+		
+		// Bail if text would extend outside vertical bounds.
+		if (CGRectGetMinY(lineRect) < CGRectGetMinY(drawableRect))
+			break;
+		
 		// Find collision.
-		CGRect lineRect = CGRectMake(currentAnchor.x, currentAnchor.y, width, height);
 		CGFloat hCollision = CGRectGetMaxX(drawableRect);
 		CGRect obstacle = CGRectNull;
 		for(NSDictionary *frameRep in _exclusionFrames) {
@@ -86,23 +102,11 @@
 			if(!CGRectMakeWithDictionaryRepresentation((CFDictionaryRef)frameRep, &eFrame))
 				continue;
 			
-			// Obstacle blocks horizontal segment.
+			// Candidate obstacle does block horizontal segment.
 			if (CGRectIntersectsRect(lineRect, eFrame)) {
 				CGFloat edge = CGRectGetMinX(eFrame);
-				
-				CGContextSaveGState(context);
-				CGContextSetFillColorWithColor(context, [[UIColor greenColor] CGColor]);
-				CGContextSetBlendMode(context, kCGBlendModeMultiply);
-				CGContextFillRect(context, eFrame);
-				CGContextRestoreGState(context);
 
-				CGContextSaveGState(context);
-				CGContextSetFillColorWithColor(context, [[UIColor redColor] CGColor]);
-				CGContextSetBlendMode(context, kCGBlendModeScreen);
-				CGContextFillRect(context, eFrame);
-				CGContextRestoreGState(context);
-				
-				
+				// Obstacle is the closest text boundary encountered so far.
 				if (edge < hCollision) {
 					hCollision = edge;
 					obstacle = eFrame;
@@ -111,16 +115,31 @@
 			}
 		}
 		
+#ifdef DEBUG_BOUNDS
+		// This will be executed for each line that runs up against |obstacle|. Good enough for debug.
+		if (!CGRectIsNull(obstacle)) {
+			CGContextSaveGState(context);
+			CGContextSetStrokeColor(context, CGColorGetComponents([[UIColor redColor] CGColor]));
+			CGContextStrokeRectWithWidth(context, obstacle, 2);
+			CGContextSetFillColor(context, CGColorGetComponents([[UIColor whiteColor] CGColor]));
+			CGContextFillRect(context, obstacle);
+			CGContextRestoreGState(context);
+		}
+#endif
+		
 		// Find character count of largest gramatically intact substring that fits within the given width.
-		NSInteger countThatFits = CTTypesetterSuggestLineBreakWithOffset(typesetter, currentStart, hCollision - currentAnchor.x, 0);
+		NSInteger countThatFits = CTTypesetterSuggestLineBreakWithOffset(typesetter, 
+																		 currentStart,
+																		 hCollision - currentAnchor.x,
+																		 0);
 		
 		// The substring that can be displayed in the available horizontal space.
-		substring = [[self.string attributedSubstringFromRange:NSMakeRange(currentStart, countThatFits)] attributedStringWithVisibleHyphen];	
+		substring = [[self.string attributedSubstringFromRange:NSMakeRange(currentStart, countThatFits)]
+					 attributedStringWithVisibleHyphen];	
 		CTLineRef formattedLine = CTLineCreateWithAttributedString((CFAttributedStringRef)substring);
 		
-		CGContextSetTextPosition(context, currentAnchor.x, currentAnchor.y - height - leading);
+		CGContextSetTextPosition(context, currentAnchor.x, currentAnchor.y - height);
 		CTLineDraw(formattedLine, context);	
-
 		
 		// Update anchors for next text segment.
 		if (!CGRectIsNull(obstacle)) {
@@ -130,7 +149,7 @@
 		} else {
 			// Collision was right edge; push to next line.
 			currentAnchor.x = drawableRect.origin.x;
-			currentAnchor.y -= (height + leading);
+			currentAnchor.y -= height;
 		}
 
 		// Update the substring range
