@@ -18,6 +18,8 @@
 		446DA8671306D3F90012B8CA /* FontViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 446DA8661306D3F90012B8CA /* FontViewController.xib */; };
 		446DA86B1306D4480012B8CA /* FontViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 446DA86A1306D4480012B8CA /* FontViewController.m */; };
 		620D895613180CF300E2AD5D /* RZStyledTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 620D895513180CF300E2AD5D /* RZStyledTextView.m */; };
+		62312B4F1325805500F87D55 /* RZWrappingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 62312B4E1325805500F87D55 /* RZWrappingTextView.m */; };
+		62312B521325805C00F87D55 /* NSAttributedString+RZStyledText.m in Sources */ = {isa = PBXBuildFile; fileRef = 62312B511325805C00F87D55 /* NSAttributedString+RZStyledText.m */; };
 		62BFCC67130B1F8700DC761F /* NSString+Hyphenate.m in Sources */ = {isa = PBXBuildFile; fileRef = 62BFCC63130B1F3500DC761F /* NSString+Hyphenate.m */; };
 		62BFCC75130B1F9900DC761F /* hyphen.c in Sources */ = {isa = PBXBuildFile; fileRef = 62BFCBE2130B1F3500DC761F /* hyphen.c */; };
 		62BFCC76130B1FA200DC761F /* hnjalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = 62BFCBDF130B1F3500DC761F /* hnjalloc.c */; };
@@ -74,6 +76,10 @@
 		446DA86A1306D4480012B8CA /* FontViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontViewController.m; sourceTree = "<group>"; };
 		620D895413180CF300E2AD5D /* RZStyledTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZStyledTextView.h; sourceTree = "<group>"; };
 		620D895513180CF300E2AD5D /* RZStyledTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZStyledTextView.m; sourceTree = "<group>"; };
+		62312B4D1325805500F87D55 /* RZWrappingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZWrappingTextView.h; sourceTree = "<group>"; };
+		62312B4E1325805500F87D55 /* RZWrappingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZWrappingTextView.m; sourceTree = "<group>"; };
+		62312B501325805C00F87D55 /* NSAttributedString+RZStyledText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+RZStyledText.h"; sourceTree = "<group>"; };
+		62312B511325805C00F87D55 /* NSAttributedString+RZStyledText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+RZStyledText.m"; sourceTree = "<group>"; };
 		62BFCBCE130B1F3500DC761F /* aclocal.m4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = aclocal.m4; sourceTree = "<group>"; };
 		62BFCBCF130B1F3500DC761F /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
 		62BFCBD0130B1F3500DC761F /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
@@ -327,6 +333,10 @@
 				446DA86A1306D4480012B8CA /* FontViewController.m */,
 				620D895413180CF300E2AD5D /* RZStyledTextView.h */,
 				620D895513180CF300E2AD5D /* RZStyledTextView.m */,
+				62312B4D1325805500F87D55 /* RZWrappingTextView.h */,
+				62312B4E1325805500F87D55 /* RZWrappingTextView.m */,
+				62312B501325805C00F87D55 /* NSAttributedString+RZStyledText.h */,
+				62312B511325805C00F87D55 /* NSAttributedString+RZStyledText.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -832,6 +842,8 @@
 				CB2F783F13060344003D2AC0 /* OHAttributedLabel.m in Sources */,
 				446DA86B1306D4480012B8CA /* FontViewController.m in Sources */,
 				620D895613180CF300E2AD5D /* RZStyledTextView.m in Sources */,
+				62312B4F1325805500F87D55 /* RZWrappingTextView.m in Sources */,
+				62312B521325805C00F87D55 /* NSAttributedString+RZStyledText.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
