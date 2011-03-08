@@ -46,7 +46,7 @@
 }
 
 #pragma mark -
-#pragma mark Setters
+#pragma mark Mutators
 
 - (void)setFrame:(CGRect)aFrame {
 	[super setFrame:aFrame];
@@ -83,7 +83,7 @@
 }
 
 #pragma mark -
-#pragma mark Getters
+#pragma mark Accessors
 
 - (CTFrameRef)textFrame {
 	if (!_textFrame) {
