@@ -22,6 +22,7 @@
 
 @synthesize string			= _string;
 @synthesize insets			= _insets;
+@synthesize textAlignment	= _textAlignment;
 @synthesize displayRange	= _displayRange;
 @synthesize textFrame		= _textFrame;
 
@@ -141,31 +142,61 @@
 	NSArray *lines = (NSArray *)CTFrameGetLines(self.textFrame);
 	CGPoint* origins  = (CGPoint*)calloc([lines count], sizeof(CGPointZero));
 	CTFrameGetLineOrigins(self.textFrame, CFRangeMake(0, [lines count]), origins);
-	
+
 	for (int lineNumber = 0; lineNumber < [lines count]; lineNumber++) {
 		CTLineRef line = (CTLineRef)[lines objectAtIndex:lineNumber];
-		CGContextSetTextPosition(context, self.displayFrame.origin.x + origins[lineNumber].x, origins[lineNumber].y);
+		CTLineRef formattedLine = nil;
 		
 		CFRange cfLineRange = CTLineGetStringRange(line);
 		NSRange lineRange = NSMakeRange(cfLineRange.location, cfLineRange.length);
 		NSString* lineString = [[self.string string] substringWithRange:lineRange];
-		static const unichar softHypen = 0x00AD;
 		
 		// If the last character is a non-printing soft hyphen, it is replaced with a hyphen-minus for display.
 		// Technique adapted from Frank Zheng, detailed at: http://frankzblog.appspot.com/?p=7001
+		static const unichar softHypen = 0x00AD;
 		unichar lastChar = [lineString characterAtIndex:lineString.length-1];
 		if(softHypen == lastChar) {
 			NSMutableAttributedString* lineAttrString = [[self.string attributedSubstringFromRange:lineRange] mutableCopy];
 			NSRange replaceRange = NSMakeRange(lineRange.length-1, 1);
 			[lineAttrString replaceCharactersInRange:replaceRange withString:@"-"];
-			CTLineRef hyphenatedLine = CTLineCreateWithAttributedString((CFAttributedStringRef)lineAttrString);
-			CTLineRef justifiedLine = CTLineCreateJustifiedLine(hyphenatedLine, 1.0, self.displayFrame.size.width);
-			CTLineDraw(justifiedLine, context);
+			CTLineRef hyphenatedLine = CTLineCreateWithAttributedString((CFAttributedStringRef)lineAttrString);			
+			formattedLine = CFRetain(hyphenatedLine);
 			
+			// Cleanup
 			[lineAttrString release];
+			CFRelease(hyphenatedLine);
 		} else {
-			CTLineDraw(line, context);
+			formattedLine = CFRetain(line);
 		}
+		
+		// Align line in frame.
+		CGFloat alignmentOffset = 0;
+		switch (self.textAlignment) {
+			case kRZLeftTextAlignment:
+			case kRZCenterTextAlignment:
+			case kRZRightTextAlignment: {
+				alignmentOffset = CTLineGetPenOffsetForFlush(formattedLine, 
+															 self.textAlignment * 0.5,
+															 self.displayFrame.size.width);
+				break;
+			}
+			case kRZJustifiedTextAlignment: {
+				CTLineRef justifiedLine = CTLineCreateJustifiedLine(formattedLine,
+																	1.0,							// Fully justified.
+																	self.displayFrame.size.width);
+				CFRelease(formattedLine);
+				formattedLine = CFRetain(justifiedLine);
+				CFRelease(justifiedLine);
+				break;
+			}
+		}
+
+		CGContextSetTextPosition(context, 
+								 self.displayFrame.origin.x + origins[lineNumber].x + alignmentOffset, 
+								 origins[lineNumber].y);
+
+		CTLineDraw(formattedLine, context);
+		CFRelease(formattedLine);
 	}
 	free(origins);
 }

@@ -116,12 +116,12 @@
 		NSDictionary *fourth = (NSDictionary*)CGRectCreateDictionaryRepresentation(CGRectMake(230, 700, 100, 100));
 		NSSet *exclusionFrames = [NSSet setWithObjects: zeroth, first, second, third, fourth, nil];
 		_textView = 
-		 [[RZWrappingTextView alloc] initWithFrame:self.scrollView.frame 
+		 [[RZWrappingTextView alloc] initWithFrame:self.scrollView.frame
 											string:self.text
 										  location:startPosition
 										edgeInsets:UIEdgeInsetsZero
 								   exclusionFrames:exclusionFrames];
-		_textView.textWrapMode = kRZTextWrapModeBehind;
+		_textView.textWrapMode = kRZTextWrapModeSquare;
 		[[self view] addSubview:_textView];
 	} else {
 		self.textView.frame = rect;

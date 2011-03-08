@@ -8,6 +8,13 @@
 #import <UIKit/UIKit.h>
 #import <CoreText/CoreText.h>
 
+typedef enum RZTextAlignment {
+	kRZLeftTextAlignment,
+	kRZCenterTextAlignment,
+	kRZRightTextAlignment,
+	kRZJustifiedTextAlignment,
+} RZTextAlignment;
+
 /**
  @class RZStyledTextView
  @abstract An RZStyledTextView object displays a range of an NSAttributedString.
@@ -26,6 +33,11 @@
 	UIEdgeInsets _insets;
 	
 	/**
+	 How text is horizontally aligned within the view.
+	 */
+	RZTextAlignment _textAlignment;
+	
+	/**
 	 The starting index of the substring to be displayed.
 	 */
 	NSInteger _location;
@@ -41,9 +53,9 @@
 	CTFrameRef _textFrame;
 }
 
-
 @property (nonatomic, retain)	NSAttributedString	*string;
 @property (nonatomic, assign)	UIEdgeInsets		insets;
+@property (nonatomic, assign)	RZTextAlignment		textAlignment;
 @property (readonly)			CTFrameRef			textFrame;
 @property (readonly)			NSRange				displayRange;
 @property (readonly)			CGRect				displayFrame;
