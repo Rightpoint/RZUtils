@@ -8,11 +8,14 @@
 #import <UIKit/UIKit.h>
 #import <CoreText/CoreText.h>
 
+/**
+ An enumeration of text alignment modes.
+ */
 typedef enum RZTextAlignment {
-	kRZLeftTextAlignment,
-	kRZCenterTextAlignment,
-	kRZRightTextAlignment,
-	kRZJustifiedTextAlignment,
+	kRZLeftTextAlignment, /**< Position the text flush with the left edge of its container. */
+	kRZCenterTextAlignment, /**< Center the text within its container */
+	kRZRightTextAlignment,  /**< Position the text flush with the right edge of its container. */
+	kRZJustifiedTextAlignment, /**< Keep text flush with both edges, spacing out words and characters if required. */
 } RZTextAlignment;
 
 /**
@@ -74,3 +77,4 @@ typedef enum RZTextAlignment {
 		 edgeInsets:(UIEdgeInsets)someInsets;
 
 @end
+ 
