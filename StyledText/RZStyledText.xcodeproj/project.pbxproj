@@ -11,8 +11,9 @@
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 62312EFB13268CFE00F87D55 /* Build configuration list for PBXAggregateTarget "Build & Merge Libraries" */;
 			buildPhases = (
+				623130121326B33900F87D55 /* Copy Resources */,
+				623132BF1326DF9D00F87D55 /* Copy Headers */,
 				62312EFD13268D1300F87D55 /* merge and construct framework */,
-				623130121326B33900F87D55 /* CopyFiles */,
 			);
 			dependencies = (
 				62312FD91326980C00F87D55 /* PBXTargetDependency */,
@@ -62,8 +63,13 @@
 		62312FB71326977600F87D55 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		62312FB81326977600F87D55 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB2F77A91305F853003D2AC0 /* CoreText.framework */; };
 		62312FB91326977600F87D55 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB2F77AB1305F858003D2AC0 /* QuartzCore.framework */; };
-		623130191326B38600F87D55 /* Hyphenate.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62BFCF03130C30AB00DC761F /* Hyphenate.bundle */; };
-		6231313F1326D07C00F87D55 /* RZStyledText.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 623130251326B66000F87D55 /* RZStyledText.h */; };
+		623130191326B38600F87D55 /* Hyphenate.bundle in Copy Resources */ = {isa = PBXBuildFile; fileRef = 62BFCF03130C30AB00DC761F /* Hyphenate.bundle */; };
+		623132C11326E00400F87D55 /* RZStyledText.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 623130251326B66000F87D55 /* RZStyledText.h */; };
+		623132C21326E00400F87D55 /* RZStyledTextView.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 620D895413180CF300E2AD5D /* RZStyledTextView.h */; };
+		623132C31326E00400F87D55 /* RZWrappingTextView.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 62312B4D1325805500F87D55 /* RZWrappingTextView.h */; };
+		623132C41326E00400F87D55 /* NSAttributedString+RZStyledText.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 62312B501325805C00F87D55 /* NSAttributedString+RZStyledText.h */; };
+		623132C51326E01200F87D55 /* NSAttributedString+HTML.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 62BFD134130C653300DC761F /* NSAttributedString+HTML.h */; };
+		623132C61326E01C00F87D55 /* NSString+Hyphenate.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 62BFCC62130B1F3500DC761F /* NSString+Hyphenate.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,15 +104,31 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		623130121326B33900F87D55 /* CopyFiles */ = {
+		623130121326B33900F87D55 /* Copy Resources */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = RZStyledText;
-			dstSubfolderSpec = 7;
+			dstPath = Public_Resources;
+			dstSubfolderSpec = 16;
 			files = (
-				6231313F1326D07C00F87D55 /* RZStyledText.h in CopyFiles */,
-				623130191326B38600F87D55 /* Hyphenate.bundle in CopyFiles */,
+				623130191326B38600F87D55 /* Hyphenate.bundle in Copy Resources */,
 			);
+			name = "Copy Resources";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		623132BF1326DF9D00F87D55 /* Copy Headers */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Public_Headers;
+			dstSubfolderSpec = 16;
+			files = (
+				623132C61326E01C00F87D55 /* NSString+Hyphenate.h in Copy Headers */,
+				623132C51326E01200F87D55 /* NSAttributedString+HTML.h in Copy Headers */,
+				623132C11326E00400F87D55 /* RZStyledText.h in Copy Headers */,
+				623132C21326E00400F87D55 /* RZStyledTextView.h in Copy Headers */,
+				623132C31326E00400F87D55 /* RZWrappingTextView.h in Copy Headers */,
+				623132C41326E00400F87D55 /* NSAttributedString+RZStyledText.h in Copy Headers */,
+			);
+			name = "Copy Headers";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -892,7 +914,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Script adapted from Cocoanetics:\n# \thttp://www.cocoanetics.com/2010/04/making-your-own-iphone-frameworks/\n\n# name and build location\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_BUILD_PATH=\"${PROJECT_DIR}/build/Framework\"\n \n# these never change\nFRAMEWORK_VERSION=A\nFRAMEWORK_CURRENT_VERSION=1\nFRAMEWORK_COMPATIBILITY_VERSION=1\n \n# Clean any existing framework that might be there\nif [ -d \"$FRAMEWORK_BUILD_PATH\" ]\nthen\n\techo \"Framework: Cleaning framework...\"\n\trm -rf \"$FRAMEWORK_BUILD_PATH\"\nfi\n \n# Build the canonical Framework bundle directory structure\necho \"Framework: Setting up directories...\"\nFRAMEWORK_DIR=$FRAMEWORK_BUILD_PATH/$FRAMEWORK_NAME.framework\nmkdir -p $FRAMEWORK_DIR\nmkdir -p $FRAMEWORK_DIR/Versions\nmkdir -p $FRAMEWORK_DIR/Versions/$FRAMEWORK_VERSION\nmkdir -p $FRAMEWORK_DIR/Versions/$FRAMEWORK_VERSION/Resources\nmkdir -p $FRAMEWORK_DIR/Versions/$FRAMEWORK_VERSION/Headers\n \necho \"Framework: Creating symlinks...\"\nln -s $FRAMEWORK_VERSION $FRAMEWORK_DIR/Versions/Current\nln -s Versions/Current/Headers $FRAMEWORK_DIR/Headers\nln -s Versions/Current/Resources $FRAMEWORK_DIR/Resources\nln -s Versions/Current/$FRAMEWORK_NAME $FRAMEWORK_DIR/$FRAMEWORK_NAME\n \n# combine lib files for various platforms into one\necho \"Framework: Creating library...\"\nlipo -create \"${PROJECT_DIR}/build/${BUILD_STYLE}-iphoneos/lib${PROJECT_NAME}.a\" \"${PROJECT_DIR}/build/${BUILD_STYLE}-iphonesimulator/lib${PROJECT_NAME}.a\" -o \"$FRAMEWORK_DIR/Versions/Current/$FRAMEWORK_NAME\"\n \necho \"Framework: Copying assets into current version...\"\ncp -LR ${SRCROOT}/Public_Headers/*.h $FRAMEWORK_DIR/Headers/\ncp -LR ${SRCROOT}/Public_Resources/* $FRAMEWORK_DIR/Resources/\n \n#replace placeholder in plist with project name\ncat \"${SRCROOT}/Framework.plist\" | sed 's/${PROJECT_NAME}/'\"${PROJECT_NAME}\"'/' > $FRAMEWORK_DIR/Resources/Info.plist";
+			shellScript = "# Script adapted from Cocoanetics:\n# \thttp://www.cocoanetics.com/2010/04/making-your-own-iphone-frameworks/\n\n# name and build location\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_BUILD_PATH=\"${PROJECT_DIR}/build/Framework\"\n \n# these never change\nFRAMEWORK_VERSION=A\nFRAMEWORK_CURRENT_VERSION=1\nFRAMEWORK_COMPATIBILITY_VERSION=1\n \n# Clean any existing framework that might be there\nif [ -d \"$FRAMEWORK_BUILD_PATH\" ]\nthen\n\techo \"Framework: Cleaning framework...\"\n\trm -rf \"$FRAMEWORK_BUILD_PATH\"\nfi\n \n# Build the canonical Framework bundle directory structure\necho \"Framework: Setting up directories...\"\nFRAMEWORK_DIR=$FRAMEWORK_BUILD_PATH/$FRAMEWORK_NAME.framework\nmkdir -p $FRAMEWORK_DIR\nmkdir -p $FRAMEWORK_DIR/Versions\nmkdir -p $FRAMEWORK_DIR/Versions/$FRAMEWORK_VERSION\nmkdir -p $FRAMEWORK_DIR/Versions/$FRAMEWORK_VERSION/Resources\nmkdir -p $FRAMEWORK_DIR/Versions/$FRAMEWORK_VERSION/Headers\n \necho \"Framework: Creating symlinks...\"\nln -s $FRAMEWORK_VERSION $FRAMEWORK_DIR/Versions/Current\nln -s Versions/Current/Headers $FRAMEWORK_DIR/Headers\nln -s Versions/Current/Resources $FRAMEWORK_DIR/Resources\nln -s Versions/Current/$FRAMEWORK_NAME $FRAMEWORK_DIR/$FRAMEWORK_NAME\n \n# combine lib files for various platforms into one\necho \"Framework: Creating library...\"\nlipo -create \"${PROJECT_DIR}/build/${BUILD_STYLE}-iphoneos/lib${PROJECT_NAME}.a\" \"${PROJECT_DIR}/build/${BUILD_STYLE}-iphonesimulator/lib${PROJECT_NAME}.a\" -o \"$FRAMEWORK_DIR/Versions/Current/$FRAMEWORK_NAME\"\n \necho \"Framework: Copying assets into current version...\"\ncp ${BUILT_PRODUCTS_DIR}/Public_Headers/*.h $FRAMEWORK_DIR/Headers/\ncp -R ${BUILT_PRODUCTS_DIR}/Public_Resources/* $FRAMEWORK_DIR/Resources/\n \n#replace placeholder in plist with project name\ncat \"${SRCROOT}/Framework.plist\" | sed 's/${PROJECT_NAME}/'\"${PROJECT_NAME}\"'/' > $FRAMEWORK_DIR/Resources/Info.plist";
 		};
 /* End PBXShellScriptBuildPhase section */
 
