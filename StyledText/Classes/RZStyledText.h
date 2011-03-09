@@ -2,7 +2,7 @@
 //  RZStyledText.h
 //
 //  Created by jkaufman on 3/8/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright 2011 Raizlabs. All rights reserved.
 //
 
 #import "RZStyledTextView.h"

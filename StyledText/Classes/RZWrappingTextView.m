@@ -22,13 +22,9 @@
 
 @implementation RZWrappingTextView
 
-@synthesize string = _string;
-@synthesize location = _location;
-@synthesize exclusionFrames = _exclusionFrames;
-@synthesize textWrapMode = _textWrapMode;
-@synthesize displayRange = _displayRange;
-@synthesize displayRect = _displayRect;
-@synthesize needsReflow = _needsReflow;
+@synthesize exclusionFrames	= _exclusionFrames;
+@synthesize textWrapMode	= _textWrapMode;
+@synthesize needsReflow		= _needsReflow;
 
 - (id)initWithFrame:(CGRect)aFrame
 			 string:(NSAttributedString *)aString
@@ -41,14 +37,13 @@
 		_location = aLocation;
 		_insets = someInsets;
 		_exclusionFrames = [someExclusionFrames retain];
-		_displayRect = UIEdgeInsetsInsetRect(self.bounds, _insets);
+		_displayFrame = UIEdgeInsetsInsetRect(self.bounds, _insets);
 	}
 
 	return self;
 }
 
 - (void)dealloc {
-	[_string release];
 	[_exclusionFrames release];
 	
 	[super dealloc];
@@ -57,7 +52,7 @@
 - (void)setFrame:(CGRect)aFrame {
 	// Save frame, update display rect, and perform layout.
 	[super setFrame:aFrame];
-	_displayRect = UIEdgeInsetsInsetRect(aFrame, _insets);
+	_displayFrame = UIEdgeInsetsInsetRect(aFrame, _insets);
 	self.needsReflow = YES; // Reflow will be performed upon display.
 	[self setNeedsDisplay];
 }
@@ -117,7 +112,7 @@
 	// Create a typesetter using the complete attributed string.
  	CTTypesetterRef typesetter = CTTypesetterCreateWithAttributedString((CFAttributedStringRef)self.string);
 
-	CGPoint currentAnchor = CGPointMake(0, _displayRect.size.height - _displayRect.origin.y);
+	CGPoint currentAnchor = CGPointMake(0, _displayFrame.size.height - _displayFrame.origin.y);
 	CFIndex currentStart = 0;
 	while (1) {
 		// Bail if entire string was drawn.
@@ -145,11 +140,11 @@
 #endif
 		
 		// Bail if text would extend outside vertical bounds.
-		if (CGRectGetMinY(lineRect) < CGRectGetMinY(_displayRect))
+		if (CGRectGetMinY(lineRect) < CGRectGetMinY(_displayFrame))
 			break;
 		
 		// Find text boundaries.
-		CGFloat hCollision = CGRectGetMaxX(_displayRect);
+		CGFloat hCollision = CGRectGetMaxX(_displayFrame);
 		CGRect obstacle = CGRectNull;
 
 		// If wrapping is set to "behind," obstacles are ignored.
@@ -187,7 +182,7 @@
 		// drawing below it.
 		if (self.textWrapMode == kRZTextWrapModeTopAndBottom && !CGRectIsNull(obstacle)) {
 			currentAnchor.y = CGRectGetMinY(obstacle);
-			currentAnchor.x = _displayRect.origin.x;
+			currentAnchor.x = _displayFrame.origin.x;
 			continue; // Bail on laying out the line.
 		}
 		
@@ -224,7 +219,7 @@
 			obstacle = CGRectNull; // Analyzer flags this correctly, but it's not a problem.
 		} else {
 			// Collision was right edge; push to next line.
-			currentAnchor.x = _displayRect.origin.x;
+			currentAnchor.x = _displayFrame.origin.x;
 			currentAnchor.y -= height;
 		}
 

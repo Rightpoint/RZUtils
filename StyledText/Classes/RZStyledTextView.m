@@ -20,11 +20,7 @@
 
 @implementation RZStyledTextView
 
-@synthesize string			= _string;
-@synthesize insets			= _insets;
 @synthesize textAlignment	= _textAlignment;
-@synthesize displayRange	= _displayRange;
-@synthesize textFrame		= _textFrame;
 
 #pragma mark -
 #pragma mark Lifecylce
@@ -39,7 +35,6 @@
 }
 
 - (void)dealloc {
-	[_string release];
 	if (_textFrame)
 		CFRelease(_textFrame);
 	[super dealloc];
@@ -102,10 +97,6 @@
 	}
 	
 	return _textFrame;
-}
-
-- (CGRect)displayFrame {
-	return UIEdgeInsetsInsetRect(self.bounds, _insets);
 }
 
 - (NSRange)displayRange {

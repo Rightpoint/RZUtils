@@ -6,15 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-/**
- An enumeration of text wrapping modes.
- */
-typedef enum RZTextWrapMode {
-	kRZTextWrapModeBehind, /**< Display text underneath exclusion frames, effectively ignoring them. */
-	kRZTextWrapModeTopAndBottom, /**< Flow text above and below exclusion frames, leaving regions to the sides empty. */
-	kRZTextWrapModeSquare, /**< Flow text around exclusion frames. */
-} RZTextWrapMode;
+#import "RZStyledTextContainer.h"
 
 /**
  @class RZWrappingTextView
@@ -23,41 +15,16 @@ typedef enum RZTextWrapMode {
  @discussion An RZStyledTextView object displays a range of an NSAttributedString, with support for layout settings
  and runtime hyphenation.
  */
-@interface RZWrappingTextView : UIView {
+@interface RZWrappingTextView : RZStyledTextContainer {
 	/**
-	 The attributed string to be displayed.
-	 */
-	NSAttributedString *_string;
-
-	/**
-	The insets within which the the attributed string is rendered.
-	*/
-	UIEdgeInsets _insets;
-	
-	/**
-	 The starting index of the substring to be displayed.
-	 */
-	NSInteger _location;
-	
-	/**
-	  A collection of rectangles in which no text should be drawn.
+	 A collection of rectangles in which no text should be drawn.
 	 */
 	NSSet *_exclusionFrames;
 	
 	/**
-	 The text wrapping mode applied to exclusion frames.
+	 The mode used to flow text around obstalces andboundaries.
 	 */
 	RZTextWrapMode _textWrapMode;
-	
-	/**
-	  The range of the substring that fits within the shape defined by the exclusion frames and view frame.
-	 */
-	NSRange _displayRange;
-	
-	/**
-	  The minimum bounding box that completely contains the rendered text.
-	 */
-	CGRect _displayRect;
 	
 	/**
 	 Dirty bit used to indicate that attributes have changed, but that re-layout has not completed.
@@ -65,12 +32,14 @@ typedef enum RZTextWrapMode {
 	BOOL _needsReflow;
 }
 
-@property (nonatomic, retain)			NSAttributedString	*string;
-@property (nonatomic, assign)			NSInteger			location;
-@property (nonatomic, retain)			NSSet				*exclusionFrames;
+#pragma mark RZStyledTextContainerProtocol
+
+// Optional
 @property (nonatomic, assign)			RZTextWrapMode		textWrapMode;
-@property (readonly)					NSRange				displayRange;
-@property (readonly)					CGRect				displayRect;
+
+#pragma mark RZWrappingTextView
+
+@property (nonatomic, retain)			NSSet				*exclusionFrames;
 @property (readonly, nonatomic, assign)	BOOL				needsReflow;
 
 /**

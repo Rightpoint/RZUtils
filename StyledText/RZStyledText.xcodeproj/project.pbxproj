@@ -63,6 +63,12 @@
 		62312FB81326977600F87D55 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB2F77A91305F853003D2AC0 /* CoreText.framework */; };
 		62312FB91326977600F87D55 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB2F77AB1305F858003D2AC0 /* QuartzCore.framework */; };
 		6290B3681327EC6C0010E2C9 /* Hyphenate.bundle in copy */ = {isa = PBXBuildFile; fileRef = 62BFCF03130C30AB00DC761F /* Hyphenate.bundle */; };
+		629EDB341328183800CE88C9 /* RZStyledTextContainerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 629EDB331328183800CE88C9 /* RZStyledTextContainerProtocol.h */; };
+		629EDB351328183800CE88C9 /* RZStyledTextContainerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 629EDB331328183800CE88C9 /* RZStyledTextContainerProtocol.h */; };
+		629EDBD7132823A700CE88C9 /* RZStyledTextContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 629EDBD5132823A700CE88C9 /* RZStyledTextContainer.h */; };
+		629EDBD8132823A700CE88C9 /* RZStyledTextContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 629EDBD6132823A700CE88C9 /* RZStyledTextContainer.m */; };
+		629EDBD9132823A700CE88C9 /* RZStyledTextContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 629EDBD5132823A700CE88C9 /* RZStyledTextContainer.h */; };
+		629EDBDA132823A700CE88C9 /* RZStyledTextContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 629EDBD6132823A700CE88C9 /* RZStyledTextContainer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +131,9 @@
 		62312FBD1326977600F87D55 /* libRZStyledText.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRZStyledText.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		623130251326B66000F87D55 /* RZStyledText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZStyledText.h; sourceTree = "<group>"; };
 		623130B31326C46E00F87D55 /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Macros.h; path = Classes/Macros.h; sourceTree = "<group>"; };
+		629EDB331328183800CE88C9 /* RZStyledTextContainerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZStyledTextContainerProtocol.h; sourceTree = "<group>"; };
+		629EDBD5132823A700CE88C9 /* RZStyledTextContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZStyledTextContainer.h; sourceTree = "<group>"; };
+		629EDBD6132823A700CE88C9 /* RZStyledTextContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZStyledTextContainer.m; sourceTree = "<group>"; };
 		62BFCBCE130B1F3500DC761F /* aclocal.m4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = aclocal.m4; sourceTree = "<group>"; };
 		62BFCBCF130B1F3500DC761F /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
 		62BFCBD0130B1F3500DC761F /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
@@ -373,6 +382,9 @@
 			isa = PBXGroup;
 			children = (
 				623130251326B66000F87D55 /* RZStyledText.h */,
+				629EDB331328183800CE88C9 /* RZStyledTextContainerProtocol.h */,
+				629EDBD5132823A700CE88C9 /* RZStyledTextContainer.h */,
+				629EDBD6132823A700CE88C9 /* RZStyledTextContainer.m */,
 				620D895413180CF300E2AD5D /* RZStyledTextView.h */,
 				620D895513180CF300E2AD5D /* RZStyledTextView.m */,
 				62312B4D1325805500F87D55 /* RZWrappingTextView.h */,
@@ -780,6 +792,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				629EDB341328183800CE88C9 /* RZStyledTextContainerProtocol.h in Headers */,
+				629EDBD7132823A700CE88C9 /* RZStyledTextContainer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -787,15 +801,17 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				629EDB351328183800CE88C9 /* RZStyledTextContainerProtocol.h in Headers */,
+				629EDBD9132823A700CE88C9 /* RZStyledTextContainer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		62312F2013268D5100F87D55 /* RZStyledText Device */ = {
+		62312F2013268D5100F87D55 /* RZStyledText */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 62312F4B13268D9A00F87D55 /* Build configuration list for PBXNativeTarget "RZStyledText Device" */;
+			buildConfigurationList = 62312F4B13268D9A00F87D55 /* Build configuration list for PBXNativeTarget "RZStyledText" */;
 			buildPhases = (
 				62312F1D13268D5100F87D55 /* Headers */,
 				62312F1E13268D5100F87D55 /* Sources */,
@@ -805,7 +821,7 @@
 			);
 			dependencies = (
 			);
-			name = "RZStyledText Device";
+			name = RZStyledText;
 			productName = RZStyledText_device;
 			productReference = 62312F2113268D5100F87D55 /* libRZStyledText.a */;
 			productType = "com.apple.product-type.library.static";
@@ -852,7 +868,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				62312F2013268D5100F87D55 /* RZStyledText Device */,
+				62312F2013268D5100F87D55 /* RZStyledText */,
 				62312FA31326977600F87D55 /* RZStyledText Simulator */,
 				62312EF313268CFA00F87D55 /* Build & Merge Libraries */,
 			);
@@ -912,6 +928,7 @@
 				62312F4813268D6C00F87D55 /* RZStyledTextView.m in Sources */,
 				62312F4913268D6C00F87D55 /* RZWrappingTextView.m in Sources */,
 				62312F4A13268D6C00F87D55 /* NSAttributedString+RZStyledText.m in Sources */,
+				629EDBD8132823A700CE88C9 /* RZStyledTextContainer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -933,6 +950,7 @@
 				62312FB11326977600F87D55 /* RZStyledTextView.m in Sources */,
 				62312FB21326977600F87D55 /* RZWrappingTextView.m in Sources */,
 				62312FB31326977600F87D55 /* NSAttributedString+RZStyledText.m in Sources */,
+				629EDBDA132823A700CE88C9 /* RZStyledTextContainer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -941,7 +959,7 @@
 /* Begin PBXTargetDependency section */
 		62312FD91326980C00F87D55 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 62312F2013268D5100F87D55 /* RZStyledText Device */;
+			target = 62312F2013268D5100F87D55 /* RZStyledText */;
 			targetProxy = 62312FD81326980C00F87D55 /* PBXContainerItemProxy */;
 		};
 		62312FDB1326980C00F87D55 /* PBXTargetDependency */ = {
@@ -1077,7 +1095,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		62312F4B13268D9A00F87D55 /* Build configuration list for PBXNativeTarget "RZStyledText Device" */ = {
+		62312F4B13268D9A00F87D55 /* Build configuration list for PBXNativeTarget "RZStyledText" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				62312F2213268D5100F87D55 /* Debug */,

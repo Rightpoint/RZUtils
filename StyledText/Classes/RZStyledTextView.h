@@ -7,16 +7,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreText/CoreText.h>
-
-/**
- An enumeration of text alignment modes.
- */
-typedef enum RZTextAlignment {
-	kRZLeftTextAlignment, /**< Position the text flush with the left edge of its container. */
-	kRZCenterTextAlignment, /**< Center the text within its container */
-	kRZRightTextAlignment,  /**< Position the text flush with the right edge of its container. */
-	kRZJustifiedTextAlignment, /**< Keep text flush with both edges, spacing out words and characters if required. */
-} RZTextAlignment;
+#import "RZStyledTextContainer.h"
 
 /**
  @class RZStyledTextView
@@ -24,16 +15,7 @@ typedef enum RZTextAlignment {
  @discussion An RZStyledTextView object displays a range of an NSAttributedString, with support for layout settings
  and runtime soft-hyphenation.
  */
-@interface RZStyledTextView : UIView {
-	/**
-	 The attributed string to be displayed.
-	 */
-	NSAttributedString	*_string;
-	
-	/**
-	 The insets within which the the attributed string is rendered.
-	 */
-	UIEdgeInsets _insets;
+@interface RZStyledTextView : RZStyledTextContainer {
 	
 	/**
 	 How text is horizontally aligned within the view.
@@ -41,27 +23,18 @@ typedef enum RZTextAlignment {
 	RZTextAlignment _textAlignment;
 	
 	/**
-	 The starting index of the substring to be displayed.
-	 */
-	NSInteger _location;
-	
-	/**
-	 The calculated substring range that can be displayed without clipping.
-	 */
-	NSRange	_displayRange;
-	
-	/**
 	 The configued CoreText frame used to perform text layout calculations.
 	 */
 	CTFrameRef _textFrame;
 }
 
-@property (nonatomic, retain)	NSAttributedString	*string;
-@property (nonatomic, assign)	UIEdgeInsets		insets;
+#pragma mark RZStyledTextContainerProtocol
+
+// Optional
 @property (nonatomic, assign)	RZTextAlignment		textAlignment;
+
+#pragma mark RZStyledTextView
 @property (readonly)			CTFrameRef			textFrame;
-@property (readonly)			NSRange				displayRange;
-@property (readonly)			CGRect				displayFrame;
 
 /**
  Initialize a new RZStyledTextView object
