@@ -12,6 +12,7 @@
 			buildConfigurationList = 62312EFB13268CFE00F87D55 /* Build configuration list for PBXAggregateTarget "Build & Merge Libraries" */;
 			buildPhases = (
 				62312EFD13268D1300F87D55 /* merge */,
+				6290B36C1327EC6E0010E2C9 /* copy */,
 			);
 			dependencies = (
 				62312FD91326980C00F87D55 /* PBXTargetDependency */,
@@ -61,6 +62,7 @@
 		62312FB71326977600F87D55 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		62312FB81326977600F87D55 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB2F77A91305F853003D2AC0 /* CoreText.framework */; };
 		62312FB91326977600F87D55 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB2F77AB1305F858003D2AC0 /* QuartzCore.framework */; };
+		6290B3681327EC6C0010E2C9 /* Hyphenate.bundle in copy */ = {isa = PBXBuildFile; fileRef = 62BFCF03130C30AB00DC761F /* Hyphenate.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +96,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		6290B36C1327EC6E0010E2C9 /* copy */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "${SYMROOT}/${CONFIGURATION}-universal";
+			dstSubfolderSpec = 0;
+			files = (
+				6290B3681327EC6C0010E2C9 /* Hyphenate.bundle in copy */,
+			);
+			name = copy;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -107,7 +123,6 @@
 		62312F2113268D5100F87D55 /* libRZStyledText.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRZStyledText.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		62312F5913268EE500F87D55 /* RZStyledText_prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZStyledText_prefix.pch; sourceTree = "<group>"; };
 		62312FBD1326977600F87D55 /* libRZStyledText.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRZStyledText.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		62312FE51326AE8600F87D55 /* Framework.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Framework.plist; sourceTree = "<group>"; };
 		623130251326B66000F87D55 /* RZStyledText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZStyledText.h; sourceTree = "<group>"; };
 		623130B31326C46E00F87D55 /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Macros.h; path = Classes/Macros.h; sourceTree = "<group>"; };
 		62BFCBCE130B1F3500DC761F /* aclocal.m4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = aclocal.m4; sourceTree = "<group>"; };
@@ -402,7 +417,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				62312FE51326AE8600F87D55 /* Framework.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -875,7 +889,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Script adapted from Cocoanetics:\n# \thttp://www.cocoanetics.com/2010/04/making-your-own-iphone-frameworks/\n\n# combine lib files for various platforms into one\nmkdir -p ${PROJECT_DIR}/build/${BUILD_STYLE}-fat\nlipo -create \"${PROJECT_DIR}/build/${BUILD_STYLE}-iphoneos/lib${PROJECT_NAME}.a\" \"${PROJECT_DIR}/build/${BUILD_STYLE}-iphonesimulator/lib${PROJECT_NAME}.a\" -o \"${PROJECT_DIR}/build/${BUILD_STYLE}-fat/lib${PROJECT_NAME}.a\"";
+			shellScript = "# Script adapted from Cocoanetics:\n# \thttp://www.cocoanetics.com/2010/04/making-your-own-iphone-frameworks/\n\n# combine lib files for various platforms into one\n#mkdir -p ${PROJECT_DIR}/build/${BUILD_STYLE}-fat\n#lipo -create \"${PROJECT_DIR}/build/${BUILD_STYLE}-iphoneos/lib${PROJECT_NAME}.a\" \"${PROJECT_DIR}/build/${BUILD_STYLE}-iphonesimulator/lib${PROJECT_NAME}.a\" -o \"${PROJECT_DIR}/#build/${BUILD_STYLE}-fat/lib${PROJECT_NAME}.a\"\n\n#########\n\n# Purpose:\n#   Create a static library for iPhone from within XCode\n#   Because Apple staff DELIBERATELY broke Xcode to make this impossible from the GUI (Xcode 3.2.3 specifically states this in the Release notes!)\n#   ...no, I don't understand why they did such a stupid thing either!\n#\n# Author: Adam Martin - http://twitter.com/redglassesapps\n# Based on: original script from Eonil (main changes: Eonil's script WILL NOT WORK in Xcode GUI - it WILL CRASH YOUR COMPUTER)\n#\n# More info: see this Stack Overflow question: http://stackoverflow.com/questions/3520977/build-fat-static-library-device-simulator-using-xcode-and-sdk-4\n\n\n#####################[ part 1 ]##################\n# First, work out the BASESDK version number (NB: Apple ought to report this, but they hide it)\n#    (incidental: searching for substrings in sh is a nightmare! Sob)\n\nSDK_VERSION=$(echo ${SDK_NAME} | grep -o '.\\{3\\}$')\n\n# Next, work out if we're in SIM or DEVICE\n\nif [ ${PLATFORM_NAME} = \"iphonesimulator\" ]\nthen\nOTHER_SDK_TO_BUILD=iphoneos${SDK_VERSION}\nelse\nOTHER_SDK_TO_BUILD=iphonesimulator${SDK_VERSION}\nfi\n\necho \"XCode has selected SDK: ${PLATFORM_NAME} with version: ${SDK_VERSION} (although back-targetting: ${IPHONEOS_DEPLOYMENT_TARGET})\"\necho \"...therefore, OTHER_SDK_TO_BUILD = ${OTHER_SDK_TO_BUILD}\"\n#\n#####################[ end of part 1 ]##################\n\n#####################[ part 2 ]##################\n#\n# IF this is the original invocation, invoke WHATEVER other builds are required\n#\n# Xcode is already building ONE target...\n#\n# ...but this is a LIBRARY, so Apple is wrong to set it to build just one.\n# ...we need to build ALL targets\n# ...we MUST NOT re-build the target that is ALREADY being built: Xcode WILL CRASH YOUR COMPUTER if you try this (infinite recursion!)\n#\n#\n# So: build ONLY the missing platforms/configurations.\n\nif [ \"true\" = ${ALREADYINVOKED} ]\nthen\necho \"RECURSION: I am NOT the root invocation, so I'm NOT going to recurse\"\nelse\n# CRITICAL:\n# Prevent infinite recursion (Xcode sucks)\nexport ALREADYINVOKED=\"true\"\n\necho \"RECURSION: I am the root ... recursing all missing build targets NOW...\"\necho \"RECURSION: ...about to invoke: xcodebuild -configuration \\\"${CONFIGURATION}\\\" -target \\\"${TARGET_NAME}\\\" -sdk \\\"${OTHER_SDK_TO_BUULD}\\\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO\"\nxcodebuild -configuration \"${CONFIGURATION}\" -target \"${TARGET_NAME}\" -sdk \"${OTHER_SDK_TO_BUILD}\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO\nfi\n\nACTION=\"build\"\n\n#Merge all platform binaries as a fat binary for each configurations.\n\nCURRENTCONFIG_DEVICE_DIR=${SYMROOT}/${CONFIGURATION}-iphoneos\nCURRENTCONFIG_SIMULATOR_DIR=${SYMROOT}/${CONFIGURATION}-iphonesimulator\nCURRENTCONFIG_UNIVERSAL_DIR=${SYMROOT}/${CONFIGURATION}-universal\n\n# ... remove the products of previous runs of this script\n#      NB: this directory is ONLY created by this script - it should be safe to delete!\n\nrm -rf \"${CURRENTCONFIG_UNIVERSAL_DIR}\"\nmkdir \"${CURRENTCONFIG_UNIVERSAL_DIR}\"\n\n#\necho \"lipo: for current configuration (${CONFIGURATION}) creating output file: ${CURRENTCONFIG_UNIVERSAL_DIR}/lib${PROJECT_NAME}.a\"\nlipo -create -output \"${CURRENTCONFIG_UNIVERSAL_DIR}/lib${PROJECT_NAME}.a\" \"${CURRENTCONFIG_DEVICE_DIR}/lib${PROJECT_NAME}.a\" \"${CURRENTCONFIG_SIMULATOR_DIR}/lib${PROJECT_NAME}.a\"\n\n#########\n#\n# Added: StackOverflow suggestion to also copy \"include\" files\n#    (untested, but should work OK)\n#\nif [ -d \"${CURRENTCONFIG_DEVICE_DIR}/usr/local/include\" ]\nthen\n  mkdir -p \"${CURRENTCONFIG_UNIVERSAL_DIR}/usr/local/include\"\n  cp \"${CURRENTCONFIG_DEVICE_DIR}\"/usr/local/include/* \"${CURRENTCONFIG_UNIVERSAL_DIR}/usr/local/include\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -941,20 +955,22 @@
 		62312EF413268CFB00F87D55 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = "Build & Merge Libraries";
+				PRODUCT_NAME = RZStyledText_Universal;
 			};
 			name = Debug;
 		};
 		62312EF513268CFB00F87D55 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				PRODUCT_NAME = "Build & Merge Libraries";
+				PRODUCT_NAME = RZStyledText_Universal;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -969,7 +985,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = RZStyledText;
-				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -982,7 +997,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = RZStyledText;
-				SDKROOT = iphoneos;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -999,7 +1013,6 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = RZStyledText;
-				SDKROOT = iphoneos;
 				VALID_ARCHS = i386;
 			};
 			name = Debug;
@@ -1015,7 +1028,6 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = RZStyledText;
-				SDKROOT = iphoneos;
 				VALID_ARCHS = i386;
 				ZERO_LINK = NO;
 			};
@@ -1024,7 +1036,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREFIX_HEADER = RZStyledText_prefix.pch;
@@ -1033,14 +1045,14 @@
 				OTHER_CFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREFIX_HEADER = RZStyledText_prefix.pch;
@@ -1049,7 +1061,7 @@
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
