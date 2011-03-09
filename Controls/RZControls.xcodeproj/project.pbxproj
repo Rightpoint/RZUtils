@@ -1,0 +1,227 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FE2A94ED130B24F5000F1EC2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE2A94EC130B24F5000F1EC2 /* UIKit.framework */; };
+		FE2A9547130B250A000F1EC2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+		FE2A954D130B254E000F1EC2 /* RZCoverView.h in Headers */ = {isa = PBXBuildFile; fileRef = FE2A9549130B254E000F1EC2 /* RZCoverView.h */; };
+		FE2A954E130B254E000F1EC2 /* RZCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2A954A130B254E000F1EC2 /* RZCoverView.m */; };
+		FE2A954F130B254E000F1EC2 /* RZCoverViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = FE2A954B130B254E000F1EC2 /* RZCoverViewCell.h */; };
+		FE2A9550130B254E000F1EC2 /* RZCoverViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2A954C130B254E000F1EC2 /* RZCoverViewCell.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FE2A94E9130B24DA000F1EC2 /* libRZCoverView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRZCoverView.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE2A94EC130B24F5000F1EC2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		FE2A9549130B254E000F1EC2 /* RZCoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZCoverView.h; sourceTree = "<group>"; };
+		FE2A954A130B254E000F1EC2 /* RZCoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZCoverView.m; sourceTree = "<group>"; };
+		FE2A954B130B254E000F1EC2 /* RZCoverViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZCoverViewCell.h; sourceTree = "<group>"; };
+		FE2A954C130B254E000F1EC2 /* RZCoverViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZCoverViewCell.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FE2A94E7130B24DA000F1EC2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE2A94ED130B24F5000F1EC2 /* UIKit.framework in Frameworks */,
+				FE2A9547130B250A000F1EC2 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FE2A94E9130B24DA000F1EC2 /* libRZCoverView.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* RZControls */ = {
+			isa = PBXGroup;
+			children = (
+				FE2A9548130B254E000F1EC2 /* RZCoverView */,
+				0867D69AFE84028FC02AAC07 /* Frameworks */,
+				034768DFFF38A50411DB9C8B /* Products */,
+			);
+			name = RZControls;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FE2A94EC130B24F5000F1EC2 /* UIKit.framework */,
+				AACBBE490F95108600F1A2B1 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FE2A9548130B254E000F1EC2 /* RZCoverView */ = {
+			isa = PBXGroup;
+			children = (
+				FE2A9549130B254E000F1EC2 /* RZCoverView.h */,
+				FE2A954A130B254E000F1EC2 /* RZCoverView.m */,
+				FE2A954B130B254E000F1EC2 /* RZCoverViewCell.h */,
+				FE2A954C130B254E000F1EC2 /* RZCoverViewCell.m */,
+			);
+			path = RZCoverView;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		FE2A94E5130B24DA000F1EC2 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE2A954D130B254E000F1EC2 /* RZCoverView.h in Headers */,
+				FE2A954F130B254E000F1EC2 /* RZCoverViewCell.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		FE2A94E8130B24DA000F1EC2 /* RZCoverView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FE2A94EE130B24F6000F1EC2 /* Build configuration list for PBXNativeTarget "RZCoverView" */;
+			buildPhases = (
+				FE2A94E5130B24DA000F1EC2 /* Headers */,
+				FE2A94E6130B24DA000F1EC2 /* Sources */,
+				FE2A94E7130B24DA000F1EC2 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RZCoverView;
+			productName = RZCoverView;
+			productReference = FE2A94E9130B24DA000F1EC2 /* libRZCoverView.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "RZControls" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 0867D691FE84028FC02AAC07 /* RZControls */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FE2A94E8130B24DA000F1EC2 /* RZCoverView */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FE2A94E6130B24DA000F1EC2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE2A954E130B254E000F1EC2 /* RZCoverView.m in Sources */,
+				FE2A9550130B254E000F1EC2 /* RZCoverViewCell.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB922308733DC00010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PREBINDING = NO;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		1DEB922408733DC00010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PREBINDING = NO;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		FE2A94EA130B24DB000F1EC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PREBINDING = NO;
+				PRODUCT_NAME = RZCoverView;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		FE2A94EB130B24DB000F1EC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PREBINDING = NO;
+				PRODUCT_NAME = RZCoverView;
+				SDKROOT = iphoneos;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "RZControls" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB922308733DC00010E9CD /* Debug */,
+				1DEB922408733DC00010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FE2A94EE130B24F6000F1EC2 /* Build configuration list for PBXNativeTarget "RZCoverView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FE2A94EA130B24DB000F1EC2 /* Debug */,
+				FE2A94EB130B24DB000F1EC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}
