@@ -1,6 +1,0 @@
-[submodule "SBJSON"]
-	path = SBJSON
-	url = git@github.com:stig/json-framework
-[submodule "ASIHTTPRequest"]
-	path = ASIHTTPRequest
-	url = git@github.com:pokeb/asi-http-request.git
