@@ -922,10 +922,9 @@ CTParagraphStyleRef createParagraphStyle(CGFloat paragraphSpacingBefore, CGFloat
                         CTFontDescriptorRef fontDesc = CTFontDescriptorCreateWithAttributes((CFDictionaryRef)fontAttributes);
                         font = CTFontCreateWithFontDescriptor(fontDesc, currentFontDescriptor.pointSize, NULL);
                         CFRelease(fontDesc);
-                    }
-                    
-                    if (fontCache)
+                        
                         [fontCache setObject:(id)font forKey:fontAttributes];
+                    }
 
 					CGFloat paragraphSpacing = [[currentTag objectForKey:@"ParagraphSpacing"] floatValue];
 					CGFloat paragraphSpacingBefore = [[currentTag objectForKey:@"ParagraphSpacingBefore"] floatValue];
