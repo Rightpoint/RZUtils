@@ -15,7 +15,7 @@
 #import "NSScanner+HTML.h"
 #import "NSAttributedStringRunDelegates.h"
 #import "DTTextAttachment.h"
-#import "NSString+Hyphenate.h" // Raizlabs addition.
+#import "NSString+Hyphenate.h"
 
 #import "DTCoreTextFontDescriptor.h"
 
@@ -33,9 +33,9 @@
 #define UNICODE_OBJECT_PLACEHOLDER @"\ufffc"
 #define UNICODE_LINE_FEED @"\u2028"
 
+
 NSString *NSBaseURLDocumentOption = @"BaseURL";
 NSString *NSTextEncodingNameDocumentOption = @"TextEncodingName";
-NSString *RZFontPointSizeAdjustment = @"PointSizeAdjustment";
 
 CTParagraphStyleRef createDefaultParagraphStyle()
 {
@@ -92,13 +92,13 @@ CTParagraphStyleRef createParagraphStyle(CGFloat paragraphSpacingBefore, CGFloat
 
 @implementation NSAttributedString (HTML)
 
-- (id)initWithHTML:(NSData *)data documentAttributes:(NSDictionary **)dict
+- (id)initWithHTML:(NSData *)data documentAttributes:(NSDictionary **)dict fontCache:(NSMutableDictionary **)acache
 {
-	return [self initWithHTML:data options:nil documentAttributes:dict];
+	return [self initWithHTML:data options:nil documentAttributes:dict fontCache:acache];
 }
 
 
-- (id)initWithHTML:(NSData *)data baseURL:(NSURL *)base documentAttributes:(NSDictionary **)dict
+- (id)initWithHTML:(NSData *)data baseURL:(NSURL *)base documentAttributes:(NSDictionary **)dict fontCache:(NSMutableDictionary **)acache
 {
 	NSDictionary *optionsDict = nil;
 	
@@ -107,7 +107,7 @@ CTParagraphStyleRef createParagraphStyle(CGFloat paragraphSpacingBefore, CGFloat
 		optionsDict = [NSDictionary dictionaryWithObject:base forKey:NSBaseURLDocumentOption];
 	}
 	
-	return [self initWithHTML:data options:optionsDict documentAttributes:dict];
+	return [self initWithHTML:data options:optionsDict documentAttributes:dict fontCache:acache];
 }
 
 
@@ -306,7 +306,7 @@ CTParagraphStyleRef createParagraphStyle(CGFloat paragraphSpacingBefore, CGFloat
 	}
 	
 }
-- (id)initWithHTML:(NSData *)data options:(NSDictionary *)options documentAttributes:(NSDictionary **)dict
+- (id)initWithHTML:(NSData *)data options:(NSDictionary *)options documentAttributes:(NSDictionary **)dict fontCache:(NSMutableDictionary **)acache
 {
 	// Specify the appropriate text encoding for the passed data, default is UTF8 
 	NSString *textEncodingName = [options objectForKey:NSTextEncodingNameDocumentOption];
@@ -323,11 +323,13 @@ CTParagraphStyleRef createParagraphStyle(CGFloat paragraphSpacingBefore, CGFloat
 	
 	
 	// Make it a string
-	NSString *htmlString = [[NSString alloc] initWithData:data encoding:encoding];
+	NSString *_htmlString = [[NSString alloc] initWithData:data encoding:encoding];
 	
 	// trim whitespace
-	htmlString = [htmlString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	NSString *htmlString = [_htmlString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	
+	[_htmlString release];
+    
 	NSMutableAttributedString *tmpString = [[[NSMutableAttributedString alloc] init] autorelease];
 	
 	NSMutableArray *tagStack = [NSMutableArray array];
@@ -342,7 +344,7 @@ CTParagraphStyleRef createParagraphStyle(CGFloat paragraphSpacingBefore, CGFloat
 	// we cannot skip any characters, NLs turn into spaces and multi-spaces get compressed to singles
 	NSScanner *scanner = [NSScanner scannerWithString:htmlString];
 	scanner.charactersToBeSkipped = nil;
-
+    
 	// base tag with font defaults
 	DTCoreTextFontDescriptor *defaultFontDescriptor = [[[DTCoreTextFontDescriptor alloc] initWithFontAttributes:nil] autorelease];
 	defaultFontDescriptor.pointSize = 12;
@@ -355,7 +357,7 @@ CTParagraphStyleRef createParagraphStyle(CGFloat paragraphSpacingBefore, CGFloat
 	
 	// skip initial whitespace
 	[scanner scanCharactersFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet] intoString:NULL];
-
+    
 	
 	
 	while (![scanner isAtEnd]) 
@@ -364,7 +366,7 @@ CTParagraphStyleRef createParagraphStyle(CGFloat paragraphSpacingBefore, CGFloat
 		NSDictionary *tagAttributesDict = nil;
 		BOOL tagOpen = YES;
 		BOOL immediatelyClosed = NO;
-
+        
 		// default font
 		if ([scanner scanHTMLTag:&tagName attributes:&tagAttributesDict isOpen:&tagOpen isClosed:&immediatelyClosed] && tagName)
 		{
@@ -401,7 +403,7 @@ CTParagraphStyleRef createParagraphStyle(CGFloat paragraphSpacingBefore, CGFloat
 				if (parentFontDescriptor)
 				{
 					currentFontDescriptor = [[parentFontDescriptor copy] autorelease];  // inherit
-
+                    
 					// never inherit font name
 					currentFontDescriptor.fontName = nil;
 				}
@@ -457,7 +459,7 @@ CTParagraphStyleRef createParagraphStyle(CGFloat paragraphSpacingBefore, CGFloat
 				DTTextAttachment *attachment = [[[DTTextAttachment alloc] init] autorelease];
 				attachment.contents = image;
 				attachment.size = CGSizeMake(width, height);
-				
+                
 				CTRunDelegateRef embeddedObjectRunDelegate = createEmbeddedObjectRunDelegate(attachment);
 				
 				CTParagraphStyleRef paragraphStyle = createParagraphStyle(0, 0, 0, 0, 0);
@@ -466,6 +468,7 @@ CTParagraphStyleRef createParagraphStyle(CGFloat paragraphSpacingBefore, CGFloat
 														(id)embeddedObjectRunDelegate, kCTRunDelegateAttributeName, 
 														(id)paragraphStyle, kCTParagraphStyleAttributeName, nil];
 				CFRelease(embeddedObjectRunDelegate);
+                CFRelease(paragraphStyle);
 				
 				id link = [currentTag objectForKey:@"DTLink"];
 				if (link)
@@ -514,6 +517,7 @@ CTParagraphStyleRef createParagraphStyle(CGFloat paragraphSpacingBefore, CGFloat
 														(id)embeddedObjectRunDelegate, kCTRunDelegateAttributeName, 
 														(id)paragraphStyle, kCTParagraphStyleAttributeName, nil];
 				CFRelease(embeddedObjectRunDelegate);
+                CFRelease(paragraphStyle);
 				
 				if (needsNewLineBefore)
 				{
@@ -655,7 +659,7 @@ CTParagraphStyleRef createParagraphStyle(CGFloat paragraphSpacingBefore, CGFloat
 #endif
 				}
 			}
-
+            
 			else if ([tagName isEqualToString:@"u"])
 			{
 				if (tagOpen)
@@ -858,11 +862,10 @@ CTParagraphStyleRef createParagraphStyle(CGFloat paragraphSpacingBefore, CGFloat
 				
 				if ([[tagContents stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]] length])
 				{
-					NSLocale *en = [[[NSLocale alloc] initWithLocaleIdentifier:@"En_US"] autorelease];
+                    NSLocale *en = [[[NSLocale alloc] initWithLocaleIdentifier:@"En_US"] autorelease];
 					tagContents = [tagContents stringByHyphenatingWithLocale:en]; // Raizlabs addition.
 					tagContents = [tagContents stringByNormalizingWhitespace];
 					tagContents = [tagContents stringByReplacingHTMLEntities];
-					
 					
 					NSDictionary *currentTagAttributes = [currentTag objectForKey:@"Attributes"];
 					DTCoreTextFontDescriptor *currentFontDescriptor = [currentTag objectForKey:@"FontDescriptor"];
@@ -893,20 +896,37 @@ CTParagraphStyleRef createParagraphStyle(CGFloat paragraphSpacingBefore, CGFloat
 					{
 						[attributes setObject:link forKey:@"DTLink"];
 					}
-
+                    
 					// if we don't know a font name yet, find it
 					if (!currentFontDescriptor.fontName)
 					{
 						[currentFontDescriptor normalize];
 					}
-
+                    
 					// create font
 					NSDictionary *fontAttributes = [currentFontDescriptor fontAttributes];
-					CTFontDescriptorRef fontDesc = CTFontDescriptorCreateWithAttributes((CFDictionaryRef)fontAttributes);
-					NSInteger pointSizeAdjustment = [[options objectForKey:RZFontPointSizeAdjustment] intValue];
-					NSInteger displayPointSize = pointSizeAdjustment + currentFontDescriptor.pointSize;
-					CTFontRef font = CTFontCreateWithFontDescriptor(fontDesc, displayPointSize, NULL);
-					
+                    
+                    // Hit font cache rather than creating a new one for each tag. Initially implement fontCache as a flat list.
+                    // This will NEVER deallocate fonts once they're created. This is heavyweight. I just want to see it work.
+                    CTFontRef font = nil;
+                    NSMutableDictionary *fontCache = nil;
+                    if (acache != NULL) {
+                       fontCache= (NSMutableDictionary *)*acache;
+                        for (NSDictionary *cachedFontAttributes in [fontCache allKeys]) {
+                            if ([cachedFontAttributes isEqualToDictionary:fontAttributes]) {
+                               font = (CTFontRef)[fontCache objectForKey:cachedFontAttributes];
+                            }
+                        }
+                    }
+                    if(!font) {   
+                        CTFontDescriptorRef fontDesc = CTFontDescriptorCreateWithAttributes((CFDictionaryRef)fontAttributes);
+                        font = CTFontCreateWithFontDescriptor(fontDesc, currentFontDescriptor.pointSize, NULL);
+                        CFRelease(fontDesc);
+                    }
+                    
+                    if (fontCache)
+                        [fontCache setObject:(id)font forKey:fontAttributes];
+
 					CGFloat paragraphSpacing = [[currentTag objectForKey:@"ParagraphSpacing"] floatValue];
 					CGFloat paragraphSpacingBefore = [[currentTag objectForKey:@"ParagraphSpacingBefore"] floatValue];
 					
@@ -944,6 +964,9 @@ CTParagraphStyleRef createParagraphStyle(CGFloat paragraphSpacingBefore, CGFloat
 					
 					[attributes setObject:(id)font forKey:(id)kCTFontAttributeName];
 					[attributes setObject:(id)paragraphStyle forKey:(id)kCTParagraphStyleAttributeName];
+                    
+					CFRelease(font);
+					CFRelease(paragraphStyle);
 					
 					NSString *fontColor = [currentTagAttributes objectForKey:@"color"];
 					
@@ -1044,10 +1067,6 @@ CTParagraphStyleRef createParagraphStyle(CGFloat paragraphSpacingBefore, CGFloat
 					[tagString release];
 					
 					previousAttributes = attributes;
-					
-					CFRelease(font);
-					CFRelease(fontDesc);
-					CFRelease(paragraphStyle);
 				}
 				
 			}

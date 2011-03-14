@@ -10,12 +10,11 @@
 
 extern NSString *NSBaseURLDocumentOption;
 extern NSString *NSTextEncodingNameDocumentOption;
-extern NSString *RZFontPointSizeAdjustment;
 
 @interface NSAttributedString (HTML)
 
-- (id)initWithHTML:(NSData *)data documentAttributes:(NSDictionary **)dict;
-- (id)initWithHTML:(NSData *)data baseURL:(NSURL *)base documentAttributes:(NSDictionary **)dict;
-- (id)initWithHTML:(NSData *)data options:(NSDictionary *)options documentAttributes:(NSDictionary **)dict;
+- (id)initWithHTML:(NSData *)data documentAttributes:(NSDictionary **)dict fontCache:(NSMutableDictionary **)cache;
+- (id)initWithHTML:(NSData *)data baseURL:(NSURL *)base documentAttributes:(NSDictionary **)dict fontCache:(NSMutableDictionary **)cache;
+- (id)initWithHTML:(NSData *)data options:(NSDictionary *)options documentAttributes:(NSDictionary **)dict fontCache:(NSMutableDictionary **)cache;
 
 @end
