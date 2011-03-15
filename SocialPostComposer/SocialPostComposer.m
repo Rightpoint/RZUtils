@@ -6,7 +6,7 @@
 //  Copyright 2009 Raizlabs. All rights reserved.
 //
 
-#import "ImageUtils.h"
+#import <RZImageUtils/ImageUtils.h>
 #import "SocialPostComposer.h"
 
 #define kImageMaxSize 800
