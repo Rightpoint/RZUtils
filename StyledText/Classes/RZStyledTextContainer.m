@@ -22,9 +22,17 @@
     [super dealloc];
 }
 
+- (id)initWithFrame:(CGRect)frame {
+    if ((self = [super initWithFrame:frame])) {
+        _displayRange = NSMakeRange(NSNotFound, 0);
+    }
+    
+    return self;
+}
+
 - (NSRange)displayRange {
 	NSAssert(0, @"Subclasses of RZStyledTextContainer must override -displayRange.");
-	return NSMakeRange(0, 0);
+	return _displayRange;
 }
 
 - (CGRect)displayFrame {

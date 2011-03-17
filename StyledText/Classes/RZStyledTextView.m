@@ -100,8 +100,11 @@
 }
 
 - (NSRange)displayRange {
-	NSInteger displayLength = CTFrameGetVisibleStringRange(self.textFrame).length;
-	return NSMakeRange(_location, displayLength);
+    if (_displayRange.location == NSNotFound) {
+        NSInteger displayLength = CTFrameGetVisibleStringRange(self.textFrame).length;
+        _displayRange = NSMakeRange(_location, displayLength);
+    }
+    return _displayRange;
 }
 
 #pragma mark -
@@ -112,6 +115,7 @@
 	if (_textFrame) {
 		CFRelease(_textFrame);
 		_textFrame = nil;
+        _displayRange = NSMakeRange(NSNotFound, 0);
 	}
 }
 
