@@ -1,0 +1,6 @@
+[submodule "SBJSON"]
+	path = SBJSON
+	url = git@github.com:Raizlabs/json-framework.git
+[submodule "ASIHTTPRequest"]
+	path = ASIHTTPRequest
+	url = git@github.com:Raizlabs/asi-http-request.git
