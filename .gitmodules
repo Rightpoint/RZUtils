@@ -4,3 +4,6 @@
 [submodule "ASIHTTPRequest"]
 	path = ASIHTTPRequest
 	url = git@github.com:Raizlabs/asi-http-request.git
+[submodule "StyledText/NSAttributedString-Additions-for-HTML"]
+	path = StyledText/NSAttributedString-Additions-for-HTML
+	url = git@github.com:Raizlabs/NSAttributedString-Additions-for-HTML.git
