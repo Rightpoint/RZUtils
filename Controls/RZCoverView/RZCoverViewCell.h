@@ -18,13 +18,16 @@ typedef enum {
 	RZCoverViewCellStyle _style;
 	NSString* _reuseIdentifier;
 	UIImage* _image;
+    UIImageView* _imageView;
 }
 
 @property (readonly) RZCoverViewCellStyle style;
+@property (readonly) UIView* imageView;
 @property (nonatomic, retain) NSString* reuseIdentifier;
 @property (nonatomic, retain) UIImage* image;
 
 - (id)initWithStyle:(RZCoverViewCellStyle)style reuseIdentifier:(NSString*)reuseIdentifier;
+- (void)setImage:(UIImage*)image animated:(BOOL)animated;
 - (void)updateImage:(UIImage*)image animated:(BOOL)animated;
 
 @end

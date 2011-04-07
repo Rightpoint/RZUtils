@@ -9,11 +9,18 @@
 #import "RZCoverViewCell.h"
 #import "RZCoverView.h"
 
+@interface RZCoverViewCell (Private)
+
+- (void)setImageView:(UIView*)imageView;
+
+@end
+
 @implementation RZCoverViewCell
 
 @synthesize style = _style;
 @synthesize reuseIdentifier = _reuseIdentifier;
 @synthesize image = _image;
+@synthesize imageView = _imageView;
 
 - (id)initWithStyle:(RZCoverViewCellStyle)style reuseIdentifier:(NSString*)reuseIdentifier
 {
@@ -28,34 +35,45 @@
 - (void)updateImage:(UIImage*)image animated:(BOOL)animated
 {
 	self.image = image;
-	
-	UIImageView* cover = [[UIImageView alloc] initWithImage:image];
-	
-	cover.contentMode = UIViewContentModeScaleAspectFit;
-	cover.autoresizingMask = UIViewAutoresizingFlexibleWidth || UIViewAutoresizingFlexibleHeight || UIViewAutoresizingFlexibleLeftMargin || UIViewAutoresizingFlexibleRightMargin;
-	
-	if (RZCoverViewStyleShelf == _style || RZCoverViewStyleShelfReflected == _style)
-	{
-		cover.autoresizingMask = cover.autoresizingMask || UIViewAutoresizingFlexibleTopMargin;
-	}
-	
-	CGRect coverFrame = cover.frame;
-	coverFrame.size.width = self.bounds.size.width;
-	coverFrame.size.height = self.bounds.size.height;
-	cover.frame = coverFrame;
-	
-	cover.tag = 1;
-	
-	UIImageView* currentCoverView = nil;
-	
-	for (UIView* subview in self.subviews)
-	{
-		if (1 == subview.tag)
-		{
-			currentCoverView = (UIImageView*)subview;
-			break;
-		}
-	}
+	UIImageView* cover = nil;
+    
+    if (image)
+    {
+        cover = [[UIImageView alloc] initWithImage:image];
+        cover.contentMode = UIViewContentModeScaleAspectFit;
+        
+        /*
+        cover.autoresizingMask = UIViewAutoresizingFlexibleWidth || UIViewAutoresizingFlexibleHeight || UIViewAutoresizingFlexibleLeftMargin || UIViewAutoresizingFlexibleRightMargin;
+        
+        if (RZCoverViewStyleShelf == _style || RZCoverViewStyleShelfReflected == _style)
+        {
+            cover.autoresizingMask = cover.autoresizingMask || UIViewAutoresizingFlexibleTopMargin;
+        }
+        
+        CGRect coverFrame = cover.frame;
+        coverFrame.size.width = self.bounds.size.width;
+        coverFrame.size.height = self.bounds.size.height;
+        cover.frame = coverFrame;
+        */
+        CGRect coverFrame = [RZCoverView scaleRect:cover.frame toFitInsideFrame:self.frame];
+        cover.frame = coverFrame;
+        
+        cover.tag = 1;
+        
+        /*
+        UIImageView* currentCoverView = nil;
+        
+        for (UIView* subview in self.subviews)
+        {
+            if (1 == subview.tag)
+            {
+                currentCoverView = (UIImageView*)subview;
+                break;
+            }
+        }
+         */
+    }
+    UIView *currentCoverView = self.imageView;
 	
 	if (animated)
 	{
@@ -77,8 +95,13 @@
 	{
 		[currentCoverView removeFromSuperview];
 	}
+    
+    [self setImageView:cover];
 	
-	[self addSubview:cover];
+    if (cover)
+    {
+        [self addSubview:cover];
+    }
 }
 
 - (void)animationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
@@ -89,8 +112,38 @@
 	}
 }
 
+- (void)setImage:(UIImage *)image
+{
+    [self setImage:image animated:NO];
+}
+
+- (void)setImage:(UIImage *)image animated:(BOOL)animated
+{
+    if (_image == image)
+    {
+        return;
+    }
+    
+    [_image release];
+    _image = [image retain];
+    
+    [self updateImage:image animated:animated];
+}
+
+- (void)setImageView:(UIView *)imageView
+{
+    if (_imageView == imageView)
+    {
+        return;
+    }
+    
+    [_imageView release];
+    _imageView = [imageView retain];
+}
+
 - (void)dealloc {
 	[_reuseIdentifier release];
+    [_imageView release];
 	[_image release];
 	
     [super dealloc];

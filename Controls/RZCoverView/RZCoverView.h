@@ -35,6 +35,8 @@ typedef enum {
 	int _numberOfCoversToCache;
 	
 	float _margin;
+    
+    double _bottomPadding;
 	
 	RZCoverViewStyle _style;
 	
@@ -57,8 +59,11 @@ typedef enum {
 @property (nonatomic, assign) id<RZCoverViewDelegate> coverViewDelegate;
 @property (nonatomic, assign) BOOL dimInactiveCovers;
 @property (nonatomic, assign) BOOL pulseCoversOnTouch;
+@property (nonatomic, assign) double bottomPadding;
 @property (nonatomic, retain) NSIndexPath* currentIndex;
 @property (readonly) RZCoverViewStyle style;
+
++ (CGRect)scaleRect:(CGRect)rect toFitInsideFrame:(CGRect)frame;
 
 - (id)initWithFrame:(CGRect)frame style:(RZCoverViewStyle)style;
 

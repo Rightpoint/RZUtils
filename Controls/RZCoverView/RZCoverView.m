@@ -12,7 +12,7 @@ double const kDefaultMargin = -30.0f;
 double const kDefaultGrowAnimationDuration = 0.20;
 double const kDefaultVerticalPadding = 20.0;
 
-double const kSmallScaleFactor = 0.65;
+double const kSmallScaleFactor = 0.85;
 
 // image reflection
 static const CGFloat kDefaultReflectionFraction = 0.10;
@@ -65,6 +65,7 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
 @synthesize dataSource = _dataSource;
 @synthesize coverViewDelegate = _coverViewDelegate;
 @synthesize dimInactiveCovers = _dimInactiveCovers;
+@synthesize bottomPadding = _bottomPadding;
 @synthesize pulseCoversOnTouch = _pulseCoversOnTouch;
 @synthesize currentIndex = _currentIndex;
 @synthesize style = _style;
@@ -83,6 +84,7 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
 		_cachedCoverViewCells = [[NSMutableDictionary alloc] init];
 		_dimInactiveCovers = NO;
 		_pulseCoversOnTouch = YES;
+        _bottomPadding = kDefaultVerticalPadding;
 		_margin = kDefaultMargin;
 		_viewFrame = frame;
 		_style = style;
@@ -166,7 +168,7 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
 	}
 	
 	double horizontalPadding = (self.bounds.size.width / 2.0) - ([self calculateCoverWidth] / 2.0);
-	double bottomPadding = kDefaultVerticalPadding;
+	double bottomPadding = self.bottomPadding;
 	
 	if(_reflection)
 	{
@@ -176,7 +178,7 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
 	self.contentInset = UIEdgeInsetsMake(kDefaultVerticalPadding, horizontalPadding, bottomPadding, horizontalPadding);
 	
 	self.coverSize = [self calculateCoverSize];
-	_margin = -(self.coverSize.width / 10.0);
+	_margin = 0;//(self.coverSize.width / 10.0);
 	
 	self.contentSize = [self scrollingContentSize];
 	
@@ -190,8 +192,9 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
 		cell.frame = (CGRect){[self contentOffsetForCoverAtIndexPath:indexPath],[self coverSize]};
 		cell.backgroundColor = [UIColor clearColor];
 		cell.clipsToBounds = YES;
-		cell.opaque = YES;
-		
+		cell.opaque = NO;
+        [cell updateImage:cell.image animated:NO];
+		/*
 		UIImageView* cover = [[UIImageView alloc] initWithImage:cell.image];
 		UIImageView* reflectionView = nil;
 		
@@ -207,19 +210,28 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
 			
 		}
 		
-		cover.contentMode = UIViewContentModeScaleAspectFit;
-		cover.autoresizingMask = UIViewAutoresizingFlexibleWidth || UIViewAutoresizingFlexibleHeight || UIViewAutoresizingFlexibleLeftMargin || UIViewAutoresizingFlexibleRightMargin;
+		//cover.contentMode = UIViewContentModeScaleAspectFit;
+		//cover.autoresizingMask = UIViewAutoresizingFlexibleWidth || UIViewAutoresizingFlexibleHeight || UIViewAutoresizingFlexibleLeftMargin || UIViewAutoresizingFlexibleRightMargin;
 		
-		if (RZCoverViewStyleShelf == _style || RZCoverViewStyleShelfReflected == _style)
-		{
-			cover.autoresizingMask = cover.autoresizingMask || UIViewAutoresizingFlexibleTopMargin;
-		}
+		//if (RZCoverViewStyleShelf == _style || RZCoverViewStyleShelfReflected == _style)
+		//{
+		//	cover.autoresizingMask = cover.autoresizingMask || UIViewAutoresizingFlexibleTopMargin;
+		//}
 		
-		CGRect coverFrame = cover.frame;
-		coverFrame.size.width = cell.frame.size.width;
-		coverFrame.size.height = cell.frame.size.height;
-		cover.frame = coverFrame;
+		//CGRect coverFrame = cover.frame;
+		//coverFrame.size.width = cell.frame.size.width;
+		//coverFrame.size.height = cell.frame.size.height;
+		//cover.frame = coverFrame;
 		
+        CGRect coverFrame = [RZCoverView scaleRect:cover.frame toFitInsideFrame:cell.frame];
+        
+        if (RZCoverViewStyleShelf == _style || RZCoverViewStyleShelfReflected == _style)
+        {
+            coverFrame.origin.y = cell.frame.size.height - coverFrame.size.height;
+        }
+        
+        cover.frame = coverFrame;
+        
 		cover.tag = 1;
 		
 //		NSLog(@"Cell Height: %f Cover Height: %f", cell.frame.size.height, cover.bounds.size.height);
@@ -229,16 +241,16 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
 			cell.clipsToBounds = NO;
 			
 			reflectionView.contentMode = UIViewContentModeScaleAspectFit;
-			reflectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth || UIViewAutoresizingFlexibleHeight || UIViewAutoresizingFlexibleLeftMargin || UIViewAutoresizingFlexibleRightMargin;
+			reflectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
 			
 			if (RZCoverViewStyleShelf == _style || RZCoverViewStyleShelfReflected == _style)
 			{
-				reflectionView.autoresizingMask = reflectionView.autoresizingMask || UIViewAutoresizingFlexibleTopMargin;
+				reflectionView.autoresizingMask = reflectionView.autoresizingMask | UIViewAutoresizingFlexibleTopMargin;
 			}
 			
 			CGRect reflectFrame = reflectionView.frame;
-			reflectFrame.size.width = cell.frame.size.width;
-			reflectFrame.size.height = cell.frame.size.height;// * kDefaultReflectionFraction;
+			reflectFrame.size.width = cell.imageView.frame.size.width;
+			reflectFrame.size.height = cell.imageView.frame.size.height;// * kDefaultReflectionFraction;
 			reflectionView.frame = reflectFrame;
 			
 			reflectionView.tag = 2;
@@ -248,12 +260,12 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
 			[cell addSubview:reflectionView];
 			[reflectionView release];
 		}
-		
+		*/
 		[cell addTarget:self action:@selector(coverTapped:) forControlEvents:UIControlEventTouchUpInside];
 		[cell addTarget:self action:@selector(coverTouched:) forControlEvents:UIControlEventTouchDown];
 		[cell addTarget:self action:@selector(coverTouchedCancelled:) forControlEvents:UIControlEventTouchCancel | UIControlEventTouchUpOutside];
-		[cell addSubview:cover];
-		[cover release];
+		//[cell addSubview:cover];
+		//[cover release];
 		
 		
 		[cell setTag:i];
@@ -549,6 +561,31 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
 	}
 	
 	return NO;
+}
+
++ (CGRect)scaleRect:(CGRect)rect toFitInsideFrame:(CGRect)frame
+{
+    CGFloat width = rect.size.width;
+    CGFloat height = rect.size.height;
+    
+    CGFloat maxWidth = frame.size.width;
+    CGFloat maxHeight = frame.size.height;
+    
+    CGFloat widthScale = maxWidth/width;
+    
+    CGFloat scaledWidth = maxWidth;
+    CGFloat scaledHeight = height * widthScale;
+    
+    if (scaledHeight > maxHeight)
+    {
+        CGFloat heightScale = maxHeight/height;
+        
+        scaledHeight = maxHeight;
+        scaledWidth = width * heightScale;
+        
+    }
+    
+    return CGRectMake(floor(fabs(maxWidth - scaledWidth) / 2.0), floor(fabs(maxHeight - scaledHeight) / 2.0), scaledWidth, scaledHeight);
 }
 
 #pragma mark RZCoverViewCell Actions
