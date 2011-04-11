@@ -24,7 +24,7 @@
 
 - (id)initWithStyle:(RZCoverViewCellStyle)style reuseIdentifier:(NSString*)reuseIdentifier
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		_style = style;
 		self.reuseIdentifier = reuseIdentifier;
 	}
@@ -39,7 +39,7 @@
     
     if (image)
     {
-        cover = [[UIImageView alloc] initWithImage:image];
+        cover = [[[UIImageView alloc] initWithImage:image] autorelease];
         cover.contentMode = UIViewContentModeScaleAspectFit;
         
         /*
