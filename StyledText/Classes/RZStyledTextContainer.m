@@ -15,6 +15,7 @@
 @synthesize insets			= _insets;
 @synthesize displayRange	= _displayRange;
 @synthesize displayFrame	= _displayFrame;
+@synthesize hyphenate       = _hyphenate;
 
 - (void)dealloc {
 	[_string release];

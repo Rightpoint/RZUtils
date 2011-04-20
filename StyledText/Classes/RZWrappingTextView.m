@@ -199,9 +199,11 @@
 		if (wordLength < countThatFits) {
 			
 			// The substring that can be displayed in the available horizontal space.
-			substring = [[self.string attributedSubstringFromRange:NSMakeRange(currentStart, countThatFits)]
-						 attributedStringWithVisibleHyphen];
-	
+			substring = [self.string attributedSubstringFromRange:NSMakeRange(currentStart, countThatFits)];
+
+            if(_hyphenate)
+                substring = [substring attributedStringWithVisibleHyphen];
+            
 			// Draw the substring.
 			CTLineRef formattedLine = CTLineCreateWithAttributedString((CFAttributedStringRef)substring);
 			CGContextSetTextPosition(context, currentAnchor.x, currentAnchor.y - height);

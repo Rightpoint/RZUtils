@@ -30,6 +30,7 @@
 		_string = [aString retain];
 		_location = aLocation;
 		_insets = someInsets;
+        _hyphenate = YES;
 	}
 	return self;
 }
@@ -146,11 +147,12 @@
 		NSRange lineRange = NSMakeRange(cfLineRange.location, cfLineRange.length);
 		NSString* lineString = [[self.string string] substringWithRange:lineRange];
 		
+        
 		// If the last character is a non-printing soft hyphen, it is replaced with a hyphen-minus for display.
 		// Technique adapted from Frank Zheng, detailed at: http://frankzblog.appspot.com/?p=7001
 		static const unichar softHypen = 0x00AD;
 		unichar lastChar = [lineString characterAtIndex:lineString.length-1];
-		if(softHypen == lastChar) {
+		if(_hyphenate && softHypen == lastChar) {
 			NSMutableAttributedString* lineAttrString = [[self.string attributedSubstringFromRange:lineRange] mutableCopy];
 			NSRange replaceRange = NSMakeRange(lineRange.length-1, 1);
 			[lineAttrString replaceCharactersInRange:replaceRange withString:@"-"];

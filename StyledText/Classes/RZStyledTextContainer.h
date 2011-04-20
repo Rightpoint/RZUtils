@@ -41,6 +41,11 @@
 	 */
 	CGRect _displayFrame;
 	
+    /**
+     Whether or not to hyphenate the text
+     */
+    BOOL _hyphenate;
+    
 }
 
 
@@ -52,5 +57,6 @@
 @property (nonatomic, assign)	UIEdgeInsets		insets;
 @property (readonly)			NSRange				displayRange;
 @property (readonly)			CGRect				displayFrame;
+@property (nonatomic, assign)   BOOL                hyphenate;
 
 @end

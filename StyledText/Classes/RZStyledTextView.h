@@ -26,6 +26,7 @@
 	 The configued CoreText frame used to perform text layout calculations.
 	 */
 	CTFrameRef _textFrame;
+    
 }
 
 #pragma mark RZStyledTextContainerProtocol
