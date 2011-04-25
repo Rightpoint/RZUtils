@@ -203,6 +203,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = RZStyledText;
+				SKIP_INSTALL = YES;				
 			};
 			name = Debug;
 		};
@@ -216,6 +217,7 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = RZStyledText;
 				ZERO_LINK = NO;
+				SKIP_INSTALL = YES;				
 			};
 			name = Release;
 		};
@@ -232,6 +234,7 @@
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				SKIP_INSTALL = YES;				
 			};
 			name = Debug;
 		};
@@ -248,6 +251,7 @@
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				SKIP_INSTALL = YES;				
 			};
 			name = Release;
 		};

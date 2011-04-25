@@ -157,6 +157,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -170,6 +171,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;				
 			};
 			name = Release;
 		};
@@ -183,6 +185,7 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = RZCoverView;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;				
 			};
 			name = Debug;
 		};
@@ -197,6 +200,7 @@
 				PRODUCT_NAME = RZCoverView;
 				SDKROOT = iphoneos;
 				ZERO_LINK = NO;
+				SKIP_INSTALL = YES;				
 			};
 			name = Release;
 		};
