@@ -124,7 +124,7 @@
 	CGContextRef context = UIGraphicsGetCurrentContext();
 	
 	// Draw a white background.
-	CGContextSetFillColorWithColor(context, [[UIColor whiteColor] CGColor]);
+	CGContextSetFillColorWithColor(context, [self.backgroundColor CGColor]);
 	CGContextFillRect(context, self.bounds);
 	
     // Initialize the text matrix to a known value.
