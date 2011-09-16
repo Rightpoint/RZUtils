@@ -190,7 +190,6 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-	UIImage *viewImage = nil;
 	PDFPageView* pageView = nil;
 	
 	// HACK: until we can do the animation correctly.
