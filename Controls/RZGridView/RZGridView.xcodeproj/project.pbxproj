@@ -1,0 +1,477 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B01920951439F50100FD9121 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B01920941439F50100FD9121 /* UIKit.framework */; };
+		B01920971439F50100FD9121 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B01920961439F50100FD9121 /* Foundation.framework */; };
+		B01920991439F50100FD9121 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B01920981439F50100FD9121 /* CoreGraphics.framework */; };
+		B019209F1439F50100FD9121 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B019209D1439F50100FD9121 /* InfoPlist.strings */; };
+		B01920A21439F50100FD9121 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B01920A11439F50100FD9121 /* main.m */; };
+		B01920A51439F50100FD9121 /* RZGridViewAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B01920A41439F50100FD9121 /* RZGridViewAppDelegate.m */; };
+		B01920A81439F50100FD9121 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B01920A61439F50100FD9121 /* MainWindow.xib */; };
+		B01920AB1439F50100FD9121 /* RZGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B01920AA1439F50100FD9121 /* RZGridViewController.m */; };
+		B01920AE1439F50100FD9121 /* RZGridViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B01920AC1439F50100FD9121 /* RZGridViewController.xib */; };
+		B01920B51439F50100FD9121 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B01920941439F50100FD9121 /* UIKit.framework */; };
+		B01920B61439F50100FD9121 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B01920961439F50100FD9121 /* Foundation.framework */; };
+		B01920B71439F50100FD9121 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B01920981439F50100FD9121 /* CoreGraphics.framework */; };
+		B01920BF1439F50100FD9121 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B01920BD1439F50100FD9121 /* InfoPlist.strings */; };
+		B01920C21439F50100FD9121 /* RZGridViewTests.h in Resources */ = {isa = PBXBuildFile; fileRef = B01920C11439F50100FD9121 /* RZGridViewTests.h */; };
+		B01920C41439F50100FD9121 /* RZGridViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B01920C31439F50100FD9121 /* RZGridViewTests.m */; };
+		B01920CF1439F57C00FD9121 /* RZGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = B01920CE1439F57C00FD9121 /* RZGridView.m */; };
+		B01920D5143A08AB00FD9121 /* RZGridViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B01920D4143A08AB00FD9121 /* RZGridViewCell.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B01920B81439F50100FD9121 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B01920871439F50100FD9121 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B019208F1439F50100FD9121;
+			remoteInfo = RZGridView;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B01920901439F50100FD9121 /* RZGridView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RZGridView.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B01920941439F50100FD9121 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B01920961439F50100FD9121 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B01920981439F50100FD9121 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B019209C1439F50100FD9121 /* RZGridView-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RZGridView-Info.plist"; sourceTree = "<group>"; };
+		B019209E1439F50100FD9121 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B01920A01439F50100FD9121 /* RZGridView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RZGridView-Prefix.pch"; sourceTree = "<group>"; };
+		B01920A11439F50100FD9121 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B01920A31439F50100FD9121 /* RZGridViewAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZGridViewAppDelegate.h; sourceTree = "<group>"; };
+		B01920A41439F50100FD9121 /* RZGridViewAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZGridViewAppDelegate.m; sourceTree = "<group>"; };
+		B01920A71439F50100FD9121 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		B01920A91439F50100FD9121 /* RZGridViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZGridViewController.h; sourceTree = "<group>"; };
+		B01920AA1439F50100FD9121 /* RZGridViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZGridViewController.m; sourceTree = "<group>"; };
+		B01920AD1439F50100FD9121 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RZGridViewController.xib; sourceTree = "<group>"; };
+		B01920B41439F50100FD9121 /* RZGridViewTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RZGridViewTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B01920BC1439F50100FD9121 /* RZGridViewTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RZGridViewTests-Info.plist"; sourceTree = "<group>"; };
+		B01920BE1439F50100FD9121 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B01920C01439F50100FD9121 /* RZGridViewTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RZGridViewTests-Prefix.pch"; sourceTree = "<group>"; };
+		B01920C11439F50100FD9121 /* RZGridViewTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZGridViewTests.h; sourceTree = "<group>"; };
+		B01920C31439F50100FD9121 /* RZGridViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZGridViewTests.m; sourceTree = "<group>"; };
+		B01920CD1439F57C00FD9121 /* RZGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZGridView.h; sourceTree = "<group>"; };
+		B01920CE1439F57C00FD9121 /* RZGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZGridView.m; sourceTree = "<group>"; };
+		B01920D3143A08AB00FD9121 /* RZGridViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZGridViewCell.h; sourceTree = "<group>"; };
+		B01920D4143A08AB00FD9121 /* RZGridViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZGridViewCell.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B019208D1439F50100FD9121 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B01920951439F50100FD9121 /* UIKit.framework in Frameworks */,
+				B01920971439F50100FD9121 /* Foundation.framework in Frameworks */,
+				B01920991439F50100FD9121 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B01920B01439F50100FD9121 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B01920B51439F50100FD9121 /* UIKit.framework in Frameworks */,
+				B01920B61439F50100FD9121 /* Foundation.framework in Frameworks */,
+				B01920B71439F50100FD9121 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B01920851439F50100FD9121 = {
+			isa = PBXGroup;
+			children = (
+				B019209A1439F50100FD9121 /* RZGridView */,
+				B01920BA1439F50100FD9121 /* RZGridViewTests */,
+				B01920931439F50100FD9121 /* Frameworks */,
+				B01920911439F50100FD9121 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B01920911439F50100FD9121 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B01920901439F50100FD9121 /* RZGridView.app */,
+				B01920B41439F50100FD9121 /* RZGridViewTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B01920931439F50100FD9121 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B01920941439F50100FD9121 /* UIKit.framework */,
+				B01920961439F50100FD9121 /* Foundation.framework */,
+				B01920981439F50100FD9121 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B019209A1439F50100FD9121 /* RZGridView */ = {
+			isa = PBXGroup;
+			children = (
+				B01920A31439F50100FD9121 /* RZGridViewAppDelegate.h */,
+				B01920A41439F50100FD9121 /* RZGridViewAppDelegate.m */,
+				B01920A61439F50100FD9121 /* MainWindow.xib */,
+				B01920A91439F50100FD9121 /* RZGridViewController.h */,
+				B01920AA1439F50100FD9121 /* RZGridViewController.m */,
+				B01920AC1439F50100FD9121 /* RZGridViewController.xib */,
+				B019209B1439F50100FD9121 /* Supporting Files */,
+				B01920CD1439F57C00FD9121 /* RZGridView.h */,
+				B01920CE1439F57C00FD9121 /* RZGridView.m */,
+				B01920D3143A08AB00FD9121 /* RZGridViewCell.h */,
+				B01920D4143A08AB00FD9121 /* RZGridViewCell.m */,
+			);
+			path = RZGridView;
+			sourceTree = "<group>";
+		};
+		B019209B1439F50100FD9121 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B019209C1439F50100FD9121 /* RZGridView-Info.plist */,
+				B019209D1439F50100FD9121 /* InfoPlist.strings */,
+				B01920A01439F50100FD9121 /* RZGridView-Prefix.pch */,
+				B01920A11439F50100FD9121 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B01920BA1439F50100FD9121 /* RZGridViewTests */ = {
+			isa = PBXGroup;
+			children = (
+				B01920C11439F50100FD9121 /* RZGridViewTests.h */,
+				B01920C31439F50100FD9121 /* RZGridViewTests.m */,
+				B01920BB1439F50100FD9121 /* Supporting Files */,
+			);
+			path = RZGridViewTests;
+			sourceTree = "<group>";
+		};
+		B01920BB1439F50100FD9121 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B01920BC1439F50100FD9121 /* RZGridViewTests-Info.plist */,
+				B01920BD1439F50100FD9121 /* InfoPlist.strings */,
+				B01920C01439F50100FD9121 /* RZGridViewTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B019208F1439F50100FD9121 /* RZGridView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B01920C71439F50100FD9121 /* Build configuration list for PBXNativeTarget "RZGridView" */;
+			buildPhases = (
+				B019208C1439F50100FD9121 /* Sources */,
+				B019208D1439F50100FD9121 /* Frameworks */,
+				B019208E1439F50100FD9121 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RZGridView;
+			productName = RZGridView;
+			productReference = B01920901439F50100FD9121 /* RZGridView.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B01920B31439F50100FD9121 /* RZGridViewTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B01920CA1439F50100FD9121 /* Build configuration list for PBXNativeTarget "RZGridViewTests" */;
+			buildPhases = (
+				B01920AF1439F50100FD9121 /* Sources */,
+				B01920B01439F50100FD9121 /* Frameworks */,
+				B01920B11439F50100FD9121 /* Resources */,
+				B01920B21439F50100FD9121 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B01920B91439F50100FD9121 /* PBXTargetDependency */,
+			);
+			name = RZGridViewTests;
+			productName = RZGridViewTests;
+			productReference = B01920B41439F50100FD9121 /* RZGridViewTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B01920871439F50100FD9121 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Angry Fish Studios";
+			};
+			buildConfigurationList = B019208A1439F50100FD9121 /* Build configuration list for PBXProject "RZGridView" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = B01920851439F50100FD9121;
+			productRefGroup = B01920911439F50100FD9121 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B019208F1439F50100FD9121 /* RZGridView */,
+				B01920B31439F50100FD9121 /* RZGridViewTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B019208E1439F50100FD9121 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B019209F1439F50100FD9121 /* InfoPlist.strings in Resources */,
+				B01920A81439F50100FD9121 /* MainWindow.xib in Resources */,
+				B01920AE1439F50100FD9121 /* RZGridViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B01920B11439F50100FD9121 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B01920BF1439F50100FD9121 /* InfoPlist.strings in Resources */,
+				B01920C21439F50100FD9121 /* RZGridViewTests.h in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B01920B21439F50100FD9121 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B019208C1439F50100FD9121 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B01920A21439F50100FD9121 /* main.m in Sources */,
+				B01920A51439F50100FD9121 /* RZGridViewAppDelegate.m in Sources */,
+				B01920AB1439F50100FD9121 /* RZGridViewController.m in Sources */,
+				B01920CF1439F57C00FD9121 /* RZGridView.m in Sources */,
+				B01920D5143A08AB00FD9121 /* RZGridViewCell.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B01920AF1439F50100FD9121 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B01920C41439F50100FD9121 /* RZGridViewTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B01920B91439F50100FD9121 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B019208F1439F50100FD9121 /* RZGridView */;
+			targetProxy = B01920B81439F50100FD9121 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B019209D1439F50100FD9121 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B019209E1439F50100FD9121 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		B01920A61439F50100FD9121 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B01920A71439F50100FD9121 /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		B01920AC1439F50100FD9121 /* RZGridViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B01920AD1439F50100FD9121 /* en */,
+			);
+			name = RZGridViewController.xib;
+			sourceTree = "<group>";
+		};
+		B01920BD1439F50100FD9121 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B01920BE1439F50100FD9121 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B01920C51439F50100FD9121 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		B01920C61439F50100FD9121 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Release;
+		};
+		B01920C81439F50100FD9121 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RZGridView/RZGridView-Prefix.pch";
+				INFOPLIST_FILE = "RZGridView/RZGridView-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B01920C91439F50100FD9121 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RZGridView/RZGridView-Prefix.pch";
+				INFOPLIST_FILE = "RZGridView/RZGridView-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		B01920CB1439F50100FD9121 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RZGridView.app/RZGridView";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RZGridViewTests/RZGridViewTests-Prefix.pch";
+				INFOPLIST_FILE = "RZGridViewTests/RZGridViewTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		B01920CC1439F50100FD9121 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RZGridView.app/RZGridView";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RZGridViewTests/RZGridViewTests-Prefix.pch";
+				INFOPLIST_FILE = "RZGridViewTests/RZGridViewTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B019208A1439F50100FD9121 /* Build configuration list for PBXProject "RZGridView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B01920C51439F50100FD9121 /* Debug */,
+				B01920C61439F50100FD9121 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B01920C71439F50100FD9121 /* Build configuration list for PBXNativeTarget "RZGridView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B01920C81439F50100FD9121 /* Debug */,
+				B01920C91439F50100FD9121 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		B01920CA1439F50100FD9121 /* Build configuration list for PBXNativeTarget "RZGridViewTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B01920CB1439F50100FD9121 /* Debug */,
+				B01920CC1439F50100FD9121 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B01920871439F50100FD9121 /* Project object */;
+}
