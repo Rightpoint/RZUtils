@@ -23,6 +23,8 @@
 @property (nonatomic, retain) NSIndexPath *selectedLastPath;
 @property (nonatomic, retain) NSIndexPath *selectedStartPath;
 
+@property (assign, getter = isScrolling) BOOL scrolling;
+
 - (void)loadData;
 - (void)configureScrollView;
 
@@ -35,6 +37,9 @@
 - (NSUInteger)indexForIndexPath:(NSIndexPath*)indexPath;
 - (NSRange)rangeForSection:(NSUInteger)section;
 - (NSRange)rangeForRow:(NSUInteger)row inSection:(NSUInteger)section;
+
+- (void)updateSelectedCellIndex;
+- (void)scrollIfNeededUsingDelta:(CGPoint)delta;
 
 @end
 
@@ -59,6 +64,8 @@
 @synthesize selectedLastPath = _selectedLastPath;
 @synthesize selectedStartPath = _selectedStartPath;
 
+@synthesize scrolling = _scrolling;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -69,6 +76,7 @@
         self.totalSections = 1;
         self.totalRows = 0;
         self.totalItems = 0;
+        self.scrolling = NO;
         
         self.scrollView = [[[UIScrollView alloc] initWithFrame:self.bounds] autorelease];
         self.scrollView.multipleTouchEnabled = NO;
@@ -444,9 +452,11 @@
 - (void)handleCellPress:(UILongPressGestureRecognizer*)gestureRecognizer
 {
     NSIndexPath *currentIndexPath = nil;
+    CGPoint oldCenter;
     
     switch ([gestureRecognizer state]) {
         case UIGestureRecognizerStateBegan:
+            self.selectedCell = (RZGridViewCell*)gestureRecognizer.view;
             self.selectedStartPath = [self indexPathForCell:(RZGridViewCell *)gestureRecognizer.view];
             self.selectedLastPath = self.selectedStartPath;
             self.reorderTouchOffset = CGPointMake(gestureRecognizer.view.center.x - [gestureRecognizer locationInView:self.scrollView].x, 
@@ -459,24 +469,22 @@
             break;
             
         case UIGestureRecognizerStateChanged:
-            gestureRecognizer.view.center = CGPointApplyAffineTransform([gestureRecognizer locationInView:self.scrollView], CGAffineTransformMakeTranslation(self.reorderTouchOffset.x, self.reorderTouchOffset.y));
-            currentIndexPath = [self indexPathForItemAtPoint:gestureRecognizer.view.center];
-//            NSLog(@"Gesture X:%f Y:%f", gestureRecognizer.view.center.x, gestureRecognizer.view.center.y);
-//            NSLog(@"Index Path for Gesture View's Center: %@", currentIndexPath);
-//            NSLog(@"Last Index Path: %@", self.selectedLastPath);
+            oldCenter = self.selectedCell.center;
             
-            if (currentIndexPath && ![self.selectedLastPath isEqual:currentIndexPath])
-            {
-                [self moveItemAtIndexPath:self.selectedLastPath toIndexPath:currentIndexPath];
-                self.selectedLastPath = currentIndexPath;
-            }
+            self.selectedCell.center = CGPointApplyAffineTransform([gestureRecognizer locationInView:self.scrollView], CGAffineTransformMakeTranslation(self.reorderTouchOffset.x, self.reorderTouchOffset.y));
+            
+            CGPoint delta = CGPointMake(self.selectedCell.center.x - oldCenter.x, self.selectedCell.center.y - oldCenter.y);
+            
+            [self updateSelectedCellIndex];
+            
+            [self scrollIfNeededUsingDelta:delta];
             
             break;
         
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled:
             
-            currentIndexPath = [self indexPathForItemAtPoint:gestureRecognizer.view.center];
+            currentIndexPath = [self indexPathForItemAtPoint:self.selectedCell.center];
             
             if (!currentIndexPath)
             {
@@ -498,6 +506,7 @@
             }
             
             self.selectedCell = nil;
+            self.selectedStartPath = nil;
             self.selectedLastPath = nil;
             break;
             
@@ -586,6 +595,113 @@
     }
     
     return NSMakeRange(0, 0);
+}
+
+- (void)updateSelectedCellIndex
+{
+    NSIndexPath *currentIndexPath = [self indexPathForItemAtPoint:self.selectedCell.center];
+    //            NSLog(@"Gesture X:%f Y:%f", self.selectedCell.center.x, self.selectedCell.center.y);
+    //            NSLog(@"Index Path for Gesture View's Center: %@", currentIndexPath);
+    //            NSLog(@"Last Index Path: %@", self.selectedLastPath);
+    
+    if (currentIndexPath && ![self.selectedLastPath isEqual:currentIndexPath])
+    {
+        [self moveItemAtIndexPath:self.selectedLastPath toIndexPath:currentIndexPath];
+        self.selectedLastPath = currentIndexPath;
+    }
+}
+
+- (void)scrollIfNeededUsingDelta:(CGPoint)delta
+{
+    @synchronized(self)
+    {
+        if (!self.scrolling && self.selectedCell)
+        {
+            CGPoint locationInBounds = [self.selectedCell.superview convertPoint:self.selectedCell.center toView:self];
+            CGFloat xMinBoundry = self.selectedCell.bounds.size.width / 2.0;
+            CGFloat xMaxBounrdy = self.bounds.size.width - xMinBoundry;
+            CGFloat yMinBoundry = self.selectedCell.bounds.size.height / 2.0;
+            CGFloat yMaxBoundry = self.bounds.size.height - yMinBoundry;
+            
+            CGFloat xOffset = 0.0;
+            CGFloat yOffset = 0.0;
+            CGFloat speed = 100.0;
+            
+            if (locationInBounds.x < xMinBoundry && delta.x < 1.0)
+            {
+                xOffset = -speed * (1.0 - locationInBounds.x/self.bounds.size.width);
+            }
+            else if (locationInBounds.x > xMaxBounrdy && delta.x > -1.0)
+            {
+                xOffset = speed * (locationInBounds.x/self.bounds.size.width);
+            }
+            
+            if (locationInBounds.y < yMinBoundry && delta.y < 1.0)
+            {
+                yOffset = -speed * (1.0 - locationInBounds.y/self.bounds.size.height);
+            }
+            else if (locationInBounds.y > yMaxBoundry && delta.y > -1.0)
+            {
+                yOffset = speed * (locationInBounds.y/self.bounds.size.height);
+            }
+            
+            CGPoint scrollOffset = self.scrollView.contentOffset;
+            CGFloat maxX = self.scrollView.contentSize.width - self.scrollView.bounds.size.width;
+            CGFloat maxY = self.scrollView.contentSize.height - self.scrollView.bounds.size.height;
+            
+            if (scrollOffset.x + xOffset < 0.0)
+            {
+                xOffset = 0.0 - scrollOffset.x;
+            }
+            else if (scrollOffset.x + xOffset > maxX)
+            {
+                xOffset = maxX - scrollOffset.x;
+            }
+            
+            if (scrollOffset.y + yOffset < 0.0)
+            {
+                yOffset = 0.0 - scrollOffset.y;
+            }
+            else if (scrollOffset.y + yOffset > maxY)
+            {
+                yOffset = maxY - scrollOffset.y;
+            }
+            
+            if (fabs(xOffset) > 1.0 || fabs(yOffset) > 1.0)
+            {
+                self.scrolling = YES;
+                [UIView animateWithDuration:0.1
+                                      delay:0
+                                    options:(UIViewAnimationOptionCurveLinear | UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionAllowUserInteraction |
+                                        UIViewAnimationOptionAllowAnimatedContent) 
+                                 animations:^{
+                                     CGPoint offset = self.scrollView.contentOffset;
+                                     offset.x += xOffset;
+                                     offset.y += yOffset;
+                                     [self.scrollView setContentOffset:offset animated:NO];
+                                     
+                                     CGPoint cellCenter = self.selectedCell.center;
+                                     cellCenter.x += xOffset;
+                                     cellCenter.y += yOffset;
+                                     self.selectedCell.center = cellCenter;
+                                     
+                                     [self updateSelectedCellIndex];
+                                 } 
+                                 completion:^(BOOL finished) {
+                                     self.scrolling = NO;
+                                     [self scrollIfNeededUsingDelta:CGPointMake(xOffset, yOffset)];
+                                 }
+                 ];
+            }
+        }
+    }
+}
+
+#pragma mark - UIScrollView Delegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
 }
 
 #pragma mark - UIGestureRecognizer Delegate
