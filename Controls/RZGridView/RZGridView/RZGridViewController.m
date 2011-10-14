@@ -112,4 +112,9 @@
     return cell;
 }
 
+- (void)gridView:(RZGridView *)gridView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
+{
+    NSLog(@"Item Moved from: %@ to: %@", sourceIndexPath, destinationIndexPath);
+}
+
 @end

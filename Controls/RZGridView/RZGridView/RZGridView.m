@@ -484,14 +484,9 @@
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled:
             
-            currentIndexPath = [self indexPathForItemAtPoint:self.selectedCell.center];
+            [self updateSelectedCellIndex];
             
-            if (!currentIndexPath)
-            {
-                currentIndexPath = self.selectedLastPath;
-            }
-            
-            CGRect endRect = [self rectForItemAtIndexPath:currentIndexPath];
+            CGRect endRect = [self rectForItemAtIndexPath:self.selectedLastPath];
             
             [UIView animateWithDuration:0.2 animations:^(void) {
                 gestureRecognizer.view.center = CGPointMake(CGRectGetMidX(endRect), CGRectGetMidY(endRect));
@@ -500,9 +495,12 @@
                 gestureRecognizer.view.alpha = 1.0;
             }];
             
-            if ([self.dataSource respondsToSelector:@selector(gridView:moveItemAtIndexPath:toIndexPath:)])
+            if (self.selectedStartPath && 
+                self.selectedLastPath && 
+                ![self.selectedStartPath isEqual:self.selectedLastPath] && 
+                [self.dataSource respondsToSelector:@selector(gridView:moveItemAtIndexPath:toIndexPath:)])
             {
-                [self.dataSource gridView:self moveItemAtIndexPath:self.selectedStartPath toIndexPath:currentIndexPath];
+                [self.dataSource gridView:self moveItemAtIndexPath:self.selectedStartPath toIndexPath:self.selectedLastPath];
             }
             
             self.selectedCell = nil;
