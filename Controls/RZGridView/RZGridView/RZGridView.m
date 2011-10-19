@@ -276,6 +276,12 @@
         
         if (CGRectContainsPoint(itemRect, point))
         {
+            NSUInteger maxCol = [[[self.rowRangesBySection objectAtIndex:section] objectAtIndex:row] rangeValue].length - 1;
+            if (itemIndexPath.gridColumn > maxCol)
+            {
+                itemIndexPath = [NSIndexPath indexPathForColumn:maxCol andRow:row inSection:section];
+            }
+            
             return itemIndexPath;
         }
         
@@ -343,6 +349,8 @@
         numSections = [self.dataSource numberOfSectionsInGridView:self];
     }
     
+    [self.visibileCells makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
     self.visibileCells = [NSMutableArray array];
     self.sectionRanges = [NSMutableArray arrayWithCapacity:numSections];
     self.rowRangesBySection = [NSMutableArray arrayWithCapacity:numSections];
@@ -370,9 +378,8 @@
                 
                 if (cell)
                 {
-                    cell.indexPath = indexPath;
                     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleCellPress:)];
-                    longPress.minimumPressDuration = 0.5;
+                    longPress.minimumPressDuration = 0.125;
                     longPress.delegate = self;
                     [cell addGestureRecognizer:longPress];
                     [longPress release];
@@ -399,6 +406,9 @@
     self.totalItems = totalItems;
     self.totalRows = totalRows;
     self.totalSections = numSections;
+    
+    NSLog(@"Section Ranges:\n%@", self.sectionRanges);
+    NSLog(@"Row Ranges:\n%@", self.rowRangesBySection);
 }
 
 - (void)configureScrollView
@@ -623,7 +633,7 @@
             
             CGFloat xOffset = 0.0;
             CGFloat yOffset = 0.0;
-            CGFloat speed = 100.0;
+            CGFloat speed = self.scrollView.bounds.size.height / 10.0;
             
             if (locationInBounds.x < xMinBoundry && delta.x < 1.0)
             {
