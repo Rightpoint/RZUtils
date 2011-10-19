@@ -67,7 +67,9 @@
 
 - (RZGridViewCell*)gridView:(RZGridView*)gridView cellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    RZGridViewCell *cell = [[[RZGridViewCell alloc] initWithFrame:CGRectZero] autorelease];
+    static NSString *cellIdentifier = @"ExampleCell";
+    
+    RZGridViewCell *cell = [[[RZGridViewCell alloc] initWithStyle:RZGridViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
     
     NSInteger colorIndex = indexPath.gridRow * 3 + indexPath.gridColumn;
     

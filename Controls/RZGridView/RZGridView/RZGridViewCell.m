@@ -9,31 +9,54 @@
 #import "RZGridViewCell.h"
 
 
+@interface RZGridViewCell ()
+
+@property (assign, nonatomic) RZGridViewCellStyle style;
+@property (copy, readwrite, nonatomic) NSString *reuseIdentifier;
+
+@property (retain, readwrite, nonatomic) UIImageView *imageView;
+@property (retain, readwrite, nonatomic) UIView *contentView;
+
+@end
+
 @implementation RZGridViewCell
 
-@synthesize indexPath = _indexPath;
+@synthesize style = _style;
+@synthesize reuseIdentifier = _reuseIdentifier;
 
-- (id)initWithFrame:(CGRect)frame
+@synthesize imageView = _imageView;
+@synthesize contentView = _contentView;
+
+- (id)initWithStyle:(RZGridViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
+    if ((self = [super initWithFrame:CGRectZero]))
+    {
+        self.style = style;
+        self.reuseIdentifier = reuseIdentifier;
+        
+        self.contentMode = UIViewContentModeScaleAspectFit;
+        
+        self.contentView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+        self.contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        self.contentView.contentMode = UIViewContentModeScaleToFill;
+        [self addSubview:self.contentView];
+        
+        self.imageView = [[[UIImageView alloc] initWithFrame:CGRectZero] autorelease];
+        self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        self.imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self.contentView addSubview:self.imageView];
+        
     }
+    
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
-
 - (void)dealloc
 {
-    [_indexPath release];
+    [_reuseIdentifier release];
+    
+    [_imageView release];
+    [_contentView release];
     
     [super dealloc];
 }

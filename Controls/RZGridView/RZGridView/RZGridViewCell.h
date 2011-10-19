@@ -8,11 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum {
+    RZGridViewCellStyleDefault
+} RZGridViewCellStyle;
 
 @interface RZGridViewCell : UIView {
     
 }
 
-@property (nonatomic, retain) NSIndexPath *indexPath;
+@property (copy, readonly, nonatomic) NSString *reuseIdentifier;
+
+@property (retain, readonly, nonatomic) UIImageView *imageView;
+@property (retain, readonly, nonatomic) UIView *contentView;
+
+- (id)initWithStyle:(RZGridViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 
 @end
