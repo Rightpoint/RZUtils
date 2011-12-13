@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <RZXMLNode.h>
+#import "RZXMLNode.h"
 
 // An Attribute is attached to a tag. It does not respond to the |attributes|
 // or |children| properties.

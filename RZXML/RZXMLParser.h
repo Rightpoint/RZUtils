@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <RZXMLNode.h>
+#import "RZXMLNode.h"
 
 // This subclass of NSXMLParser creates a DOM tree from an XML document. After
 // calling |-parse|, you can access the root of the tree through the |root|
