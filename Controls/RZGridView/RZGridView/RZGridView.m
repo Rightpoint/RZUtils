@@ -66,32 +66,45 @@
 
 @synthesize scrolling = _scrolling;
 
+-(void) setup
+{
+    
+    self.rowHeight = 200.0;
+    self.totalSections = 1;
+    self.totalRows = 0;
+    self.totalItems = 0;
+    self.scrolling = NO;
+    
+    self.scrollView = [[[UIScrollView alloc] initWithFrame:self.bounds] autorelease];
+    self.scrollView.multipleTouchEnabled = NO;
+    self.scrollView.delegate = self;
+    //self.scrollView.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
+    
+    [self loadData];
+    [self configureScrollView];
+    [self tileCells];
+    
+    [self addSubview:self.scrollView];
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
+
         // Initialization code
+        [self setup];
         
-        self.rowHeight = 200.0;
-        self.totalSections = 1;
-        self.totalRows = 0;
-        self.totalItems = 0;
-        self.scrolling = NO;
-        
-        self.scrollView = [[[UIScrollView alloc] initWithFrame:self.bounds] autorelease];
-        self.scrollView.multipleTouchEnabled = NO;
-        self.scrollView.delegate = self;
-        //self.scrollView.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
-        
-        [self loadData];
-        [self configureScrollView];
-        [self tileCells];
-        
-        [self addSubview:self.scrollView];
     }
     return self;
 }
 
+-(void) awakeFromNib
+{
+    [super awakeFromNib];
+    
+    [self setup];
+}
 
 - (void)dealloc
 {

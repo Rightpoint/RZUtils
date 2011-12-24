@@ -30,8 +30,8 @@
     NSUInteger _totalSections;
 }
 
-@property (nonatomic, assign) id<RZGridViewDataSource> dataSource;
-@property (nonatomic, assign) id<RZGridViewDelegate> delegate;
+@property (nonatomic, assign) IBOutlet id<RZGridViewDataSource> dataSource;
+@property (nonatomic, assign) IBOutlet id<RZGridViewDelegate> delegate;
 @property (nonatomic, assign) CGFloat rowHeight;
 
 @property (nonatomic, retain) NSMutableArray *visibileCells;
