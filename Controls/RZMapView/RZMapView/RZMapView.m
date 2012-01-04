@@ -11,20 +11,24 @@
 
 @property (retain, nonatomic) UIImageView *mapImageView;
 @property (retain, nonatomic) NSMutableSet *mapRegionViews;
+@property (retain, nonatomic) NSMutableSet *mapPinViews;
 @property (retain, nonatomic) UITapGestureRecognizer *doubleTapZoomGestureRecognizer;
 @property (assign, nonatomic) id<RZMapViewDelegate> mapDelegate;
 
 - (void)doubleTapZoomTriggered:(UITapGestureRecognizer*)gestureRecognizer;
 - (void)regionTapped:(UITapGestureRecognizer*)gestureRecognizer;
+- (void)pinTapped:(UITapGestureRecognizer*)gestureRecognizer;
 
 @end
 
 @implementation RZMapView
 
 @synthesize mapImage = _mapImage;
+@synthesize activePin = _activePin;
 
 @synthesize mapImageView = _mapImageView;
 @synthesize mapRegionViews = _mapRegionViews;
+@synthesize mapPinViews = _mapPinViews;
 @synthesize doubleTapZoomGestureRecognizer = _doubleTapZoomGestureRecognizer;
 @synthesize mapDelegate = _mapDelegate;
 
@@ -35,6 +39,7 @@
         // Initialization code
         
         self.mapRegionViews = [NSMutableSet set];
+        self.mapPinViews = [NSMutableSet set];
         
         UITapGestureRecognizer *doubleTapZoomGR = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapZoomTriggered:)] autorelease];
         doubleTapZoomGR.numberOfTapsRequired = 2;
@@ -51,9 +56,11 @@
 - (void)dealloc
 {
     [_mapImage release];
+    [_activePin release];
     
     [_mapImageView release];
     [_mapRegionViews release];
+    [_mapPinViews release];
     
     [_doubleTapZoomGestureRecognizer release];
     
@@ -138,6 +145,16 @@
 - (NSSet*)mapRegions
 {
     return self.mapRegionViews;
+}
+
+- (NSSet*)mapPins
+{
+    return self.mapPinViews;
+}
+
+- (id<RZMapViewDelegate>)delegate
+{
+    return self.mapDelegate;
 }
 
 - (void)setDelegate:(id<RZMapViewDelegate>)delegate
@@ -246,6 +263,22 @@
     self.maximumZoomScale = 1.0;
 }
 
+- (void)setActivePin:(RZMapViewPin *)activePin
+{
+    [self setActivePin:activePin animated:YES];
+}
+
+- (void)setActivePin:(RZMapViewPin *)activePin animated:(BOOL)animated
+{
+    if (activePin != _activePin)
+    {
+        [_activePin setActive:NO animated:animated];
+        [activePin setActive:YES animated:animated];
+        [_activePin release];
+        _activePin = [activePin retain];
+    }
+}
+
 - (void)addMapRegions:(NSSet*)objects
 {
     for (RZMapViewLocation *region in objects)
@@ -280,6 +313,60 @@
     [self removeMapRegions:[NSSet setWithObject:region]];
 }
 
+- (void)addMapPins:(NSSet*)objects
+{
+    [self addMapPins:objects animated:NO];
+}
+
+- (void)addMapPins:(NSSet*)objects animated:(BOOL)animated
+{
+    
+    // TODO - Add animations for adding pins
+    
+    
+    CGFloat scale = 1.0/self.zoomScale;
+	CGAffineTransform scaleTransform = CGAffineTransformScale(CGAffineTransformIdentity, scale, scale);
+    
+    for (RZMapViewPin *pin in objects)
+    {
+        UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pinTapped:)];
+        tapGR.numberOfTapsRequired = 1;
+        tapGR.numberOfTouchesRequired = 1;
+        tapGR.cancelsTouchesInView = NO;
+        [tapGR requireGestureRecognizerToFail:self.doubleTapZoomGestureRecognizer];
+        [pin addGestureRecognizer:tapGR];
+        [tapGR release];
+        [self.mapImageView addSubview:pin];
+        pin.center = pin.location.center;
+        pin.transform = scaleTransform;
+    }
+    
+    [self.mapPinViews unionSet:objects];
+}
+
+- (void)addMapPin:(RZMapViewPin*)pin
+{
+    [self addMapPins:[NSSet setWithObject:pin] animated:NO];
+}
+
+- (void)addMapPin:(RZMapViewPin*)pin animated:(BOOL)animated
+{
+    [self addMapPins:[NSSet setWithObject:pin] animated:animated];
+}
+
+- (void)removeMapPins:(NSSet*)objects
+{
+    [objects makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    [self.mapPinViews minusSet:objects];
+}
+
+- (void)removeMapPin:(RZMapViewPin*)pin
+{
+    [self removeMapPins:[NSSet setWithObject:pin]];
+}
+
+
 
 #pragma mark = UIScrollViewDelegate
 
@@ -293,6 +380,14 @@
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView
 {
+    CGFloat scale = 1.0/scrollView.zoomScale;
+	CGAffineTransform scaleTransform = CGAffineTransformScale(CGAffineTransformIdentity, scale, scale);
+    
+    for (RZMapViewPin *pin in self.mapPinViews)
+    {
+        pin.transform = scaleTransform;
+    }
+    
     if ([self.mapDelegate respondsToSelector:@selector(scrollViewDidZoom:)])
     {
         [self.mapDelegate scrollViewDidZoom:scrollView];
@@ -417,6 +512,25 @@
     if ([self.mapDelegate respondsToSelector:@selector(mapView:regionTapped:)])
     {
         [self.mapDelegate mapView:self regionTapped:(RZMapViewLocation*)gestureRecognizer.view];
+    }
+}
+
+- (void)pinTapped:(UITapGestureRecognizer*)gestureRecognizer
+{
+    RZMapViewPin *pin = (RZMapViewPin*)gestureRecognizer.view;
+    
+    if (pin == self.activePin)
+    {
+        self.activePin = nil;
+    }
+    else
+    {
+        self.activePin = pin;
+    }
+    
+    if ([self.mapDelegate respondsToSelector:@selector(mapView:pinTapped:)])
+    {
+        [self.mapDelegate mapView:self pinTapped:pin];
     }
 }
 

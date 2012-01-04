@@ -7,24 +7,37 @@
 
 #import <UIKit/UIKit.h>
 #import "RZMapViewLocation.h"
+#import "RZMapViewPin.h"
 
-@protocol RZMapViewDelegate;
+@class RZMapView;
+
+@protocol RZMapViewDelegate <NSObject, UIScrollViewDelegate>
+
+- (void)mapView:(RZMapView*)mapView regionTapped:(RZMapViewLocation*)region;
+- (void)mapView:(RZMapView*)mapView pinTapped:(RZMapViewPin*)pin;
+
+@end
 
 @interface RZMapView : UIScrollView <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
 @property (retain, nonatomic) UIImage *mapImage;
 @property (retain, nonatomic, readonly) NSSet *mapRegions;
+@property (retain, nonatomic, readonly) NSSet *mapPins;
+@property (retain, nonatomic) RZMapViewPin *activePin;
 @property (assign, nonatomic) id<RZMapViewDelegate> delegate;
+
+- (void)setActivePin:(RZMapViewPin *)activePin animated:(BOOL)animated;
 
 - (void)addMapRegions:(NSSet*)objects;
 - (void)addMapRegion:(RZMapViewLocation*)region;
 - (void)removeMapRegions:(NSSet*)objects;
 - (void)removeMapRegion:(RZMapViewLocation*)region;
 
-@end
-
-@protocol RZMapViewDelegate <NSObject, UIScrollViewDelegate>
-
-- (void)mapView:(RZMapView*)mapView regionTapped:(RZMapViewLocation*)region;
+- (void)addMapPins:(NSSet*)objects;
+- (void)addMapPins:(NSSet*)objects animated:(BOOL)animated;
+- (void)addMapPin:(RZMapViewPin*)pin;
+- (void)addMapPin:(RZMapViewPin*)pin animated:(BOOL)animated;
+- (void)removeMapPins:(NSSet*)objects;
+- (void)removeMapPin:(RZMapViewPin*)pin;
 
 @end
