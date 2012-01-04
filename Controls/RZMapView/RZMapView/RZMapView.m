@@ -243,7 +243,7 @@
     }
     
     self.zoomScale = self.minimumZoomScale;
-    self.maximumZoomScale = self.mapImage.scale / [[UIScreen mainScreen] scale];
+    self.maximumZoomScale = 1.0;
 }
 
 - (void)addMapRegions:(NSSet*)objects
