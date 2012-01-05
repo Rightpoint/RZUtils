@@ -99,9 +99,9 @@
     CGFloat imageViewX = 0.0;
     CGFloat imageViewY = 0.0;
     
-    if (RZMapViewPinPointLocationRight == pointLocation ||
-        RZMapViewPinPointLocationTopRight == pointLocation ||
-        RZMapViewPinPointLocationBottomRight == pointLocation)
+    if (RZMapViewPinPointLocationLeft == pointLocation ||
+        RZMapViewPinPointLocationTopLeft == pointLocation ||
+        RZMapViewPinPointLocationBottomLeft == pointLocation)
     {
         imageViewX = self.pinImageView.bounds.size.width;
     }
