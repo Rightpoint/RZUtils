@@ -13,12 +13,15 @@
 
 @protocol RZMapViewDelegate <NSObject, UIScrollViewDelegate>
 
+@optional
 - (void)mapView:(RZMapView*)mapView regionTapped:(RZMapViewLocation*)region;
 - (void)mapView:(RZMapView*)mapView pinTapped:(RZMapViewPin*)pin;
 
+- (UIView*)mapView:(RZMapView*)mapView popoverViewForPin:(RZMapViewPin*)pin;
+
 @end
 
-@interface RZMapView : UIScrollView <UIScrollViewDelegate, UIGestureRecognizerDelegate>
+@interface RZMapView : UIScrollView <RZMapViewPinDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
 @property (retain, nonatomic) UIImage *mapImage;
 @property (retain, nonatomic, readonly) NSSet *mapRegions;

@@ -21,16 +21,27 @@ typedef enum {
     RZMapViewPinPointLocationBottomRight
 } RZMapViewPinPointLocation;
 
+@protocol RZMapViewPinDelegate;
+
 @interface RZMapViewPin : UIView
 
 @property (retain, nonatomic, readonly) UIImage *pinImage;
 @property (retain, nonatomic) UIImage *popoverBackgroundImage;
 @property (retain, nonatomic) UIView *popoverView;
+@property (retain, nonatomic, readonly) UIImageView *pinImageView;
 @property (retain, nonatomic) RZMapViewLocation *location;
 @property (assign, nonatomic, getter = isActive) BOOL active;
 @property (assign, nonatomic, readonly) RZMapViewPinPointLocation pointLocation;
+@property (assign, nonatomic) id<RZMapViewPinDelegate> delegate;
 
 - (void)setPinImage:(UIImage *)pinImage withPointLocation:(RZMapViewPinPointLocation)pointLocation;
 - (void)setActive:(BOOL)active animated:(BOOL)animated;
+
+@end
+
+
+@protocol RZMapViewPinDelegate <NSObject>
+
+- (void)pinViewTapped:(RZMapViewPin*)pin;
 
 @end

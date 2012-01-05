@@ -12,9 +12,12 @@
 
 @property (retain, nonatomic, readwrite) UIImage *pinImage;
 @property (assign, nonatomic, readwrite) RZMapViewPinPointLocation pointLocation;
+@property (retain, nonatomic, readwrite) UIImageView *pinImageView;
 
-@property (retain, nonatomic) UIImageView *pinImageView;
 @property (retain, nonatomic) UIImageView *popoverBackgroundImageView;
+@property (retain, nonatomic) UITapGestureRecognizer *pinTappedRecognizer;
+
+- (void)pinTapped:(UITapGestureRecognizer*)gestureRecognizer;
 
 @end
 
@@ -23,12 +26,14 @@
 @synthesize pinImage = _pinImage;
 @synthesize popoverBackgroundImage = _popoverBackgroundImage;
 @synthesize popoverView = _popoverView;
+@synthesize pinImageView = _pinImageView;
 @synthesize location = _location;
 @synthesize active = _active;
 @synthesize pointLocation = _pointLocation;
+@synthesize delegate = _delegate;
 
-@synthesize pinImageView = _pinImageView;
 @synthesize popoverBackgroundImageView = _popoverBackgroundImageView;
+@synthesize pinTappedRecognizer = _pinTappedRecognizer;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -38,19 +43,26 @@
         self.clipsToBounds = NO;
         self.pointLocation = RZMapViewPinPointLocationBottom;
         
+        UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pinTapped:)];
+        tapGR.numberOfTapsRequired = 1;
+        tapGR.numberOfTouchesRequired = 1;
+        tapGR.cancelsTouchesInView = NO;
+        self.pinTappedRecognizer = tapGR;
+        [tapGR release];
     }
     return self;
 }
 
 - (void)dealloc
-{
+{    
     [_pinImage release];
     [_popoverBackgroundImage release];
     [_popoverView release];
+    [_pinImageView release];
     [_location release];
     
-    [_pinImageView release];
     [_popoverBackgroundImageView release];
+    [_pinTappedRecognizer release];
     
     [super dealloc];
 }
@@ -62,6 +74,8 @@
     
     [self.pinImageView removeFromSuperview];
     self.pinImageView = [[[UIImageView alloc] initWithImage:self.pinImage] autorelease];
+    self.pinImageView.userInteractionEnabled = YES;
+    [self.pinImageView addGestureRecognizer:self.pinTappedRecognizer];
     
     CGPoint currentCenter = self.center;
     
@@ -179,6 +193,14 @@
     }
     
     return _popoverView;
+}
+
+- (void)pinTapped:(UITapGestureRecognizer *)gestureRecognizer
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(pinViewTapped:)])
+    {
+        [self.delegate pinViewTapped:self];
+    }
 }
 
 @end

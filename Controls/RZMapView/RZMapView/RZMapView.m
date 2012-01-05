@@ -272,10 +272,23 @@
 {
     if (activePin != _activePin)
     {
+        if (nil != activePin && 
+            self.mapDelegate && 
+            [self.mapDelegate respondsToSelector:@selector(mapView:popoverViewForPin:)])
+        {
+            UIView *popoverView = [self.mapDelegate mapView:self popoverViewForPin:activePin];
+            if (popoverView)
+            {
+                activePin.popoverView = popoverView;
+            }
+        }
+        
         [_activePin setActive:NO animated:animated];
         [activePin setActive:YES animated:animated];
         [_activePin release];
         _activePin = [activePin retain];
+        
+        [self.mapImageView bringSubviewToFront:_activePin];
     }
 }
 
@@ -329,13 +342,7 @@
     
     for (RZMapViewPin *pin in objects)
     {
-        UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pinTapped:)];
-        tapGR.numberOfTapsRequired = 1;
-        tapGR.numberOfTouchesRequired = 1;
-        tapGR.cancelsTouchesInView = NO;
-        [tapGR requireGestureRecognizerToFail:self.doubleTapZoomGestureRecognizer];
-        [pin addGestureRecognizer:tapGR];
-        [tapGR release];
+        pin.delegate = self;
         [self.mapImageView addSubview:pin];
         pin.center = pin.location.center;
         pin.transform = scaleTransform;
@@ -367,6 +374,24 @@
 }
 
 
+#pragma mark - RZMapViewPinDelegate
+
+- (void)pinViewTapped:(RZMapViewPin*)pin
+{
+    if (pin == self.activePin)
+    {
+        self.activePin = nil;
+    }
+    else
+    {
+        self.activePin = pin;
+    }
+    
+    if ([self.mapDelegate respondsToSelector:@selector(mapView:pinTapped:)])
+    {
+        [self.mapDelegate mapView:self pinTapped:pin];
+    }
+}
 
 #pragma mark = UIScrollViewDelegate
 
@@ -512,25 +537,6 @@
     if ([self.mapDelegate respondsToSelector:@selector(mapView:regionTapped:)])
     {
         [self.mapDelegate mapView:self regionTapped:(RZMapViewLocation*)gestureRecognizer.view];
-    }
-}
-
-- (void)pinTapped:(UITapGestureRecognizer*)gestureRecognizer
-{
-    RZMapViewPin *pin = (RZMapViewPin*)gestureRecognizer.view;
-    
-    if (pin == self.activePin)
-    {
-        self.activePin = nil;
-    }
-    else
-    {
-        self.activePin = pin;
-    }
-    
-    if ([self.mapDelegate respondsToSelector:@selector(mapView:pinTapped:)])
-    {
-        [self.mapDelegate mapView:self pinTapped:pin];
     }
 }
 
