@@ -29,6 +29,7 @@
 @property (retain, nonatomic, readonly) NSSet *mapPins;
 @property (retain, nonatomic) RZMapViewPin *activePin;
 @property (assign, nonatomic) id<RZMapViewDelegate> delegate;
+@property (assign, nonatomic, getter = isPinAddAnimationSimultaneous) BOOL pinAddAnimationSimultaneous;
 
 - (void)setActivePin:(RZMapViewPin *)activePin animated:(BOOL)animated;
 

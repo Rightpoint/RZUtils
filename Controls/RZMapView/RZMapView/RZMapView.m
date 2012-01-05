@@ -29,6 +29,7 @@
 
 @synthesize mapImage = _mapImage;
 @synthesize activePin = _activePin;
+@synthesize pinAddAnimationSimultaneous = _pinAddAnimationSimultaneous;
 
 @synthesize mapImageView = _mapImageView;
 @synthesize mapRegionViews = _mapRegionViews;
@@ -344,6 +345,9 @@
     CGFloat scale = 1.0/self.zoomScale;
 	CGAffineTransform scaleTransform = CGAffineTransformScale(CGAffineTransformIdentity, scale, scale);
     
+    NSUInteger addCount = [objects count];
+    double delay = 0.0;
+    
     for (RZMapViewPin *pin in objects)
     {
         pin.delegate = self;
@@ -391,7 +395,16 @@
             
             // set the timing function for the group and the animation duration
             theGroup.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-            theGroup.duration=2.0;
+            
+            if (!self.pinAddAnimationSimultaneous && addCount > 1)
+            {
+                theGroup.duration = 1.8;
+                theGroup.beginTime = delay;
+            }
+            else
+            {
+                theGroup.duration=2.0;
+            }
             theGroup.delegate = self;
             [theGroup setValue:pin forKey:@"RZMapViewPinAnimationKey"];
             // release the path
@@ -399,6 +412,8 @@
             
             // add animation to pin layer to trigger animation
             [pin.layer addAnimation:theGroup forKey:@"animatePosition"];
+            
+            delay += 0.2 / (double)addCount;
         }
     }
     
