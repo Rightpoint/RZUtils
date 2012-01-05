@@ -575,17 +575,6 @@
 
 - (void)regionTapped:(UITapGestureRecognizer*)gestureRecognizer
 {
-    if ([gestureRecognizer.view.backgroundColor isEqual:[UIColor yellowColor]])
-    {
-        gestureRecognizer.view.backgroundColor = [UIColor clearColor];
-        gestureRecognizer.view.alpha = 1.0;
-    }
-    else
-    {
-        gestureRecognizer.view.backgroundColor = [UIColor yellowColor];
-        gestureRecognizer.view.alpha = 0.5;
-    }
-    
     if ([self.mapDelegate respondsToSelector:@selector(mapView:regionTapped:)])
     {
         [self.mapDelegate mapView:self regionTapped:(RZMapViewLocation*)gestureRecognizer.view];
