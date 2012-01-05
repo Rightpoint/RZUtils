@@ -399,7 +399,8 @@
             if (!self.pinAddAnimationSimultaneous && addCount > 1)
             {
                 theGroup.duration = 1.8;
-                theGroup.beginTime = delay;
+                theGroup.beginTime = CACurrentMediaTime()+delay;
+                pin.hidden = YES;
             }
             else
             {
@@ -443,6 +444,12 @@
 }
 
 #pragma mark - CAAnimationDelegate
+
+- (void)animationDidStart:(CAAnimation *)anim
+{
+    RZMapViewPin *pin = [anim valueForKey:@"RZMapViewPinAnimationKey"];
+    pin.hidden = NO;
+}
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
