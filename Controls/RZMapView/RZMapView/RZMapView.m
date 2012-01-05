@@ -6,6 +6,10 @@
 //
 
 #import "RZMapView.h"
+#import <QuartzCore/QuartzCore.h>
+
+#define kBounceHeight   30
+#define kBounceSeconds 0.25f
 
 @interface RZMapView ()
 
@@ -346,6 +350,54 @@
         [self.mapImageView addSubview:pin];
         pin.center = pin.location.center;
         pin.transform = scaleTransform;
+        
+        
+        
+        if (animated)
+        {
+            //figure out the final pin placement
+            CGPoint pinCenterFinish = pin.location.center;
+            
+            if (CGPointEqualToPoint(pinCenterFinish, CGPointZero)) {
+                pinCenterFinish = self.center;
+            }
+            
+            //position the pin at the top (just offscreen)
+            //CGPoint pinCenterStart = CGPointMake(pinCenterFinish.x, 0);
+            CGPoint pinCenterStart = CGPointMake(pinCenterFinish.x, (self.contentOffset.y * scale) - pin.frame.size.height);	//note, just offscreen be height of the pin button
+            
+            // create the path for the keyframe animation
+            CGMutablePathRef thePath = CGPathCreateMutable();
+            CGPathMoveToPoint(thePath,NULL,pinCenterStart.x,pinCenterStart.y);
+            CGPathAddLineToPoint(thePath, NULL, pinCenterFinish.x, pinCenterFinish.y);
+            CGPathAddCurveToPoint(thePath,NULL,
+                                  pinCenterFinish.x,pinCenterFinish.y,
+                                  pinCenterFinish.x,pinCenterFinish.y - (kBounceHeight * scale),
+                                  pinCenterFinish.x,pinCenterFinish.y);
+            CGPathAddCurveToPoint(thePath,NULL,
+                                  pinCenterFinish.x,pinCenterFinish.y,
+                                  pinCenterFinish.x,pinCenterFinish.y - (kBounceHeight * scale * 0.5),
+                                  pinCenterFinish.x,pinCenterFinish.y);
+            CGPathAddCurveToPoint(thePath,NULL,
+                                  pinCenterFinish.x,pinCenterFinish.y,
+                                  pinCenterFinish.x,pinCenterFinish.y - (kBounceHeight * scale * 0.25),
+                                  pinCenterFinish.x,pinCenterFinish.y);
+            
+            CAKeyframeAnimation *theAnimation=[CAKeyframeAnimation animationWithKeyPath:@"position"];
+            theAnimation.path=thePath;
+            
+            CAAnimationGroup *theGroup = [CAAnimationGroup animation];
+            theGroup.animations=[NSArray arrayWithObject:theAnimation];
+            
+            // set the timing function for the group and the animation duration
+            theGroup.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+            theGroup.duration=2.0;
+            // release the path
+            CFRelease(thePath);
+            
+            // add animation to pin layer to trigger animation
+            [pin.layer addAnimation:theGroup forKey:@"animatePosition"];
+        }
     }
     
     [self.mapPinViews unionSet:objects];
