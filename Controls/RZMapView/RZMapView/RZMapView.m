@@ -20,6 +20,7 @@
 @property (assign, nonatomic) id<RZMapViewDelegate> mapDelegate;
 
 - (void)doubleTapZoomTriggered:(UITapGestureRecognizer*)gestureRecognizer;
+- (void)idleTapTriggered:(UITapGestureRecognizer*)gestureRecognizer;
 - (void)regionTapped:(UITapGestureRecognizer*)gestureRecognizer;
 - (void)pinTapped:(UITapGestureRecognizer*)gestureRecognizer;
 
@@ -52,6 +53,13 @@
         doubleTapZoomGR.cancelsTouchesInView = NO;
         [self addGestureRecognizer:doubleTapZoomGR];
         self.doubleTapZoomGestureRecognizer = doubleTapZoomGR;
+        
+        UITapGestureRecognizer *tapToDismissPinGR = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(idleTapTriggered:)] autorelease];
+        tapToDismissPinGR.numberOfTapsRequired = 1;
+        tapToDismissPinGR.numberOfTouchesRequired = 1;
+        tapToDismissPinGR.cancelsTouchesInView = NO;
+        [tapToDismissPinGR requireGestureRecognizerToFail:doubleTapZoomGR];
+        [self addGestureRecognizer:tapToDismissPinGR];
         
         [super setDelegate:self];
     }
@@ -304,7 +312,7 @@
         UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(regionTapped:)];
         tapGR.numberOfTapsRequired = 1;
         tapGR.numberOfTouchesRequired = 1;
-        tapGR.cancelsTouchesInView = NO;
+        tapGR.cancelsTouchesInView = YES;
         [tapGR requireGestureRecognizerToFail:self.doubleTapZoomGestureRecognizer];
         [region addGestureRecognizer:tapGR];
         [tapGR release];
@@ -609,6 +617,11 @@
                                     self.bounds.size.height / newZoomScale);
         [self zoomToRect:newRect animated:YES];
     }
+}
+
+- (void)idleTapTriggered:(UITapGestureRecognizer*)gestureRecognizer
+{
+    [self setActivePin:nil animated:YES];
 }
 
 - (void)regionTapped:(UITapGestureRecognizer*)gestureRecognizer
