@@ -392,6 +392,8 @@
             // set the timing function for the group and the animation duration
             theGroup.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
             theGroup.duration=2.0;
+            theGroup.delegate = self;
+            [theGroup setValue:pin forKey:@"RZMapViewPinAnimationKey"];
             // release the path
             CFRelease(thePath);
             
@@ -425,6 +427,20 @@
     [self removeMapPins:[NSSet setWithObject:pin]];
 }
 
+#pragma mark - CAAnimationDelegate
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
+{
+    if (flag)
+    {
+        RZMapViewPin *pin = [anim valueForKey:@"RZMapViewPinAnimationKey"];
+        
+        if (pin && self.delegate && [self.delegate respondsToSelector:@selector(mapView:pinAddAnimationDidFinish:)])
+        {
+            [self.delegate mapView:self pinAddAnimationDidFinish:pin];
+        }
+    }
+}
 
 #pragma mark - RZMapViewPinDelegate
 

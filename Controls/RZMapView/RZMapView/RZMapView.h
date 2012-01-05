@@ -18,6 +18,7 @@
 - (void)mapView:(RZMapView*)mapView pinTapped:(RZMapViewPin*)pin;
 
 - (UIView*)mapView:(RZMapView*)mapView popoverViewForPin:(RZMapViewPin*)pin;
+- (void)mapView:(RZMapView *)mapView pinAddAnimationDidFinish:(RZMapViewPin *)pin;
 
 @end
 
