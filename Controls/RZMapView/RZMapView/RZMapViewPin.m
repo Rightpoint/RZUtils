@@ -120,15 +120,15 @@
         {
             CGPoint finalCenter = self.popoverView.center;
             
-//            self.popoverView.center = CGPointMake(finalCenter.x, finalCenter.y + (self.popoverView.bounds.size.height / 2.0));
+            self.popoverView.center = CGPointMake(finalCenter.x, finalCenter.y + (self.popoverView.bounds.size.height / 2.0));
             CGAffineTransform currentTransform = self.popoverView.transform;
-            self.popoverView.transform = CGAffineTransformTranslate(CGAffineTransformScale(currentTransform, 0.01, 0.01), 0, self.popoverView.bounds.size.height / 2.0);
+            self.popoverView.transform = CGAffineTransformScale(currentTransform, 0.01, 0.01);
             
             [UIView animateWithDuration:0.25 
                                   delay:0 
                                 options:UIViewAnimationOptionCurveEaseInOut 
                              animations:^{
-//                                self.popoverView.center = finalCenter;
+                                self.popoverView.center = finalCenter;
                                 self.popoverView.transform = currentTransform;
                             } 
                              completion:nil];
@@ -137,7 +137,7 @@
     else if (animated)
     {
         CGAffineTransform currentTransform = self.popoverView.transform;
-        CGAffineTransform endTransform = CGAffineTransformTranslate(CGAffineTransformScale(currentTransform, 0.01, 0.01), 0, self.popoverView.bounds.size.height / 2.0);
+        CGAffineTransform endTransform = CGAffineTransformScale(currentTransform, 0.01, 0.01);
         
         [UIView animateWithDuration:0.25 
                               delay:0 
@@ -145,6 +145,7 @@
                          animations:^{
                              self.animating = YES;
                              self.popoverView.transform = endTransform;
+                             self.popoverView.center = CGPointMake(self.popoverView.center.x, self.popoverView.center.y + self.popoverView.bounds.size.height / 2.0);
                          } 
                          completion:^(BOOL finished) {
                              self.animating = NO;
