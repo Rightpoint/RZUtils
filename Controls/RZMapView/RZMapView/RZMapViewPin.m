@@ -17,6 +17,9 @@
 @property (retain, nonatomic) UIImageView *popoverBackgroundImageView;
 @property (retain, nonatomic) UITapGestureRecognizer *pinTappedRecognizer;
 
+@property (assign, getter = isAnimating) BOOL animating;
+
+- (void)configurePinView;
 - (void)pinTapped:(UITapGestureRecognizer*)gestureRecognizer;
 
 @end
@@ -35,12 +38,13 @@
 @synthesize popoverBackgroundImageView = _popoverBackgroundImageView;
 @synthesize pinTappedRecognizer = _pinTappedRecognizer;
 
+@synthesize animating = _animating;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.clipsToBounds = NO;
         self.pointLocation = RZMapViewPinPointLocationBottom;
         
         UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pinTapped:)];
@@ -49,6 +53,8 @@
         tapGR.cancelsTouchesInView = NO;
         self.pinTappedRecognizer = tapGR;
         [tapGR release];
+        
+        self.backgroundColor = [UIColor redColor];
     }
     return self;
 }
@@ -67,6 +73,16 @@
     [super dealloc];
 }
 
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    if (!self.isAnimating)
+    {
+        [self configurePinView];
+    }
+}
+
 - (void)setPinImage:(UIImage *)pinImage withPointLocation:(RZMapViewPinPointLocation)pointLocation
 {
     self.pointLocation = pointLocation;
@@ -76,47 +92,11 @@
     self.pinImageView = [[[UIImageView alloc] initWithImage:self.pinImage] autorelease];
     self.pinImageView.userInteractionEnabled = YES;
     [self.pinImageView addGestureRecognizer:self.pinTappedRecognizer];
+    [self addSubview:self.pinImageView];
+    self.pinImageView.backgroundColor = [UIColor yellowColor];
     
     CGPoint currentCenter = self.center;
-    
-    CGFloat newWidth = self.pinImageView.bounds.size.width;
-    CGFloat newHeight = self.pinImageView.bounds.size.height;
-    
-    if (RZMapViewPinPointLocationTop != pointLocation &&
-        RZMapViewPinPointLocationCenter != pointLocation &&
-        RZMapViewPinPointLocationBottom != pointLocation)
-    {
-        newWidth *= 2.0;
-    }
-    
-    if (RZMapViewPinPointLocationLeft != pointLocation &&
-        RZMapViewPinPointLocationCenter != pointLocation &&
-        RZMapViewPinPointLocationRight != pointLocation)
-    {
-        newHeight *= 2.0;
-    }
-    
-    CGFloat imageViewX = 0.0;
-    CGFloat imageViewY = 0.0;
-    
-    if (RZMapViewPinPointLocationLeft == pointLocation ||
-        RZMapViewPinPointLocationTopLeft == pointLocation ||
-        RZMapViewPinPointLocationBottomLeft == pointLocation)
-    {
-        imageViewX = self.pinImageView.bounds.size.width;
-    }
-    
-    if (RZMapViewPinPointLocationTop == pointLocation ||
-        RZMapViewPinPointLocationTopLeft == pointLocation ||
-        RZMapViewPinPointLocationTopRight == pointLocation)
-    {
-        imageViewY = self.pinImageView.bounds.size.height;
-    }
-    
-    self.bounds = CGRectMake(0, 0, newWidth, newHeight);
-    self.pinImageView.frame = (CGRect){imageViewX, imageViewY, self.pinImageView.bounds.size};
-    [self addSubview:self.pinImageView];
-    
+    [self configurePinView];
     self.center = currentCenter;
 }
 
@@ -132,49 +112,55 @@
         return;
     }
     
+    _active = active;
+    
     if (active)
     {
         [self addSubview:self.popoverView];
-        self.popoverView.center = CGPointMake(self.pinImageView.center.x, self.pinImageView.center.y - (self.pinImageView.bounds.size.height / 2.0) - (self.popoverView.bounds.size.height / 2.0));
+        [self configurePinView];
         
         if (animated)
         {
             CGPoint finalCenter = self.popoverView.center;
             
-            self.popoverView.center = CGPointMake(finalCenter.x, finalCenter.y + (self.popoverView.bounds.size.height / 2.0));
-            self.popoverView.transform = CGAffineTransformMakeScale(0.01, 0.01);
+//            self.popoverView.center = CGPointMake(finalCenter.x, finalCenter.y + (self.popoverView.bounds.size.height / 2.0));
+            CGAffineTransform currentTransform = self.popoverView.transform;
+            self.popoverView.transform = CGAffineTransformTranslate(CGAffineTransformScale(currentTransform, 0.01, 0.01), 0, self.popoverView.bounds.size.height / 2.0);
             
             [UIView animateWithDuration:0.25 
                                   delay:0 
                                 options:UIViewAnimationOptionCurveEaseInOut 
                              animations:^{
-                                self.popoverView.center = finalCenter;
-                                self.popoverView.transform = CGAffineTransformIdentity;
+//                                self.popoverView.center = finalCenter;
+                                self.popoverView.transform = currentTransform;
                             } 
                              completion:nil];
         }
     }
     else if (animated)
     {
-        CGPoint endCenter = CGPointMake(self.popoverView.center.x, self.popoverView.center.y + (self.popoverView.bounds.size.height / 2.0));
+        CGAffineTransform currentTransform = self.popoverView.transform;
+        CGAffineTransform endTransform = CGAffineTransformTranslate(CGAffineTransformScale(currentTransform, 0.01, 0.01), 0, self.popoverView.bounds.size.height / 2.0);
         
         [UIView animateWithDuration:0.25 
                               delay:0 
                             options:UIViewAnimationOptionCurveEaseInOut 
                          animations:^{
-                             self.popoverView.center = endCenter;
-                             self.popoverView.transform = CGAffineTransformMakeScale(0.01, 0.01);
+                             self.animating = YES;
+                             self.popoverView.transform = endTransform;
                          } 
                          completion:^(BOOL finished) {
+                             self.animating = NO;
                              [self.popoverView removeFromSuperview];
+                             [self configurePinView];
+                             self.popoverView.transform = currentTransform;
                          }];
     }
     else
     {
         [self.popoverView removeFromSuperview];
+        [self configurePinView];
     }
-    
-    _active = active;
 }
 
 - (UIView*)popoverView
@@ -193,6 +179,64 @@
     }
     
     return _popoverView;
+}
+
+- (void)configurePinView
+{
+    CGFloat newWidth = (self.active) ? MAX(self.pinImageView.bounds.size.width, self.popoverView.bounds.size.width) : self.pinImageView.bounds.size.width;
+    CGFloat newHeight = self.pinImageView.bounds.size.height + (self.active ? self.popoverView.bounds.size.height : 0.0);
+    
+//    if (RZMapViewPinPointLocationTop != self.pointLocation &&
+//        RZMapViewPinPointLocationCenter != self.pointLocation &&
+//        RZMapViewPinPointLocationBottom != self.pointLocation)
+//    {
+//        newWidth *= 2.0;
+//    }
+//    
+//    if (RZMapViewPinPointLocationLeft != self.pointLocation &&
+//        RZMapViewPinPointLocationCenter != self.pointLocation &&
+//        RZMapViewPinPointLocationRight != self.pointLocation)
+//    {
+//        newHeight *= 2.0;
+//    }
+    
+    CGFloat imageViewX = 0.0;
+    CGFloat imageViewY = (self.active) ? -(self.popoverView.bounds.size.height / 2.0) : 0.0;
+    
+    if (RZMapViewPinPointLocationLeft == self.pointLocation ||
+        RZMapViewPinPointLocationTopLeft == self.pointLocation ||
+        RZMapViewPinPointLocationBottomLeft == self.pointLocation)
+    {
+        imageViewX += self.pinImageView.bounds.size.width / 2.0;
+    }
+    else if (RZMapViewPinPointLocationRight == self.pointLocation ||
+             RZMapViewPinPointLocationTopRight == self.pointLocation ||
+             RZMapViewPinPointLocationBottomRight == self.pointLocation)
+    {
+        imageViewX -= self.pinImageView.bounds.size.width / 2.0;
+    }
+    
+    if (RZMapViewPinPointLocationTop == self.pointLocation ||
+        RZMapViewPinPointLocationTopLeft == self.pointLocation ||
+        RZMapViewPinPointLocationTopRight == self.pointLocation)
+    {
+        imageViewY += self.pinImageView.bounds.size.height / 2.0;
+    }
+    else if (RZMapViewPinPointLocationBottom == self.pointLocation ||
+             RZMapViewPinPointLocationBottomLeft == self.pointLocation ||
+             RZMapViewPinPointLocationBottomRight == self.pointLocation)
+    {
+        imageViewY -= self.pinImageView.bounds.size.height / 2.0;
+    }
+    
+    self.bounds = CGRectMake(0, 0, newWidth, newHeight);
+    self.pinImageView.center = CGPointMake(self.bounds.size.width / 2.0, (self.active ? self.popoverView.bounds.size.height : 0.0) + (self.pinImageView.bounds.size.height / 2.0));
+    self.popoverView.center = CGPointMake(self.bounds.size.width / 2.0, self.popoverView.bounds.size.height / 2.0);
+    
+    CGAffineTransform currentTransform = self.transform;
+    currentTransform.tx = 0;
+    currentTransform.ty = 0;
+    self.transform = CGAffineTransformTranslate(currentTransform, imageViewX, imageViewY);
 }
 
 - (void)pinTapped:(UITapGestureRecognizer *)gestureRecognizer

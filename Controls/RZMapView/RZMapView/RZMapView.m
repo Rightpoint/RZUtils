@@ -17,6 +17,7 @@
 @property (retain, nonatomic) NSMutableSet *mapRegionViews;
 @property (retain, nonatomic) NSMutableSet *mapPinViews;
 @property (retain, nonatomic) UITapGestureRecognizer *doubleTapZoomGestureRecognizer;
+@property (retain, nonatomic) UITapGestureRecognizer *idleTapGestureRecognizer;
 @property (assign, nonatomic) id<RZMapViewDelegate> mapDelegate;
 
 - (void)doubleTapZoomTriggered:(UITapGestureRecognizer*)gestureRecognizer;
@@ -36,6 +37,7 @@
 @synthesize mapRegionViews = _mapRegionViews;
 @synthesize mapPinViews = _mapPinViews;
 @synthesize doubleTapZoomGestureRecognizer = _doubleTapZoomGestureRecognizer;
+@synthesize idleTapGestureRecognizer = _idleTapGestureRecognizer;
 @synthesize mapDelegate = _mapDelegate;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -58,8 +60,10 @@
         tapToDismissPinGR.numberOfTapsRequired = 1;
         tapToDismissPinGR.numberOfTouchesRequired = 1;
         tapToDismissPinGR.cancelsTouchesInView = NO;
+        tapToDismissPinGR.delegate = self;
         [tapToDismissPinGR requireGestureRecognizerToFail:doubleTapZoomGR];
         [self addGestureRecognizer:tapToDismissPinGR];
+        self.idleTapGestureRecognizer = tapToDismissPinGR;
         
         [super setDelegate:self];
     }
@@ -76,6 +80,7 @@
     [_mapPinViews release];
     
     [_doubleTapZoomGestureRecognizer release];
+    [_idleTapGestureRecognizer release];
     
     [super dealloc];
 }
@@ -312,7 +317,7 @@
         UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(regionTapped:)];
         tapGR.numberOfTapsRequired = 1;
         tapGR.numberOfTouchesRequired = 1;
-        tapGR.cancelsTouchesInView = YES;
+        tapGR.cancelsTouchesInView = NO;
         [tapGR requireGestureRecognizerToFail:self.doubleTapZoomGestureRecognizer];
         [region addGestureRecognizer:tapGR];
         [tapGR release];
@@ -503,12 +508,15 @@
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView
 {
-    CGFloat scale = 1.0/scrollView.zoomScale;
+    CGFloat scale = 1.0/ (double)scrollView.zoomScale;
 	CGAffineTransform scaleTransform = CGAffineTransformScale(CGAffineTransformIdentity, scale, scale);
     
     for (RZMapViewPin *pin in self.mapPinViews)
     {
-        pin.transform = scaleTransform;
+        CGAffineTransform currentTransform = pin.transform;
+        
+        pin.transform = CGAffineTransformMake(scaleTransform.a, scaleTransform.b, scaleTransform.c, scaleTransform.d, currentTransform.tx, currentTransform.ty);
+        [pin setNeedsLayout];
     }
     
     if ([self.mapDelegate respondsToSelector:@selector(scrollViewDidZoom:)])
@@ -606,6 +614,35 @@
 
 #pragma mark - UIGestureRecognizerDelegate
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if (gestureRecognizer == self.idleTapGestureRecognizer)
+    {
+        if (self.activePin && self.activePin.popoverView.superview)
+        {
+            UIView *popoverView = self.activePin.popoverView;
+            CGRect popoverRect = popoverView.frame;
+            CGPoint touchInPopover = [touch locationInView:self.activePin];
+            BOOL isInPopoverView = CGRectContainsPoint(popoverRect, touchInPopover);
+            return !isInPopoverView;
+        }
+    }
+    
+    return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    if (gestureRecognizer == self.idleTapGestureRecognizer)
+    {
+        return NO;
+    }
+    
+    return YES;
+}
+
+
+#pragma mark - UIGestureRecognizer Callbacks
 - (void)doubleTapZoomTriggered:(UITapGestureRecognizer *)gestureRecognizer
 {
     if (gestureRecognizer == self.doubleTapZoomGestureRecognizer)
