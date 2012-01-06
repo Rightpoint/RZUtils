@@ -53,8 +53,6 @@
         tapGR.cancelsTouchesInView = NO;
         self.pinTappedRecognizer = tapGR;
         [tapGR release];
-        
-        self.backgroundColor = [UIColor redColor];
     }
     return self;
 }
@@ -93,7 +91,6 @@
     self.pinImageView.userInteractionEnabled = YES;
     [self.pinImageView addGestureRecognizer:self.pinTappedRecognizer];
     [self addSubview:self.pinImageView];
-    self.pinImageView.backgroundColor = [UIColor yellowColor];
     
     CGPoint currentCenter = self.center;
     [self configurePinView];
