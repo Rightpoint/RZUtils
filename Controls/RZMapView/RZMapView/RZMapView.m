@@ -102,8 +102,6 @@
     CGFloat containerRatio = containmentSize.width / containmentSize.height;
     CGFloat mapRatio = mapImageSize.width / mapImageSize.height;
     
-    NSLog(@"Ratios - Container: %f Map: %f", containerRatio, mapRatio);
-    
     if (containerRatio > 1.0 && mapRatio > 1.0)
     {
         if (mapRatio > containerRatio)
@@ -197,7 +195,12 @@
     [_mapImage release];
     _mapImage = [mapImage retain];
     
+    // hold on to the old zoom scale so we can reset it after the image is swapped out. 
+    float oldZoomScale = self.zoomScale;
+    CGPoint oldOffset = self.contentOffset;
     
+    // set the zoom scale to 1 so everything is positioned correctly.
+    self.zoomScale = 1.0;
     
     [self.mapImageView removeFromSuperview];
     self.mapImageView = [[[UIImageView alloc] initWithImage:_mapImage] autorelease];
@@ -205,11 +208,18 @@
     self.contentSize = self.mapImage.size;
     [self addSubview:self.mapImageView];
     
+    // Re-add the regions to the new image
     [self.mapRegionViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
     for (UIView *view in self.mapRegionViews)
     {
-        [self addSubview:view];
+        [self.mapImageView addSubview:view];
+    }
+    
+    // re-add the pins to the new image
+    [self.mapPinViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    for (UIView *view in self.mapPinViews)
+    {
+        [self.mapImageView addSubview:view];
     }
     
     NSLog(@"Image Attrs - ImageScale: %f ImageViewContentScale: %f ScrollViewContentScale: %f", _mapImage.scale, self.mapImageView.contentScaleFactor, self.contentScaleFactor);
@@ -219,8 +229,6 @@
     
     CGFloat containerRatio = containmentSize.width / containmentSize.height;
     CGFloat mapRatio = mapImageSize.width / mapImageSize.height;
-    
-    NSLog(@"Ratios - Container: %f Map: %f", containerRatio, mapRatio);
     
     if (containerRatio > 1.0 && mapRatio > 1.0)
     {
@@ -277,7 +285,9 @@
         self.minimumZoomScale = scaleFactor;
     }
     
-    self.zoomScale = self.minimumZoomScale;
+    self.zoomScale = oldZoomScale;
+    self.contentOffset = oldOffset;
+    
     self.maximumZoomScale = 1.0;
 }
 
