@@ -1,0 +1,487 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7232564D17691398002B8B7E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7232564C17691398002B8B7E /* UIKit.framework */; };
+		7232564F17691398002B8B7E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7232564E17691398002B8B7E /* Foundation.framework */; };
+		7232565117691398002B8B7E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7232565017691398002B8B7E /* CoreGraphics.framework */; };
+		7232565717691398002B8B7E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7232565517691398002B8B7E /* InfoPlist.strings */; };
+		7232565917691398002B8B7E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7232565817691398002B8B7E /* main.m */; };
+		7232565D17691398002B8B7E /* RZAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7232565C17691398002B8B7E /* RZAppDelegate.m */; };
+		7232565F17691398002B8B7E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7232565E17691398002B8B7E /* Default.png */; };
+		7232566117691398002B8B7E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7232566017691398002B8B7E /* Default@2x.png */; };
+		7232566317691398002B8B7E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7232566217691398002B8B7E /* Default-568h@2x.png */; };
+		7232566617691398002B8B7E /* RZMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7232566517691398002B8B7E /* RZMasterViewController.m */; };
+		7232566917691398002B8B7E /* RZDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7232566817691398002B8B7E /* RZDetailViewController.m */; };
+		7232566C17691398002B8B7E /* RZMasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7232566A17691398002B8B7E /* RZMasterViewController.xib */; };
+		7232566F17691398002B8B7E /* RZDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7232566D17691398002B8B7E /* RZDetailViewController.xib */; };
+		7232567717691398002B8B7E /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7232567617691398002B8B7E /* SenTestingKit.framework */; };
+		7232567817691398002B8B7E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7232564C17691398002B8B7E /* UIKit.framework */; };
+		7232567917691398002B8B7E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7232564E17691398002B8B7E /* Foundation.framework */; };
+		7232568117691398002B8B7E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7232567F17691398002B8B7E /* InfoPlist.strings */; };
+		7232568417691398002B8B7E /* RZUtilsDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7232568317691398002B8B7E /* RZUtilsDemoTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7232567A17691398002B8B7E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7232564117691398002B8B7E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7232564817691398002B8B7E;
+			remoteInfo = RZUtilsDemo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		7232564917691398002B8B7E /* RZUtilsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RZUtilsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7232564C17691398002B8B7E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		7232564E17691398002B8B7E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		7232565017691398002B8B7E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		7232565417691398002B8B7E /* RZUtilsDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RZUtilsDemo-Info.plist"; sourceTree = "<group>"; };
+		7232565617691398002B8B7E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7232565817691398002B8B7E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7232565A17691398002B8B7E /* RZUtilsDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RZUtilsDemo-Prefix.pch"; sourceTree = "<group>"; };
+		7232565B17691398002B8B7E /* RZAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZAppDelegate.h; sourceTree = "<group>"; };
+		7232565C17691398002B8B7E /* RZAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZAppDelegate.m; sourceTree = "<group>"; };
+		7232565E17691398002B8B7E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		7232566017691398002B8B7E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		7232566217691398002B8B7E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		7232566417691398002B8B7E /* RZMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZMasterViewController.h; sourceTree = "<group>"; };
+		7232566517691398002B8B7E /* RZMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZMasterViewController.m; sourceTree = "<group>"; };
+		7232566717691398002B8B7E /* RZDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZDetailViewController.h; sourceTree = "<group>"; };
+		7232566817691398002B8B7E /* RZDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZDetailViewController.m; sourceTree = "<group>"; };
+		7232566B17691398002B8B7E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RZMasterViewController.xib; sourceTree = "<group>"; };
+		7232566E17691398002B8B7E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RZDetailViewController.xib; sourceTree = "<group>"; };
+		7232567517691398002B8B7E /* RZUtilsDemoTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RZUtilsDemoTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7232567617691398002B8B7E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		7232567E17691398002B8B7E /* RZUtilsDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RZUtilsDemoTests-Info.plist"; sourceTree = "<group>"; };
+		7232568017691398002B8B7E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7232568217691398002B8B7E /* RZUtilsDemoTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZUtilsDemoTests.h; sourceTree = "<group>"; };
+		7232568317691398002B8B7E /* RZUtilsDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZUtilsDemoTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7232564617691398002B8B7E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7232564D17691398002B8B7E /* UIKit.framework in Frameworks */,
+				7232564F17691398002B8B7E /* Foundation.framework in Frameworks */,
+				7232565117691398002B8B7E /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7232567117691398002B8B7E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7232567717691398002B8B7E /* SenTestingKit.framework in Frameworks */,
+				7232567817691398002B8B7E /* UIKit.framework in Frameworks */,
+				7232567917691398002B8B7E /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7232564017691398002B8B7E = {
+			isa = PBXGroup;
+			children = (
+				7232565217691398002B8B7E /* RZUtilsDemo */,
+				7232567C17691398002B8B7E /* RZUtilsDemoTests */,
+				7232564B17691398002B8B7E /* Frameworks */,
+				7232564A17691398002B8B7E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7232564A17691398002B8B7E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7232564917691398002B8B7E /* RZUtilsDemo.app */,
+				7232567517691398002B8B7E /* RZUtilsDemoTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7232564B17691398002B8B7E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7232564C17691398002B8B7E /* UIKit.framework */,
+				7232564E17691398002B8B7E /* Foundation.framework */,
+				7232565017691398002B8B7E /* CoreGraphics.framework */,
+				7232567617691398002B8B7E /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7232565217691398002B8B7E /* RZUtilsDemo */ = {
+			isa = PBXGroup;
+			children = (
+				7232565B17691398002B8B7E /* RZAppDelegate.h */,
+				7232565C17691398002B8B7E /* RZAppDelegate.m */,
+				7232566417691398002B8B7E /* RZMasterViewController.h */,
+				7232566517691398002B8B7E /* RZMasterViewController.m */,
+				7232566717691398002B8B7E /* RZDetailViewController.h */,
+				7232566817691398002B8B7E /* RZDetailViewController.m */,
+				7232566A17691398002B8B7E /* RZMasterViewController.xib */,
+				7232566D17691398002B8B7E /* RZDetailViewController.xib */,
+				7232565317691398002B8B7E /* Supporting Files */,
+			);
+			path = RZUtilsDemo;
+			sourceTree = "<group>";
+		};
+		7232565317691398002B8B7E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7232565417691398002B8B7E /* RZUtilsDemo-Info.plist */,
+				7232565517691398002B8B7E /* InfoPlist.strings */,
+				7232565817691398002B8B7E /* main.m */,
+				7232565A17691398002B8B7E /* RZUtilsDemo-Prefix.pch */,
+				7232565E17691398002B8B7E /* Default.png */,
+				7232566017691398002B8B7E /* Default@2x.png */,
+				7232566217691398002B8B7E /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7232567C17691398002B8B7E /* RZUtilsDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				7232568217691398002B8B7E /* RZUtilsDemoTests.h */,
+				7232568317691398002B8B7E /* RZUtilsDemoTests.m */,
+				7232567D17691398002B8B7E /* Supporting Files */,
+			);
+			path = RZUtilsDemoTests;
+			sourceTree = "<group>";
+		};
+		7232567D17691398002B8B7E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7232567E17691398002B8B7E /* RZUtilsDemoTests-Info.plist */,
+				7232567F17691398002B8B7E /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7232564817691398002B8B7E /* RZUtilsDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7232568717691398002B8B7E /* Build configuration list for PBXNativeTarget "RZUtilsDemo" */;
+			buildPhases = (
+				7232564517691398002B8B7E /* Sources */,
+				7232564617691398002B8B7E /* Frameworks */,
+				7232564717691398002B8B7E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RZUtilsDemo;
+			productName = RZUtilsDemo;
+			productReference = 7232564917691398002B8B7E /* RZUtilsDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7232567417691398002B8B7E /* RZUtilsDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7232568A17691398002B8B7E /* Build configuration list for PBXNativeTarget "RZUtilsDemoTests" */;
+			buildPhases = (
+				7232567017691398002B8B7E /* Sources */,
+				7232567117691398002B8B7E /* Frameworks */,
+				7232567217691398002B8B7E /* Resources */,
+				7232567317691398002B8B7E /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7232567B17691398002B8B7E /* PBXTargetDependency */,
+			);
+			name = RZUtilsDemoTests;
+			productName = RZUtilsDemoTests;
+			productReference = 7232567517691398002B8B7E /* RZUtilsDemoTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7232564117691398002B8B7E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = RZ;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = RaizLabs;
+			};
+			buildConfigurationList = 7232564417691398002B8B7E /* Build configuration list for PBXProject "RZUtilsDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7232564017691398002B8B7E;
+			productRefGroup = 7232564A17691398002B8B7E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7232564817691398002B8B7E /* RZUtilsDemo */,
+				7232567417691398002B8B7E /* RZUtilsDemoTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7232564717691398002B8B7E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7232565717691398002B8B7E /* InfoPlist.strings in Resources */,
+				7232565F17691398002B8B7E /* Default.png in Resources */,
+				7232566117691398002B8B7E /* Default@2x.png in Resources */,
+				7232566317691398002B8B7E /* Default-568h@2x.png in Resources */,
+				7232566C17691398002B8B7E /* RZMasterViewController.xib in Resources */,
+				7232566F17691398002B8B7E /* RZDetailViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7232567217691398002B8B7E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7232568117691398002B8B7E /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7232567317691398002B8B7E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7232564517691398002B8B7E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7232565917691398002B8B7E /* main.m in Sources */,
+				7232565D17691398002B8B7E /* RZAppDelegate.m in Sources */,
+				7232566617691398002B8B7E /* RZMasterViewController.m in Sources */,
+				7232566917691398002B8B7E /* RZDetailViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7232567017691398002B8B7E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7232568417691398002B8B7E /* RZUtilsDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7232567B17691398002B8B7E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7232564817691398002B8B7E /* RZUtilsDemo */;
+			targetProxy = 7232567A17691398002B8B7E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		7232565517691398002B8B7E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7232565617691398002B8B7E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		7232566A17691398002B8B7E /* RZMasterViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7232566B17691398002B8B7E /* en */,
+			);
+			name = RZMasterViewController.xib;
+			sourceTree = "<group>";
+		};
+		7232566D17691398002B8B7E /* RZDetailViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7232566E17691398002B8B7E /* en */,
+			);
+			name = RZDetailViewController.xib;
+			sourceTree = "<group>";
+		};
+		7232567F17691398002B8B7E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7232568017691398002B8B7E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7232568517691398002B8B7E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		7232568617691398002B8B7E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7232568817691398002B8B7E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RZUtilsDemo/RZUtilsDemo-Prefix.pch";
+				INFOPLIST_FILE = "RZUtilsDemo/RZUtilsDemo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		7232568917691398002B8B7E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RZUtilsDemo/RZUtilsDemo-Prefix.pch";
+				INFOPLIST_FILE = "RZUtilsDemo/RZUtilsDemo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		7232568B17691398002B8B7E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RZUtilsDemo.app/RZUtilsDemo";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RZUtilsDemo/RZUtilsDemo-Prefix.pch";
+				INFOPLIST_FILE = "RZUtilsDemoTests/RZUtilsDemoTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		7232568C17691398002B8B7E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RZUtilsDemo.app/RZUtilsDemo";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RZUtilsDemo/RZUtilsDemo-Prefix.pch";
+				INFOPLIST_FILE = "RZUtilsDemoTests/RZUtilsDemoTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7232564417691398002B8B7E /* Build configuration list for PBXProject "RZUtilsDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7232568517691398002B8B7E /* Debug */,
+				7232568617691398002B8B7E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7232568717691398002B8B7E /* Build configuration list for PBXNativeTarget "RZUtilsDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7232568817691398002B8B7E /* Debug */,
+				7232568917691398002B8B7E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		7232568A17691398002B8B7E /* Build configuration list for PBXNativeTarget "RZUtilsDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7232568B17691398002B8B7E /* Debug */,
+				7232568C17691398002B8B7E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7232564117691398002B8B7E /* Project object */;
+}
