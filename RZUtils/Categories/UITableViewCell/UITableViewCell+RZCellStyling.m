@@ -6,7 +6,7 @@
 //
 
 #import "UITableViewCell+RZCellStyling.h"
-#import "UIImage+StretchHelpers.h"
+#import "UIImage+RZStretchHelpers.h"
 
 @implementation UITableViewCell (RZCellStyling)
 
