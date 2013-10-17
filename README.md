@@ -14,6 +14,10 @@ This is a collection of helpful utilities and components which makes iOS develop
  - **RZLoadingImageView**               A drop in solution for a image view that loads from a NSURL and caches to file.
  - **RZViewFactory**                    A simple view factory class
 
+## Macros Overview
+
+ - **RZLogHelper**						A header with debug log macros that extend NSLog, including verbosity levels
+
 ## License
 RZUtils is distributed under an [MIT License](http://opensource.org/licenses/MIT). See the LICENSE file for more details.
 
