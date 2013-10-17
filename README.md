@@ -1,6 +1,21 @@
 # RZUtils
 
-This is a collection of helpful utilities as well as a demo project that demonstrates the use of some components.
+This is a collection of helpful utilities and components which makes iOS development quicker and easier.  A demo project is provided that demonstrates the use of most components.
+
+## Categories Overview
+
+ - **NSDictionary+RZExtensions**        Safely using NSDictionaries
+ - **UIImage+RZStretchHelpers**         Stretch and cap inset methods for UIImage
+ - **UITableViewCell+RZCellStyling**    Methods for styling top, bottom, and middle tableview cells for grouped tableviews
+ - **UIView+RZFrameUtils**              Easy adjustments to UIView frames
+
+## Components Overview
+
+ - **RZLoadingImageView**               A drop in solution for a image view that loads from a NSURL and caches to file.
+ - **RZViewFactory**                    A simple view factory class
+
+## License
+RZUtils is distributed under an [MIT License](http://opensource.org/licenses/MIT). See the LICENSE file for more details.
 
 ## Guidelines for adding a new component
 
