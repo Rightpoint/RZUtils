@@ -21,6 +21,6 @@ RZUtils is distributed under an [MIT License](http://opensource.org/licenses/MIT
 
 When adding new components, please try and follow the following guidelines as closely as possible to ensure maximum ease of use and maintanability.
 
- * Add accompanying demo usage and/or unit test for the component. 
+ * No need for unit tests, just make sure it works and solves problems rather than causing them.
  * Ensure that the component has well documented headers.
  * Aggressivly use namespacing (method prefix) for Objective-C categories in order to avoid potential naming collisions.
