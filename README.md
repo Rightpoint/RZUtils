@@ -14,7 +14,7 @@ This is a collection of helpful utilities and components which makes iOS develop
  - **RZLoadingImageView**               A drop in solution for a image view that loads from a NSURL and caches to file.
  - **RZViewFactory**                    A simple view factory class
 
-## Macros Overview
+## Headers Overview
 
  - **RZLogHelper**						A header with debug log macros that extend NSLog, including verbosity levels
 
