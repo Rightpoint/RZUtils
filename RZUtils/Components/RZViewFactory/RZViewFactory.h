@@ -8,15 +8,12 @@
 #import <Foundation/Foundation.h>
 
 @interface UIView (RZViewFactory)
-+ (UIView *)view;
-@end
 
-@interface RZViewFactory : NSObject {
-    UIView *_view;
-}
-
-@property (nonatomic, strong) IBOutlet UIView *view;
-
-+ (UIView *)viewWithNibNamed:(NSString *)nibName;
+// This method of loading views from nibs only works if nib's owner is nil
+//
+//  EXAMPLE: MyView *myView = [MyView rz_loadFromNibNamed:nil];
+//  The above will try to find a xib called "MyView.xib" with a top-level
+//  object of custom class "MyView", and will return an instance loaded from that xib
++ (instancetype)rz_loadFromNibNamed:(NSString*)nibNameOrNil;
 
 @end
