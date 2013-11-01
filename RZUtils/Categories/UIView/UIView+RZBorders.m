@@ -38,7 +38,7 @@ static char kRZBorderViewKey;
     {
         hostView = [[RZBorderedHostView alloc] initWithFrame:self.bounds];
         hostView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [self addSubview:hostView];
+        [self insertSubview:hostView atIndex:0];
         objc_setAssociatedObject(self, &kRZBorderViewKey, hostView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     

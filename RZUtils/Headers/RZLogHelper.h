@@ -27,7 +27,6 @@
 #endif
 
 
-
 // Abandon all hope, ye who change code below this line
 // ----------------------------------------------------------------
 
@@ -39,22 +38,23 @@
 #undef RZ_LOGGING_LEVEL_DEBUG
 #endif
 
-#define RZ_LOG_FORMAT(fmt, lvl, ...) NSLog((@"%s (Line %d)\n[%@] " fmt), __PRETTY_FUNCTION__, __LINE__, lvl, ##__VA_ARGS__)
+// Creates a string containing the current function and line number
+#define RZCurrentCodeLocation [NSString stringWithFormat:@"%s (Line %d)", __PRETTY_FUNCTION__, __LINE__]
 
 #if defined(RZ_LOGGING_LEVEL_INFO) && RZ_LOGGING_LEVEL_INFO
-#define RZLogInfo(fmt, ...) RZ_LOG_FORMAT(fmt, @"info", ##__VA_ARGS__)
+#define RZLogInfo(fmt, ...) NSLog((@"[INFO] " fmt), ##__VA_ARGS__)
 #else
 #define RZLogInfo(...)
 #endif
 
 #if defined(RZ_LOGGING_LEVEL_ERROR) && RZ_LOGGING_LEVEL_ERROR
-#define RZLogError(fmt, ...) RZ_LOG_FORMAT(fmt, @"***ERROR***", ##__VA_ARGS__)
+#define RZLogError(fmt, ...) NSLog((@"[ERROR] " fmt), ##__VA_ARGS__)
 #else
 #define RZLogError(...)
 #endif
 
 #if defined(RZ_LOGGING_LEVEL_DEBUG) && RZ_LOGGING_LEVEL_DEBUG
-#define RZLogDebug(fmt, ...) RZ_LOG_FORMAT(fmt, @"DEBUG", ##__VA_ARGS__)
+#define RZLogDebug(fmt, ...) NSLog((@"[DEBUG] " fmt), ##__VA_ARGS__)
 #else
 #define RZLogDebug(...)
 #endif

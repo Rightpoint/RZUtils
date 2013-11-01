@@ -27,7 +27,7 @@ typedef NS_ENUM(NSUInteger, RZViewBorderMask)
 
 @end
 
-// Adds a clear-background instance of RZBorderedHostView as a subview of the target view.
+// Adds a clear-background instance of RZBorderedHostView as the lowest z-ordered subview of the target view (below all other views).
 // Good enough when the subview hierarchy is simple enough such that nothing will be added on top of the borders.
 @interface UIView (RZBorders)
 
