@@ -6,20 +6,20 @@
 //  Copyright (c) 2013 Raizlabs. All rights reserved.
 //
 
-#import "UIAlertView+CompletionBlocks.h"
+#import "UIAlertView+RZCompletionBlocks.h"
 #import <objc/runtime.h>
 
 @interface AlertViewCompletionDelegate : NSObject <UIAlertViewDelegate>
 
-@property (copy, nonatomic) AlertViewCompletionBlock completionBlock;
+@property (copy, nonatomic) RZAlertViewCompletionBlock completionBlock;
 
-- (id)initWithCompletionBlock:(AlertViewCompletionBlock)completion;
+- (id)initWithCompletionBlock:(RZAlertViewCompletionBlock)completion;
 
 @end
 
 @implementation AlertViewCompletionDelegate
 
-- (id)initWithCompletionBlock:(AlertViewCompletionBlock)completion
+- (id)initWithCompletionBlock:(RZAlertViewCompletionBlock)completion
 {
     self = [super init];
     if (self){
@@ -38,9 +38,9 @@
 
 @end
 
-@implementation UIAlertView (CompletionBlocks)
+@implementation UIAlertView (RZCompletionBlocks)
 
-- (void)showWithCompletionBlock:(AlertViewCompletionBlock)completion
+- (void)showWithCompletionBlock:(RZAlertViewCompletionBlock)completion
 {
     if (completion){
         AlertViewCompletionDelegate *alertDelegate = [[AlertViewCompletionDelegate alloc] initWithCompletionBlock:completion];
