@@ -55,16 +55,16 @@
     return _inEditingConfirmationState;
 }
 
-#pragma mark - Handle Notification
+#pragma mark - Editing State Management
 
 - (void)_rz_editingStateChangedForCell:(RZCollectionTableViewCell *)cell
 {
     // TODO: may want to show "edit circles" in the future, which is a different state from "confirmation"
     if (cell != nil && [self.visibleCells containsObject:cell])
     {
-        if (cell.tvcIsEditing)
+        if (cell.rzEditing)
         {
-            switch (cell.tvcEditingStyle)
+            switch (cell.rzEditingStyle)
             {
                 case RZCollectionTableViewCellEditingStyleDelete:
                     [self enterConfirmationStateForCell:cell];
@@ -87,7 +87,7 @@
         
         if ([self.collectionViewLayout isKindOfClass:[RZCollectionTableViewLayout class]])
         {
-            [(RZCollectionTableViewLayout*)self.collectionViewLayout _rz_commitEditingStyle:cell.tvcEditingStyle
+            [(RZCollectionTableViewLayout*)self.collectionViewLayout _rz_commitEditingStyle:cell.rzEditingStyle
                                                                           forRowAtIndexPath:[self indexPathForCell:cell]];
         }
     }
@@ -102,7 +102,7 @@
         
         if ([obj isKindOfClass:[RZCollectionTableViewCell class]] && obj != cell)
         {
-            [(RZCollectionTableViewCell*)obj setTvcEditing:NO animated:YES];
+            [(RZCollectionTableViewCell *)obj setRzEditing:NO animated:YES];
         }
         
     }];
@@ -116,7 +116,7 @@
         
         if ([obj isKindOfClass:[RZCollectionTableViewCell class]])
         {
-            [(RZCollectionTableViewCell*)obj setTvcEditing:NO animated:YES];
+            [(RZCollectionTableViewCell *)obj setRzEditing:NO animated:YES];
         }
         
     }];
