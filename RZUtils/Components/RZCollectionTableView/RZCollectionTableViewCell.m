@@ -17,14 +17,14 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
 
 @interface RZCollectionTableViewCell () <UIGestureRecognizerDelegate>
 
-@property (nonatomic, readwrite, weak) UIView *pannableContentView;
+@property (nonatomic, readwrite, weak) UIView *swipeableContentHostView;
 
 @property (nonatomic, weak) UIPanGestureRecognizer *panGesture;
 
-- (void)createBackgroundView;
+- (void)createSwipeableView;
 
 // NOTE: see comments in implementation of this method
-- (void)convertConstraintsToContentView;
+- (void)moveSubviewsToSwipeableContainer;
 
 - (void)configureGestures;
 - (void)handlePan:(UIPanGestureRecognizer *)panGesture;
@@ -38,7 +38,7 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
     self = [super initWithFrame:frame];
     if (self)
     {
-        [self createBackgroundView];
+        [self createSwipeableView];
         [self configureGestures];
     }
     return self;
@@ -49,9 +49,9 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
     self = [super initWithCoder:aDecoder];
     if (self)
     {
-        [self createBackgroundView];
-        [self convertConstraintsToContentView];
+        [self createSwipeableView];
         [self configureGestures];
+        [self moveSubviewsToSwipeableContainer];
     }
     return self;
 }
@@ -66,16 +66,26 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
 
 #pragma mark - Config
 
-- (void)createBackgroundView
+- (void)createSwipeableView
 {
-    self.contentView.backgroundColor = self.backgroundColor;
-    
-    self.backgroundView = [[UIView alloc] initWithFrame:self.bounds];
-    self.backgroundView.backgroundColor = [UIColor redColor];
+    UIView *swipeView = [[UIView alloc] initWithFrame:self.contentView.bounds];
+    swipeView.backgroundColor = self.backgroundColor;
+    swipeView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.contentView addSubview:swipeView];
+    self.swipeableContentHostView = swipeView;
 }
 
-- (void)convertConstraintsToContentView
+- (void)moveSubviewsToSwipeableContainer
 {
+    // move all of content view's subviews to the pannable container
+    NSArray *subviews = [[self.contentView subviews] copy];
+    [subviews enumerateObjectsUsingBlock:^(UIView *sv, NSUInteger idx, BOOL *stop) {
+        if (sv != self.swipeableContentHostView)
+        {
+            [self.swipeableContentHostView addSubview:sv];
+        }
+    }];
+    
     //
     // Nick Donaldson, 11/01/13
     //
@@ -95,13 +105,15 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
     NSArray *initialConstraints = [[self constraints] copy];
     [initialConstraints enumerateObjectsUsingBlock:^(NSLayoutConstraint *constraint, NSUInteger idx, BOOL *stop) {
         
-        if (constraint.firstItem == self && constraint.secondItem != nil)
+        if (constraint.firstItem == self.swipeableContentHostView || constraint.secondItem == self.swipeableContentHostView) return;
+        
+        if ((constraint.firstItem == self || constraint.firstItem == self.contentView) && constraint.secondItem != nil)
         {
-            if ([self.contentView.subviews containsObject:constraint.secondItem])
+            if ([self.swipeableContentHostView.subviews containsObject:constraint.secondItem])
             {
                 // copy constraint, change first view to content view
                 [self removeConstraint:constraint];
-                [self addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView
+                [self addConstraint:[NSLayoutConstraint constraintWithItem:self.swipeableContentHostView
                                                                  attribute:constraint.firstAttribute
                                                                  relatedBy:constraint.relation
                                                                     toItem:constraint.secondItem
@@ -110,16 +122,16 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
                                                                   constant:constraint.constant]];
             }
         }
-        else if (constraint.secondItem == self && constraint.firstItem != nil)
+        else if ((constraint.secondItem == self || constraint.secondItem == self.contentView) && constraint.firstItem != nil)
         {
-            if ([self.contentView.subviews containsObject:constraint.firstItem])
+            if ([self.swipeableContentHostView.subviews containsObject:constraint.firstItem])
             {
                 // copy constraint, change second view to content view
                 [self removeConstraint:constraint];
                 [self addConstraint:[NSLayoutConstraint constraintWithItem:constraint.firstItem
                                                                  attribute:constraint.firstAttribute
                                                                  relatedBy:constraint.relation
-                                                                    toItem:self.contentView
+                                                                    toItem:self.swipeableContentHostView
                                                                  attribute:constraint.secondAttribute
                                                                 multiplier:constraint.multiplier
                                                                   constant:constraint.constant]];
@@ -134,7 +146,7 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
 - (void)configureGestures
 {
     UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-    [self.contentView addGestureRecognizer:panGesture];
+    [self.swipeableContentHostView addGestureRecognizer:panGesture];
     panGesture.delegate = self;
     panGesture.enabled = NO;
     self.panGesture = panGesture;
@@ -187,12 +199,10 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
 
 - (void)handlePan:(UIPanGestureRecognizer *)panGesture
 {
-//    [self setTvcEditing:YES animated:YES];'
-    
     static CGFloat initialTranslationX = 0;
     
     CGPoint translation = [panGesture translationInView:self];
-    CGAffineTransform currentTransform = self.contentView.transform;
+    CGAffineTransform currentTransform = self.swipeableContentHostView.transform;
 
     switch (panGesture.state)
     {
@@ -202,8 +212,6 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
             
         case UIGestureRecognizerStateChanged:
         {
-            
-            
             CGFloat targetTranslationX = initialTranslationX + translation.x;
             targetTranslationX = MIN(0, targetTranslationX); // must be negative (left)
             
@@ -211,8 +219,11 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
             if (targetTranslationX < -kRZCTDefaultDeleteButtonWidth)
             {
                 // effect of translation gets mitigated the farther the target is
+                CGFloat overshoot = -kRZCTDefaultDeleteButtonWidth - targetTranslationX;
+                targetTranslationX = -kRZCTDefaultDeleteButtonWidth - overshoot*0.25;
             }
-            self.contentView.transform = CGAffineTransformMakeTranslation(targetTranslationX, 0);
+            
+            self.swipeableContentHostView.transform = CGAffineTransformMakeTranslation(targetTranslationX, 0);
         }
             break;
 
@@ -223,7 +234,7 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
                                   delay:0.0
                                 options:UIViewAnimationOptionCurveEaseOut
                              animations:^{
-                                 self.contentView.transform = CGAffineTransformIdentity;
+                                 self.swipeableContentHostView.transform = CGAffineTransformIdentity;
                              } completion:^(BOOL finished) {
                                  
                              }];

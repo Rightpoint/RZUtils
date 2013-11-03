@@ -22,9 +22,16 @@ typedef NS_ENUM(NSUInteger, RZCollectionTableViewCellEditingStyle)
 
 //! UICollectionViewCell subclass intended to be used with RZCollectionTableView.
 /*!
-    Adds basic iOS7-style swipe-to-delete functionality for collection view cell
+    Adds basic iOS7-style swipe-to-edit functionality for collection view cell
  */
 @interface RZCollectionTableViewCell : UICollectionViewCell
+
+//! Container view for adding subviews that will be swiped over when swiping to edit
+/*!
+    If loaded from a XIB, all subviews in the XIB will be moved to this view by default.
+    If building in code, you must add subviews here, NOT to the normal contentView.
+ */
+@property (nonatomic, readonly, weak) UIView *swipeableContentHostView;
 
 // NOTE: Using "rz" prefix for the editing interface to avoid potential future conflict with apple interface (if they ever add one).
 // If "editing" interface is added in future for UICollectionViewCell, this will be changed so simply overload that interface.
