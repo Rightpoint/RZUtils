@@ -5,12 +5,13 @@
 //  Copyright (c) 2013 RaizLabs. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 #import "RZCollectionTableViewCell.h"
 #import "RZCollectionTableView.h"
 #import "RZCollectionTableView_Private.h"
 
 #define kRZCTDefaultDeleteButtonWidth 80.f
+#define kRZCTEditStateAnimDuration    0.6
 
 NSString * const RZCollectionTableViewCellEditingStateChanged = @"RZCollectionTableViewCellEditingStateChanged";
 NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTableViewCellEditingCommitted";
@@ -230,13 +231,22 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled:
         {
-            [UIView animateWithDuration:0.3
+            
+            [UIView animateWithDuration:kRZCTEditStateAnimDuration * 0.33
                                   delay:0.0
                                 options:UIViewAnimationOptionCurveEaseOut
                              animations:^{
-                                 self.swipeableContentHostView.transform = CGAffineTransformIdentity;
+                                 self.swipeableContentHostView.transform = CGAffineTransformMakeTranslation(currentTransform.tx * 0.2, 0);
                              } completion:^(BOOL finished) {
-                                 
+                                
+                                 [UIView animateWithDuration:kRZCTEditStateAnimDuration * 0.66
+                                                       delay:0.0
+                                                     options:UIViewAnimationOptionCurveEaseOut
+                                                  animations:^{
+                                                      self.swipeableContentHostView.transform = CGAffineTransformIdentity;
+                                                  } completion:^(BOOL finished) {
+                                                      
+                                                  }];
                              }];
         }
             break;
