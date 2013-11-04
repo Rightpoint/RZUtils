@@ -37,20 +37,20 @@ static char kRZAssociatedObservationsKey;
 }
 
 
-- (void)rz_beginObservingObject:(NSObject *)object keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options withBlock:(RZKVOBlock)block
+- (void)rz_addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options withBlock:(RZKVOBlock)block
 {
-    [[self rz_blockObservations] addObject:[[RZBlockObservation alloc] initWithObservedObject:object observer:self keyPath:keyPath options:options block:block]];
+    [[observer rz_blockObservations] addObject:[[RZBlockObservation alloc] initWithObservedObject:self observer:observer keyPath:keyPath options:options block:block]];
 }
 
-- (void)rz_endObservingObject:(NSObject *)object keyPath:(NSString *)keyPath
+- (void)rz_removeObserver:(NSObject *)observer keyPath:(NSString *)keyPath
 {
-    NSIndexSet *indexes = [[self rz_blockObservations] indexesOfObjectsPassingTest:^BOOL(RZBlockObservation *obs, NSUInteger idx, BOOL *stop) {
-        return (([obs.observedObject isEqual:object] || obs.observedObject == nil) && (keyPath == nil || [keyPath isEqualToString:obs.keyPath]));
+    NSIndexSet *indexes = [[observer rz_blockObservations] indexesOfObjectsPassingTest:^BOOL(RZBlockObservation *obs, NSUInteger idx, BOOL *stop) {
+        return (([obs.observer isEqual:observer] || obs.observer == nil) && (keyPath == nil || [keyPath isEqualToString:obs.keyPath]));
     }];
     
     if (indexes.count > 0)
     {
-        [[self rz_blockObservations] removeObjectsAtIndexes:indexes];
+        [[observer rz_blockObservations] removeObjectsAtIndexes:indexes];
     }
 }
 
