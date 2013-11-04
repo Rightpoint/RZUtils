@@ -345,7 +345,7 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
             {
                 // effect of translation gets mitigated the farther the target is
                 CGFloat overshoot = maxTransX - targetTranslationX;
-                targetTranslationX = maxTransX - overshoot*0.25;
+                targetTranslationX = maxTransX - overshoot*0.3333;
             }
             
             self.swipeableContentHostView.transform = CGAffineTransformMakeTranslation(targetTranslationX, 0);
