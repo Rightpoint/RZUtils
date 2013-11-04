@@ -12,7 +12,7 @@
 @interface RZCollectionTableView ()
 
 - (void)_rz_editingStateChangedForCell:(RZCollectionTableViewCell*)cell;
-- (void)_rz_editingCommittedForCell:(RZCollectionTableViewCell*)cell;
+- (void)_rz_editingButtonPressed:(NSUInteger)buttonIdx forCell:(RZCollectionTableViewCell *)cell;
 
 // Flag to indicate whether the table view is in the editing confirmation state or not.
 @property (nonatomic, readonly) BOOL _rz_inEditingConfirmationState;
@@ -21,7 +21,7 @@
 
 @interface RZCollectionTableViewLayout ()
 
-- (void)_rz_commitEditingStyle:(RZCollectionTableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath;
+- (void)_rz_editingButtonPressed:(NSUInteger)buttonIdx forRowAtIndexPath:(NSIndexPath*)indexPath;
 
 @end
 

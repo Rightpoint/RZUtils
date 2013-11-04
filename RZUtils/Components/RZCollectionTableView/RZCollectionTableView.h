@@ -87,8 +87,8 @@ NS_CLASS_AVAILABLE_IOS(6_0) @protocol RZCollectionTableViewLayoutDelegate <UICol
 - (CGFloat)collectionView:(UICollectionView*)collectionView layout:(RZCollectionTableViewLayout*)layout heightForHeaderInSection:(NSInteger)section;
 - (CGFloat)collectionView:(UICollectionView*)collectionView layout:(RZCollectionTableViewLayout*)layout heightForFooterInSection:(NSInteger)section;
 
-- (RZCollectionTableViewCellEditingStyle)collectionView:(UICollectionView*)collectionView layout:(RZCollectionTableViewLayout*)layout editingStyleForRowAtIndexPath:(NSIndexPath*)indexPath;
-- (void)collectionView:(UICollectionView*)collectionView layout:(RZCollectionTableViewLayout*)layout commitEditingStyle:(RZCollectionTableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath;
+- (BOOL)collectionView:(UICollectionView*)collectionView layout:(RZCollectionTableViewLayout*)layout editingEnabledForRowAtIndexPath:(NSIndexPath*)indexPath;
+- (void)collectionView:(UICollectionView*)collectionView layout:(RZCollectionTableViewLayout*)layout editingButtonPressedForIndex:(NSUInteger)buttonIndex forRowAtIndexPath:(NSIndexPath*)indexPath;
 
 @end
 
@@ -105,6 +105,6 @@ typedef NS_ENUM(NSUInteger, RZCollectionTableViewCellRowPosition)
 NS_CLASS_AVAILABLE_IOS(6_0) @interface RZCollectionTableViewCellAttributes : UICollectionViewLayoutAttributes
 
 @property (nonatomic, assign) RZCollectionTableViewCellRowPosition rowPosition;
-@property (nonatomic, assign) RZCollectionTableViewCellEditingStyle editingStyle;
+@property (nonatomic, assign) BOOL rzEditingEnabled;
 
 @end

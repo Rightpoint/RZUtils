@@ -10,27 +10,49 @@
 #import "RZCollectionTableView.h"
 #import "RZCollectionTableView_Private.h"
 
-#define kRZCTDefaultDeleteButtonWidth 80.f
-#define kRZCTEditStateAnimDuration    0.6
+#define kRZCTEditingButtonWidth       80.f
+#define kRZCTEditStateAnimDuration    0.3
 
 NSString * const RZCollectionTableViewCellEditingStateChanged = @"RZCollectionTableViewCellEditingStateChanged";
 NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTableViewCellEditingCommitted";
 
 @interface RZCollectionTableViewCell () <UIGestureRecognizerDelegate>
 
+@property (nonatomic, strong) NSArray *rzEditingItems;
+
 @property (nonatomic, readwrite, weak) UIView *swipeableContentHostView;
+@property (nonatomic, weak)   UIView *editingButtonsHostView;
+@property (nonatomic, strong) NSArray *editingButtons;
 
 @property (nonatomic, weak) UIPanGestureRecognizer *panGesture;
 
-- (void)createSwipeableView;
+- (void)createHostViews;
 
 // NOTE: see comments in implementation of this method
 - (void)moveSubviewsToSwipeableContainer;
+
+- (void)refreshEditingButtons;
+
+- (void)editingButtonPressed:(UIButton*)button;
 
 - (void)configureGestures;
 - (void)handlePan:(UIPanGestureRecognizer *)panGesture;
 
 @end
+
+@interface RZCollectionTableViewCellEditingItem ()
+
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, strong) UIFont *titleFont;
+@property (nonatomic, strong) UIColor *titleColor;
+@property (nonatomic, strong) UIColor *titleHighlightColor;
+@property (nonatomic, strong) UIColor *bgColor;
+@property (nonatomic, strong) UIImage *icon;
+@property (nonatomic, strong) UIImage *highlightedIcon;
+
+@end
+
+// ------------------------------------------------
 
 @implementation RZCollectionTableViewCell
 
@@ -39,7 +61,7 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
     self = [super initWithFrame:frame];
     if (self)
     {
-        [self createSwipeableView];
+        [self createHostViews];
         [self configureGestures];
     }
     return self;
@@ -50,7 +72,7 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
     self = [super initWithCoder:aDecoder];
     if (self)
     {
-        [self createSwipeableView];
+        [self createHostViews];
         [self configureGestures];
         [self moveSubviewsToSwipeableContainer];
     }
@@ -67,8 +89,14 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
 
 #pragma mark - Config
 
-- (void)createSwipeableView
+- (void)createHostViews
 {
+    UIView *editingButtonView = [[UIView alloc] initWithFrame:self.contentView.bounds];
+    editingButtonView.backgroundColor = self.backgroundColor;
+    editingButtonView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.contentView addSubview:editingButtonView];
+    self.editingButtonsHostView = editingButtonView;
+    
     UIView *swipeView = [[UIView alloc] initWithFrame:self.contentView.bounds];
     swipeView.backgroundColor = self.backgroundColor;
     swipeView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -81,7 +109,7 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
     // move all of content view's subviews to the pannable container
     NSArray *subviews = [[self.contentView subviews] copy];
     [subviews enumerateObjectsUsingBlock:^(UIView *sv, NSUInteger idx, BOOL *stop) {
-        if (sv != self.swipeableContentHostView)
+        if (sv != self.swipeableContentHostView && sv != self.editingButtonsHostView)
         {
             [self.swipeableContentHostView addSubview:sv];
         }
@@ -101,7 +129,6 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
     // If this anomaly is ever fixed in UIKit, this method *should* still be safe - the search will simply
     // not find any constraints that match the criteria to be modified.
     //
-#warning TODO: File Radar on this
     
     NSArray *initialConstraints = [[self constraints] copy];
     [initialConstraints enumerateObjectsUsingBlock:^(NSLayoutConstraint *constraint, NSUInteger idx, BOOL *stop) {
@@ -153,12 +180,93 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
     self.panGesture = panGesture;
 }
 
+
+- (void)refreshEditingButtons
+{
+    [self.editingButtons makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    NSMutableArray *newButtons = [NSMutableArray array];
+    
+    [self.rzEditingItems enumerateObjectsUsingBlock:^(RZCollectionTableViewCellEditingItem *item, NSUInteger idx, BOOL *stop) {
+        
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectZero];
+        button.translatesAutoresizingMaskIntoConstraints = NO;
+        [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
+        [button setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
+        button.backgroundColor = item.bgColor ? item.bgColor : [UIColor redColor];
+        
+        [button addTarget:self action:@selector(editingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        
+        if (item.icon)
+        {
+            [button setImage:item.icon forState:UIControlStateNormal];
+            [button setImage:item.highlightedIcon forState:UIControlStateHighlighted];
+        }
+        else
+        {
+            [button setTitle:item.title forState:UIControlStateNormal];
+            [button.titleLabel setFont:item.titleFont];
+            [button setTitleColor:item.titleColor forState:UIControlStateNormal];
+            [button setTitleColor:item.titleHighlightColor forState:UIControlStateHighlighted];
+        }
+        
+        [self.editingButtonsHostView addSubview:button];
+        [self.editingButtonsHostView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[button]-0-|" options:0 metrics:nil views:@{@"button" : button}]];
+        [self.editingButtonsHostView addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:kRZCTEditingButtonWidth]];
+        
+        if (idx > 0)
+        {
+            // right-align to previous button
+            UIButton *prevButton = [newButtons objectAtIndex:idx-1];
+            [self.editingButtonsHostView addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:prevButton attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
+        }
+        else
+        {
+            // right-align to container
+            [self.editingButtonsHostView addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.editingButtonsHostView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
+        }
+        
+        [newButtons addObject:button];
+        
+        // update background color of container to match last button
+        if (idx == self.editingButtons.count)
+        {
+            self.editingButtonsHostView.backgroundColor = item.bgColor;
+        }
+    }];
+    
+    self.editingButtons = [NSArray arrayWithArray:newButtons];
+}
+
+- (void)editingButtonPressed:(UIButton *)button
+{
+    NSInteger idx = [self.editingButtons indexOfObject:button];
+    if (idx != NSNotFound)
+    {
+        [self._rz_parentCollectionTableView _rz_editingButtonPressed:idx forCell:self];
+    }
+}
+
 #pragma mark - Editing
 
-- (void)setRzEditingStyle:(RZCollectionTableViewCellEditingStyle)editingStyle
+- (void)setRzEditingItems:(NSArray *)editingItems
 {
-    _rzEditingStyle = editingStyle;
-    self.panGesture.enabled = (editingStyle == RZCollectionTableViewCellEditingStyleDelete);
+    _rzEditingItems = editingItems;
+    [self refreshEditingButtons];
+}
+
+- (void)setRzEditingEnabled:(BOOL)rzEditingEnabled
+{
+    if (rzEditingEnabled && self.rzEditingItems.count == 0)
+    {
+        _rzEditingEnabled = NO;
+        NSLog(@"ERROR: Cannot enable editing on RZCollectionTableViewCell with no editing items set");
+    }
+    else
+    {
+        _rzEditingEnabled = rzEditingEnabled;
+        self.panGesture.enabled = rzEditingEnabled;
+    }
 }
 
 - (void)setRzEditing:(BOOL)editing
@@ -169,9 +277,24 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
 - (void)setRzEditing:(BOOL)editing animated:(BOOL)animated
 {
     _rzEditing = editing;
-
-    self.panGesture.enabled = (editing && self.rzEditingStyle == RZCollectionTableViewCellEditingStyleDelete);
     
+    self.swipeableContentHostView.userInteractionEnabled = !editing;
+    
+    CGFloat stopTarget = editing ? (-kRZCTEditingButtonWidth * self.rzEditingItems.count) : 0;
+    if (animated)
+    {
+        [UIView animateWithDuration:kRZCTEditStateAnimDuration
+                              delay:0.0
+                            options:UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             self.swipeableContentHostView.transform = CGAffineTransformMakeTranslation(stopTarget, 0);
+                         } completion:nil];
+    }
+    else
+    {
+        self.swipeableContentHostView.transform = CGAffineTransformMakeTranslation(stopTarget, 0);
+    }
+
     [self._rz_parentCollectionTableView _rz_editingStateChangedForCell:self];
 }
 
@@ -181,12 +304,12 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
     if ([layoutAttributes isKindOfClass:[RZCollectionTableViewCellAttributes class]])
     {
         RZCollectionTableViewCellAttributes *rzLayoutAttributes = (RZCollectionTableViewCellAttributes*)layoutAttributes;
-        self.rzEditingStyle = rzLayoutAttributes.editingStyle;
+        self.rzEditingEnabled = rzLayoutAttributes.rzEditingEnabled;
         self._rz_parentCollectionTableView = rzLayoutAttributes._rz_parentCollectionTableView;
     }
     else
     {
-        self.rzEditingStyle = RZCollectionTableViewCellEditingStyleNone;
+        self.rzEditingEnabled = NO;
         self._rz_parentCollectionTableView = nil;
     }
 }
@@ -204,6 +327,7 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
     
     CGPoint translation = [panGesture translationInView:self];
     CGAffineTransform currentTransform = self.swipeableContentHostView.transform;
+    CGFloat maxTransX = -kRZCTEditingButtonWidth * self.rzEditingItems.count;
 
     switch (panGesture.state)
     {
@@ -217,11 +341,11 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
             targetTranslationX = MIN(0, targetTranslationX); // must be negative (left)
             
             // if we're beyond the threshold, mitigate the amount we continue to translate
-            if (targetTranslationX < -kRZCTDefaultDeleteButtonWidth)
+            if (targetTranslationX < maxTransX)
             {
                 // effect of translation gets mitigated the farther the target is
-                CGFloat overshoot = -kRZCTDefaultDeleteButtonWidth - targetTranslationX;
-                targetTranslationX = -kRZCTDefaultDeleteButtonWidth - overshoot*0.25;
+                CGFloat overshoot = maxTransX - targetTranslationX;
+                targetTranslationX = maxTransX - overshoot*0.25;
             }
             
             self.swipeableContentHostView.transform = CGAffineTransformMakeTranslation(targetTranslationX, 0);
@@ -232,22 +356,15 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
         case UIGestureRecognizerStateCancelled:
         {
             
-            [UIView animateWithDuration:kRZCTEditStateAnimDuration * 0.33
-                                  delay:0.0
-                                options:UIViewAnimationOptionCurveEaseOut
-                             animations:^{
-                                 self.swipeableContentHostView.transform = CGAffineTransformMakeTranslation(currentTransform.tx * 0.2, 0);
-                             } completion:^(BOOL finished) {
-                                
-                                 [UIView animateWithDuration:kRZCTEditStateAnimDuration * 0.66
-                                                       delay:0.0
-                                                     options:UIViewAnimationOptionCurveEaseOut
-                                                  animations:^{
-                                                      self.swipeableContentHostView.transform = CGAffineTransformIdentity;
-                                                  } completion:^(BOOL finished) {
-                                                      
-                                                  }];
-                             }];
+            if (currentTransform.tx < maxTransX)
+            {
+                [self setRzEditing:YES animated:YES];
+                
+            }
+            else
+            {
+                [self setRzEditing:NO animated:YES];
+            }
         }
             break;
 
@@ -276,5 +393,32 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
     }
     return shouldBegin;
 }
+
+@end
+
+
+
+@implementation RZCollectionTableViewCellEditingItem
+
++ (RZCollectionTableViewCellEditingItem *)itemWithTitle:(NSString *)title font:(UIFont *)font titleColor:(UIColor *)titleColor highlightedTitlecolor:(UIColor *)highlightedTitleColor backgroundColor:(UIColor *)backgroundColor
+{
+    RZCollectionTableViewCellEditingItem *item = [RZCollectionTableViewCellEditingItem new];
+    item.title = title;
+    item.titleFont = font;
+    item.titleColor = titleColor;
+    item.titleHighlightColor = highlightedTitleColor ? highlightedTitleColor : titleColor;
+    item.bgColor = backgroundColor;
+    return item;
+}
+
++ (RZCollectionTableViewCellEditingItem *)itemWithIcon:(UIImage *)icon highlightedIcon:(UIImage *)highlightedIcon backgroundColor:(UIColor *)backgroundColor
+{
+    RZCollectionTableViewCellEditingItem *item = [RZCollectionTableViewCellEditingItem new];
+    item.icon = icon;
+    item.highlightedIcon = highlightedIcon ? highlightedIcon : icon;
+    item.bgColor = backgroundColor;
+    return item;
+}
+
 
 @end

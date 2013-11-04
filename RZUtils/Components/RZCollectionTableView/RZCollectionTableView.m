@@ -59,27 +59,16 @@
 
 - (void)_rz_editingStateChangedForCell:(RZCollectionTableViewCell *)cell
 {
-    // TODO: may want to show "edit circles" in the future, which is a different state from "confirmation"
     if (cell != nil && [self.visibleCells containsObject:cell])
     {
         if (cell.rzEditing)
         {
-            switch (cell.rzEditingStyle)
-            {
-                case RZCollectionTableViewCellEditingStyleDelete:
-                    [self enterConfirmationStateForCell:cell];
-                    break;
-                    
-                case RZCollectionTableViewCellEditingStyleNone:
-                default:
-                    break;
-            }
+            [self enterConfirmationStateForCell:cell];
         }
     }
-    
 }
 
-- (void)_rz_editingCommittedForCell:(RZCollectionTableViewCell *)cell
+- (void)_rz_editingButtonPressed:(NSUInteger)buttonIdx forCell:(RZCollectionTableViewCell *)cell
 {
     if (cell != nil && [self.visibleCells containsObject:cell])
     {
@@ -87,8 +76,8 @@
         
         if ([self.collectionViewLayout isKindOfClass:[RZCollectionTableViewLayout class]])
         {
-            [(RZCollectionTableViewLayout*)self.collectionViewLayout _rz_commitEditingStyle:cell.rzEditingStyle
-                                                                          forRowAtIndexPath:[self indexPathForCell:cell]];
+            [(RZCollectionTableViewLayout*)self.collectionViewLayout _rz_editingButtonPressed:buttonIdx
+                                                                            forRowAtIndexPath:[self indexPathForCell:cell]];
         }
     }
 }
@@ -418,11 +407,11 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
     }
     
     // Update editing style
-    if ([self.layoutDelegate respondsToSelector:@selector(collectionView:layout:editingStyleForRowAtIndexPath:)])
+    if ([self.layoutDelegate respondsToSelector:@selector(collectionView:layout:editingEnabledForRowAtIndexPath:)])
     {
-        rowAttributes.editingStyle = [self.layoutDelegate collectionView:self.collectionView
-                                                                  layout:self
-                                           editingStyleForRowAtIndexPath:indexPath];
+        rowAttributes.rzEditingEnabled = [self.layoutDelegate collectionView:self.collectionView
+                                                                      layout:self
+                                             editingEnabledForRowAtIndexPath:indexPath];
     }
     
     if ([self.collectionView isKindOfClass:[RZCollectionTableView class]])
@@ -840,13 +829,13 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
 
 #pragma mark - Very Private
 
-- (void)_rz_commitEditingStyle:(RZCollectionTableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)_rz_editingButtonPressed:(NSUInteger)buttonIdx forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.layoutDelegate respondsToSelector:@selector(collectionView:layout:commitEditingStyle:forRowAtIndexPath:)])
+    if ([self.layoutDelegate respondsToSelector:@selector(collectionView:layout:editingButtonPressedForIndex:forRowAtIndexPath:)])
     {
         [self.layoutDelegate collectionView:self.collectionView
                                      layout:self
-                         commitEditingStyle:editingStyle
+               editingButtonPressedForIndex:buttonIdx
                           forRowAtIndexPath:indexPath];
     }
 }
@@ -861,7 +850,7 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
 {
     RZCollectionTableViewCellAttributes *copiedAttributes = [super copyWithZone:zone];
     copiedAttributes.rowPosition = self.rowPosition;
-    copiedAttributes.editingStyle = self.editingStyle;
+    copiedAttributes.rzEditingEnabled = self.rzEditingEnabled;
     copiedAttributes._rz_parentCollectionTableView = self._rz_parentCollectionTableView;
     return copiedAttributes;
 }
