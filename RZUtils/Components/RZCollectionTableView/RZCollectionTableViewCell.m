@@ -259,7 +259,7 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
     BOOL shouldBegin = NO;
-    if ([gestureRecognizer isKindOfClass:[UIGestureRecognizer class]])
+    if (gestureRecognizer == self.panGesture)
     {
         UIPanGestureRecognizer *pan = (UIPanGestureRecognizer*)gestureRecognizer;
         CGPoint vel = [pan velocityInView:self];
@@ -269,6 +269,10 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
             // if it's more left than right
             shouldBegin = (vel.x < 0);
         }
+    }
+    else if ([super respondsToSelector:@selector(gestureRecognizerShouldBegin:)])
+    {
+        shouldBegin = [super gestureRecognizerShouldBegin:gestureRecognizer];
     }
     return shouldBegin;
 }
