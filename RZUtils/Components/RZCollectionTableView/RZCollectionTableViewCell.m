@@ -123,7 +123,7 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
     // they should be constrained to it rather than to the cell.
     //
     // Normally this is not a problem since the contentView will always fill the cell, but in this case,
-    // we are transforming the contentView to achieve the "swipe to delete" behavior, so we need to swap
+    // we are moving the subviews to a new container to achieve the "swipe to delete" behavior, so we need to swap
     // the targets of the constraints to be correct.
     //
     // If this anomaly is ever fixed in UIKit, this method *should* still be safe - the search will simply
@@ -355,11 +355,9 @@ NSString * const RZCollectionTableViewCellEditingCommitted = @"RZCollectionTable
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled:
         {
-            
             if (currentTransform.tx < maxTransX)
             {
                 [self setRzEditing:YES animated:YES];
-                
             }
             else
             {

@@ -16,8 +16,6 @@
     BOOL _inEditingConfirmationState;
 }
 
-- (void)commonInit;
-
 - (void)enterConfirmationStateForCell:(RZCollectionTableViewCell*)cell;
 - (void)endConfirmationState;
 
@@ -25,29 +23,10 @@
 
 @implementation RZCollectionTableView
 
-- (id)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout
+- (void)reloadData
 {
-    self = [super initWithFrame:frame collectionViewLayout:layout];
-    if (self)
-    {
-        [self commonInit];
-    }
-    return self;
-}
-
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super initWithCoder:aDecoder];
-    if (self)
-    {
-        [self commonInit];
-    }
-    return self;
-}
-
-- (void)commonInit
-{
-    
+    [super reloadData];
+    self.panGestureRecognizer.enabled = YES;
 }
 
 - (BOOL)_rz_inEditingConfirmationState
@@ -96,6 +75,9 @@
         
     }];
     
+    // disable pan gesture on collection view
+    self.panGestureRecognizer.enabled = NO;
+    
     _inEditingConfirmationState = YES;
 }
 
@@ -109,6 +91,8 @@
         }
         
     }];
+    
+    self.panGestureRecognizer.enabled = YES;
     
     _inEditingConfirmationState = NO;
 }
