@@ -16,6 +16,9 @@
 - (NSDate *)rz_dateByAddingDays:(NSInteger)days;
 
 // YES if date represents the same day
-- (BOOL)rz_isSameDayAsDate:(NSDate*)date;
+- (BOOL)rz_isSameDayAsDate:(NSDate *)date;
+
+// Returns days of difference from other date
+- (NSInteger)rz_dayOffsetFromDate:(NSDate *)date;
 
 @end

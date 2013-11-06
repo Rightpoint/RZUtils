@@ -49,4 +49,15 @@ static NSCalendar * RZCachedCurrentCalendar()
     return (comp1.day == comp2.day) && (comp1.month == comp2.month) && (comp1.year == comp2.year);
 }
 
+- (NSInteger)rz_dayOffsetFromDate:(NSDate *)date
+{
+    NSInteger offset = 0;
+    if (![self rz_isSameDayAsDate:date])
+    {
+        NSTimeInterval difference = [[self rz_dateByRemovingTime] timeIntervalSinceDate:[date rz_dateByRemovingTime]];
+        offset = round(difference/(3600*24));
+    }
+    return offset;
+}
+
 @end
