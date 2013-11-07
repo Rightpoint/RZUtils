@@ -21,14 +21,30 @@ static NSCalendar * RZCachedCurrentCalendar()
 
 @implementation NSDate (RZExtensions)
 
-+ (NSDate *)rz_dateWithoutTime
++ (NSDate *)rz_currentDayNoTime
 {
-    return [[NSDate date] rz_dateByRemovingTime];
+    return [NSDate rz_currentDayNoTimeLocally:NO];
+}
+
++ (NSDate *)rz_currentDayNoTimeLocally:(BOOL)locally
+{
+    return [[NSDate date] rz_dateByRemovingTimeLocally:locally];
 }
 
 - (NSDate *)rz_dateByRemovingTime
 {
-    NSCalendar *cal = RZCachedCurrentCalendar();
+    return [self rz_dateByRemovingTimeLocally:NO];
+}
+
+- (NSDate *)rz_dateByRemovingTimeLocally:(BOOL)locally
+{
+    NSCalendar *cal = [RZCachedCurrentCalendar() copy];
+    
+    if (!locally)
+    {
+        [cal setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    }
+    
     NSDateComponents *components = [cal components:(NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond) fromDate:self];
 
     [components setHour:0];
@@ -45,7 +61,17 @@ static NSCalendar * RZCachedCurrentCalendar()
 
 - (BOOL)rz_isSameDayAsDate:(NSDate *)date
 {
-    NSCalendar* calendar = RZCachedCurrentCalendar();
+    return [self rz_isSameDayAsDate:date locally:NO];
+}
+
+- (BOOL)rz_isSameDayAsDate:(NSDate *)date locally:(BOOL)locally
+{
+    NSCalendar* calendar = [RZCachedCurrentCalendar() copy];
+    
+    if (!locally)
+    {
+        [calendar setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    }
     
     unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
     NSDateComponents* comp1 = [calendar components:unitFlags fromDate:self];
@@ -56,25 +82,8 @@ static NSCalendar * RZCachedCurrentCalendar()
 
 - (NSInteger)rz_dayOffsetFromDate:(NSDate *)date
 {
-    NSInteger offset = 0;
-    if (![self rz_isSameDayAsDate:date])
-    {
-        NSTimeInterval difference = [[self rz_dateByRemovingTime] timeIntervalSinceDate:[date rz_dateByRemovingTime]];
-        offset = round(difference/(3600*24));
-    }
-    return offset;
-}
-
-- (BOOL)rz_isDateInRangeToStartDate:(NSDate *)startDate endDate:(NSDate *)endDate
-{
-    return ([self compare:startDate] == NSOrderedDescending) && ([self compare:endDate] == NSOrderedAscending);
-}
-
-- (BOOL)rz_isDateInRangeOrEqualToStartDate:(NSDate *)startDate endDate:(NSDate *)endDate
-{
-    NSComparisonResult startCompare = [self compare:startDate];
-    NSComparisonResult endCompare = [self compare:endDate];
-    return (startCompare == NSOrderedDescending || startCompare == NSOrderedSame) && (endCompare == NSOrderedAscending || endCompare == NSOrderedSame);
+    NSTimeInterval difference = [[self rz_dateByRemovingTime] timeIntervalSinceDate:[date rz_dateByRemovingTime]];
+    return round(difference/(3600*24));
 }
 
 @end
