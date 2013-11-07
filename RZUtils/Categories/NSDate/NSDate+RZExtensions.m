@@ -86,4 +86,16 @@ static NSCalendar * RZCachedCurrentCalendar()
     return round(difference/(3600*24));
 }
 
+- (BOOL)rz_isDateInRangeStartDate:(NSDate *)startDate endDate:(NSDate *)endDate
+{
+    return ([self compare:startDate] == NSOrderedDescending) && ([self compare:endDate] == NSOrderedAscending);
+}
+
+- (BOOL)rz_isDateInRangeOrEqualToStartDate:(NSDate *)startDate endDate:(NSDate *)endDate
+{
+    NSComparisonResult startCompare = [self compare:startDate];
+    NSComparisonResult endCompare = [self compare:endDate];
+    return (startCompare == NSOrderedDescending || startCompare == NSOrderedSame) && (endCompare == NSOrderedAscending || endCompare == NSOrderedSame);
+}
+
 @end

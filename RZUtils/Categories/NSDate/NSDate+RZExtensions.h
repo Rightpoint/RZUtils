@@ -36,4 +36,10 @@
 // Returns days of difference from other date
 - (NSInteger)rz_dayOffsetFromDate:(NSDate *)date;
 
+// Yes if date is inbetween the start and end date but not equal to
+- (BOOL)rz_isDateInRangeStartDate:(NSDate *)startDate endDate:(NSDate *)endDate;
+
+// Yes if date is inbetween or equal to either the start or the end date.
+- (BOOL)rz_isDateInRangeOrEqualToStartDate:(NSDate *)startDate endDate:(NSDate *)endDate;
+
 @end
