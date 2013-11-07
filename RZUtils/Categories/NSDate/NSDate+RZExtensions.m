@@ -40,7 +40,17 @@ static NSCalendar * RZCachedCurrentCalendar()
 
 - (BOOL)rz_isSameDayAsDate:(NSDate *)date
 {
-    NSCalendar* calendar = RZCachedCurrentCalendar();
+    return [self rz_isSameDayAsDate:date locally:NO];
+}
+
+- (BOOL)rz_isSameDayAsDate:(NSDate *)date locally:(BOOL)locally
+{
+    NSCalendar* calendar = [RZCachedCurrentCalendar() copy];
+    
+    if (!locally)
+    {
+        [calendar setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    }
     
     unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
     NSDateComponents* comp1 = [calendar components:unitFlags fromDate:self];
@@ -51,13 +61,8 @@ static NSCalendar * RZCachedCurrentCalendar()
 
 - (NSInteger)rz_dayOffsetFromDate:(NSDate *)date
 {
-    NSInteger offset = 0;
-    if (![self rz_isSameDayAsDate:date])
-    {
-        NSTimeInterval difference = [[self rz_dateByRemovingTime] timeIntervalSinceDate:[date rz_dateByRemovingTime]];
-        offset = round(difference/(3600*24));
-    }
-    return offset;
+    NSTimeInterval difference = [[self rz_dateByRemovingTime] timeIntervalSinceDate:[date rz_dateByRemovingTime]];
+    return round(difference/(3600*24));
 }
 
 @end

@@ -15,8 +15,12 @@
 // add (or subtract) number of days
 - (NSDate *)rz_dateByAddingDays:(NSInteger)days;
 
-// YES if date represents the same day
+// YES if date represents the same day.
+// Uses GMT date boundary by default
 - (BOOL)rz_isSameDayAsDate:(NSDate *)date;
+
+// If locally is NO, will use GMT date boundary, otherwise uses local time zone
+- (BOOL)rz_isSameDayAsDate:(NSDate *)date locally:(BOOL)locally;
 
 // Returns days of difference from other date
 - (NSInteger)rz_dayOffsetFromDate:(NSDate *)date;
