@@ -21,9 +21,30 @@ static NSCalendar * RZCachedCurrentCalendar()
 
 @implementation NSDate (RZExtensions)
 
++ (NSDate *)rz_currentDayNoTime
+{
+    return [NSDate rz_currentDayNoTimeLocally:NO];
+}
+
++ (NSDate *)rz_currentDayNoTimeLocally:(BOOL)locally
+{
+    return [[NSDate date] rz_dateByRemovingTimeLocally:locally];
+}
+
 - (NSDate *)rz_dateByRemovingTime
 {
-    NSCalendar *cal = RZCachedCurrentCalendar();
+    return [self rz_dateByRemovingTimeLocally:NO];
+}
+
+- (NSDate *)rz_dateByRemovingTimeLocally:(BOOL)locally
+{
+    NSCalendar *cal = [RZCachedCurrentCalendar() copy];
+    
+    if (!locally)
+    {
+        [cal setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    }
+    
     NSDateComponents *components = [cal components:(NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond) fromDate:self];
 
     [components setHour:0];
