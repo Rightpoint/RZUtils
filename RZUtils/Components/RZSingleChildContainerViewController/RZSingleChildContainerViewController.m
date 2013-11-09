@@ -64,8 +64,7 @@
 
 - (void)setContentVCAnimatedTransition:(id<UIViewControllerAnimatedTransitioning>)contentVCAnimatedTransition
 {
-    NSParameterAssert(contentVCAnimatedTransition);
-    _contentVCAnimatedTransition = contentVCAnimatedTransition;
+    _contentVCAnimatedTransition = contentVCAnimatedTransition ? contentVCAnimatedTransition : [RZSingleChildContainerAlphaTransitioner new];
 }
 
 - (void)performBlockWhenViewLoaded:(void (^)())block
