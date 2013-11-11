@@ -45,7 +45,7 @@ static NSCalendar * RZCachedCurrentCalendar()
         [cal setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     }
     
-    NSDateComponents *components = [cal components:(NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond) fromDate:self];
+    NSDateComponents *components = [cal components:(NSCalendarUnitTimeZone | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond) fromDate:self];
 
     [components setHour:0];
     [components setMinute:0];
