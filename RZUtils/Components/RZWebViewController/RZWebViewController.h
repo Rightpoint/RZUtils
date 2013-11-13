@@ -22,7 +22,7 @@
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 
 // Intialize the webview with a localFile in the bundle
-- (id)initWithLocalFileName:(NSString *)fileName;
+- (id)initWithPathForResource:(NSString *)resource;
 
 // Intialize the webview with a remote Website URL
 - (id)initWithRemoteURL:(NSURL *)webURL;

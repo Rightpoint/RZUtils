@@ -15,13 +15,13 @@
 
 @implementation RZWebViewController
 
-- (id)initWithLocalFileName:(NSString *)fileName
+- (id)initWithPathForResource:(NSString *)resource
 {
     self = [super init];
     if (self)
     {
         // For now we are assuming that everything is HTML.  In the future we may want to allow the ability to specify this.
-        self.webContentURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:fileName ofType:@"html"] isDirectory:NO];
+        self.webContentURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:resource ofType:@"html"] isDirectory:NO];
     }
     return self;
 }
