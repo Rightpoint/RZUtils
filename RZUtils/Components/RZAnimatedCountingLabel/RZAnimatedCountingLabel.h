@@ -26,8 +26,4 @@ typedef NSString * (^RZAnimatedCountingLabelFormatBlock)(NSNumber *number);
 // Set number value with animation. Will cancel existing animation before starting.
 - (void)animateToNumberValue:(NSNumber *)numberValue duration:(CFTimeInterval)duration completion:(void(^)(BOOL finished))completion;
 
-// TODO: Timing function is not implemented yet
-- (void)animateToNumberValue:(NSNumber *)numberValue duration:(CFTimeInterval)duration timingFunction:(CAMediaTimingFunction *)timingFunction completion:(void(^)(BOOL finished))completion;
-
-
 @end

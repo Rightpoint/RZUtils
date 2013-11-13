@@ -21,7 +21,6 @@
 @property (nonatomic, assign) CFTimeInterval animationDuration;
 @property (nonatomic, assign) CFTimeInterval animationStartTimestamp;
 @property (nonatomic, assign) CFTimeInterval lastUpdateTimestamp;
-@property (nonatomic, strong) CAMediaTimingFunction *timingFunction;
 
 @property (nonatomic, copy) void (^animationCompletion)(BOOL finished);
 
@@ -75,11 +74,6 @@
 
 - (void)animateToNumberValue:(NSNumber *)numberValue duration:(CFTimeInterval)duration completion:(void (^)(BOOL))completion
 {
-    [self animateToNumberValue:numberValue duration:duration timingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault] completion:completion];
-}
-
-- (void)animateToNumberValue:(NSNumber *)numberValue duration:(CFTimeInterval)duration timingFunction:(CAMediaTimingFunction *)timingFunction completion:(void (^)(BOOL))completion
-{
     if (self.displayLink && self.animationCompletion)
     {
         self.animationCompletion(NO);
@@ -93,7 +87,6 @@
     
     self.animationDuration = duration;
     self.targetNumber = numberValue;
-    self.timingFunction = timingFunction;
     
     self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLinkTick:)];
     self.lastUpdateTimestamp = self.animationStartTimestamp = 0;
