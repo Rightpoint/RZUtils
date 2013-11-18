@@ -47,6 +47,11 @@
     [self.viewLoadedBlocks removeAllObjects];
 }
 
+- (BOOL)shouldAutomaticallyForwardAppearanceMethods
+{
+    return NO;
+}
+
 - (UIViewController*)childViewControllerForStatusBarStyle
 {
     return self.currentContentViewController;
@@ -92,21 +97,27 @@
         
         if (animated)
         {
+            [currentChild beginAppearanceTransition:NO animated:YES];
             [currentChild willMoveToParentViewController:nil];
             [wself addChildViewController:viewController];
-            
+            [viewController beginAppearanceTransition:YES animated:YES];
             RZSingleChildContainerTransitionContext *ctx = [[RZSingleChildContainerTransitionContext alloc] initWithContainerVC:wself
-                                                                                                                                 fromVC:currentChild
-                                                                                                                                   toVC:viewController];
+                                                                                                                         fromVC:currentChild
+                                                                                                                           toVC:viewController];
             [wself.contentVCAnimatedTransition animateTransition:ctx];
         }
         else
         {
+            [currentChild beginAppearanceTransition:NO animated:NO];
             [currentChild.view removeFromSuperview];
             [currentChild removeFromParentViewController];
+            [currentChild endAppearanceTransition];
+            
             [wself addChildViewController:viewController];
+            [viewController beginAppearanceTransition:YES animated:NO];
             [[wself childContentContainerView] addSubview:viewController.view];
             [viewController didMoveToParentViewController:wself];
+            [viewController endAppearanceTransition];
             [self setNeedsStatusBarAppearanceUpdate];
         }
     }];
@@ -172,6 +183,9 @@
 - (void)completeTransition:(BOOL)didComplete
 {
     [_fromVC.view removeFromSuperview]; // just in case it didn't happen in the animation
+    [_fromVC endAppearanceTransition];
+    [_toVC endAppearanceTransition];
+
     [_fromVC removeFromParentViewController];
     [_toVC didMoveToParentViewController:_containerVC];
     [_containerVC setNeedsStatusBarAppearanceUpdate];
