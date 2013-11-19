@@ -92,14 +92,14 @@
     [self performBlockWhenViewLoaded:^{
         
         UIViewController *currentChild = wself.currentContentViewController;
-        viewController.view.frame = [wself childContentContainerView].bounds;
-        viewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
         if (animated)
         {
             [currentChild beginAppearanceTransition:NO animated:YES];
             [currentChild willMoveToParentViewController:nil];
             [wself addChildViewController:viewController];
+            viewController.view.frame = [wself childContentContainerView].bounds;
+            viewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
             [viewController beginAppearanceTransition:YES animated:YES];
             RZSingleChildContainerTransitionContext *ctx = [[RZSingleChildContainerTransitionContext alloc] initWithContainerVC:wself
                                                                                                                          fromVC:currentChild
@@ -114,6 +114,8 @@
             [currentChild endAppearanceTransition];
             
             [wself addChildViewController:viewController];
+            viewController.view.frame = [wself childContentContainerView].bounds;
+            viewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
             [viewController beginAppearanceTransition:YES animated:NO];
             [[wself childContentContainerView] addSubview:viewController.view];
             [viewController didMoveToParentViewController:wself];
