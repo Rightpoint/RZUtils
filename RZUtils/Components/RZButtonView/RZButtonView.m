@@ -10,15 +10,15 @@
 
 @interface RZButtonView ()
 
-- (void)setSubviewsHighlighted:(BOOL)highlighted;
+- (void)setSubviewsHighlighted:(BOOL)highlighted forView:(UIView *)view;
 
 @end
 
 @implementation RZButtonView
 
-- (void)setSubviewsHighlighted:(BOOL)highlighted
+- (void)setSubviewsHighlighted:(BOOL)highlighted forView:(UIView *)view
 {
-    [[self subviews] enumerateObjectsUsingBlock:^(UIView *subview, NSUInteger idx, BOOL *stop) {
+    [[view subviews] enumerateObjectsUsingBlock:^(UIView *subview, NSUInteger idx, BOOL *stop) {
         
         if ([subview respondsToSelector:@selector(setHighlighted:)])
         {
@@ -33,12 +33,14 @@
             [iv invoke];
         }
         
+        // recursion!!
+        [self setSubviewsHighlighted:highlighted forView:subview];
     }];
 }
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    [self setSubviewsHighlighted:YES];
+    [self setSubviewsHighlighted:YES forView:self];
     return YES;
 }
 
@@ -49,12 +51,12 @@
 
 - (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    [self setSubviewsHighlighted:NO];
+    [self setSubviewsHighlighted:NO forView:self];
 }
 
 - (void)cancelTrackingWithEvent:(UIEvent *)event
 {
-    [self setSubviewsHighlighted:NO];
+    [self setSubviewsHighlighted:NO forView:self];
 }
 
 @end

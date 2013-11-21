@@ -74,6 +74,7 @@ static char kRZBorderViewKey;
 {
     self = [super initWithFrame:frame];
     if (self){
+        self.userInteractionEnabled = NO;
         self.contentScaleFactor = [[UIScreen mainScreen] scale];
     }
     return self;
