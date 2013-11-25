@@ -95,18 +95,10 @@
 @import Accelerate;
 #import <float.h>
 
-
-@implementation UIImage (ImageEffects)
-
-+ (UIImage *)blurredImageByCapturingView:(UIView *)view withRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor
+static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRadius, UIColor * tintColor, CGFloat saturationDeltaFactor)
 {
     UIImage *outputImage = nil;
-    CGRect imageRect = { CGPointZero, view.bounds.size };
-    
-    UIGraphicsBeginImageContextWithOptions(imageRect.size, NO, [UIScreen mainScreen].scale);
-    
-    [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
-    
+
     BOOL hasBlur = blurRadius > __FLT_EPSILON__;
     BOOL hasSaturationChange = fabs(saturationDeltaFactor - 1.) > __FLT_EPSILON__;
     if (hasBlur || hasSaturationChange) {
@@ -206,10 +198,47 @@
         outputImage = UIGraphicsGetImageFromCurrentImageContext();
     }
     
+    return outputImage;
+}
+
+@implementation UIImage (ImageEffects)
+
++ (UIImage *)blurredImageByCapturingView:(UIView *)view withRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor
+{
+    UIImage *outputImage = nil;
+    CGRect imageRect = { CGPointZero, view.bounds.size };
+    
+    UIGraphicsBeginImageContextWithOptions(imageRect.size, NO, [UIScreen mainScreen].scale);
+    
+    [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
+    
+    outputImage = RZBlurredImageInCurrentContext(imageRect, blurRadius, tintColor, saturationDeltaFactor);
+    
     UIGraphicsEndImageContext();
     
     return outputImage;
     
+}
+
+- (UIImage *)blurredImageWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor
+{
+    UIImage *outputImage = nil;
+    CGRect imageRect = { CGPointZero, self.size };
+    
+    UIGraphicsBeginImageContextWithOptions(imageRect.size, NO, self.scale);
+
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(ctx);
+    CGContextTranslateCTM(ctx, 0, imageRect.size.height);
+    CGContextScaleCTM(ctx, 1.0, -1.0);
+    CGContextDrawImage(ctx, imageRect, [self CGImage]);
+    CGContextRestoreGState(ctx);
+    
+    outputImage = RZBlurredImageInCurrentContext(imageRect, blurRadius, tintColor, saturationDeltaFactor);
+    
+    UIGraphicsEndImageContext();
+    
+    return outputImage;
 }
 
 @end

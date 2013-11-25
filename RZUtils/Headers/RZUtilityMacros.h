@@ -20,5 +20,21 @@
 #define RZColorFromRGB(r,g,b)       [UIColor colorWithRed:r/255.f green:g/255.f blue:b/255.f alpha:1.0]
 #define RZColorFromRGBA(r,g,b,a)    [UIColor colorWithRed:r/255.f green:g/255.f blue:b/255.f alpha:a/255.f]
 
+// Clamp a float within a range
+inline static float RZClampFloat(float value, float min, float max)
+{
+    return MIN(max, MAX(value, min));
+}
+
+// Map a float to a different range
+inline static float RZMapFloat(float value, float inMin, float inMax, float outMin, float outMax, BOOL clamp)
+{
+    float result = ((value - inMin)/(inMax - inMin)) * (outMax - outMin) + outMin;
+    if (clamp)
+    {
+        result = RZClampFloat(result, MIN(outMin,outMax), MAX(outMin,outMax));
+    }
+    return result;
+}
 
 #endif

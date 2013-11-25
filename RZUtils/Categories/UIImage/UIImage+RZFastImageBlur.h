@@ -106,5 +106,6 @@
 
 // tint color ONLY APPLIES when blurring radius is non-negligible
 + (UIImage *)blurredImageByCapturingView:(UIView*)view withRadius:(CGFloat)blurRadius tintColor:(UIColor*)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
+- (UIImage *)blurredImageWithRadius:(CGFloat)blurRadius tintColor:(UIColor*)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
 
 @end
