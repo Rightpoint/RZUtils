@@ -95,7 +95,7 @@
 @import Accelerate;
 #import <float.h>
 
-static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRadius, UIColor * tintColor, CGFloat saturationDeltaFactor)
+static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRadius, UIColor * tintColor, CGFloat saturationDeltaFactor, CGFloat scale)
 {
     UIImage *outputImage = nil;
 
@@ -111,7 +111,7 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
         effectInBuffer.height   = CGBitmapContextGetHeight(effectInContext);
         effectInBuffer.rowBytes = CGBitmapContextGetBytesPerRow(effectInContext);
         
-        UIGraphicsBeginImageContextWithOptions(imageRect.size, NO, [[UIScreen mainScreen] scale]);
+        UIGraphicsBeginImageContextWithOptions(imageRect.size, NO, scale);
         CGContextRef effectOutContext = UIGraphicsGetCurrentContext();
         vImage_Buffer effectOutBuffer;
         effectOutBuffer.data     = CGBitmapContextGetData(effectOutContext);
@@ -137,9 +137,9 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
             if (radius % 2 != 1) {
                 radius += 1; // force radius to be odd so that the three box-blur methodology works.
             }
-            vImageBoxConvolve_ARGB8888(&effectInBuffer, &effectOutBuffer, NULL, 0, 0, radius, radius, 0, kvImageEdgeExtend);
-            vImageBoxConvolve_ARGB8888(&effectOutBuffer, &effectInBuffer, NULL, 0, 0, radius, radius, 0, kvImageEdgeExtend);
-            vImageBoxConvolve_ARGB8888(&effectInBuffer, &effectOutBuffer, NULL, 0, 0, radius, radius, 0, kvImageEdgeExtend);
+            vImageBoxConvolve_ARGB8888(&effectInBuffer, &effectOutBuffer, NULL, 0, 0, (uint32_t)radius, (uint32_t)radius, 0, kvImageEdgeExtend);
+            vImageBoxConvolve_ARGB8888(&effectOutBuffer, &effectInBuffer, NULL, 0, 0, (uint32_t)radius, (uint32_t)radius, 0, kvImageEdgeExtend);
+            vImageBoxConvolve_ARGB8888(&effectInBuffer, &effectOutBuffer, NULL, 0, 0, (uint32_t)radius, (uint32_t)radius, 0, kvImageEdgeExtend);
         }
         BOOL effectImageBuffersAreSwapped = NO;
         if (hasSaturationChange) {
@@ -207,12 +207,12 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
 {
     UIImage *outputImage = nil;
     CGRect imageRect = { CGPointZero, view.bounds.size };
-    
-    UIGraphicsBeginImageContextWithOptions(imageRect.size, NO, [UIScreen mainScreen].scale);
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    UIGraphicsBeginImageContextWithOptions(imageRect.size, NO, scale);
     
     [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
     
-    outputImage = RZBlurredImageInCurrentContext(imageRect, blurRadius, tintColor, saturationDeltaFactor);
+    outputImage = RZBlurredImageInCurrentContext(imageRect, blurRadius, tintColor, saturationDeltaFactor, scale);
     
     UIGraphicsEndImageContext();
     
@@ -234,7 +234,7 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
     CGContextDrawImage(ctx, imageRect, [self CGImage]);
     CGContextRestoreGState(ctx);
     
-    outputImage = RZBlurredImageInCurrentContext(imageRect, blurRadius, tintColor, saturationDeltaFactor);
+    outputImage = RZBlurredImageInCurrentContext(imageRect, blurRadius, tintColor, saturationDeltaFactor, self.scale);
     
     UIGraphicsEndImageContext();
     
