@@ -141,7 +141,7 @@
     }
     else
     {
-        valueString = [NSString stringWithFormat:@"%d", self.currentNumber.integerValue];
+        valueString = [NSString stringWithFormat:@"%ld", (long)self.currentNumber.integerValue];
     }
     
     self.text = valueString;
