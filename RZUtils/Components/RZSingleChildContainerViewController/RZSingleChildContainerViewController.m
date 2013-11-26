@@ -247,6 +247,7 @@
         [fromViewController.view setAlpha:0.f];
         [toViewController.view setAlpha:1.f];
     } completion:^(BOOL finished) {
+        fromViewController.view.alpha = 1.f;
         [transitionContext completeTransition:finished];
     }];
 }
