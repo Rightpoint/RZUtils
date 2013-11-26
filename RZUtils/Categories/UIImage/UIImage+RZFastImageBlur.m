@@ -222,8 +222,17 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
 
 - (UIImage *)blurredImageWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor
 {
+    UIImage *inputImage = self;
+    
+    BOOL shouldRotate = (self.imageOrientation != UIImageOrientationUp);
+    
+    if (shouldRotate)
+    {
+        inputImage = [UIImage imageWithCGImage:[self CGImage] scale:self.scale orientation:UIImageOrientationUp];
+    }
+    
     UIImage *outputImage = nil;
-    CGRect imageRect = { CGPointZero, self.size };
+    CGRect imageRect = { CGPointZero, inputImage.size };
     
     UIGraphicsBeginImageContextWithOptions(imageRect.size, NO, self.scale);
 
@@ -231,10 +240,15 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
     CGContextSaveGState(ctx);
     CGContextTranslateCTM(ctx, 0, imageRect.size.height);
     CGContextScaleCTM(ctx, 1.0, -1.0);
-    CGContextDrawImage(ctx, imageRect, [self CGImage]);
+    CGContextDrawImage(ctx, imageRect, [inputImage CGImage]);
     CGContextRestoreGState(ctx);
     
-    outputImage = RZBlurredImageInCurrentContext(imageRect, blurRadius, tintColor, saturationDeltaFactor, self.scale);
+    outputImage = RZBlurredImageInCurrentContext(imageRect, blurRadius, tintColor, saturationDeltaFactor, inputImage.scale);
+    
+    if (shouldRotate)
+    {
+        outputImage = [UIImage imageWithCGImage:[outputImage CGImage] scale:outputImage.scale orientation:self.imageOrientation];
+    }
     
     UIGraphicsEndImageContext();
     
