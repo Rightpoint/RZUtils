@@ -31,6 +31,8 @@ typedef NS_ENUM(NSUInteger, RZViewBorderMask)
 // Good enough when the subview hierarchy is simple enough such that nothing will be added on top of the borders.
 @interface UIView (RZBorders)
 
+@property (nonatomic, readonly) RZBorderedHostView *rz_borderHostView;
+
 - (void)rz_addBordersWithMask:(RZViewBorderMask)mask width:(CGFloat)borderWidth color:(UIColor*)color;
 - (void)rz_removeBorders;
 
