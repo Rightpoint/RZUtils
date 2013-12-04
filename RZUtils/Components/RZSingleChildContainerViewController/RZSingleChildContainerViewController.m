@@ -47,6 +47,30 @@
     [self.viewLoadedBlocks removeAllObjects];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.currentContentViewController beginAppearanceTransition:YES animated:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.currentContentViewController endAppearanceTransition];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.currentContentViewController beginAppearanceTransition:NO animated:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self.currentContentViewController endAppearanceTransition];
+}
+
 - (BOOL)shouldAutomaticallyForwardAppearanceMethods
 {
     return NO;
@@ -185,11 +209,10 @@
 - (void)completeTransition:(BOOL)didComplete
 {
     [_fromVC.view removeFromSuperview]; // just in case it didn't happen in the animation
-    [_fromVC endAppearanceTransition];
-    [_toVC endAppearanceTransition];
-
     [_fromVC removeFromParentViewController];
     [_toVC didMoveToParentViewController:_containerVC];
+    [_fromVC endAppearanceTransition];
+    [_toVC endAppearanceTransition];
     [_containerVC setNeedsStatusBarAppearanceUpdate];
 }
 
