@@ -203,16 +203,16 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
 
 @implementation UIImage (ImageEffects)
 
-+ (UIImage *)blurredImageByCapturingView:(UIView *)view withRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor
++ (UIImage *)blurredImageByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor
 {
     UIImage *outputImage = nil;
     CGRect imageRect = { CGPointZero, view.bounds.size };
     CGFloat scale = [[UIScreen mainScreen] scale];
     UIGraphicsBeginImageContextWithOptions(imageRect.size, NO, scale);
     
-    // If afterScreenUpdates is set to YES, there is a super weird bug where all tap gestures (app-wide) will be delayed.
+    // If afterScreenUpdates is set to YES, there is a super weird bug sometimes where all tap gestures (app-wide) will be delayed.
     // This definitely needs to be filed in a radar at some point.
-    [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:NO];
+    [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:waitForUpdate];
     
     outputImage = RZBlurredImageInCurrentContext(imageRect, blurRadius, tintColor, saturationDeltaFactor, scale);
     
