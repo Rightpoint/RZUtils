@@ -18,6 +18,8 @@
 @property (nonatomic, strong) NSNumber *initialNumber;
 @property (nonatomic, strong) NSNumber *targetNumber;
 
+@property (nonatomic, strong) NSNumberFormatter *numberFormatter;
+
 @property (nonatomic, assign) CFTimeInterval animationDuration;
 @property (nonatomic, assign) CFTimeInterval animationStartTimestamp;
 @property (nonatomic, assign) CFTimeInterval lastUpdateTimestamp;
@@ -50,7 +52,20 @@
     return self;
 }
 
-
+- (NSNumberFormatter *)numberFormatter
+{
+    // Currently this is locked to US localization (comma delimited)
+    if (_numberFormatter == nil)
+    {
+        _numberFormatter = [[NSNumberFormatter alloc] init];
+        _numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+        _numberFormatter.maximumFractionDigits = 0;
+        _numberFormatter.usesGroupingSeparator = YES;
+        _numberFormatter.groupingSeparator = @",";
+        _numberFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"en_US"];
+    }
+    return _numberFormatter;
+}
 #pragma mark - Public
 
 - (void)setFormatBlock:(RZAnimatedCountingLabelFormatBlock)formatBlock
@@ -141,7 +156,7 @@
     }
     else
     {
-        valueString = [NSString stringWithFormat:@"%ld", (long)self.currentNumber.integerValue];
+        valueString = [self.numberFormatter stringFromNumber:self.currentNumber];
     }
     
     self.text = valueString;
