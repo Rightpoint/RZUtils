@@ -11,10 +11,10 @@
 
 // Start of current day without time (midnight)
 // By default uses GMT midnight
-+ (NSDate *)rz_currentDayNoTime;
++ (NSDate *)rz_startOfCurrentDay;
 
 // If locally is YES, will use local time zone midnight
-+ (NSDate *)rz_currentDayNoTimeLocally:(BOOL)locally;
++ (NSDate *)rz_startOfCurrentDayLocally:(BOOL)locally;
 
 // Normalize this NSDate to the start of the day (00:00:00)
 // By default uses GMT midnight
@@ -41,5 +41,32 @@
 
 // Yes if date is inbetween or equal to either the start or the end date.
 - (BOOL)rz_isDateInRangeOrEqualToStartDate:(NSDate *)startDate endDate:(NSDate *)endDate;
+
+@end
+
+//! RZDateRange is a utility class to represent a continuous range of dates
+/*!
+    No range checking is performed - if start date precedes end date, behavior is undefined.
+ */
+@interface RZDateRange : NSObject <NSCopying>
+
+typedef NS_ENUM(NSUInteger, RZDateRangeInclusivity)
+{
+    kRZDateRangeIncludeStartEnd = 0,
+    kRZDateRangeExcludeStart,
+    kRZDateRangeExcludeEnd,
+    kRZDateRangeExcludeStartEnd
+};
+
++ (instancetype)dateRangeWithStartDate:(NSDate*)startDate endDate:(NSDate *)endDate;
+
+@property (nonatomic, copy) NSDate *startDate;
+@property (nonatomic, copy) NSDate *endDate;
+
+// Defaults to kRZDateRangeIncludeStartEnd
+- (BOOL)includesDate:(NSDate *)date;
+- (BOOL)includesDate:(NSDate *)date withInclusivity:(RZDateRangeInclusivity)inclusivity;
+
+- (BOOL)isEqualToRange:(RZDateRange *)range;
 
 @end

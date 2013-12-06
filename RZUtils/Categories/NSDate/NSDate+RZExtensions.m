@@ -21,12 +21,12 @@ static NSCalendar * RZCachedCurrentCalendar()
 
 @implementation NSDate (RZExtensions)
 
-+ (NSDate *)rz_currentDayNoTime
++ (NSDate *)rz_startOfCurrentDay
 {
-    return [NSDate rz_currentDayNoTimeLocally:NO];
+    return [NSDate rz_startOfCurrentDayLocally:NO];
 }
 
-+ (NSDate *)rz_currentDayNoTimeLocally:(BOOL)locally
++ (NSDate *)rz_startOfCurrentDayLocally:(BOOL)locally
 {
     return [[NSDate date] rz_dateByRemovingTimeLocally:locally];
 }
@@ -97,5 +97,95 @@ static NSCalendar * RZCachedCurrentCalendar()
     NSComparisonResult endCompare = [self compare:endDate];
     return (startCompare == NSOrderedDescending || startCompare == NSOrderedSame) && (endCompare == NSOrderedAscending || endCompare == NSOrderedSame);
 }
+
+@end
+
+@implementation RZDateRange
+
++ (instancetype)dateRangeWithStartDate:(NSDate *)startDate endDate:(NSDate *)endDate
+{
+    RZDateRange *r = [RZDateRange new];
+    r.startDate = startDate;
+    r.endDate = endDate;
+    return r;
+}
+
+- (BOOL)includesDate:(NSDate *)date
+{
+    return [self includesDate:date withInclusivity:kRZDateRangeIncludeStartEnd];
+}
+
+- (BOOL)includesDate:(NSDate *)date withInclusivity:(RZDateRangeInclusivity)inclusivity
+{
+    if (self.startDate == nil || self.endDate == nil) return NO;
+    
+    NSComparisonResult startComp = [date compare:self.startDate];
+    NSComparisonResult endComp   = [date compare:self.endDate];
+    
+    BOOL inRange = NO;
+    switch (inclusivity) {
+        case kRZDateRangeIncludeStartEnd:
+            inRange = (startComp != NSOrderedAscending) && (endComp != NSOrderedDescending);
+            break;
+            
+        case kRZDateRangeExcludeStart:
+            inRange = (startComp == NSOrderedDescending) && (endComp != NSOrderedDescending);
+            break;
+            
+        case kRZDateRangeExcludeEnd:
+            inRange = (startComp != NSOrderedAscending) && (endComp == NSOrderedAscending);
+            break;
+            
+        case kRZDateRangeExcludeStartEnd:
+            inRange = (startComp == NSOrderedDescending) && (endComp == NSOrderedAscending);
+            break;
+            
+        default:
+            break;
+    }
+    
+    return inRange;
+}
+
+/*** copyWithZone: and equality/hash methods auto-implemented by AppCode ***/
+
+- (id)copyWithZone:(NSZone *)zone {
+    RZDateRange *copy = [[[self class] allocWithZone:zone] init];
+
+    if (copy != nil) {
+        copy.startDate = self.startDate;
+        copy.endDate = self.endDate;
+    }
+
+    return copy;
+}
+
+- (BOOL)isEqual:(id)other {
+    if (other == self)
+        return YES;
+    if (!other || ![[other class] isEqual:[self class]])
+        return NO;
+
+    return [self isEqualToRange:other];
+}
+
+- (BOOL)isEqualToRange:(RZDateRange *)range {
+    if (self == range)
+        return YES;
+    if (range == nil)
+        return NO;
+    if (self.startDate != range.startDate && ![self.startDate isEqualToDate:range.startDate])
+        return NO;
+    if (self.endDate != range.endDate && ![self.endDate isEqualToDate:range.endDate])
+        return NO;
+    return YES;
+}
+
+- (NSUInteger)hash {
+    NSUInteger hash = [self.startDate hash];
+    hash = hash * 31u + [self.endDate hash];
+    return hash;
+}
+
 
 @end
