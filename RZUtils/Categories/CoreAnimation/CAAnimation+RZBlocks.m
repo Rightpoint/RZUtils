@@ -41,7 +41,7 @@
 
 @implementation CAAnimation (RZBlocks)
 
-- (void)setAnimationDidStartBlock:(RZAnimationDidStartBlock)startBlock
+- (void)rz_setAnimationDidStartBlock:(RZAnimationDidStartBlock)startBlock
 {
     id delegate = self.delegate;
     if (delegate != nil && [delegate isKindOfClass:[RZCAAnimationBlockDelegate class]])
@@ -57,7 +57,7 @@
     }
 }
 
-- (void)setAnimationDidStopBlock:(RZAnimationDidStopBlock)stopBlock
+- (void)rz_setAnimationDidStopBlock:(RZAnimationDidStopBlock)stopBlock
 {
     id delegate = self.delegate;
     if (delegate != nil && [delegate isKindOfClass:[RZCAAnimationBlockDelegate class]])

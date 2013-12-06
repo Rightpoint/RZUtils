@@ -16,7 +16,7 @@ typedef void (^RZAnimationDidStopBlock)(BOOL finished);
 
 @interface CAAnimation (RZBlocks)
 
-- (void)setAnimationDidStartBlock:(RZAnimationDidStartBlock)startBlock;
-- (void)setAnimationDidStopBlock:(RZAnimationDidStopBlock)stopBlock;
+- (void)rz_setAnimationDidStartBlock:(RZAnimationDidStartBlock)startBlock;
+- (void)rz_setAnimationDidStopBlock:(RZAnimationDidStopBlock)stopBlock;
 
 @end
