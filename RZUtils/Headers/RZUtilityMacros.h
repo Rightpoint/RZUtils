@@ -12,6 +12,9 @@
 
 #import <Foundation/Foundation.h>
 
+#define RZNilToNSNull(x)        (x ? x : [NSNull null])
+#define RZNSNullToNil(x)        ([x isEqual:[NSNull null]] ? nil : x)
+
 #define RZNilToEmptyString(x)   (x ? x : @"")
 #define RZNilToZeroNumber(x)    (x ? x : @0)
 #define RZStringToNumber(x)     (NSNumber *)([x isKindOfClass:[NSNumber class]] ? x : ([x isKindOfClass:[NSString class]] ? @([x floatValue]) : nil))
