@@ -9,7 +9,10 @@
 #import "RZWebViewController.h"
 
 @interface RZWebViewController () <UIWebViewDelegate>
-@property (nonatomic, copy) NSURL* webContentURL;
+
+@property (nonatomic, copy) NSURL *webContentURL;
+
+- (void)sharePressed;
 
 @end
 
@@ -44,6 +47,12 @@
     {
         [self.webView loadRequest:[NSURLRequest requestWithURL:self.webContentURL]];
     }
+
+    if(self.allowsSharing)
+    {
+        UIBarButtonItem *shareItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(sharePressed)];
+        self.navigationItem.rightBarButtonItem = shareItem;
+    }
 }
 
 - (void)dealloc
@@ -64,6 +73,13 @@
     self.activityIndicator.center = self.webView.center;
     [self.activityIndicator setHidesWhenStopped:YES];
     [self.view addSubview:self.activityIndicator];
+}
+
+- (void)sharePressed
+{
+    UIActivityViewController *shareVC = [[UIActivityViewController alloc] initWithActivityItems:self.sharingItems applicationActivities:nil];
+    shareVC.excludedActivityTypes = self.excludedActivityTypes;
+    [self presentViewController:shareVC animated:YES completion:nil];
 }
 
 #pragma mark - WebView Delegate Methods

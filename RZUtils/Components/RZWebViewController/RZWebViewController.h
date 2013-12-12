@@ -18,6 +18,11 @@
 // Should the webview be alloud to open additional links
 @property (nonatomic, assign) BOOL allowsWebNavigation;
 
+// Allows sharing of the website.
+@property (nonatomic, assign) BOOL allowsSharing;
+@property (nonatomic, strong) NSArray *sharingItems;
+@property (nonatomic, strong) NSArray *excludedActivityTypes;
+
 @property (nonatomic, strong) UIWebView *webView;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 
