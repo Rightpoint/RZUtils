@@ -47,6 +47,30 @@
     [self.viewLoadedBlocks removeAllObjects];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.currentContentViewController beginAppearanceTransition:YES animated:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.currentContentViewController endAppearanceTransition];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.currentContentViewController beginAppearanceTransition:NO animated:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self.currentContentViewController endAppearanceTransition];
+}
+
 - (BOOL)shouldAutomaticallyForwardAppearanceMethods
 {
     return NO;
@@ -93,14 +117,23 @@
         
         UIViewController *currentChild = wself.currentContentViewController;
         
+        // this can happen when the view hasn't been presented yet - don't prematurely pass appearance transition methods
+        BOOL hasWindow = [self.view window] != nil;
+        
         if (animated)
         {
-            [currentChild beginAppearanceTransition:NO animated:YES];
+            if (hasWindow)
+            {
+                [currentChild beginAppearanceTransition:NO animated:YES];
+            }
             [currentChild willMoveToParentViewController:nil];
             [wself addChildViewController:viewController];
             viewController.view.frame = [wself childContentContainerView].bounds;
             viewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-            [viewController beginAppearanceTransition:YES animated:YES];
+            if (hasWindow)
+            {
+                [viewController beginAppearanceTransition:YES animated:YES];
+            }
             RZSingleChildContainerTransitionContext *ctx = [[RZSingleChildContainerTransitionContext alloc] initWithContainerVC:wself
                                                                                                                          fromVC:currentChild
                                                                                                                            toVC:viewController];
@@ -108,18 +141,30 @@
         }
         else
         {
-            [currentChild beginAppearanceTransition:NO animated:NO];
+            if (hasWindow)
+            {
+                [currentChild beginAppearanceTransition:NO animated:NO];
+            }
             [currentChild.view removeFromSuperview];
             [currentChild removeFromParentViewController];
-            [currentChild endAppearanceTransition];
+            if (hasWindow)
+            {
+                [currentChild endAppearanceTransition];
+            }
             
             [wself addChildViewController:viewController];
             viewController.view.frame = [wself childContentContainerView].bounds;
             viewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-            [viewController beginAppearanceTransition:YES animated:NO];
+            if (hasWindow)
+            {
+                [viewController beginAppearanceTransition:YES animated:NO];
+            }
             [[wself childContentContainerView] addSubview:viewController.view];
             [viewController didMoveToParentViewController:wself];
-            [viewController endAppearanceTransition];
+            if (hasWindow)
+            {
+                [viewController endAppearanceTransition];
+            }
             [self setNeedsStatusBarAppearanceUpdate];
         }
     }];
@@ -185,11 +230,13 @@
 - (void)completeTransition:(BOOL)didComplete
 {
     [_fromVC.view removeFromSuperview]; // just in case it didn't happen in the animation
-    [_fromVC endAppearanceTransition];
-    [_toVC endAppearanceTransition];
-
     [_fromVC removeFromParentViewController];
     [_toVC didMoveToParentViewController:_containerVC];
+    if ([_containerVC.view window] != nil)
+    {
+        [_fromVC endAppearanceTransition];
+        [_toVC endAppearanceTransition];
+    }
     [_containerVC setNeedsStatusBarAppearanceUpdate];
 }
 

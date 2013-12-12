@@ -16,25 +16,38 @@
 
 @interface UIView (RZAutoLayoutHelpers)
 
+// Return a particular constraint of this view if it exists
+- (NSLayoutConstraint*)rz_pinnedWidthConstraint;
+- (NSLayoutConstraint*)rz_pinnedHeightConstraint;
+- (NSLayoutConstraint*)rz_pinnedTopConstraint;
+- (NSLayoutConstraint*)rz_pinnedLeftConstraint;
+- (NSLayoutConstraint*)rz_pinnedRightConstraint;
+- (NSLayoutConstraint*)rz_pinnedBottomConstraint;
+
+// Pinning dimensions
 - (void)rz_pinWidthTo:(CGFloat)width;
 - (void)rz_pinHeightTo:(CGFloat)height;
 - (void)rz_pinSizeTo:(CGSize)size;
 
+// Pinning sides
+- (void)rz_pinTopSpaceToSuperviewWithPadding:(CGFloat)padding;
+- (void)rz_pinLeftSpaceToSuperviewWithPadding:(CGFloat)padding;
+- (void)rz_pinBottomSpaceToSuperviewWithPadding:(CGFloat)padding;
+- (void)rz_pinRightSpaceToSuperviewWithPadding:(CGFloat)padding;
+- (void)rz_fillContainerWithInsets:(UIEdgeInsets)insets;
+
+- (void)rz_fillContainerHorizontallyWithPadding:(CGFloat)padding;
+- (void)rz_fillContainerHorizontallyWithMinimumPadding:(CGFloat)padding;
+- (void)rz_fillContainerVerticallyWithPadding:(CGFloat)padding;
+- (void)rz_fillContainerVerticallyWithMinimumPadding:(CGFloat)padding;
+
+// Centering
 - (void)rz_centerHorizontallyInContainer;
 - (void)rz_centerHorizontallyInContainerWithOffset:(CGFloat)offset;
 - (void)rz_centerVerticallyInContainer;
 - (void)rz_centerVerticallyInContainerWithOffset:(CGFloat)offset;
 
-- (void)rz_fillContainerWithInsets:(UIEdgeInsets)insets;
-
-- (void)rz_fillContainerHorizontallyWithMinPadding:(CGFloat)padding;
-- (void)rz_fillContainerVerticallyWithMinPadding:(CGFloat)padding;
-
-- (void)rz_insetFromContainerTopBy:(CGFloat)padding;
-- (void)rz_insetFromContainerLeftBy:(CGFloat)padding;
-- (void)rz_insetFromContainerBottomBy:(CGFloat)padding;
-- (void)rz_insetFromContainerRightBy:(CGFloat)padding;
-
+// Batch alignment
 - (void)rz_spaceSubviews:(NSArray *)subviews vertically:(BOOL)vertically minimumItemSpacing:(CGFloat)itemSpacing;
 - (void)rz_alignSubviews:(NSArray *)subviews byAttribute:(NSLayoutAttribute)attribute;
 

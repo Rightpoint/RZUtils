@@ -31,6 +31,11 @@ static char kRZBorderViewKey;
 
 @implementation UIView (RZBorders)
 
+- (RZBorderedHostView *)rz_borderHostView
+{
+    return objc_getAssociatedObject(self, &kRZBorderViewKey);
+}
+
 - (void)rz_addBordersWithMask:(RZViewBorderMask)mask width:(CGFloat)borderWidth color:(UIColor *)color
 {
     RZBorderedHostView *hostView = objc_getAssociatedObject(self, &kRZBorderViewKey);
