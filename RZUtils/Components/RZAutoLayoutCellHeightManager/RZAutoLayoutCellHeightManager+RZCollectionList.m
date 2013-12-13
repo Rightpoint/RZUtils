@@ -57,7 +57,10 @@ static char s_RZAutoLayoutHeightManagerToken;
             break;
     }
 }
-- (void)collectionList:(id<RZCollectionList>)collectionList didChangeSection:(id<RZCollectionListSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(RZCollectionListChangeType)type {}
+- (void)collectionList:(id<RZCollectionList>)collectionList didChangeSection:(id<RZCollectionListSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(RZCollectionListChangeType)type
+{
+    self.shouldFlushCache = YES;
+}
 - (void)collectionListDidChangeContent:(id<RZCollectionList>)collectionList
 {
     if (self.shouldFlushCache)
