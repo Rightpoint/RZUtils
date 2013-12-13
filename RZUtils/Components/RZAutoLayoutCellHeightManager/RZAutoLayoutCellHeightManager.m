@@ -125,9 +125,8 @@
             self.configurationBlock(self.offScreenCell, object);
         }
         UIView* contentView = [self.offScreenCell contentView];
-        
-        [contentView setNeedsLayout];
-        [contentView layoutIfNeeded];
+//        [contentView setNeedsLayout];
+//        [contentView layoutIfNeeded];
         height = [contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
         [self.cellHeightCache setObject:@(height) forKey:indexPath];
     }

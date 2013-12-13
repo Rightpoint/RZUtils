@@ -81,6 +81,9 @@ NS_CLASS_AVAILABLE_IOS(6_0) @protocol RZCollectionTableViewLayoutDelegate <UICol
 - (CGFloat)collectionView:(UICollectionView*)collectionView layout:(RZCollectionTableViewLayout*)layout heightForRowAtIndexPath:(NSIndexPath*)indexPath;
 - (CGFloat)collectionView:(UICollectionView*)collectionView layout:(RZCollectionTableViewLayout*)layout rowSpacingForSection:(NSInteger)section;
 
+// implement this to speed up load times
+- (CGFloat)collectionView:(UICollectionView*)collectionView layout:(RZCollectionTableViewLayout*)layout estimatedHeightForRowAtIndexPath:(NSIndexPath*)indexPath;
+
 - (UIEdgeInsets)collectionView:(UICollectionView*)collectionView layout:(RZCollectionTableViewLayout*)layout insetForSectionAtIndex:(NSInteger)section; // same signature as UICollectionViewDelegateFlowLayout
 
 // If either of these return zero, no header will be requested for that section.

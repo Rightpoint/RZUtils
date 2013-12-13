@@ -155,7 +155,10 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
 - (CGFloat)footerHeightForSection:(NSInteger)section;
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath*)indexPath;
+- (CGFloat)heightForRowAtIndexPath:(NSIndexPath*)indexPath estimated:(BOOL)estimated;
+
 - (CGFloat)heightForSection:(NSInteger)section;
+- (CGFloat)heightForSection:(NSInteger)section estimated:(BOOL)estimated;
 
 - (NSIndexPath *)indexPathForRawRowIndex:(NSInteger)rowIndex; // converts expanded index to sectioned index path
 - (NSIndexPath *)indexPathOfFirstRowInRect:(CGRect)rect;
@@ -538,6 +541,11 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
 
 - (CGFloat)heightForSection:(NSInteger)section
 {
+    return [self heightForSection:section estimated:NO];
+}
+
+- (CGFloat)heightForSection:(NSInteger)section estimated:(BOOL)estimated
+{
     CGFloat height = 0;
     
     NSNumber *cachedHeight = [self.sectionHeightCache objectForKey:@(section)];
@@ -552,7 +560,7 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
         for (NSInteger i = 0; i < rowsInSection; i++)
         {
             // go ahead and cache the attributes while we're doing this
-            height += [self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:section]].frame.size.height;
+            height += [self heightForRowAtIndexPath:[NSIndexPath indexPathForItem:i inSection:section] estimated:estimated];
         }
         
         if (rowsInSection > 1)
@@ -568,13 +576,21 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
         UIEdgeInsets insets = [self insetsForSection:section];
         height += insets.top + insets.bottom;
         
-        [self.sectionHeightCache setObject:@(height) forKey:@(section)];
+        if (!estimated)
+        {
+            [self.sectionHeightCache setObject:@(height) forKey:@(section)];
+        }
     }
     
     return height;
 }
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self heightForRowAtIndexPath:indexPath estimated:NO];
+}
+
+- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath estimated:(BOOL)estimated
 {
     CGFloat height = self.rowHeight;
     
@@ -587,10 +603,23 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
         }
         else
         {
-            height = [(id <RZCollectionTableViewLayoutDelegate>)self.collectionView.delegate collectionView:self.collectionView
-                                                                                                     layout:self
-                                                                                    heightForRowAtIndexPath:indexPath];
-            [self.rowHeightCache setObject:@(height) forKey:indexPath];
+            BOOL isEstimate = estimated && [self.layoutDelegate respondsToSelector:@selector(collectionView:layout:estimatedHeightForRowAtIndexPath:)];
+            
+            if (isEstimate)
+            {
+                height = [self.layoutDelegate collectionView:self.collectionView
+                                                      layout:self
+                            estimatedHeightForRowAtIndexPath:indexPath];
+            }
+            else
+            {
+                height = [self.layoutDelegate collectionView:self.collectionView
+                                                      layout:self
+                                     heightForRowAtIndexPath:indexPath];
+                
+                [self.rowHeightCache setObject:@(height) forKey:indexPath];
+            }
+            
         }
         
     }
