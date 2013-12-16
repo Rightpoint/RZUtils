@@ -16,6 +16,6 @@
 //  [NSAttributedString attributedStringWithStringsAndAttributes:@"test",attributes,@"test2,attributes2,nil];
 // 
 
-+ (instancetype)attributedStringWithStringsAndAttributes:(id)firstString, ... NS_REQUIRES_NIL_TERMINATION;
++ (instancetype)rz_attributedStringWithStringsAndAttributes:(id)firstString, ... NS_REQUIRES_NIL_TERMINATION;
 
 @end

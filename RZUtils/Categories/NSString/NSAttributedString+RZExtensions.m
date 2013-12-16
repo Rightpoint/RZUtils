@@ -10,7 +10,7 @@
 
 @implementation NSAttributedString (RZExtensions)
 
-+ (instancetype)attributedStringWithStringsAndAttributes:(id)firstString, ... NS_REQUIRES_NIL_TERMINATION
++ (instancetype)rz_attributedStringWithStringsAndAttributes:(id)firstString, ... NS_REQUIRES_NIL_TERMINATION
 {
     NSMutableAttributedString* string = [[NSMutableAttributedString alloc] init];
     id param;
