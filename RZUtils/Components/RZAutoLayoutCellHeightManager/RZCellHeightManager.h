@@ -1,5 +1,5 @@
 //
-//  RZAutoLayoutCellHeightManager.h
+//  RZCellHeightManager.h
 //  Raizlabs
 //
 //  Created by Alex Rouse on 12/11/13.
@@ -16,7 +16,7 @@ typedef CGFloat (^RZAutoLayoutCellHeightManagerHeightBlock)(id cell, id object);
  *  There is no reason why we couldn't expand it to work with UITableViewCells and more.
  **/
 
-@interface RZAutoLayoutCellHeightManager : NSObject
+@interface RZCellHeightManager : NSObject
 
 
 // Assumes that the cell comes from a nib and has the same name as the class

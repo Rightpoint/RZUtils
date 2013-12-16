@@ -1,12 +1,12 @@
 //
-//  RZAutoLayoutCellHeightManager.m
+//  RZCellHeightManager.m
 //  Raizlabs
 //
 //  Created by Alex Rouse on 12/11/13.
 //  Copyright (c) 2013 Raizlabs. All rights reserved.
 //
 
-#import "RZAutoLayoutCellHeightManager.h"
+#import "RZCellHeightManager.h"
 
 #import "RZViewFactory.h"
 
@@ -50,10 +50,10 @@
 
 
 /**
- * RZAutoLayoutCellHeightManager
+ * RZCellHeightManager
  **/
 
-@interface RZAutoLayoutCellHeightManager ()
+@interface RZCellHeightManager ()
 @property (nonatomic, strong) id offScreenCell;
 @property (nonatomic, strong) NSString* cellClassName;
 @property (nonatomic, strong) NSString* cellNibName;
@@ -64,7 +64,7 @@
 
 @end
 
-@implementation RZAutoLayoutCellHeightManager
+@implementation RZCellHeightManager
 
 - (instancetype)initWithCellClassName:(NSString *)cellClass configurationBlock:(RZAutoLayoutCellHeightManagerConfigBlock)configurationBlock
 {
