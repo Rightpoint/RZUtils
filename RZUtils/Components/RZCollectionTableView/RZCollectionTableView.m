@@ -803,7 +803,7 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
             CGRect rowRect = [self layoutAttributesForItemAtIndexPath:currentIndexPath].frame;
             if (CGRectIntersectsRect(rowRect, rect))
             {
-                if (currentRowIdx == 0 || rowRect.origin.y <= rect.origin.y)
+                if (currentRowIdx == 0 || rowRect.origin.y - [self rowSpacingForSection:currentIndexPath.section] <= rect.origin.y)
                 {
                     resultPath = currentIndexPath;
                     found = YES;

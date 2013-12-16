@@ -1,12 +1,12 @@
 //
-//  RZAutoLayoutCellHeightManager+RZCollectionList.m
+//  RZCellHeightManager+RZCollectionList.m
 //  Raizlabs
 //
 //  Created by Alex Rouse on 12/12/13.
 //  Copyright (c) 2013 Raizlabs. All rights reserved.
 //
 
-#import "RZAutoLayoutCellHeightManager+RZCollectionList.h"
+#import "RZCellHeightManager+RZCollectionList.h"
 #import <objc/runtime.h>
 
 static char s_RZAutoLayoutHeightManagerToken;
@@ -14,7 +14,7 @@ static char s_RZAutoLayoutHeightManagerToken;
 @interface RZAutoLayoutHeightManagerObserver : NSObject <RZCollectionListObserver>
 
 @property (nonatomic, weak) id<RZCollectionList> collectionList;
-@property (nonatomic, weak) RZAutoLayoutCellHeightManager *heightManager;
+@property (nonatomic, weak) RZCellHeightManager *heightManager;
 @property (nonatomic, assign) BOOL shouldFlushCache;
 @property (nonatomic, strong) NSMutableSet* reloadableIndexPaths;
 @end
@@ -76,7 +76,7 @@ static char s_RZAutoLayoutHeightManagerToken;
 @end
 
 
-@implementation RZAutoLayoutCellHeightManager (RZCollectionList)
+@implementation RZCellHeightManager (RZCollectionList)
 
 - (void)rz_autoInvalidateWithCollectionList:(id<RZCollectionList>)collectionList
 {

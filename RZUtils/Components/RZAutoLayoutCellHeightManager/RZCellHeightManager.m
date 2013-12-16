@@ -1,12 +1,12 @@
 //
-//  RZAutoLayoutCellHeightManager.m
+//  RZCellHeightManager.m
 //  Raizlabs
 //
 //  Created by Alex Rouse on 12/11/13.
 //  Copyright (c) 2013 Raizlabs. All rights reserved.
 //
 
-#import "RZAutoLayoutCellHeightManager.h"
+#import "RZCellHeightManager.h"
 
 #import "RZViewFactory.h"
 
@@ -50,30 +50,51 @@
 
 
 /**
- * RZAutoLayoutCellHeightManager
+ * RZCellHeightManager
  **/
 
-@interface RZAutoLayoutCellHeightManager ()
+@interface RZCellHeightManager ()
 @property (nonatomic, strong) id offScreenCell;
 @property (nonatomic, strong) NSString* cellClassName;
 @property (nonatomic, strong) NSString* cellNibName;
 @property (nonatomic, strong) NSCache* cellHeightCache;
 
-@property (nonatomic, copy) RZAutoLayoutCellHeightManagerBlock configurationBlock;
+@property (nonatomic, copy) RZAutoLayoutCellHeightManagerConfigBlock configurationBlock;
+@property (nonatomic, copy) RZAutoLayoutCellHeightManagerHeightBlock heightBlock;
+
 @end
 
-@implementation RZAutoLayoutCellHeightManager
+@implementation RZCellHeightManager
 
-- (id)initWithCellClassName:(NSString *)cellClass configurationBlock:(RZAutoLayoutCellHeightManagerBlock)configurationBlock
+- (instancetype)initWithCellClassName:(NSString *)cellClass configurationBlock:(RZAutoLayoutCellHeightManagerConfigBlock)configurationBlock
 {
     return [self initWithCellClassName:cellClass cellNibName:cellClass configurationBlock:configurationBlock];
 }
-- (id)initWithCellClassName:(NSString *)cellClass cellNibName:(NSString *)cellNib configurationBlock:(RZAutoLayoutCellHeightManagerBlock)configurationBlock
+- (instancetype)initWithCellClassName:(NSString *)cellClass cellNibName:(NSString *)cellNib configurationBlock:(RZAutoLayoutCellHeightManagerConfigBlock)configurationBlock
 {
     self = [super init];
     if (self)
     {
         self.configurationBlock = configurationBlock;
+        self.cellClassName = cellClass;
+        self.cellNibName = cellNib;
+        self.cellHeightCache = [[NSCache alloc] init];
+        [self configureOffScreenCell];
+    }
+    return self;
+}
+
+- (instancetype)initWithCellClassName:(NSString *)cellClass heightBlock:(RZAutoLayoutCellHeightManagerHeightBlock)heightBlock
+{
+    return [self initWithCellClassName:cellClass cellNibName:cellClass heightBlock:heightBlock];
+}
+
+- (instancetype)initWithCellClassName:(NSString *)cellClass cellNibName:(NSString *)cellNib heightBlock:(RZAutoLayoutCellHeightManagerHeightBlock)heightBlock
+{
+    self = [super init];
+    if (self)
+    {
+        self.heightBlock = heightBlock;
         self.cellClassName = cellClass;
         self.cellNibName = cellNib;
         self.cellHeightCache = [[NSCache alloc] init];
@@ -117,20 +138,26 @@
 
 - (CGFloat)cellHeightForObject:(id)object indexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height = [[self.cellHeightCache objectForKey:indexPath] floatValue];
-    if (height == 0)
+    NSNumber * height = [self.cellHeightCache objectForKey:indexPath];
+    if (height == nil)
     {
         if (self.configurationBlock)
         {
             self.configurationBlock(self.offScreenCell, object);
+            UIView* contentView = [self.offScreenCell contentView];
+            height = @([contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height);
         }
-        UIView* contentView = [self.offScreenCell contentView];
-//        [contentView setNeedsLayout];
-//        [contentView layoutIfNeeded];
-        height = [contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-        [self.cellHeightCache setObject:@(height) forKey:indexPath];
+        else if (self.heightBlock)
+        {
+            height = @(self.heightBlock(self.offScreenCell, object));
+        }
+        
+        if (height)
+        {
+            [self.cellHeightCache setObject:height forKey:indexPath];
+        }
     }
-    return height;
+    return [height floatValue];
 }
 
 @end
