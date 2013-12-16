@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^RZAutoLayoutCellHeightManagerBlock)(id cell, id object);
+typedef void (^RZAutoLayoutCellHeightManagerConfigBlock)(id cell, id object);
+typedef CGFloat (^RZAutoLayoutCellHeightManagerHeightBlock)(id cell, id object);
 
 /**
  *  This is currently only been tested/Created for A UICollectionViewCell that is created from a nib.
@@ -19,9 +20,13 @@ typedef void(^RZAutoLayoutCellHeightManagerBlock)(id cell, id object);
 
 
 // Assumes that the cell comes from a nib and has the same name as the class
-- (id)initWithCellClassName:(NSString *)cellClass configurationBlock:(RZAutoLayoutCellHeightManagerBlock)configurationBlock;
+- (instancetype)initWithCellClassName:(NSString *)cellClass configurationBlock:(RZAutoLayoutCellHeightManagerConfigBlock)configurationBlock;
+- (instancetype)initWithCellClassName:(NSString *)cellClass cellNibName:(NSString *)cellNib configurationBlock:(RZAutoLayoutCellHeightManagerConfigBlock)configurationBlock;
 
-- (id)initWithCellClassName:(NSString *)cellClass cellNibName:(NSString *)cellNib configurationBlock:(RZAutoLayoutCellHeightManagerBlock)configurationBlock;
+// This version still caches heights, but instead of autolayout uses the response from the provided block instead.
+// Useful for when height is only dependent on one particular view and performance may be an issue.
+- (instancetype)initWithCellClassName:(NSString *)cellClass heightBlock:(RZAutoLayoutCellHeightManagerHeightBlock)heightBlock;
+- (instancetype)initWithCellClassName:(NSString *)cellClass cellNibName:(NSString *)cellNib heightBlock:(RZAutoLayoutCellHeightManagerHeightBlock)heightBlock;
 
 // Clears the cached heights.
 - (void)invalidateCellHeightCache;
