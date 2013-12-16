@@ -224,9 +224,7 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
     {
         contentSize.height += [self heightForSection:s estimated:YES];
     }
-    
-    contentSize.height = MAX(contentSize.height, self.collectionView.frame.size.height);
-    
+        
     return contentSize;
 }
 
