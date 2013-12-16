@@ -70,7 +70,7 @@
 
 - (void)setFormatBlock:(RZAnimatedCountingLabelFormatBlock)formatBlock
 {
-    self.formatBlock = formatBlock;
+    _formatBlock = formatBlock;
 }
 
 - (void)setNumberValue:(NSNumber *)numberValue
