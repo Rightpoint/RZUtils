@@ -43,7 +43,7 @@ static char kRZBorderViewKey;
     {
         hostView = [[RZBorderedHostView alloc] initWithFrame:self.bounds];
         hostView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [self insertSubview:hostView atIndex:0];
+        [self addSubview:hostView];
         objc_setAssociatedObject(self, &kRZBorderViewKey, hostView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     
@@ -83,6 +83,13 @@ static char kRZBorderViewKey;
         self.contentScaleFactor = [[UIScreen mainScreen] scale];
     }
     return self;
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    // always keep me at the front
+    [self.superview bringSubviewToFront:self];
 }
 
 - (RZBorderLayer*)borderLayer
