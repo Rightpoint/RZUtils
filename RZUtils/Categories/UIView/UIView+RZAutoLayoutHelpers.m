@@ -115,6 +115,37 @@
     return constraint;
 }
 
+- (NSLayoutConstraint*)rz_pinnedCenterXConstraint
+{
+    if (self.superview == nil) return nil;
+    
+    __block NSLayoutConstraint *constraint = nil;
+    [[[self superview] constraints] enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
+        if ((c.firstItem == self && c.firstAttribute == NSLayoutAttributeCenterX) ||
+            (c.secondItem == self && c.secondAttribute == NSLayoutAttributeCenterX))
+        {
+            constraint = c;
+            *stop = YES;
+        }
+    }];
+    return constraint;
+}
+
+- (NSLayoutConstraint*)rz_pinnedCenterYConstraint
+{
+    if (self.superview == nil) return nil;
+    
+    __block NSLayoutConstraint *constraint = nil;
+    [[[self superview] constraints] enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
+        if ((c.firstItem == self && c.firstAttribute == NSLayoutAttributeCenterY) ||
+            (c.secondItem == self && c.secondAttribute == NSLayoutAttributeCenterY))
+        {
+            constraint = c;
+            *stop = YES;
+        }
+    }];
+    return constraint;
+}
 
 - (void)rz_pinWidthTo:(CGFloat)width
 {
