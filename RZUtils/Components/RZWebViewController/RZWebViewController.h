@@ -18,14 +18,14 @@
 // Should the webview be alloud to open additional links
 @property (nonatomic, assign) BOOL allowsWebNavigation;
 
-@property (nonatomic, strong) UIWebView *webView;
-@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, strong, readonly) UIWebView *webView;
+@property (nonatomic, strong, readonly) UIActivityIndicatorView *activityIndicator;
 
 // Intialize the webview with a localFile in the bundle
-- (id)initWithPathForResource:(NSString *)resource;
+- (id)initWithPathForResource:(NSString*)resource toolbar:(BOOL)showToolbar;
 
 // Intialize the webview with a remote Website URL
-- (id)initWithRemoteURL:(NSURL *)webURL;
+- (id)initWithRemoteURL:(NSURL*)webURL toolbar:(BOOL)showToolbar;
 
 
 @end
