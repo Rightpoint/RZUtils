@@ -10,8 +10,6 @@
 
 @interface RZWebViewController () <UIWebViewDelegate>
 
-@property (nonatomic, assign) BOOL showsToolbar;
-
 @property (nonatomic, weak) UIBarButtonItem *backButtonItem;
 @property (nonatomic, weak) UIBarButtonItem *forwardButtonItem;
 @property (nonatomic, weak) UIBarButtonItem *refreshButtonItem;
@@ -21,6 +19,9 @@
 
 @property (nonatomic, copy) NSURL* webContentURL;
 
+@property (nonatomic, assign) BOOL showsToolbar;
+@property (nonatomic, assign) BOOL scalesPages;
+
 - (void)initializeView;
 - (void)updateBackForwardButtons;
 
@@ -28,7 +29,7 @@
 
 @implementation RZWebViewController
 
-- (id)initWithPathForResource:(NSString *)resource toolbar:(BOOL)showToolbar
+- (id)initWithPathForResource:(NSString *)resource toolbar:(BOOL)showToolbar scalePageToFit:(BOOL)scalePageToFit
 {
     self = [super init];
     if (self)
@@ -36,17 +37,19 @@
         // For now we are assuming that everything is HTML.  In the future we may want to allow the ability to specify this.
         self.webContentURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:resource ofType:@"html"] isDirectory:NO];
         self.showsToolbar = showToolbar;
+        self.scalesPages = scalePageToFit;
     }
     return self;
 }
 
-- (id)initWithRemoteURL:(NSURL *)webURL toolbar:(BOOL)showToolbar
+- (id)initWithRemoteURL:(NSURL *)webURL toolbar:(BOOL)showToolbar scalePageToFit:(BOOL)scalePageToFit
 {
     self = [super init];
     if (self)
     {
         self.webContentURL = webURL;
         self.showsToolbar = showToolbar;
+        self.scalesPages = scalePageToFit;
     }
     return self;
 }
@@ -77,10 +80,14 @@
     self.webView.delegate = nil;
 }
 
+#pragma mark - Private
+
 - (void)initializeView
 {
     self.webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+    self.webView.frame = self.view.bounds;
     self.webView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    self.webView.scalesPageToFit = self.scalesPages;
     self.webView.delegate = self;
     [self.view addSubview:self.webView];
     
