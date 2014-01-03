@@ -22,12 +22,23 @@ static float RZTweenMapFloat(float value, float inMin, float inMax, float outMin
 
 @interface RZTweenKeyFrame : NSObject
 
++ (instancetype)keyFrameWithTime:(NSTimeInterval)time value:(NSValue *)value;
+
 @property (nonatomic, assign) NSTimeInterval time;
 @property (nonatomic, strong) NSValue *value;
 
 @end
 
 @implementation RZTweenKeyFrame
+
++ (instancetype)keyFrameWithTime:(NSTimeInterval)time value:(NSValue *)value
+{
+    RZTweenKeyFrame *kf = [RZTweenKeyFrame new];
+    kf.time = time;
+    kf.value = value;
+    return kf;
+}
+
 @end
 
 // -----------------------------
@@ -36,8 +47,9 @@ static float RZTweenMapFloat(float value, float inMin, float inMax, float outMin
 @interface RZTween ()
 
 @property (nonatomic, strong) NSMutableArray *sortedKeyFrames;
+- (void)addKeyFrame:(RZTweenKeyFrame *)keyFrame;
 
-
+- (NSArray *)nearestKeyFramesForTime:(NSTimeInterval)time;
 
 @end
 
@@ -58,6 +70,54 @@ static float RZTweenMapFloat(float value, float inMin, float inMax, float outMin
     return @0;
 }
 
+- (void)addKeyFrame:(RZTweenKeyFrame *)keyFrame
+{
+    if (self.sortedKeyFrames.count == 0)
+    {
+        [self.sortedKeyFrames addObject:keyFrame];
+    }
+    else
+    {
+        NSUInteger newIndex = [self.sortedKeyFrames indexOfObject:keyFrame
+                                                    inSortedRange:NSMakeRange(0, self.sortedKeyFrames.count)
+                                                          options:NSBinarySearchingInsertionIndex
+                                                  usingComparator:^NSComparisonResult(RZTweenKeyFrame *kf1, RZTweenKeyFrame *kf2) {
+                                                      return [@(kf1.time) compare:@(kf2.time)];
+                                                  }];
+        [self.sortedKeyFrames insertObject:keyFrame atIndex:newIndex];
+    }
+}
+
+- (NSArray *)nearestKeyFramesForTime:(NSTimeInterval)time
+{
+    NSArray *kframes = nil;
+    if (self.sortedKeyFrames.count > 0)
+    {
+        RZTweenKeyFrame *searchFrame = [RZTweenKeyFrame keyFrameWithTime:time value:nil];
+        NSUInteger insertIndex = [self.sortedKeyFrames indexOfObject:searchFrame
+                                                       inSortedRange:NSMakeRange(0, self.sortedKeyFrames.count)
+                                                             options:NSBinarySearchingInsertionIndex
+                                                     usingComparator:^NSComparisonResult(RZTweenKeyFrame *kf1, RZTweenKeyFrame *kf2) {
+                                                         return [@(kf1.time) compare:@(kf2.time)];
+                                                     }];
+        
+        if (insertIndex == 0)
+        {
+            kframes = @[[self.sortedKeyFrames firstObject]];
+        }
+        else if (insertIndex == self.sortedKeyFrames.count)
+        {
+            kframes = @[[self.sortedKeyFrames lastObject]];
+        }
+        else
+        {
+            kframes = @[[self.sortedKeyFrames objectAtIndex:insertIndex-1],
+                        [self.sortedKeyFrames objectAtIndex:insertIndex]];
+        }
+    }
+    return kframes;
+}
+
 @end
 
 // -----------------------------
@@ -66,19 +126,29 @@ static float RZTweenMapFloat(float value, float inMin, float inMax, float outMin
 
 - (void)addKeyFloat:(CGFloat)keyFloat atTime:(NSTimeInterval)time
 {
-    [self.keyValues setObject:@(keyFloat) forKey:@(time)];
+    [self addKeyFrame:[RZTweenKeyFrame keyFrameWithTime:time value:@(keyFloat)]];
 }
+
 
 - (NSValue*)valueAtTime:(NSTimeInterval)time
 {
-
-}
-
-- (id)copyWithZone:(NSZone *)zone
-{
-    RZFloatTween *copy = [RZFloatTween new];
-    copy->_keyValues = [_keyValues copy];
-    return copy;
+    NSNumber *value = @0;
+    NSArray *nearestKeyFrames = [self nearestKeyFramesForTime:time];
+    if (nearestKeyFrames.count > 0)
+    {
+        if (nearestKeyFrames.count == 1)
+        {
+            RZTweenKeyFrame *kf = [nearestKeyFrames firstObject];
+            value = (NSNumber*)kf.value;
+        }
+        else
+        {
+            RZTweenKeyFrame *kf1 = [nearestKeyFrames firstObject];
+            RZTweenKeyFrame *kf2 = [nearestKeyFrames lastObject];
+            value = @(RZTweenMapFloat(time, kf1.time, kf2.time, [(NSNumber*)kf1.value floatValue], [(NSNumber*)kf2.value floatValue], YES));
+        }
+    }
+    return value;
 }
 
 // -----------------------------

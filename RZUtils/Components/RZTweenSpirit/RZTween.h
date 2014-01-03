@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 
 /*!
- *  A subclass of RZTween provides a way to interpolate a value of an arbitrary type
- *  between a start and end point. Currently only linear interpolation is supported.
+ *  A subclass of RZTween provides a way to interpolate a value of an arbitrary numerical type
+ *  between several keyframes. Currently only linear interpolation is supported.
  *  A tween can be used as-is or with RZTweenAnimator.
  */
 

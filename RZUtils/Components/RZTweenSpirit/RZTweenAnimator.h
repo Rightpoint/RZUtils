@@ -16,16 +16,18 @@
 
 // Add a tween for a particular object and keypath.
 // If multiple tweens exist for the same object with overlapping intervals, the one that started first wins.
-- (void)addTween:(id<RZTween>)tween forKeypath:(NSString *)keyPath ofObject:(id)object;
+- (void)addTween:(RZTween *)tween forKeypath:(NSString *)keyPath ofObject:(id)object;
 
 // set this to change the timeline position immediately
 @property (nonatomic, assign) NSTimeInterval time;
 
-// Animate to a particular time
-- (void)animateToTime:(NSTimeInterval)time;
+// These are still in-development
 
-// Animate to a particular time over a different duration
-- (void)animateToTime:(NSTimeInterval)time overDuration:(NSTimeInterval)duration;
+//// Animate to a particular time
+//- (void)animateToTime:(NSTimeInterval)time;
+//
+//// Animate to a particular time over a different duration
+//- (void)animateToTime:(NSTimeInterval)time overDuration:(NSTimeInterval)duration;
 
 @property (nonatomic, weak) id<RZTweenAnimatorDelegate> delegate;
 

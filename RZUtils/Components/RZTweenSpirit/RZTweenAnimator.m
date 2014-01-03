@@ -8,21 +8,20 @@
 
 #import "RZTweenAnimator.h"
 
-@interface RZTweenAnimatorKeypathTween : NSObject
+@interface RZPropertyTween : NSObject
 
-+ (instancetype)keypathTweenWithTween:(id<RZTween>)tween
-                           forKeypath:(NSString *)keyPath
-                             ofObject:(id)object;
-
-@property (nonatomic, strong) id<RZTween> tween;
+@property (nonatomic, strong) RZTween *tween;
 @property (nonatomic, copy) NSString *keyPath;
 @property (nonatomic, weak) id object;
 
 @end
 
+@implementation RZPropertyTween
+@end
+
 @interface RZTweenAnimator ()
 
-@property (nonatomic, strong) NSMutableSet *keypathTweens;
+@property (nonatomic, strong) NSMutableDictionary *animatedTweens;
 
 - (void)animateToTime:(NSTimeInterval)time usingScale:(double)timeScale;
 
@@ -46,23 +45,26 @@
     self = [super init];
     if (self)
     {
-        self.keypathTweens = [NSMutableSet set];
+        self.animatedTweens = [NSMutableDictionary dictionary];
     }
     return self;
 }
 
 #pragma mark - Adding tweens
 
-- (void)addTween:(id<RZTween>)tween forKeypath:(NSString *)keyPath ofObject:(id)object
+- (void)addTween:(RZTween *)tween forKeypath:(NSString *)keyPath ofObject:(id)object
 {
     NSParameterAssert(tween);
     NSParameterAssert(keyPath);
     NSParameterAssert(object);
+
+    RZPropertyTween *pt = [RZPropertyTween new];
+    pt.tween = tween;
+    pt.object = object;
+    pt.keyPath = keyPath;
     
-    RZTweenAnimatorKeypathTween *kpt = [RZTweenAnimatorKeypathTween keypathTweenWithTween:tween
-                                                                               forKeypath:keyPath
-                                                                                 ofObject:object];
-    [self.keypathTweens addObject:kpt];
+    NSString *kpHash = [NSString stringWithFormat:@"%p_%@", object, keyPath];
+    [self.animatedTweens setObject:pt forKey:kpHash];
 }
 
 #pragma mark - Public animation
@@ -118,6 +120,16 @@
 
 - (void)setValuesForCurrentTime
 {
+    NSArray *allTweens = [self.animatedTweens allValues];
+    [allTweens enumerateObjectsUsingBlock:^(RZPropertyTween *pt, NSUInteger idx, BOOL *stop) {
+        
+        NSValue *value = [pt.tween valueAtTime:self.time];
+        if (value != nil)
+        {
+            [pt.object setValue:value forKeyPath:pt.keyPath];
+        }
+    }];
+    
     if ([self.delegate respondsToSelector:@selector(tweenAnimatorDidAnimate:)])
     {
         [self.delegate tweenAnimatorDidAnimate:self];
