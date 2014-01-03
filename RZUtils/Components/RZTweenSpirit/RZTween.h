@@ -27,9 +27,11 @@
 
 @end
 
-//@interface RZCGAffineTransformTween : NSObject <RZTween>
-//
-//@end
+@interface RZTransformTween : RZTween
+
+- (void)addKeyTransform:(CGAffineTransform)transform atTime:(NSTimeInterval)time;
+
+@end
 
 //@interface RZRectTween : NSObject <RZTween>
 //
