@@ -27,6 +27,14 @@
 
 @end
 
+// Obviously can't tween between bool values,
+// so this simply returns the most recent boolean keyframe value
+@interface RZBooleanTween : RZTween
+
+- (void)addKeyBool:(BOOL)keyBool atTime:(NSTimeInterval)time;
+
+@end
+
 @interface RZTransformTween : RZTween
 
 - (void)addKeyTransform:(CGAffineTransform)transform atTime:(NSTimeInterval)time;

@@ -155,6 +155,30 @@ static float RZTweenMapFloat(float value, float inMin, float inMax, float outMin
 
 // -----------------------------
 
+@implementation RZBooleanTween
+
+- (void)addKeyBool:(BOOL)keyBool atTime:(NSTimeInterval)time
+{
+    [self addKeyFrame:[RZTweenKeyFrame keyFrameWithTime:time value:@(keyBool)]];
+}
+
+
+- (NSValue*)valueAtTime:(NSTimeInterval)time
+{
+    NSNumber *value = @0;
+    NSArray *nearestKeyFrames = [self nearestKeyFramesForTime:time];
+    if (nearestKeyFrames.count > 0)
+    {
+        RZTweenKeyFrame *kf = [nearestKeyFrames firstObject];
+        value = (NSNumber*)kf.value;
+    }
+    return value;
+}
+
+@end
+
+// -----------------------------
+
 @implementation RZTransformTween
 
 - (void)addKeyTransform:(CGAffineTransform)transform atTime:(NSTimeInterval)time
