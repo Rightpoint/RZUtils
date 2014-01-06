@@ -155,7 +155,6 @@
             [cgImages addObject:(__bridge id)[image CGImage]];
         }];
         
-        
         CAKeyframeAnimation *frameAnim = [CAKeyframeAnimation animationWithKeyPath:@"contents"];
         frameAnim.duration = (self.animationDuration <= 0) ? self.animationImages.count * kRZAnimatedImageDefaultFrameTime : self.animationDuration;
         frameAnim.values = cgImages;
@@ -168,7 +167,6 @@
 - (void)stopAnimating
 {
     [self.imageLayer removeAnimationForKey:kRZAnimatedImageViewAnimKey];
-    self.completion = nil;
 }
 
 #pragma mark - Animation delegate
@@ -178,7 +176,6 @@
     if (self.completion)
     {
         self.completion(flag);
-        self.completion = nil;
     }
 }
 
