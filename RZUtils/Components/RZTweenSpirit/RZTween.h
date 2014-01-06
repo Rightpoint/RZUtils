@@ -41,22 +41,7 @@
 
 @end
 
-//@interface RZRectTween : NSObject <RZTween>
-//
-//+ (instancetype)tweenWithStartTime:(NSTimeInterval)startTime
-//                         startRect:(CGRect)startRect
-//                           endTime:(NSTimeInterval)endTime
-//                           endRect:(CGRect)endRect;
-//
-//@end
-//
-//@interface RZScaleTransformTween : NSObject <RZTween>
-//
-//+ (instancetype)tweenWithStartTime:(NSTimeInterval)startTime
-//                        startScale:(CGSize)startScale
-//                           endTime:(NSTimeInterval)endTime
-//                          endScale:(CGSize)endScale;
-//@end
-
-
-// TODO - Color, rotation transform, whatever else
+// TODO:
+// - Color
+// - CGRect
+// - Other curves besides linear

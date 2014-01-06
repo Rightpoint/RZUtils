@@ -21,13 +21,11 @@
 // set this to change the timeline position immediately
 @property (nonatomic, assign) NSTimeInterval time;
 
-// These are still in-development
+// Animate to a particular time
+- (void)animateToTime:(NSTimeInterval)time;
 
-//// Animate to a particular time
-//- (void)animateToTime:(NSTimeInterval)time;
-//
-//// Animate to a particular time over a different duration
-//- (void)animateToTime:(NSTimeInterval)time overDuration:(NSTimeInterval)duration;
+// Animate to a particular time over a different duration
+- (void)animateToTime:(NSTimeInterval)time overDuration:(NSTimeInterval)duration;
 
 @property (nonatomic, weak) id<RZTweenAnimatorDelegate> delegate;
 

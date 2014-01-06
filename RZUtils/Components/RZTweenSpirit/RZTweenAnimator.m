@@ -164,10 +164,10 @@
 {
     BOOL finished = NO;
     NSTimeInterval nextTime = _time + (frameTimer.duration * self.timeScale);
-    if ((self.timeScale > 0 && nextTime >= _time) ||
-        (self.timeScale < 0 && nextTime <= _time))
+    if ((self.timeScale > 0 && nextTime >= self.targetTime) ||
+        (self.timeScale < 0 && nextTime <= self.targetTime))
     {
-        nextTime = _time;
+        nextTime = self.targetTime;
         finished = YES;
     }
     
