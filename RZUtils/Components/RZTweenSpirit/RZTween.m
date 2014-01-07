@@ -8,12 +8,17 @@
 
 #import "RZTween.h"
 
+static float RZTweenClampFloat(float value, float min, float max)
+{
+    return MIN(max, MAX(value, min));
+}
+
 static float RZTweenMapFloat(float value, float inMin, float inMax, float outMin, float outMax, BOOL clamp)
 {
     float result = ((value - inMin)/(inMax - inMin)) * (outMax - outMin) + outMin;
     if (clamp)
     {
-        result = RZClampFloat(result, MIN(outMin,outMax), MAX(outMin,outMax));
+        result = RZTweenClampFloat(result, MIN(outMin,outMax), MAX(outMin,outMax));
     }
     return result;
 }
