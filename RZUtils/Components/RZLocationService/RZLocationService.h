@@ -9,6 +9,15 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
+OBJC_EXTERN NSString * const RZLocationServiceErrorDomain;
+
+typedef NS_ENUM(NSInteger, RZLocationServiceErrorCode)
+{
+    RZLocationServiceErrorTimeout    = 1,
+    RZLocationServiceErrorNotEnabled = 2
+};
+
+
 typedef void(^RZLocationServiceSuccessBlock)(id result);
 typedef void(^RZLocationServiceErrorBlock)(NSError* error);
 
@@ -20,6 +29,8 @@ typedef void(^RZLocationServiceErrorBlock)(NSError* error);
  *   - Caches most recent location and placemarks
  *   - Combines location + placemark fetch into one handy interface.
  *   - Based on Apple's own location services sample code.
+ *
+ *  NOTE: All methods are assumed to be called from the main thread. 
  */
 @interface RZLocationService : NSObject <CLLocationManagerDelegate>
 
