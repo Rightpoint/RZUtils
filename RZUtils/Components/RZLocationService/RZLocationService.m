@@ -60,6 +60,12 @@ NSString * const RZLocationServiceErrorDomain = @"RZLocationServiceErrorDomain";
     return self;
 }
 
+- (void)dealloc
+{
+    [self.timeoutTimer invalidate];
+    self.timeoutTimer = nil;
+}
+
 - (void)locationWithCompletion:(RZLocationServiceSuccessBlock)successBlock
                                error:(RZLocationServiceErrorBlock)errorBlock
 {
@@ -111,11 +117,13 @@ NSString * const RZLocationServiceErrorDomain = @"RZLocationServiceErrorDomain";
 {
     if (!self.timeoutTimer)
     {
-        self.timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:self.locationFetchTimeout
+        self.timeoutTimer = [NSTimer timerWithTimeInterval:self.locationFetchTimeout
                                                              target:self
                                                            selector:@selector(locationUpdateTimeout)
                                                            userInfo:nil
                                                             repeats:NO];
+        [[NSRunLoop currentRunLoop] addTimer:self.timeoutTimer forMode:NSRunLoopCommonModes];
+        
     }
 }
 

@@ -30,7 +30,7 @@ typedef void(^RZLocationServiceErrorBlock)(NSError* error);
  *   - Combines location + placemark fetch into one handy interface.
  *   - Based on Apple's own location services sample code.
  *
- *  NOTE: All methods are assumed to be called from the main thread. 
+ *  NOTE: All methods are assumed to be called from the main thread.
  */
 @interface RZLocationService : NSObject <CLLocationManagerDelegate>
 
