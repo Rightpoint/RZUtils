@@ -9,7 +9,7 @@
 #import "RZLocationService.h"
 
 #define kRZLDefaultUpdateTimeout        3.0
-#define kRZLAcceptableAccuracyMeters    100
+#define kRZLAcceptableAccuracyMeters    100.0
 #define kRZLMaxAge                      5.0
 
 @interface RZLocationService ()
@@ -50,6 +50,9 @@
         _successBlocks = [NSMutableArray array];
         _errorBlocks = [NSMutableArray array];
         _fetchLocInProgress = NO;
+    
+        _locationFetchTimeout = kRZLDefaultUpdateTimeout;
+        _desiredAccuracyMeters = kRZLAcceptableAccuracyMeters;
     }
     return self;
 }
@@ -69,7 +72,7 @@
         return;
     }
 
-    // if we're already waiting for a fetch and we get called again, add he blocks and bail.
+    // if we're already waiting for a fetch and we get called again, add the blocks and bail.
     [self.successBlocks addObject:successBlock];
     [self.errorBlocks addObject:errorBlock];
     
@@ -86,7 +89,7 @@
     // Only schedule the timer if we are NOT waiting for authorization
     if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusNotDetermined)
     {
-        [self performSelector:@selector(locationUpdateTimeout) withObject:nil afterDelay:kRZLDefaultUpdateTimeout];
+        [self performSelector:@selector(locationUpdateTimeout) withObject:nil afterDelay:self.locationFetchTimeout];
     }
 }
 
@@ -101,7 +104,7 @@
     // if the status is Authorized and we were waiting for authorization, start the timeout timer. 
     if (status == kCLAuthorizationStatusAuthorized && self.fetchLocInProgress)
     {
-        [self performSelector:@selector(locationUpdateTimeout) withObject:nil afterDelay:kRZLDefaultUpdateTimeout];
+        [self performSelector:@selector(locationUpdateTimeout) withObject:nil afterDelay:self.locationFetchTimeout];
     }
 }
 
@@ -144,7 +147,7 @@
         // accuracy because it is a negative value. Instead, compare against some predetermined "real" measure of
         // acceptable accuracy, or depend on the timeout to stop updating. This sample depends on the timeout.
         //
-        double acceptable = kRZLAcceptableAccuracyMeters;
+        double acceptable = self.desiredAccuracyMeters;
         if (newLocation.horizontalAccuracy <= acceptable)
         {
             [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(locationUpdateTimeout) object:nil];

@@ -12,6 +12,15 @@
 typedef void(^RZLocationServiceSuccessBlock)(id result);
 typedef void(^RZLocationServiceErrorBlock)(NSError* error);
 
+/**
+ *  This class exposes location services as block-based interfaces. It also provides the following benefits over using raw location fetching:
+ *
+ *   - Filters out stale locations on fetch and waits for a location with an acceptable accuracy, falling back on the "best effort" location.
+ *   - On location fetch, if not authorized for location, operations are suspended while the user is prompted for permission.
+ *   - Caches most recent location and placemarks
+ *   - Combines location + placemark fetch into one handy interface.
+ *   - Based on Apple's own location services sample code.
+ */
 @interface RZLocationService : NSObject <CLLocationManagerDelegate>
 
 /**
@@ -33,6 +42,17 @@ typedef void(^RZLocationServiceErrorBlock)(NSError* error);
  *  The last fetched placemark.
  */
 @property (nonatomic, readonly, strong) CLPlacemark *lastPlacemark;
+
+/**
+ *  The amount of time alloted before a location fetch operation fails. When a failure
+ *  occurs, the "best effort" location is returned, or an error if no location has been found.
+ */
+@property (nonatomic, assign) NSTimeInterval locationFetchTimeout;
+
+/**
+ *  The desired accuracy in meters. This should be a "real" value, do not use kCLLocationAccuracyBest or other constants. 
+ */
+@property (nonatomic, assign) double desiredAccuracyMeters;
 
 + (RZLocationService *)shared;
 
