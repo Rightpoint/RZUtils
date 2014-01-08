@@ -18,20 +18,8 @@ typedef NS_ENUM(NSUInteger, RZViewBorderMask)
     RZViewBorderAll     = RZViewBorderLeft | RZViewBorderBottom | RZViewBorderRight | RZViewBorderTop
 };
 
-// UIView subclass with configurable borders.
-@interface RZBorderedHostView : UIView
-
-@property (nonatomic, assign) RZViewBorderMask  rz_borderMask;
-@property (nonatomic, assign) CGFloat           rz_borderWidth;
-@property (nonatomic, strong) UIColor           *rz_borderColor;
-
-@end
-
-// Adds a clear-background instance of RZBorderedHostView as the lowest z-ordered subview of the target view (below all other views).
-// Good enough when the subview hierarchy is simple enough such that nothing will be added on top of the borders.
+// Adds a generated border image view as the highest z-ordered subview of the target view (above all other views).
 @interface UIView (RZBorders)
-
-@property (nonatomic, readonly) RZBorderedHostView *rz_borderHostView;
 
 - (void)rz_addBordersWithMask:(RZViewBorderMask)mask width:(CGFloat)borderWidth color:(UIColor*)color;
 - (void)rz_removeBorders;

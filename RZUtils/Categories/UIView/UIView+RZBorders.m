@@ -12,54 +12,50 @@
 
 static char kRZBorderViewKey;
 
-@interface RZBorderLayer : CALayer
+@interface RZBorderedImageView : UIImageView
 
-@property (nonatomic, assign) RZViewBorderMask rz_borderMask;
-@property (nonatomic, assign) CGFloat rz_borderWidth;
-@property (nonatomic, assign) CGColorRef rz_borderColorRef;
+@property (nonatomic, readonly) NSMutableDictionary *prototypeBorderImageCache;
+@property (nonatomic, readonly) NSMutableDictionary *coloredBorderImageCache;
+
+- (void)setBorderMask:(RZViewBorderMask)mask width:(CGFloat)width color:(UIColor *)color;
+
+// bmp generation
+- (UIImage *)prototypeBorderImageForMask:(RZViewBorderMask)mask width:(CGFloat)width;
+- (UIImage *)coloredBorderImageWithMask:(RZViewBorderMask)mask width:(CGFloat)width color:(UIColor *)color;
 
 @end
-
-@interface RZBorderedHostView ()
-
-@property (nonatomic, readonly) RZBorderLayer *borderLayer;
-
-@end
-
 
 // ---------------------------------------
 
 @implementation UIView (RZBorders)
 
-- (RZBorderedHostView *)rz_borderHostView
+- (RZBorderedImageView *)rz_borderImgView
 {
     return objc_getAssociatedObject(self, &kRZBorderViewKey);
 }
 
 - (void)rz_addBordersWithMask:(RZViewBorderMask)mask width:(CGFloat)borderWidth color:(UIColor *)color
 {
-    RZBorderedHostView *hostView = objc_getAssociatedObject(self, &kRZBorderViewKey);
-    if (hostView == nil)
+    RZBorderedImageView *imgView = objc_getAssociatedObject(self, &kRZBorderViewKey);
+    if (imgView == nil)
     {
-        hostView = [[RZBorderedHostView alloc] initWithFrame:self.bounds];
-        hostView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [self addSubview:hostView];
-        objc_setAssociatedObject(self, &kRZBorderViewKey, hostView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        imgView = [[RZBorderedImageView alloc] initWithFrame:self.bounds];
+        imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [imgView setBorderMask:mask width:borderWidth color:color];
+        [self addSubview:imgView];
+        objc_setAssociatedObject(self, &kRZBorderViewKey, imgView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     
-    hostView.backgroundColor = [UIColor clearColor];
-    hostView.opaque = NO;
-    hostView.borderLayer.rz_borderMask = mask;
-    hostView.borderLayer.rz_borderWidth = borderWidth;
-    hostView.borderLayer.rz_borderColorRef = [color CGColor];
+    imgView.backgroundColor = [UIColor clearColor];
+    imgView.opaque = NO;
 }
 
 - (void)rz_removeBorders
 {
-    RZBorderedHostView *hostView = objc_getAssociatedObject(self, &kRZBorderViewKey);
-    if (hostView)
+    RZBorderedImageView *imgView = objc_getAssociatedObject(self, &kRZBorderViewKey);
+    if (imgView)
     {
-        [hostView removeFromSuperview];
+        [imgView removeFromSuperview];
         objc_setAssociatedObject(self, &kRZBorderViewKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
 }
@@ -68,17 +64,13 @@ static char kRZBorderViewKey;
 
 // ---------------------------------------
 
-@implementation RZBorderedHostView
-
-+ (Class)layerClass
-{
-    return [RZBorderLayer class];
-}
+@implementation RZBorderedImageView
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self){
+    if (self)
+    {
         self.userInteractionEnabled = NO;
         self.contentScaleFactor = [[UIScreen mainScreen] scale];
     }
@@ -88,123 +80,211 @@ static char kRZBorderViewKey;
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    
     // always keep me at the front
+    self.frame = self.superview.bounds;
     [self.superview bringSubviewToFront:self];
 }
 
-- (RZBorderLayer*)borderLayer
+#pragma mark - Public
+
+- (void)setBorderMask:(RZViewBorderMask)mask width:(CGFloat)width color:(UIColor *)color
 {
-    return (RZBorderLayer*)self.layer;
+    self.image = [self coloredBorderImageWithMask:mask width:width color:color];
 }
 
-- (void)setRz_borderMask:(RZViewBorderMask)rz_borderMask
+#pragma mark - Caches
+
+- (NSMutableDictionary *)prototypeBorderImageCache
 {
-    _rz_borderMask = rz_borderMask;
-    self.borderLayer.rz_borderMask = rz_borderMask;
-}
-
-- (void)setRz_borderColor:(UIColor *)rz_borderColor
-{
-    _rz_borderColor = rz_borderColor;
-    self.borderLayer.rz_borderColorRef = [rz_borderColor CGColor];
-}
-
-- (void)setRz_borderWidth:(CGFloat)rz_borderWidth
-{
-    _rz_borderWidth = rz_borderWidth;
-    self.borderLayer.rz_borderWidth = rz_borderWidth;
-}
-
-@end
-
-@implementation RZBorderLayer
-
-+ (BOOL)needsDisplayForKey:(NSString *)key
-{
-    static NSArray *displayKeys = nil;
+    static NSMutableDictionary * s_pbiCache = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        displayKeys = @[NSStringFromSelector(@selector(rz_borderMask)),
-                        NSStringFromSelector(@selector(rz_borderWidth)),
-                        NSStringFromSelector(@selector(rz_borderColorRef))];
+        s_pbiCache = [NSMutableDictionary dictionary];
     });
-    
-    return [super needsDisplayForKey:key] || [displayKeys containsObject:key];
+    return s_pbiCache;
 }
 
-- (id)init
+- (NSMutableDictionary *)coloredBorderImageCache
 {
-    self = [super init];
-    if (self)
-    {
-        self.contentsScale = [[UIScreen mainScreen] scale];
-        self.needsDisplayOnBoundsChange = YES;
-        self.rz_borderColorRef = [[UIColor blackColor] CGColor];
-    }
-    return self;
+    static NSMutableDictionary * s_cbiCache = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        s_cbiCache = [NSMutableDictionary dictionary];
+    });
+    return s_cbiCache;
 }
 
-- (void)setRz_borderColorRef:(CGColorRef)rz_borderColorRef
-{
-    if (_rz_borderColorRef)
-    {
-        CGColorRelease(_rz_borderColorRef);
-    }
-    
-    _rz_borderColorRef = rz_borderColorRef;
-    
-    if (rz_borderColorRef)
-    {
-        CGColorRetain(rz_borderColorRef);
-    }
-}
+#pragma mark - Bitmap generation
 
-- (void)drawInContext:(CGContextRef)ctx
+- (UIImage *)prototypeBorderImageForMask:(RZViewBorderMask)mask width:(CGFloat)width
 {
-    if (self.rz_borderColorRef && self.rz_borderMask != 0 && self.rz_borderWidth > 0)
+    NSString *cacheKey = [NSString stringWithFormat:@"%lu_%.2f", (unsigned long)mask, width];
+    UIImage *protoImage = [self.prototypeBorderImageCache objectForKey:cacheKey];
+    if (protoImage == nil)
     {
-        CGContextSetStrokeColorWithColor(ctx, self.rz_borderColorRef);
-        CGContextSetLineWidth(ctx, self.rz_borderWidth);
+        CGFloat imgDim = ceilf(width * 3);
+        CGSize imgSize = CGSizeMake(imgDim, imgDim);
+
+        UIGraphicsBeginImageContextWithOptions(imgSize, NO, [[UIScreen mainScreen] scale]);
         
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+
+        CGRect fullRect = (CGRect){CGPointZero, imgSize};
+        CGContextClearRect(ctx, fullRect);
+        
+        CGColorRef white_ref = [[UIColor whiteColor] CGColor];
+        
+        CGContextSetStrokeColorWithColor(ctx, white_ref);
+        CGContextSetLineWidth(ctx, width);
+
         CGPoint segArray[8];
         NSUInteger segCount = 0;
-        
-        CGFloat midWidth = self.rz_borderWidth * 0.5;
-        
-        if (self.rz_borderMask & RZViewBorderLeft)
+
+        CGFloat midWidth = width * 0.5;
+
+        if (mask & RZViewBorderLeft)
         {
             CGPoint start = CGPointMake(midWidth, 0);
-            CGPoint end   = CGPointMake(midWidth, self.bounds.size.height);
+            CGPoint end   = CGPointMake(midWidth, imgDim);
             segArray[segCount++] = start;
             segArray[segCount++] = end;
         }
-        
-        if (self.rz_borderMask & RZViewBorderBottom)
+
+        if (mask & RZViewBorderBottom)
         {
-            CGPoint start = CGPointMake(0, self.bounds.size.height - midWidth);
-            CGPoint end   = CGPointMake(self.bounds.size.width, self.bounds.size.height - midWidth);
+            CGPoint start = CGPointMake(0, imgDim - midWidth);
+            CGPoint end   = CGPointMake(imgDim, imgDim - midWidth);
             segArray[segCount++] = start;
             segArray[segCount++] = end;
         }
-        
-        if (self.rz_borderMask & RZViewBorderRight)
+
+        if (mask & RZViewBorderRight)
         {
-            CGPoint start = CGPointMake(self.bounds.size.width - midWidth, self.bounds.size.height);
-            CGPoint end   = CGPointMake(self.bounds.size.width - midWidth, 0);
+            CGPoint start = CGPointMake(imgDim - midWidth, imgDim);
+            CGPoint end   = CGPointMake(imgDim - midWidth, 0);
             segArray[segCount++] = start;
             segArray[segCount++] = end;
         }
-        
-        if (self.rz_borderMask & RZViewBorderTop)
+
+        if (mask & RZViewBorderTop)
         {
-            CGPoint start = CGPointMake(self.bounds.size.width, midWidth);
+            CGPoint start = CGPointMake(imgDim, midWidth);
             CGPoint end   = CGPointMake(0, midWidth);
             segArray[segCount++] = start;
             segArray[segCount++] = end;
         }
         
         CGContextStrokeLineSegments(ctx, segArray, segCount);
+
+        protoImage = UIGraphicsGetImageFromCurrentImageContext();
+        if (protoImage)
+        {
+            [self.prototypeBorderImageCache setObject:protoImage forKey:cacheKey];
+        }
+
+        UIGraphicsEndImageContext();
     }
+    
+    return protoImage;
+}
+
+- (UIImage *)coloredBorderImageWithMask:(RZViewBorderMask)mask width:(CGFloat)width color:(UIColor *)color
+{
+    CGFloat r, g, b, a;
+    [color getRed:&r green:&g blue:&b alpha:&a];
+    NSString *cacheKey = [NSString stringWithFormat:@"%lu_%.2f-%lu_%lu_%lu_%lu",
+                    (unsigned long)mask,
+                    width,
+                    (unsigned long)(r * 255),
+                    (unsigned long)(g * 255),
+                    (unsigned long)(b * 255),
+                    (unsigned long)(a * 255)];
+
+    UIImage *borderImage = [self.coloredBorderImageCache objectForKey:cacheKey];
+    if (borderImage == nil)
+    {
+        UIImage *protoImage = [self prototypeBorderImageForMask:mask width:width];
+
+        if (protoImage)
+        {
+            CGSize imgSize = protoImage.size;
+
+            UIGraphicsBeginImageContextWithOptions(imgSize, NO, [[UIScreen mainScreen] scale]);
+
+            CGContextRef ctx = UIGraphicsGetCurrentContext();
+
+            CGRect fullRect = (CGRect){CGPointZero, imgSize};
+
+            // draw color border
+            CGContextSetFillColorWithColor(ctx, [color CGColor]);
+            CGContextFillRect(ctx, fullRect);
+            
+            // mask it out
+            CGContextSetBlendMode(ctx, kCGBlendModeDestinationIn);
+            CGContextDrawImage(ctx, fullRect, [protoImage CGImage]);
+            
+            borderImage = [UIGraphicsGetImageFromCurrentImageContext() resizableImageWithCapInsets:UIEdgeInsetsMake(imgSize.height * 0.5, imgSize.width * 0.5, imgSize.height * 0.5, imgSize.width * 0.5)
+                                                                                      resizingMode:UIImageResizingModeStretch];
+            if (borderImage)
+            {
+                [self.coloredBorderImageCache setObject:borderImage forKey:cacheKey];
+            }
+
+            UIGraphicsEndImageContext();
+        }
+
+    }
+
+    return borderImage;
 }
 
 @end
+
+//- (void)drawInContext:(CGContextRef)ctx
+//{
+//    if (self.rz_borderColorRef && self.rz_borderMask != 0 && self.rz_borderWidth > 0)
+//    {
+//        CGContextSetStrokeColorWithColor(ctx, self.rz_borderColorRef);
+//        CGContextSetLineWidth(ctx, self.rz_borderWidth);
+//        
+//        CGPoint segArray[8];
+//        NSUInteger segCount = 0;
+//        
+//        CGFloat midWidth = self.rz_borderWidth * 0.5;
+//        
+//        if (self.rz_borderMask & RZViewBorderLeft)
+//        {
+//            CGPoint start = CGPointMake(midWidth, 0);
+//            CGPoint end   = CGPointMake(midWidth, self.bounds.size.height);
+//            segArray[segCount++] = start;
+//            segArray[segCount++] = end;
+//        }
+//        
+//        if (self.rz_borderMask & RZViewBorderBottom)
+//        {
+//            CGPoint start = CGPointMake(0, self.bounds.size.height - midWidth);
+//            CGPoint end   = CGPointMake(self.bounds.size.width, self.bounds.size.height - midWidth);
+//            segArray[segCount++] = start;
+//            segArray[segCount++] = end;
+//        }
+//        
+//        if (self.rz_borderMask & RZViewBorderRight)
+//        {
+//            CGPoint start = CGPointMake(self.bounds.size.width - midWidth, self.bounds.size.height);
+//            CGPoint end   = CGPointMake(self.bounds.size.width - midWidth, 0);
+//            segArray[segCount++] = start;
+//            segArray[segCount++] = end;
+//        }
+//        
+//        if (self.rz_borderMask & RZViewBorderTop)
+//        {
+//            CGPoint start = CGPointMake(self.bounds.size.width, midWidth);
+//            CGPoint end   = CGPointMake(0, midWidth);
+//            segArray[segCount++] = start;
+//            segArray[segCount++] = end;
+//        }
+//        
+//        CGContextStrokeLineSegments(ctx, segArray, segCount);
+//    }
+//}
