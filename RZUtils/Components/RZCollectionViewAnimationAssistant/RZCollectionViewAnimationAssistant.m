@@ -114,7 +114,6 @@
         
         if (shouldMutate)
         {
-            
             RZCollectionViewCellAttributeUpdateOptions *opts = [RZCollectionViewCellAttributeUpdateOptions new];
             opts.isFinalAttributes = NO;
             opts.isBoundsUpdate = self.boundsChanging;
@@ -146,7 +145,6 @@
         
         if (shouldMutate)
         {
-            
             RZCollectionViewCellAttributeUpdateOptions *opts = [RZCollectionViewCellAttributeUpdateOptions new];
             opts.isFinalAttributes = YES;
             opts.isBoundsUpdate = self.boundsChanging;
