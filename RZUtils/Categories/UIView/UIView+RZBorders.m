@@ -14,8 +14,8 @@ static char kRZBorderViewKey;
 
 @interface RZBorderedImageView : UIImageView
 
-@property (nonatomic, readonly) NSMutableDictionary *maskingImageCache;
-@property (nonatomic, readonly) NSMutableDictionary *coloredBorderImageCache;
++ (NSMutableDictionary *)maskingImageCache;
++ (NSMutableDictionary *)coloredBorderImageCache;
 
 - (void)setBorderMask:(RZViewBorderMask)mask width:(CGFloat)width color:(UIColor *)color;
 
@@ -97,7 +97,7 @@ static char kRZBorderViewKey;
 
 #pragma mark - Caches
 
-- (NSMutableDictionary *)maskingImageCache
++ (NSMutableDictionary *)maskingImageCache
 {
     static NSMutableDictionary *s_maskCache = nil;
     static dispatch_once_t onceToken;
@@ -107,12 +107,21 @@ static char kRZBorderViewKey;
     return s_maskCache;
 }
 
-- (NSMutableDictionary *)coloredBorderImageCache
++ (NSMutableDictionary *)coloredBorderImageCache
 {
     static NSMutableDictionary * s_cbiCache = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        
         s_cbiCache = [NSMutableDictionary dictionary];
+        
+        // Automatically clear the cache in low-memory situations. Should be a rare occurrence.
+        // This notification observation will be valid for the application lifetime - no need to ever remove the observer.
+        [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidReceiveMemoryWarningNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+            [[[RZBorderedImageView class] maskingImageCache] removeAllObjects];
+            [[[RZBorderedImageView class] coloredBorderImageCache] removeAllObjects];
+        }];
+        
     });
     return s_cbiCache;
 }
@@ -122,7 +131,7 @@ static char kRZBorderViewKey;
 - (UIImage *)maskingImageForMask:(RZViewBorderMask)mask width:(CGFloat)width
 {
     NSString *cacheKey = [NSString stringWithFormat:@"%lu_%.2f", (unsigned long)mask, width];
-    UIImage *maskImage = [self.maskingImageCache objectForKey:cacheKey];
+    UIImage *maskImage = [[[self class] maskingImageCache] objectForKey:cacheKey];
     if (maskImage == nil)
     {
         CGFloat imgDim = ceilf(width * 3);
@@ -135,9 +144,9 @@ static char kRZBorderViewKey;
         CGRect fullRect = (CGRect){CGPointZero, imgSize};
         CGContextClearRect(ctx, fullRect);
         
-        CGColorRef white_ref = [[UIColor whiteColor] CGColor];
+        CGColorRef maskImageColorRef = [[UIColor whiteColor] CGColor];
         
-        CGContextSetStrokeColorWithColor(ctx, white_ref);
+        CGContextSetStrokeColorWithColor(ctx, maskImageColorRef);
         CGContextSetLineWidth(ctx, width);
 
         CGPoint segArray[8];
@@ -183,7 +192,7 @@ static char kRZBorderViewKey;
 
         if (maskImage)
         {
-            [self.maskingImageCache setObject:maskImage forKey:cacheKey];
+            [[[self class] maskingImageCache] setObject:maskImage forKey:cacheKey];
         }
 
         UIGraphicsEndImageContext();
@@ -204,7 +213,7 @@ static char kRZBorderViewKey;
                     (unsigned long)(b * 255),
                     (unsigned long)(a * 255)];
 
-    UIImage *borderImage = [self.coloredBorderImageCache objectForKey:cacheKey];
+    UIImage *borderImage = [[[self class] coloredBorderImageCache] objectForKey:cacheKey];
     if (borderImage == nil)
     {
         UIImage *maskImage = [self maskingImageForMask:mask width:width];
@@ -231,7 +240,7 @@ static char kRZBorderViewKey;
                                                                                       resizingMode:UIImageResizingModeStretch];
             if (borderImage)
             {
-                [self.coloredBorderImageCache setObject:borderImage forKey:cacheKey];
+                [[[self class] coloredBorderImageCache] setObject:borderImage forKey:cacheKey];
             }
 
             UIGraphicsEndImageContext();
