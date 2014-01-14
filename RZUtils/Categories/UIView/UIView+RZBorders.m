@@ -19,8 +19,10 @@ static char kRZBorderViewKey;
 
 - (void)setBorderMask:(RZViewBorderMask)mask width:(CGFloat)width color:(UIColor *)color;
 
-// bmp generation
-- (UIImage *)prototypeBorderImageForMask:(RZViewBorderMask)mask width:(CGFloat)width;
+// Returns a new or cached masking image that can be used to fill a rect area to produce a bordered effect.
+- (UIImage *)maskingImageForMask:(RZViewBorderMask)mask width:(CGFloat)width;
+
+// Returns a clear, stretchable image with the specified borders, width, and color
 - (UIImage *)coloredBorderImageWithMask:(RZViewBorderMask)mask width:(CGFloat)width color:(UIColor *)color;
 
 @end
@@ -117,7 +119,7 @@ static char kRZBorderViewKey;
 
 #pragma mark - Bitmap generation
 
-- (UIImage *)prototypeBorderImageForMask:(RZViewBorderMask)mask width:(CGFloat)width
+- (UIImage *)maskingImageForMask:(RZViewBorderMask)mask width:(CGFloat)width
 {
     NSString *cacheKey = [NSString stringWithFormat:@"%lu_%.2f", (unsigned long)mask, width];
     UIImage *protoImage = [self.prototypeBorderImageCache objectForKey:cacheKey];
@@ -204,7 +206,7 @@ static char kRZBorderViewKey;
     UIImage *borderImage = [self.coloredBorderImageCache objectForKey:cacheKey];
     if (borderImage == nil)
     {
-        UIImage *protoImage = [self prototypeBorderImageForMask:mask width:width];
+        UIImage *protoImage = [self maskingImageForMask:mask width:width];
 
         if (protoImage)
         {
