@@ -13,7 +13,8 @@
 {
     __block NSLayoutConstraint *constraint = nil;
     [self.constraints enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
-        if (c.firstAttribute == NSLayoutAttributeWidth &&
+        if (c.firstItem == self &&
+            c.firstAttribute == NSLayoutAttributeWidth &&
             c.secondAttribute == NSLayoutAttributeNotAnAttribute &&
             c.relation == NSLayoutRelationEqual)
         {
@@ -28,7 +29,8 @@
 {
     __block NSLayoutConstraint *constraint = nil;
     [self.constraints enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
-        if (c.firstAttribute == NSLayoutAttributeHeight &&
+        if (c.firstItem == self &&
+            c.firstAttribute == NSLayoutAttributeHeight &&
             c.secondAttribute == NSLayoutAttributeNotAnAttribute &&
             c.relation == NSLayoutRelationEqual)
         {
@@ -45,9 +47,9 @@
     
     __block NSLayoutConstraint *constraint = nil;
     [[[self superview] constraints] enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
-        if (c.firstItem == self &&
+        if ((c.firstItem == self || c.firstItem == self.superview) &&
             c.firstAttribute == NSLayoutAttributeTop &&
-            c.secondItem == self.superview &&
+            (c.secondItem == self.superview || c.secondItem == self) &&
             c.secondAttribute == NSLayoutAttributeTop &&
             c.relation == NSLayoutRelationEqual)
         {
@@ -64,10 +66,10 @@
     
     __block NSLayoutConstraint *constraint = nil;
     [[[self superview] constraints] enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
-        if (c.firstItem == self &&
-            c.firstAttribute == NSLayoutAttributeLeft &&
-            c.secondItem == self.superview &&
-            c.secondAttribute == NSLayoutAttributeLeft &&
+        if ((c.firstItem == self || c.firstItem == self.superview) &&
+            (c.firstAttribute == NSLayoutAttributeLeft || c.firstAttribute == NSLayoutAttributeLeading) &&
+            (c.secondItem == self.superview || c.secondItem == self) &&
+            (c.secondAttribute == NSLayoutAttributeLeft || c.secondAttribute == NSLayoutAttributeLeading) &&
             c.relation == NSLayoutRelationEqual)
         {
             constraint = c;
@@ -83,10 +85,10 @@
     
     __block NSLayoutConstraint *constraint = nil;
     [[[self superview] constraints] enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
-        if (c.firstItem == self &&
-            c.firstAttribute == NSLayoutAttributeRight &&
-            c.secondItem == self.superview &&
-            c.secondAttribute == NSLayoutAttributeRight &&
+        if ((c.firstItem == self || c.firstItem == self.superview) &&
+            (c.firstAttribute == NSLayoutAttributeRight || c.firstAttribute == NSLayoutAttributeTrailing) &&
+            (c.secondItem == self.superview || c.secondItem == self) &&
+            (c.secondAttribute == NSLayoutAttributeRight || c.secondAttribute == NSLayoutAttributeTrailing) &&
             c.relation == NSLayoutRelationEqual)
         {
             constraint = c;
@@ -102,9 +104,9 @@
     
     __block NSLayoutConstraint *constraint = nil;
     [[[self superview] constraints] enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
-        if (c.firstItem == self &&
+        if ((c.firstItem == self || c.firstItem == self.superview) &&
             c.firstAttribute == NSLayoutAttributeBottom &&
-            c.secondItem == self.superview &&
+            (c.secondItem == self.superview || c.secondItem == self) &&
             c.secondAttribute == NSLayoutAttributeBottom &&
             c.relation == NSLayoutRelationEqual)
         {
