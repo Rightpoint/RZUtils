@@ -9,6 +9,7 @@
 #import "RZImageDecompressionOperation.h"
 #import "RZWebServiceManager.h"
 #import "RZFileManager.h"
+#import "UIImage+RZResize.h"
 
 #define RZImageCacheError(fmt, ...) NSLog((@"[RZImageCache] Error: " fmt), ##__VA_ARGS__)
 
@@ -114,14 +115,19 @@
 
 - (NSURL*)downloadImageFromPath:(NSString *)path decompress:(BOOL)decompress delegate:(id<RZImageCacheDelegate>)delegate
 {
+    return [self downloadImageFromPath:path decompress:decompress resizeToSize:CGSizeZero preserveAspectRatio:YES delegate:delegate];
+}
+
+- (NSURL*)downloadImageFromPath:(NSString *)path decompress:(BOOL)decompress resizeToSize:(CGSize)size preserveAspectRatio:(BOOL)preserveAspect delegate:(id<RZImageCacheDelegate>)delegate
+{
     NSURL *imageURL = nil;
     if (self.baseURL){
         imageURL = [NSURL URLWithString:path relativeToURL:self.baseURL];
-        [self downloadImageFromURL:imageURL decompress:decompress delegate:delegate];
+        [self downloadImageFromURL:imageURL decompress:decompress resizeToSize:size preserveAspectRatio:preserveAspect delegate:delegate];
     }
     else{
         RZImageCacheError(@"No base URL has been set.");
-                
+
         if (delegate){
             [delegate imageCacheFailedToLoadImageFromURL:nil error:nil];
         }
@@ -131,9 +137,24 @@
 
 - (void)downloadImageFromURL:(NSURL *)url decompress:(BOOL)decompress delegate:(id<RZImageCacheDelegate>)delegate
 {
+    [self downloadImageFromURL:url decompress:decompress resizeToSize:CGSizeZero preserveAspectRatio:YES delegate:delegate];
+}
+
+- (void)downloadImageFromURL:(NSURL *)url decompress:(BOOL)decompress resizeToSize:(CGSize)size preserveAspectRatio:(BOOL)preserveAspect delegate:(id<RZImageCacheDelegate>)delegate
+{
     if (url){
-        
-        UIImage *image = [self.inMemoryImageCache objectForKey:url];
+
+        BOOL resizing = !CGSizeEqualToSize(size, CGSizeZero);
+
+        // Use the absolute URL for the cache key. If we are resizing, append the size on to the key.
+        // Use the requested size as the key because we do not yet know the actual size of the resized image (we haven't downloaded the image yet).
+        NSString *cacheKey = url.absoluteString;
+        if(resizing)
+        {
+            NSString *sizeString = [NSString stringWithFormat:@"%dx%d", (int)size.width, (int)size.height];
+            cacheKey = [NSString stringWithFormat:@"%@%@", cacheKey, sizeString];
+        }
+        UIImage *image = [self.inMemoryImageCache objectForKey:cacheKey];
         if (image == nil){
             
             if (delegate){
@@ -153,10 +174,10 @@
                         
                         if (decompress){
                             
-                            RZImageDecompressionOperation *decomp = [[RZImageDecompressionOperation alloc] initWithFileURL:downloadedFile webUrl:url completion:^(UIImage *image) {
+                            RZImageDecompressionOperation *decomp = [[RZImageDecompressionOperation alloc] initWithFileURL:downloadedFile webUrl:url resizeToSize:size preserveAspectRatio:preserveAspect completion:^(UIImage *image) {
                                 
                                 if (image){
-                                    [self.inMemoryImageCache setObject:image forKey:url cost:[image approxSizeInBytes]];
+                                    [self.inMemoryImageCache setObject:image forKey:cacheKey cost:[image approxSizeInBytes]];
                                     [self notifyDelegatesOfSuccessForURL:url withImage:image fromCache:NO];
                                 }
                                 else{
@@ -173,8 +194,15 @@
                         else{
                             NSData *imgData = [NSData dataWithContentsOfURL:downloadedFile];
                             UIImage *image = [UIImage imageWithData:imgData];
+
+                            // If a resize size is provided, resize the image.
+                            if(resizing)
+                            {
+                                image = [UIImage rz_imageWithImage:image scaledToSize:size preserveAspectRatio:preserveAspect];
+                            }
+
                             [self.downloadingUrls removeObject:url];
-                            [self.inMemoryImageCache setObject:image forKey:url];
+                            [self.inMemoryImageCache setObject:image forKey:cacheKey];
                             [self notifyDelegatesOfSuccessForURL:url withImage:image fromCache:loadedFromCache];
                         }
                         
