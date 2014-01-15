@@ -162,7 +162,7 @@ static char kRZBorderViewKey;
             segArray[segCount++] = end;
         }
 
-        if (mask & RZViewBorderBottom)
+        if (mask & RZViewBorderTop)
         {
             CGPoint start = CGPointMake(0, imgDim - midWidth);
             CGPoint end   = CGPointMake(imgDim, imgDim - midWidth);
@@ -178,7 +178,7 @@ static char kRZBorderViewKey;
             segArray[segCount++] = end;
         }
 
-        if (mask & RZViewBorderTop)
+        if (mask & RZViewBorderBottom)
         {
             CGPoint start = CGPointMake(imgDim, midWidth);
             CGPoint end   = CGPointMake(0, midWidth);
