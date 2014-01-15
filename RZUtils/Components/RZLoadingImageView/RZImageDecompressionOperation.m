@@ -109,6 +109,11 @@
             {
                 imageSize = CGSizeMake(CGImageGetWidth(imageRef), CGImageGetHeight(imageRef));
             }
+
+            // Scale for retina devices
+            CGFloat scale = [[UIScreen mainScreen] scale];
+            imageSize.width *= scale;
+            imageSize.height *= scale;
             
             CGContextRef context = CGBitmapContextCreate(NULL,
                                                          imageSize.width,

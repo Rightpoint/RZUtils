@@ -174,7 +174,7 @@
                             RZImageDecompressionOperation *decomp = [[RZImageDecompressionOperation alloc] initWithFileURL:downloadedFile webUrl:url resizeToSize:size preserveAspectRatio:preserveAspect completion:^(UIImage *image) {
                                 
                                 if (image){
-                                    [self.inMemoryImageCache setObject:image forKey:url cost:[image approxSizeInBytes]];
+                                    [self.inMemoryImageCache setObject:image forKey:cacheKey cost:[image approxSizeInBytes]];
                                     [self notifyDelegatesOfSuccessForURL:url withImage:image fromCache:NO];
                                 }
                                 else{
