@@ -144,14 +144,14 @@
 {
     if (url){
 
-        BOOL resizing = (size.width > 0 && size.height > 0);
+        BOOL resizing = !CGSizeEqualToSize(size, CGSizeZero);
 
         // Use the absolute URL for the cache key. If we are resizing, append the size on to the key.
         // Use the requested size as the key because we do not yet know the actual size of the resized image (we haven't downloaded the image yet).
         NSString *cacheKey = url.absoluteString;
         if(resizing)
         {
-            NSString *sizeString = [NSString stringWithFormat:@"%fx%f", size.width, size.height];
+            NSString *sizeString = [NSString stringWithFormat:@"%dx%d", (int)size.width, (int)size.height];
             cacheKey = [NSString stringWithFormat:@"%@%@", cacheKey, sizeString];
         }
         UIImage *image = [self.inMemoryImageCache objectForKey:cacheKey];
@@ -198,7 +198,7 @@
                             // If a resize size is provided, resize the image.
                             if(resizing)
                             {
-                                image = [UIImage imageWithImage:image scaledToSize:size preserveAspectRatio:preserveAspect];
+                                image = [UIImage rz_imageWithImage:image scaledToSize:size preserveAspectRatio:preserveAspect];
                             }
 
                             [self.downloadingUrls removeObject:url];
