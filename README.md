@@ -1,7 +1,7 @@
 # RZUtils
 
 This is a collection of helpful utilities and components which makes iOS development quicker and easier.  A demo project is provided that demonstrates the use of most components.
-***
+
 ## Categories Overview
 
 ### CoreAnimation
@@ -81,8 +81,6 @@ This is a collection of helpful utilities and components which makes iOS develop
 
 	Easy adjustments to `UIView` frames
 
-***
-
 ## Components Overview
 
 ##### RZAnimatedCountingLabel
@@ -139,8 +137,6 @@ Extensions to `UIView` for easily loading a subclass from a XIB file.
 
 `UIViewController` that manages a web view, with associated chrome.
 
-***
-
 ## Headers Overview
 
 ##### RZDispatch
@@ -159,13 +155,9 @@ Useful inline functions for working with `UIKit`.
 
 Useful conversion macros and more.
 
-***
-
 ## License
 
 RZUtils is distributed under an [MIT License](http://opensource.org/licenses/MIT). See the LICENSE file for more details.
-
-***
 
 ## Guidelines for adding a new component
 
