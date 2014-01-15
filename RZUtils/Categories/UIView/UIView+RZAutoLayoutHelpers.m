@@ -19,7 +19,8 @@
 {
     __block NSLayoutConstraint *constraint = nil;
     [self.constraints enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
-        if (c.firstAttribute == NSLayoutAttributeWidth &&
+        if (c.firstItem == self &&
+            c.firstAttribute == NSLayoutAttributeWidth &&
             c.secondAttribute == NSLayoutAttributeNotAnAttribute &&
             c.relation == NSLayoutRelationEqual)
         {
@@ -34,7 +35,8 @@
 {
     __block NSLayoutConstraint *constraint = nil;
     [self.constraints enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
-        if (c.firstAttribute == NSLayoutAttributeHeight &&
+        if (c.firstItem == self &&
+            c.firstAttribute == NSLayoutAttributeHeight &&
             c.secondAttribute == NSLayoutAttributeNotAnAttribute &&
             c.relation == NSLayoutRelationEqual)
         {
@@ -70,8 +72,8 @@
     __block NSLayoutConstraint *constraint = nil;
     [[[self superview] constraints] enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
         if ([self constraintHasCorrectViews:c] &&
-            c.firstAttribute == NSLayoutAttributeLeft &&
-            c.secondAttribute == NSLayoutAttributeLeft &&
+            (c.firstAttribute == NSLayoutAttributeLeft || c.firstAttribute == NSLayoutAttributeLeading) &&
+            (c.secondAttribute == NSLayoutAttributeLeft || c.secondAttribute == NSLayoutAttributeLeading) &&
             c.relation == NSLayoutRelationEqual)
         {
             constraint = c;
@@ -88,8 +90,8 @@
     __block NSLayoutConstraint *constraint = nil;
     [[[self superview] constraints] enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
         if ([self constraintHasCorrectViews:c] &&
-            c.firstAttribute == NSLayoutAttributeRight &&
-            c.secondAttribute == NSLayoutAttributeRight &&
+            (c.firstAttribute == NSLayoutAttributeRight  || c.firstAttribute == NSLayoutAttributeTrailing) &&
+            (c.secondAttribute == NSLayoutAttributeRight || c.secondAttribute == NSLayoutAttributeTrailing) &&
             c.relation == NSLayoutRelationEqual)
         {
             constraint = c;
@@ -117,6 +119,37 @@
     return constraint;
 }
 
+- (NSLayoutConstraint*)rz_pinnedCenterXConstraint
+{
+    if (self.superview == nil) return nil;
+    
+    __block NSLayoutConstraint *constraint = nil;
+    [[[self superview] constraints] enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
+        if ((c.firstItem == self && c.firstAttribute == NSLayoutAttributeCenterX) ||
+            (c.secondItem == self && c.secondAttribute == NSLayoutAttributeCenterX))
+        {
+            constraint = c;
+            *stop = YES;
+        }
+    }];
+    return constraint;
+}
+
+- (NSLayoutConstraint*)rz_pinnedCenterYConstraint
+{
+    if (self.superview == nil) return nil;
+    
+    __block NSLayoutConstraint *constraint = nil;
+    [[[self superview] constraints] enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
+        if ((c.firstItem == self && c.firstAttribute == NSLayoutAttributeCenterY) ||
+            (c.secondItem == self && c.secondAttribute == NSLayoutAttributeCenterY))
+        {
+            constraint = c;
+            *stop = YES;
+        }
+    }];
+    return constraint;
+}
 
 - (void)rz_pinWidthTo:(CGFloat)width
 {

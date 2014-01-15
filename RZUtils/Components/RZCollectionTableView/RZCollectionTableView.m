@@ -148,6 +148,8 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
 - (BOOL)sectionHasHeader:(NSInteger)section;
 - (BOOL)sectionHasFooter:(NSInteger)section;
 
+- (void)clearCaches;
+
 // These account for the delegate's response - use these internally
 - (UIEdgeInsets)insetsForSection:(NSInteger)section;
 - (CGFloat)rowSpacingForSection:(NSInteger)section;
@@ -155,7 +157,15 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
 - (CGFloat)footerHeightForSection:(NSInteger)section;
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath*)indexPath;
+- (CGFloat)heightForRowAtIndexPath:(NSIndexPath*)indexPath estimated:(BOOL)estimated;
+
 - (CGFloat)heightForSection:(NSInteger)section;
+- (CGFloat)heightForSection:(NSInteger)section estimated:(BOOL)estimated;
+
+- (CGRect)rectForSection:(NSInteger)section estimated:(BOOL)estimated;
+- (CGRect)rectForHeaderInSection:(NSInteger)section estimated:(BOOL)estimated;
+- (CGRect)rectForFooterInSection:(NSInteger)section estimated:(BOOL)estimated;
+- (CGRect)rectForRowAtIndexPath:(NSIndexPath *)indexPath estimated:(BOOL)estimated;
 
 - (NSIndexPath *)indexPathForRawRowIndex:(NSInteger)rowIndex; // converts expanded index to sectioned index path
 - (NSIndexPath *)indexPathOfFirstRowInRect:(CGRect)rect;
@@ -179,6 +189,7 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
         _sectionInsets = UIEdgeInsetsZero;
         _rowSpacing = 0.f;
         _rowHeight = 44.f;
+        [self clearCaches];
     }
     return self;
 }
@@ -193,14 +204,7 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
 - (void)invalidateLayout
 {
     [super invalidateLayout];
-    self.rowHeightCache               = [NSMutableDictionary dictionary];
-    self.sectionHeightCache           = [NSMutableDictionary dictionary];
-    self.headerHeightCache            = [NSMutableDictionary dictionary];
-    self.footerHeightCache            = [NSMutableDictionary dictionary];
-    self.itemAttributesCache          = [NSMutableDictionary dictionary];
-    self.supplementaryAttributesCache = [NSMutableDictionary dictionary];
-    self.cachedContentSize            = CGSizeZero;
-    self.lastRequestedRect            = CGRectZero;
+    [self clearCaches];
 }
 
 - (void)prepareLayout
@@ -214,21 +218,14 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
 
 - (CGSize)collectionViewContentSize
 {
-    if (CGSizeEqualToSize(self.cachedContentSize, CGSizeZero))
-    {
-        CGSize contentSize = CGSizeMake(self.collectionView.bounds.size.width, 0);
-        
-        for (NSInteger s = 0; s < [self.collectionView numberOfSections]; s++)
-        {
-            contentSize.height += [self heightForSection:s];
-        }
-        
-        contentSize.height = MAX(contentSize.height, self.collectionView.frame.size.height);
-        
-        self.cachedContentSize = contentSize;
-    }
+    CGSize contentSize = CGSizeMake(self.collectionView.bounds.size.width, 0);
     
-    return self.cachedContentSize;
+    for (NSInteger s = 0; s < [self.collectionView numberOfSections]; s++)
+    {
+        contentSize.height += [self heightForSection:s estimated:YES];
+    }
+        
+    return contentSize;
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
@@ -267,11 +264,11 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
             outOfBounds = NO;
             for (NSInteger s = firstRowIndexPath.section; s >= 0 && !outOfBounds; s--)
             {
-                if (CGRectIntersectsRect([self rectForSection:s], rect))
+                if (CGRectIntersectsRect([self rectForSection:s estimated:YES], rect))
                 {
                     // Header
                     BOOL headerVisible = NO;
-                    CGRect headerFrame = [self rectForHeaderInSection:s];
+                    CGRect headerFrame = [self rectForHeaderInSection:s estimated:YES];
                     if (!CGRectEqualToRect(headerFrame, CGRectZero))
                     {
                         if (CGRectIntersectsRect(headerFrame, rect))
@@ -284,7 +281,7 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
                     
                     // Footer
                     BOOL footerVisible = NO;
-                    CGRect footerFrame = [self rectForFooterInSection:s];
+                    CGRect footerFrame = [self rectForFooterInSection:s estimated:YES];
                     if (!CGRectEqualToRect(footerFrame, CGRectZero))
                     {
                         if (CGRectIntersectsRect(footerFrame, rect))
@@ -308,11 +305,11 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
             outOfBounds = NO;
             for (NSInteger s = firstRowIndexPath.section+1; s < [self.collectionView numberOfSections] && !outOfBounds; s++)
             {
-                if (CGRectIntersectsRect([self rectForSection:s], rect))
+                if (CGRectIntersectsRect([self rectForSection:s estimated:YES], rect))
                 {
                     // Header
                     BOOL headerVisible = NO;
-                    CGRect headerFrame = [self rectForHeaderInSection:s];
+                    CGRect headerFrame = [self rectForHeaderInSection:s estimated:YES];
                     if (!CGRectEqualToRect(headerFrame, CGRectZero))
                     {
                         if (CGRectIntersectsRect(headerFrame, rect))
@@ -325,7 +322,7 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
                     
                     // Footer
                     BOOL footerVisible = NO;
-                    CGRect footerFrame = [self rectForFooterInSection:s];
+                    CGRect footerFrame = [self rectForFooterInSection:s estimated:YES];
                     if (!CGRectEqualToRect(footerFrame, CGRectZero))
                     {
                         if (CGRectIntersectsRect(footerFrame, rect))
@@ -391,10 +388,10 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
     }
     
     // Update editing style
-    if ([self.layoutDelegate respondsToSelector:@selector(collectionView:layout:editingEnabledForRowAtIndexPath:)])
+    if ([self.layoutDelegate respondsToSelector:@selector(collectionView:rzTableLayout:editingEnabledForRowAtIndexPath:)])
     {
         rowAttributes.rzEditingEnabled = [self.layoutDelegate collectionView:self.collectionView
-                                                                      layout:self
+                                                               rzTableLayout:self
                                              editingEnabledForRowAtIndexPath:indexPath];
     }
     
@@ -470,13 +467,25 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
     return [self footerHeightForSection:section] != 0.f;
 }
 
+- (void)clearCaches
+{
+    self.rowHeightCache               = [NSMutableDictionary dictionary];
+    self.sectionHeightCache           = [NSMutableDictionary dictionary];
+    self.headerHeightCache            = [NSMutableDictionary dictionary];
+    self.footerHeightCache            = [NSMutableDictionary dictionary];
+    self.itemAttributesCache          = [NSMutableDictionary dictionary];
+    self.supplementaryAttributesCache = [NSMutableDictionary dictionary];
+    self.cachedContentSize            = CGSizeZero;
+    self.lastRequestedRect            = CGRectZero;
+}
+
 - (UIEdgeInsets)insetsForSection:(NSInteger)section
 {
     UIEdgeInsets insets = self.sectionInsets;
-    if ([self.layoutDelegate respondsToSelector:@selector(collectionView:layout:insetForSectionAtIndex:)])
+    if ([self.layoutDelegate respondsToSelector:@selector(collectionView:rzTableLayout:insetForSectionAtIndex:)])
     {
         insets = [self.layoutDelegate collectionView:self.collectionView
-                                              layout:self
+                                       rzTableLayout:self
                               insetForSectionAtIndex:section];
     }
     return insets;
@@ -485,10 +494,10 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
 - (CGFloat)rowSpacingForSection:(NSInteger)section
 {
     CGFloat spacing = self.rowSpacing;
-    if ([self.layoutDelegate respondsToSelector:@selector(collectionView:layout:rowSpacingForSection:)])
+    if ([self.layoutDelegate respondsToSelector:@selector(collectionView:rzTableLayout:rowSpacingForSection:)])
     {
         spacing = [self.layoutDelegate collectionView:self.collectionView
-                                               layout:self
+                                        rzTableLayout:self
                                  rowSpacingForSection:section];
     }
     return spacing;
@@ -497,7 +506,7 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
 - (CGFloat)headerHeightForSection:(NSInteger)section
 {
     CGFloat height = 0.f;
-    if ([self.layoutDelegate respondsToSelector:@selector(collectionView:layout:heightForHeaderInSection:)])
+    if ([self.layoutDelegate respondsToSelector:@selector(collectionView:rzTableLayout:heightForHeaderInSection:)])
     {
         NSNumber *cachedHeight = [self.headerHeightCache objectForKey:@(section)];
         if (cachedHeight != nil)
@@ -507,7 +516,7 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
         else
         {
             height = [self.layoutDelegate collectionView:self.collectionView
-                                                  layout:self
+                                           rzTableLayout:self
                                 heightForHeaderInSection:section];
             [self.headerHeightCache setObject:@(height) forKey:@(section)];
         }
@@ -518,7 +527,7 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
 - (CGFloat)footerHeightForSection:(NSInteger)section
 {
     CGFloat height = 0.f;
-    if ([self.layoutDelegate respondsToSelector:@selector(collectionView:layout:heightForFooterInSection:)])
+    if ([self.layoutDelegate respondsToSelector:@selector(collectionView:rzTableLayout:heightForFooterInSection:)])
     {
         NSNumber *cachedHeight = [self.footerHeightCache objectForKey:@(section)];
         if (cachedHeight != nil)
@@ -528,7 +537,7 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
         else
         {
             height = [self.layoutDelegate collectionView:self.collectionView
-                                                  layout:self
+                                           rzTableLayout:self
                                 heightForFooterInSection:section];
             [self.footerHeightCache setObject:@(height) forKey:@(section)];
         }
@@ -537,6 +546,11 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
 }
 
 - (CGFloat)heightForSection:(NSInteger)section
+{
+    return [self heightForSection:section estimated:NO];
+}
+
+- (CGFloat)heightForSection:(NSInteger)section estimated:(BOOL)estimated
 {
     CGFloat height = 0;
     
@@ -551,8 +565,7 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
         
         for (NSInteger i = 0; i < rowsInSection; i++)
         {
-            // go ahead and cache the attributes while we're doing this
-            height += [self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:section]].frame.size.height;
+            height += [self heightForRowAtIndexPath:[NSIndexPath indexPathForItem:i inSection:section] estimated:estimated];
         }
         
         if (rowsInSection > 1)
@@ -568,7 +581,10 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
         UIEdgeInsets insets = [self insetsForSection:section];
         height += insets.top + insets.bottom;
         
-        [self.sectionHeightCache setObject:@(height) forKey:@(section)];
+        if (!estimated)
+        {
+            [self.sectionHeightCache setObject:@(height) forKey:@(section)];
+        }
     }
     
     return height;
@@ -576,9 +592,14 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    return [self heightForRowAtIndexPath:indexPath estimated:NO];
+}
+
+- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath estimated:(BOOL)estimated
+{
     CGFloat height = self.rowHeight;
     
-    if ([self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:heightForRowAtIndexPath:)])
+    if ([self.collectionView.delegate respondsToSelector:@selector(collectionView:rzTableLayout:heightForRowAtIndexPath:)])
     {
         NSNumber *cachedHeight = [self.rowHeightCache objectForKey:indexPath];
         if (cachedHeight != nil)
@@ -587,10 +608,23 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
         }
         else
         {
-            height = [(id <RZCollectionTableViewLayoutDelegate>)self.collectionView.delegate collectionView:self.collectionView
-                                                                                                     layout:self
-                                                                                    heightForRowAtIndexPath:indexPath];
-            [self.rowHeightCache setObject:@(height) forKey:indexPath];
+            BOOL isEstimate = estimated && [self.layoutDelegate respondsToSelector:@selector(collectionView:rzTableLayout:estimatedHeightForRowAtIndexPath:)];
+            
+            if (isEstimate)
+            {
+                height = [self.layoutDelegate collectionView:self.collectionView
+                                               rzTableLayout:self
+                            estimatedHeightForRowAtIndexPath:indexPath];
+            }
+            else
+            {
+                height = [self.layoutDelegate collectionView:self.collectionView
+                                               rzTableLayout:self
+                                     heightForRowAtIndexPath:indexPath];
+                
+                [self.rowHeightCache setObject:@(height) forKey:indexPath];
+            }
+            
         }
         
     }
@@ -600,18 +634,28 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
 
 - (CGRect)rectForSection:(NSInteger)section
 {
+    return [self rectForSection:section estimated:NO];
+}
+
+- (CGRect)rectForSection:(NSInteger)section estimated:(BOOL)estimated
+{
     CGPoint origin = CGPointZero;
-    CGSize size = CGSizeMake(self.collectionView.bounds.size.width, [self heightForSection:section]);
+    CGSize size = CGSizeMake(self.collectionView.bounds.size.width, [self heightForSection:section estimated:estimated]);
     
     for (NSInteger s = 0; s < section; s++)
     {
-        origin.y += [self heightForSection:s];
+        origin.y += [self heightForSection:s estimated:estimated];
     }
     
     return (CGRect){origin, size};
 }
 
 - (CGRect)rectForHeaderInSection:(NSInteger)section
+{
+    return [self rectForHeaderInSection:section estimated:NO];
+}
+
+- (CGRect)rectForHeaderInSection:(NSInteger)section estimated:(BOOL)estimated
 {
     CGRect rect = CGRectZero;
     if ([self sectionHasHeader:section])
@@ -621,7 +665,7 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
         
         for (NSInteger s = 0; s < section; s++)
         {
-            origin.y += [self heightForSection:s];
+            origin.y += [self heightForSection:s estimated:estimated];
         }
         
         origin.y += [self insetsForSection:section].top;
@@ -633,6 +677,11 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
 
 - (CGRect)rectForFooterInSection:(NSInteger)section
 {
+    return [self rectForFooterInSection:section estimated:NO];
+}
+
+- (CGRect)rectForFooterInSection:(NSInteger)section estimated:(BOOL)estimated
+{
     CGRect rect = CGRectZero;
     if ([self sectionHasFooter:section])
     {
@@ -643,7 +692,7 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
         // Include this section
         for (NSInteger s = 0; s <= section; s++)
         {
-            origin.y += [self heightForSection:s];
+            origin.y += [self heightForSection:s estimated:estimated];
         }
         
         // Back up by the footer height and the inset height
@@ -656,16 +705,21 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
 
 - (CGRect)rectForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    return [self rectForRowAtIndexPath:indexPath estimated:NO];
+}
+
+- (CGRect)rectForRowAtIndexPath:(NSIndexPath *)indexPath estimated:(BOOL)estimated
+{
     UIEdgeInsets insets = [self insetsForSection:indexPath.section];
     CGFloat spacing = [self rowSpacingForSection:indexPath.section];
     
     CGPoint origin = CGPointMake(insets.left, insets.top);
-    CGSize size = CGSizeMake(self.collectionView.bounds.size.width - insets.left - insets.right, [self heightForRowAtIndexPath:indexPath]);
+    CGSize size = CGSizeMake(self.collectionView.bounds.size.width - insets.left - insets.right, [self heightForRowAtIndexPath:indexPath estimated:estimated]);
     
     // Add offset from previous sections
     for (NSInteger s = 0; s < indexPath.section; s++)
     {
-        origin.y += [self heightForSection:s];
+        origin.y += [self heightForSection:s estimated:estimated];
     }
     
     // Add offset for header
@@ -674,7 +728,7 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
     // Add offset from previous rows
     for (NSInteger r = 0; r < indexPath.item; r++)
     {
-        origin.y += [self heightForRowAtIndexPath:[NSIndexPath indexPathForItem:r inSection:indexPath.section]] + spacing;
+        origin.y += [self heightForRowAtIndexPath:[NSIndexPath indexPathForItem:r inSection:indexPath.section] estimated:estimated] + spacing;
     }
     
     return (CGRect){origin, size};
@@ -749,7 +803,7 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
             CGRect rowRect = [self layoutAttributesForItemAtIndexPath:currentIndexPath].frame;
             if (CGRectIntersectsRect(rowRect, rect))
             {
-                if (currentRowIdx == 0 || rowRect.origin.y <= rect.origin.y)
+                if (currentRowIdx == 0 || rowRect.origin.y - [self rowSpacingForSection:currentIndexPath.section] <= rect.origin.y)
                 {
                     resultPath = currentIndexPath;
                     found = YES;
@@ -815,10 +869,10 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
 
 - (void)_rz_editingButtonPressed:(NSUInteger)buttonIdx forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.layoutDelegate respondsToSelector:@selector(collectionView:layout:editingButtonPressedForIndex:forRowAtIndexPath:)])
+    if ([self.layoutDelegate respondsToSelector:@selector(collectionView:rzTableLayout:editingButtonPressedForIndex:forRowAtIndexPath:)])
     {
         [self.layoutDelegate collectionView:self.collectionView
-                                     layout:self
+                              rzTableLayout:self
                editingButtonPressedForIndex:buttonIdx
                           forRowAtIndexPath:indexPath];
     }

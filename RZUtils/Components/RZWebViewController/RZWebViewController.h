@@ -23,14 +23,19 @@
 @property (nonatomic, strong) NSArray *sharingItems;
 @property (nonatomic, strong) NSArray *excludedActivityTypes;
 
-@property (nonatomic, strong) UIWebView *webView;
-@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
+// These will return nil until the VC is loaded. DO NOT change the delegate on the webview.
+@property (nonatomic, strong, readonly) UIWebView *webView;
+@property (nonatomic, strong, readonly) UIActivityIndicatorView *activityIndicator;
 
 // Intialize the webview with a localFile in the bundle
-- (id)initWithPathForResource:(NSString *)resource;
+- (id)initWithPathForResource:(NSString*)resource
+                      toolbar:(BOOL)showToolbar
+               scalePageToFit:(BOOL)scalePageToFit;
 
 // Intialize the webview with a remote Website URL
-- (id)initWithRemoteURL:(NSURL *)webURL;
+- (id)initWithRemoteURL:(NSURL*)webURL
+                toolbar:(BOOL)showToolbar
+         scalePageToFit:(BOOL)scalePageToFit;
 
 
 @end

@@ -19,10 +19,14 @@
 // Return a particular constraint of this view if it exists
 - (NSLayoutConstraint*)rz_pinnedWidthConstraint;
 - (NSLayoutConstraint*)rz_pinnedHeightConstraint;
+
 - (NSLayoutConstraint*)rz_pinnedTopConstraint;
 - (NSLayoutConstraint*)rz_pinnedLeftConstraint;
 - (NSLayoutConstraint*)rz_pinnedRightConstraint;
 - (NSLayoutConstraint*)rz_pinnedBottomConstraint;
+
+- (NSLayoutConstraint*)rz_pinnedCenterXConstraint;
+- (NSLayoutConstraint*)rz_pinnedCenterYConstraint;
 
 // Pinning dimensions
 - (void)rz_pinWidthTo:(CGFloat)width;

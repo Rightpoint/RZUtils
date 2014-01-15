@@ -78,17 +78,20 @@ NS_CLASS_AVAILABLE_IOS(6_0) @protocol RZCollectionTableViewLayoutDelegate <UICol
 
 @optional
 
-- (CGFloat)collectionView:(UICollectionView*)collectionView layout:(RZCollectionTableViewLayout*)layout heightForRowAtIndexPath:(NSIndexPath*)indexPath;
-- (CGFloat)collectionView:(UICollectionView*)collectionView layout:(RZCollectionTableViewLayout*)layout rowSpacingForSection:(NSInteger)section;
+- (CGFloat)collectionView:(UICollectionView *)collectionView rzTableLayout:(RZCollectionTableViewLayout *)layout heightForRowAtIndexPath:(NSIndexPath*)indexPath;
+- (CGFloat)collectionView:(UICollectionView *)collectionView rzTableLayout:(RZCollectionTableViewLayout *)layout rowSpacingForSection:(NSInteger)section;
 
-- (UIEdgeInsets)collectionView:(UICollectionView*)collectionView layout:(RZCollectionTableViewLayout*)layout insetForSectionAtIndex:(NSInteger)section; // same signature as UICollectionViewDelegateFlowLayout
+// implement this to speed up load times
+- (CGFloat)collectionView:(UICollectionView *)collectionView rzTableLayout:(RZCollectionTableViewLayout *)layout estimatedHeightForRowAtIndexPath:(NSIndexPath*)indexPath;
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView rzTableLayout:(RZCollectionTableViewLayout *)layout insetForSectionAtIndex:(NSInteger)section; // same signature as UICollectionViewDelegateFlowLayout
 
 // If either of these return zero, no header will be requested for that section.
-- (CGFloat)collectionView:(UICollectionView*)collectionView layout:(RZCollectionTableViewLayout*)layout heightForHeaderInSection:(NSInteger)section;
-- (CGFloat)collectionView:(UICollectionView*)collectionView layout:(RZCollectionTableViewLayout*)layout heightForFooterInSection:(NSInteger)section;
+- (CGFloat)collectionView:(UICollectionView *)collectionView rzTableLayout:(RZCollectionTableViewLayout *)layout heightForHeaderInSection:(NSInteger)section;
+- (CGFloat)collectionView:(UICollectionView *)collectionView rzTableLayout:(RZCollectionTableViewLayout *)layout heightForFooterInSection:(NSInteger)section;
 
-- (BOOL)collectionView:(UICollectionView*)collectionView layout:(RZCollectionTableViewLayout*)layout editingEnabledForRowAtIndexPath:(NSIndexPath*)indexPath;
-- (void)collectionView:(UICollectionView*)collectionView layout:(RZCollectionTableViewLayout*)layout editingButtonPressedForIndex:(NSUInteger)buttonIndex forRowAtIndexPath:(NSIndexPath*)indexPath;
+- (BOOL)collectionView:(UICollectionView *)collectionView rzTableLayout:(RZCollectionTableViewLayout *)layout editingEnabledForRowAtIndexPath:(NSIndexPath*)indexPath;
+- (void)collectionView:(UICollectionView *)collectionView rzTableLayout:(RZCollectionTableViewLayout *)layout editingButtonPressedForIndex:(NSUInteger)buttonIndex forRowAtIndexPath:(NSIndexPath*)indexPath;
 
 @end
 
