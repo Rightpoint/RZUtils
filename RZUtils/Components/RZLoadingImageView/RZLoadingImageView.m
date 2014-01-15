@@ -86,16 +86,21 @@
 
 - (void)loadImageFromPath:(NSString *)path decompress:(BOOL)decompress
 {
+    [self loadImageFromPath:path resizeToSize:CGSizeZero preserveAspectRatio:YES decompress:decompress];
+}
+
+- (void)loadImageFromPath:(NSString *)path resizeToSize:(CGSize)newSize preserveAspectRatio:(BOOL)preserveAspect decompress:(BOOL)decompress
+{
     [self cancelRequest];
-    
+
     if (path == nil){
         [self showPlaceholder];
         return;
     }
-    
+
     [self setLoading:YES];
-    
-    self.imageURL = [[RZImageCache sharedCache] downloadImageFromPath:path decompress:decompress delegate:self];
+
+    self.imageURL = [[RZImageCache sharedCache] downloadImageFromPath:path decompress:decompress resizeToSize:newSize preserveAspectRatio:preserveAspect delegate:self];
 }
 
 - (void)loadImageFromURL:(NSURL *)url

@@ -25,11 +25,13 @@
 // Not fully-qualified - path is appended to baseURL
 // Requires that baseURL has been set, and returns full URL
 - (NSURL*)downloadImageFromPath:(NSString*)path decompress:(BOOL)decompress delegate:(id<RZImageCacheDelegate>)delegate;
+- (NSURL*)downloadImageFromPath:(NSString *)path decompress:(BOOL)decompress resizeToSize:(CGSize)size preserveAspectRatio:(BOOL)preserveAspect delegate:(id<RZImageCacheDelegate>)delegate;
 - (void)cancelImageDownloadFromPath:(NSString*)path;
 - (void)cancelImageDownloadFromPath:(NSString*)path withDelegate:(id<RZImageCacheDelegate>)delegate;
 
 // Fully-qualified URL
 - (void)downloadImageFromURL:(NSURL*)url decompress:(BOOL)decompress delegate:(id<RZImageCacheDelegate>)delegate;
+- (void)downloadImageFromURL:(NSURL *)url decompress:(BOOL)decompress resizeToSize:(CGSize)size preserveAspectRatio:(BOOL)preserveAspect delegate:(id<RZImageCacheDelegate>)delegate;
 - (void)cancelImageDownloadFromURL:(NSURL*)url;
 - (void)cancelImageDownloadFromURL:(NSURL*)url withDelegate:(id<RZImageCacheDelegate>)delegate;
 
