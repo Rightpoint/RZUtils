@@ -1,106 +1,171 @@
 # RZUtils
 
 This is a collection of helpful utilities and components which makes iOS development quicker and easier.  A demo project is provided that demonstrates the use of most components.
-
+***
 ## Categories Overview
 
-#### KVO
+### CoreAnimation
 
-##### *NSObject+RZBlockKVO*
+- **CAAnimation+RZBlocks**
 
-KVO with blocks and automatic observer removal on dealloc
+	Completion blocks for `CAAnimation`
 
-#### NSDate
+### KVO
 
-##### *NSDate+RZExtensions*
+- **NSObject+RZBlockKVO** 
 
-Common date manipulations
+	KVO with blocks and automatic observer removal on dealloc
 
-#### NSDictionary
+### NSDate
 
-##### *NSDictionary+RZExtensions*
+- **NSDate+RZExtensions**
 
-Convenience methods for NSDictionary (NSNull check, etc)
+	Common date manipulations
 
-#### UIAlertView
+### NSDictionary
 
-##### *UIAlertView+RZCompletionBlocks*
+- **NSDictionary+RZExtensions**
+	
+	Convenience methods for `NSDictionary` (`NSNull` check, etc)
 
-Alert view completion blocks
+### NSString
 
-#### UIImage
+- **NSAttributedString+RZExtensions**
+	
+	Simplified attributed string initializer and other utils
+	
+- **NSString+RZStringFormatting**
+	
+	Common string formatting methods
 
-##### *UIImage+RZFastImageBlur*
 
-Faster version of Apple's image blur method for iOS7 (with view screenshot). iOS7+ only.
+### UIAlertView
 
-##### *UIImage+RZStretchHelpers*
+- **UIAlertView+RZCompletionBlocks**
 
-Stretch and cap inset methods for UIImage   
+	Block API for `UIAlertView` actions
+	
+### UIFont
 
-#### UITableViewCell
+- **UIFont+RZExtensions**
+	
+	Funky fresh font features 
+	
+### UIImage
 
-##### *UITableViewCell+RZCellStyling*
+- **UIImage+RZFastImageBlur**
 
-Methods for styling top, bottom, and middle tableview cells for grouped tableviews
+	Faster version of Apple's image blur method for iOS7 (with view screenshot). iOS7+ only.
 
-#### UIView
+- **UIImage+RZStretchHelpers**
 
-##### *UIView+RZAutoLayoutHelpers*
+	Stretch and cap inset methods for `UIImage`   
 
-Common code-level autolayout tasks made easier.
+### UITableViewCell
 
-##### *UIView+RZBorders*
+- **UITableViewCell+RZCellStyling**
 
-Borders on arbitrary sides of any UIView, using either a category or a subclass.
+	Methods for styling top, bottom, and middle tableview cells for grouped table views
 
-##### *UIView+RZFrameUtils* 
+### UIView
 
-Easy adjustments to UIView frames
+- **UIView+RZAutoLayoutHelpers**
+
+	Common code-level autolayout tasks made easier.
+
+- **UIView+RZBorders**
+
+	Borders on arbitrary sides of any `UIView`
+
+- **UIView+RZFrameUtils**
+
+	Easy adjustments to `UIView` frames
+
+***
 
 ## Components Overview
 
-##### *RZCollectionTableView*
+##### RZAnimatedCountingLabel
 
-Is it a Collection View or a Table View? The world may never know... (Hint: It's a Collection View)
+`UILabel` subclass that animates its text from one value to another with an optional custom formatting block.
 
-RZCollectionTableView is a collection view layout and accomanying collection view and collection view cell subclasses that mimic the class/delegate interface, look, and feel of UITableView, with a few added enhancements such as customizable section insets, row spacings, and more.
+##### RZAnimatedImageView
 
-##### *RZLoadingImageView*
+Replacement for `UIImageView`-based animated .png sequences that calls a completion block when the animation is finished. Believe it or not, there is no way to do this otherwise.
 
-A drop in solution for a image view that loads from a NSURL and caches to file. 
-<br>**Deprecated**: We need to start using native URL caching with an additional in-memory cache, to reduce disk bloat.
+##### RZButtonView
 
-##### *RZSingleChildContainerViewController*
+`UIControl` subclass that acts like a UIButton but allows the addition and layout of arbitrary subviews.
 
-A UIViewController subclass for managing a single child view controller contained in any subview container of a parent. Useful for keeping one view static while another view contains one of many potential child view controllers. iOS7+ only.
+##### RZCellHeightManager
 
-#### *RZViewFactory*
+Autolayout-based dynamic cell height utility.
 
-Extensions to UIView for easily loading a subclass from a xib.
+**Deprecated**: This will soon be in its own repository.
+
+##### RZCollectionTableView
+
+Is it a Collection View or a Table View? The world may never know... (**Spoiler**: It's a Collection View)
+
+`RZCollectionTableView` is a collection view layout and accomanying collection view and collection view cell subclasses that mimic the class/delegate interface, look, and feel of `UITableView`, with a few added enhancements such as customizable section insets, row spacings, and more.
+
+##### RZCollectionViewAnimationAssistant
+
+Utility for making collection view item insertion/deletion animations easier.
+
+##### RZLoadingImageView
+
+A drop in solution for a image view that loads from an `NSURL` and caches to file. 
+
+**Deprecated**: This needs to be rewritten to start using native URL caching with an additional in-memory cache, to reduce disk bloat.
+
+##### RZLocationService
+
+CoreLocation made easy.
+
+##### RZSingleChildContainerViewController
+
+A `UIViewController` subclass for managing a single child view controller contained in any subview container of a parent. Useful for keeping one view static while another view contains one of many potential child view controllers. iOS7+ only.
+
+##### RZTweenSpirit
+
+Tweening animation utility. Allows tweening of any keypath from one value to another based on a settable timeline position. Similar to a certain "jazzy"-"handy" library, but more flexible.
+
+##### RZViewFactory
+
+Extensions to `UIView` for easily loading a subclass from a XIB file.
+
+##### RZWebviewController
+
+`UIViewController` that manages a web view, with associated chrome.
+
+***
 
 ## Headers Overview
 
-##### *RZDispatch*
+##### RZDispatch
 
 Useful inline functions for working with GCD.
 
-##### *RZLogHelper*
+##### RZLogHelper
 
-A header with debug log macros that extend NSLog, including verbosity levels.
+A header with debug log macros that extend `NSLog`, including verbosity levels.
 
-##### *RZUIKitUtilityFunctions*
+##### RZUIKitUtilityFunctions
 
-Useful inline functions for working with UIKit.
+Useful inline functions for working with `UIKit`.
 
-##### *RZUtilityMacros*
+##### RZUtilityMacros
 
 Useful conversion macros and more.
 
+***
 
 ## License
 
 RZUtils is distributed under an [MIT License](http://opensource.org/licenses/MIT). See the LICENSE file for more details.
+
+***
 
 ## Guidelines for adding a new component
 
