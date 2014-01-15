@@ -11,18 +11,23 @@
 
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize preserveAspectRatio:(BOOL)preserveAspect
 {
+    // Get the resulting size of the image.
     CGSize size = [UIImage sizeForImage:image scaledToSize:newSize preserveAspectRation:preserveAspect];
 
+    // Draw the image.
     UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
     [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+
     return newImage;
 }
 
 + (CGSize)sizeForImage:(UIImage *)image scaledToSize:(CGSize)newSize preserveAspectRation:(BOOL)preserveAspect
 {
     CGSize size = newSize;
+
+    // If we're preserving the aspect ratio, calculate the resulting size.
     if(preserveAspect)
     {
         CGFloat ratio = image.size.width / image.size.height;

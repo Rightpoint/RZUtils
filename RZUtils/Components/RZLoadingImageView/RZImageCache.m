@@ -145,6 +145,9 @@
     if (url){
 
         BOOL resizing = (size.width > 0 && size.height > 0);
+
+        // Use the absolute URL for the cache key. If we are resizing, append the size on to the key.
+        // Use the requested size as the key because we do not yet know the actual size of the resized image (we haven't downloaded the image yet).
         NSString *cacheKey = url.absoluteString;
         if(resizing)
         {
