@@ -9,6 +9,12 @@
 
 @implementation UIView (RZAutoLayoutHelpers)
 
+- (BOOL)rz_constraintIsWithSuperview:(NSLayoutConstraint *)constraint
+{
+    return ((constraint.firstItem == self && constraint.secondItem == self.superview) ||
+            (constraint.firstItem == self.superview && constraint.secondItem == self));
+}
+
 - (NSLayoutConstraint *)rz_pinnedWidthConstraint
 {
     __block NSLayoutConstraint *constraint = nil;
@@ -47,9 +53,8 @@
     
     __block NSLayoutConstraint *constraint = nil;
     [[[self superview] constraints] enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
-        if ((c.firstItem == self || c.firstItem == self.superview) &&
+        if ([self rz_constraintIsWithSuperview:c] &&
             c.firstAttribute == NSLayoutAttributeTop &&
-            (c.secondItem == self.superview || c.secondItem == self) &&
             c.secondAttribute == NSLayoutAttributeTop &&
             c.relation == NSLayoutRelationEqual)
         {
@@ -66,9 +71,8 @@
     
     __block NSLayoutConstraint *constraint = nil;
     [[[self superview] constraints] enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
-        if ((c.firstItem == self || c.firstItem == self.superview) &&
+        if ([self rz_constraintIsWithSuperview:c] &&
             (c.firstAttribute == NSLayoutAttributeLeft || c.firstAttribute == NSLayoutAttributeLeading) &&
-            (c.secondItem == self.superview || c.secondItem == self) &&
             (c.secondAttribute == NSLayoutAttributeLeft || c.secondAttribute == NSLayoutAttributeLeading) &&
             c.relation == NSLayoutRelationEqual)
         {
@@ -85,9 +89,8 @@
     
     __block NSLayoutConstraint *constraint = nil;
     [[[self superview] constraints] enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
-        if ((c.firstItem == self || c.firstItem == self.superview) &&
-            (c.firstAttribute == NSLayoutAttributeRight || c.firstAttribute == NSLayoutAttributeTrailing) &&
-            (c.secondItem == self.superview || c.secondItem == self) &&
+        if ([self rz_constraintIsWithSuperview:c] &&
+            (c.firstAttribute == NSLayoutAttributeRight  || c.firstAttribute == NSLayoutAttributeTrailing) &&
             (c.secondAttribute == NSLayoutAttributeRight || c.secondAttribute == NSLayoutAttributeTrailing) &&
             c.relation == NSLayoutRelationEqual)
         {
@@ -104,9 +107,8 @@
     
     __block NSLayoutConstraint *constraint = nil;
     [[[self superview] constraints] enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
-        if ((c.firstItem == self || c.firstItem == self.superview) &&
+        if ([self rz_constraintIsWithSuperview:c] &&
             c.firstAttribute == NSLayoutAttributeBottom &&
-            (c.secondItem == self.superview || c.secondItem == self) &&
             c.secondAttribute == NSLayoutAttributeBottom &&
             c.relation == NSLayoutRelationEqual)
         {

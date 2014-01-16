@@ -10,6 +10,8 @@
 
 @interface RZWebViewController () <UIWebViewDelegate>
 
+@property (nonatomic, copy) NSURL *webContentURL;
+
 @property (nonatomic, weak) UIBarButtonItem *backButtonItem;
 @property (nonatomic, weak) UIBarButtonItem *forwardButtonItem;
 @property (nonatomic, weak) UIBarButtonItem *refreshButtonItem;
@@ -17,13 +19,12 @@
 @property (nonatomic, strong, readwrite) UIWebView *webView;
 @property (nonatomic, strong, readwrite) UIActivityIndicatorView *activityIndicator;
 
-@property (nonatomic, copy) NSURL* webContentURL;
-
 @property (nonatomic, assign) BOOL showsToolbar;
 @property (nonatomic, assign) BOOL scalesPages;
 
 - (void)initializeView;
 - (void)updateBackForwardButtons;
+- (void)sharePressed;
 
 @end
 
@@ -62,6 +63,12 @@
     if (self.webContentURL)
     {
         [self.webView loadRequest:[NSURLRequest requestWithURL:self.webContentURL]];
+    }
+
+    if(self.allowsSharing)
+    {
+        UIBarButtonItem *shareItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(sharePressed)];
+        self.navigationItem.rightBarButtonItem = shareItem;
     }
 }
 
@@ -122,6 +129,13 @@
 {
     self.backButtonItem.enabled     = self.webView.canGoBack;
     self.forwardButtonItem.enabled  = self.webView.canGoForward;
+}
+
+- (void)sharePressed
+{
+    UIActivityViewController *shareVC = [[UIActivityViewController alloc] initWithActivityItems:self.sharingItems applicationActivities:nil];
+    shareVC.excludedActivityTypes = self.excludedActivityTypes;
+    [self presentViewController:shareVC animated:YES completion:nil];
 }
 
 #pragma mark - WebView Delegate Methods
