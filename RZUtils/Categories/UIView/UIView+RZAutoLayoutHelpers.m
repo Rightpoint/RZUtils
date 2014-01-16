@@ -9,7 +9,7 @@
 
 @implementation UIView (RZAutoLayoutHelpers)
 
-- (BOOL)constraintHasCorrectViews:(NSLayoutConstraint *)constraint
+- (BOOL)rz_constraintIsWithSuperview:(NSLayoutConstraint *)constraint
 {
     return ((constraint.firstItem == self && constraint.secondItem == self.superview) ||
             (constraint.firstItem == self.superview && constraint.secondItem == self));
@@ -53,7 +53,7 @@
     
     __block NSLayoutConstraint *constraint = nil;
     [[[self superview] constraints] enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
-        if ([self constraintHasCorrectViews:c] &&
+        if ([self rz_constraintIsWithSuperview:c] &&
             c.firstAttribute == NSLayoutAttributeTop &&
             c.secondAttribute == NSLayoutAttributeTop &&
             c.relation == NSLayoutRelationEqual)
@@ -71,7 +71,7 @@
     
     __block NSLayoutConstraint *constraint = nil;
     [[[self superview] constraints] enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
-        if ([self constraintHasCorrectViews:c] &&
+        if ([self rz_constraintIsWithSuperview:c] &&
             (c.firstAttribute == NSLayoutAttributeLeft || c.firstAttribute == NSLayoutAttributeLeading) &&
             (c.secondAttribute == NSLayoutAttributeLeft || c.secondAttribute == NSLayoutAttributeLeading) &&
             c.relation == NSLayoutRelationEqual)
@@ -89,7 +89,7 @@
     
     __block NSLayoutConstraint *constraint = nil;
     [[[self superview] constraints] enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
-        if ([self constraintHasCorrectViews:c] &&
+        if ([self rz_constraintIsWithSuperview:c] &&
             (c.firstAttribute == NSLayoutAttributeRight  || c.firstAttribute == NSLayoutAttributeTrailing) &&
             (c.secondAttribute == NSLayoutAttributeRight || c.secondAttribute == NSLayoutAttributeTrailing) &&
             c.relation == NSLayoutRelationEqual)
@@ -107,7 +107,7 @@
     
     __block NSLayoutConstraint *constraint = nil;
     [[[self superview] constraints] enumerateObjectsUsingBlock:^(NSLayoutConstraint *c, NSUInteger idx, BOOL *stop) {
-        if ([self constraintHasCorrectViews:c] &&
+        if ([self rz_constraintIsWithSuperview:c] &&
             c.firstAttribute == NSLayoutAttributeBottom &&
             c.secondAttribute == NSLayoutAttributeBottom &&
             c.relation == NSLayoutRelationEqual)
