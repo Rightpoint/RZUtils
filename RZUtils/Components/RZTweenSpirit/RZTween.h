@@ -14,10 +14,12 @@
  *  A tween can be used as-is or with RZTweenAnimator.
  */
 
-@interface RZTween : NSObject
+@interface RZTween : NSObject <NSCopying>
 
 // Returns @0 by default. Should subclass to return appropriate type wrapped in NSValue.
 - (NSValue *)valueAtTime:(NSTimeInterval)time;
+
+- (BOOL)isEqualToTween:(RZTween *)tween;
 
 @end
 

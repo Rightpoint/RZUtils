@@ -8,20 +8,9 @@
 
 #import "RZTweenAnimator.h"
 
-@interface RZPropertyTween : NSObject
-
-@property (nonatomic, strong) RZTween *tween;
-@property (nonatomic, copy) NSString *keyPath;
-@property (nonatomic, weak) id object;
-
-@end
-
-@implementation RZPropertyTween
-@end
-
 @interface RZTweenAnimator ()
 
-@property (nonatomic, strong) NSMutableDictionary *animatedTweens;
+@property (nonatomic, strong) NSMutableDictionary *tweensToBlocks;
 
 - (void)animateToTime:(NSTimeInterval)time usingScale:(double)timeScale;
 
@@ -45,26 +34,19 @@
     self = [super init];
     if (self)
     {
-        self.animatedTweens = [NSMutableDictionary dictionary];
+        self.tweensToBlocks = [NSMutableDictionary dictionary];
     }
     return self;
 }
 
 #pragma mark - Adding tweens
 
-- (void)addTween:(RZTween *)tween forKeypath:(NSString *)keyPath ofObject:(id)object
+- (void)addTween:(RZTween *)tween withUpdateBlock:(RZTweenAnimatorUpdateBlock)frameBlock
 {
     NSParameterAssert(tween);
-    NSParameterAssert(keyPath);
-    NSParameterAssert(object);
-
-    RZPropertyTween *pt = [RZPropertyTween new];
-    pt.tween = tween;
-    pt.object = object;
-    pt.keyPath = keyPath;
+    NSParameterAssert(frameBlock);
     
-    NSString *kpHash = [NSString stringWithFormat:@"%p_%@", object, keyPath];
-    [self.animatedTweens setObject:pt forKey:kpHash];
+    [self.tweensToBlocks setObject:[frameBlock copy] forKey:tween];
 }
 
 #pragma mark - Public animation
@@ -120,13 +102,11 @@
 
 - (void)setValuesForCurrentTime
 {
-    NSArray *allTweens = [self.animatedTweens allValues];
-    [allTweens enumerateObjectsUsingBlock:^(RZPropertyTween *pt, NSUInteger idx, BOOL *stop) {
-        
-        NSValue *value = [pt.tween valueAtTime:self.time];
+    [self.tweensToBlocks enumerateKeysAndObjectsUsingBlock:^(RZTween * tween, RZTweenAnimatorUpdateBlock frameBlock, BOOL *stop) {
+        NSValue *value = [tween valueAtTime:self.time];
         if (value != nil)
         {
-            [pt.object setValue:value forKeyPath:pt.keyPath];
+            frameBlock(value);
         }
     }];
     

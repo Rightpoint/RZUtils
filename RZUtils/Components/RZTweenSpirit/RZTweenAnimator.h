@@ -10,13 +10,15 @@
 #import <QuartzCore/QuartzCore.h>
 #import "RZTween.h"
 
+typedef void (^RZTweenAnimatorUpdateBlock)(NSValue *value);
+
 @protocol RZTweenAnimatorDelegate;
 
 @interface RZTweenAnimator : NSObject
 
-// Add a tween for a particular object and keypath.
+// Add a tween with a frame update block. Block is called for each update with current tweened value.
 // If multiple tweens exist for the same object with overlapping intervals, the one that started first wins.
-- (void)addTween:(RZTween *)tween forKeypath:(NSString *)keyPath ofObject:(id)object;
+- (void)addTween:(RZTween *)tween withUpdateBlock:(RZTweenAnimatorUpdateBlock)frameBlock;
 
 // set this to change the timeline position immediately
 @property (nonatomic, assign) NSTimeInterval time;

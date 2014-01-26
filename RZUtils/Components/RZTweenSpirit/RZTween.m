@@ -123,6 +123,39 @@ static float RZTweenMapFloat(float value, float inMin, float inMax, float outMin
     return kframes;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+  RZTween *copy = [[[self class] allocWithZone:zone] init];
+
+  if (copy != nil) {
+    copy.sortedKeyFrames = [self.sortedKeyFrames copy];
+  }
+
+  return copy;
+}
+
+- (BOOL)isEqual:(id)other {
+  if (other == self)
+    return YES;
+  if (!other || ![[other class] isEqual:[self class]])
+    return NO;
+
+  return [self isEqualToTween:other];
+}
+
+- (BOOL)isEqualToTween:(RZTween *)tween {
+  if (self == tween)
+    return YES;
+  if (tween == nil)
+    return NO;
+  if (self.sortedKeyFrames != tween.sortedKeyFrames && ![self.sortedKeyFrames isEqualToArray:tween.sortedKeyFrames])
+    return NO;
+  return YES;
+}
+
+- (NSUInteger)hash {
+  return [self.sortedKeyFrames hash];
+}
+
 @end
 
 // -----------------------------
