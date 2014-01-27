@@ -55,7 +55,9 @@ typedef enum {
 
 @end
 
-
+// ===============================================
+//     UIViewController Integration Category
+// ===============================================
 
 @interface UIViewController (RZHud)
 
