@@ -111,6 +111,10 @@ Is it a Collection View or a Table View? The world may never know... (**Spoiler*
 
 Utility for making collection view item insertion/deletion animations easier.
 
+#### RZHud
+
+Loading or informational HUD that fills a given view, with custom message and UIAppearance support.
+
 #### RZLoadingImageView
 
 A drop in solution for a image view that loads from an `NSURL` and caches to file. 
