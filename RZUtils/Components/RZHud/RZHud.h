@@ -10,11 +10,11 @@
 
 typedef void (^HUDDismissBlock)();
 
-typedef enum {
-    RZHudStyleBoxInfo,
+typedef NS_ENUM(NSUInteger, RZHudStyle) {
     RZHudStyleBoxLoading,
+    RZHudStyleBoxInfo,
     RZHudStyleOverlay
-} RZHudStyle;
+};
 
 typedef enum {
     RZHudAnimationMaskFade = 1,
