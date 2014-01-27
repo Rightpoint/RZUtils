@@ -41,6 +41,14 @@
 
 #pragma mark - Adding tweens
 
+- (void)addTween:(RZTween *)tween forKeyPath:(NSString *)keyPath ofObject:(id)object
+{
+    __weak __typeof(object) weakObj = object;
+    [self addTween:tween withUpdateBlock:^(NSValue *value) {
+        [weakObj setValue:value forKeyPath:keyPath];
+    }];
+}
+
 - (void)addTween:(RZTween *)tween withUpdateBlock:(RZTweenAnimatorUpdateBlock)frameBlock
 {
     NSParameterAssert(tween);

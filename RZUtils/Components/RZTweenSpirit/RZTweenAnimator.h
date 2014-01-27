@@ -16,17 +16,27 @@ typedef void (^RZTweenAnimatorUpdateBlock)(NSValue *value);
 
 @interface RZTweenAnimator : NSObject
 
-// Add a tween with a frame update block. Block is called for each update with current tweened value.
-// If multiple tweens exist for the same object with overlapping intervals, the one that started first wins.
+/**
+ * Add a tween for a particular keyPath on an object. If the data type for the tween does not match the expected
+ * type for the keyPath, an exception will likely be raised.
+ */
+- (void)addTween:(RZTween *)tween forKeyPath:(NSString *)keyPath ofObject:(id)object;
+
+/**
+ * Add a tween with a frame update block. Block is called for each update with current tweened value.
+ */
 - (void)addTween:(RZTween *)tween withUpdateBlock:(RZTweenAnimatorUpdateBlock)frameBlock;
 
-// set this to change the timeline position immediately
+/** 
+ * Represents the current position of the animation timeline.
+ * Set this to change the timeline position immediately
+ */
 @property (nonatomic, assign) NSTimeInterval time;
 
-// Animate to a particular time
+/** Animate to a particular time */
 - (void)animateToTime:(NSTimeInterval)time;
 
-// Animate to a particular time over a different duration
+/** Animate to a particular time over a different duration */
 - (void)animateToTime:(NSTimeInterval)time overDuration:(NSTimeInterval)duration;
 
 @property (nonatomic, weak) id<RZTweenAnimatorDelegate> delegate;
