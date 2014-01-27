@@ -7,27 +7,14 @@
 
 #import "RZViewFactory.h"
 
-@implementation RZViewFactory
-
-@synthesize view = _view;
-
-+ (UIView *)viewWithNibNamed:(NSString *)nibName
-{
-    RZViewFactory *viewFactory = [[RZViewFactory alloc] init];
-    [[NSBundle mainBundle] loadNibNamed:nibName owner:viewFactory options:nil];
-    return viewFactory.view;
-}
-
-@end
-
 @implementation UIView (RZViewFactory)
 
-+ (UIView *)view
++ (instancetype)rz_loadFromNibNamed:(NSString *)nibNameOrNil
 {
-    // Guess nib name.
-    Class cellClass = [self class];
-    NSString *classString = NSStringFromClass(cellClass);
-    return [RZViewFactory viewWithNibNamed:classString];
+    // assume name is same as class if nil
+    NSString *nibName = nibNameOrNil ? nibNameOrNil : NSStringFromClass([self class]);
+    UINib *nib = [UINib nibWithNibName:nibName bundle:nil];
+    return [[nib instantiateWithOwner:nil options:nil] objectAtIndex:0];
 }
 
 @end
