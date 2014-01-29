@@ -115,6 +115,10 @@ Utility for making collection view item insertion/deletion animations easier.
 
 Loading or informational HUD that fills a given view, with custom message and UIAppearance support.
 
+#### RZKeychain
+
+Easier manipulation of the secure keychain.
+
 #### RZLoadingImageView
 
 A drop in solution for a image view that loads from an `NSURL` and caches to file. 
