@@ -35,7 +35,10 @@ typedef void (^RZDelayedOperationBlock)();
 */
 + (instancetype)operationPerformedAfterDelay:(NSTimeInterval)delay onQueue:(dispatch_queue_t)queue withBlock:(RZDelayedOperationBlock)block;
 
-/** Resets the delay timer to zero and starts counting down again */
+/** 
+*   Resets the delay timer to zero and starts counting down again.
+*   Only valid to call before operation has finished.
+*/
 - (void)resetTimer;
 
 @end

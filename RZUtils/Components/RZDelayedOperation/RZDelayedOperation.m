@@ -29,6 +29,8 @@ typedef NS_ENUM(NSInteger, RZDelayedOperationState)
 - (void)invalidateTimer;
 - (void)timerFired:(NSTimer*)timer;
 
+- (void)finish;
+
 @end
 
 @implementation RZDelayedOperation
@@ -67,7 +69,7 @@ typedef NS_ENUM(NSInteger, RZDelayedOperationState)
 
 - (void)resetTimer
 {
-    if (self.block != nil)
+    if ([self isExecuting])
     {
         [self invalidateTimer];
         [self startTimer];
@@ -109,13 +111,7 @@ typedef NS_ENUM(NSInteger, RZDelayedOperationState)
 {
     dispatch_async(self.blockQueue, self.block);
     [self invalidateTimer];
-    self.block = nil;
-    
-    [self willChangeValueForKey:@"isFinished"];
-    [self willChangeValueForKey:@"isExecuting"];
-    self.state = RZDelayedOperationStateFinished;
-    [self didChangeValueForKey:@"isExecuting"];
-    [self didChangeValueForKey:@"isFinished"];
+    [self finish];
 }
 
 #pragma mark - NSOperation
@@ -154,12 +150,23 @@ typedef NS_ENUM(NSInteger, RZDelayedOperationState)
     }
 }
 
+- (void)finish
+{
+    self.block = nil;
+    
+    [self willChangeValueForKey:@"isFinished"];
+    [self willChangeValueForKey:@"isExecuting"];
+    self.state = RZDelayedOperationStateFinished;
+    [self didChangeValueForKey:@"isExecuting"];
+    [self didChangeValueForKey:@"isFinished"];
+}
+
 - (void)cancel
 {
     if (![self isFinished] && ![self isCancelled]) {
         [super cancel];
         [self invalidateTimer];
-        self.block = nil;
+        [self finish];
     }
 }
 
