@@ -12,7 +12,7 @@ typedef void (^RZDelayedOperationBlock)();
 
 /**
  *   When started, the (concurrent) operation will schedule a timer on the main run loop to execute after a delay.
- *   Returns a reference to an RZDelayedOperation object, which may be used to reset the timer or cancel entirely.
+ *   The delay timer can be reset or the operation can be cancelled completely.
  *   Once cancelled or finished executing, the operation is invalidated and cannot be restarted.
  *
  *   This operation class can be used in a queue, but be aware that it will hold up execution of other operations
