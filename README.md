@@ -111,6 +111,10 @@ Is it a Collection View or a Table View? The world may never know... (**Spoiler*
 
 Utility for making collection view item insertion/deletion animations easier.
 
+#### RZDelayedOperation
+
+Basic concurrent NSOperation class that takes a block and executes it after a given time interval. Can be cancelled or reset.
+
 #### RZHud
 
 Loading or informational HUD that fills a given view, with custom message and UIAppearance support.
