@@ -1,9 +1,8 @@
 //
 //  RZDelayedOperation.m
-//  SiteSpectSDK
 //
 //  Created by Nick Donaldson on 1/30/14.
-//  Copyright (c) 2014 SiteSpect. All rights reserved.
+//  Copyright (c) 2014 Raizlabs. All rights reserved.
 //
 
 #import "RZDelayedOperation.h"
