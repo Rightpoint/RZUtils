@@ -1,16 +1,16 @@
 //
-//  UIViewController+KeyboardWatcher.m
+//  UIViewController+RZKeyboardWatcher.m
 //
 //  Created by Joe Mahon on 1/29/14.
 //  Copyright (c) 2014 Raizlabs. All rights reserved.
 //
 
-#import "UIViewController+KeyboardWatcher.h"
+#import "UIViewController+RZKeyboardWatcher.h"
 #import <objc/runtime.h>
 
 static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKey;
 
-@interface KeyboardShownAnimationDelegate : NSObject
+@interface RZKeyboardAnimationDelegate : NSObject
 
 @property (copy, nonatomic) RZAnimationBlock animationBlock;
 @property (weak, nonatomic) UIViewController *viewController;
@@ -24,7 +24,7 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
 
 @end
 
-@implementation KeyboardShownAnimationDelegate
+@implementation RZKeyboardAnimationDelegate
 
 - (id)initWithAnimationBlock:(RZAnimationBlock)animations andViewController:(UIViewController *)vc
 {
@@ -70,7 +70,7 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
         UIViewAnimationCurve animationCurve = [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue];
         double animationDuration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
         
-        __weak KeyboardShownAnimationDelegate *wSelf = self;
+        __weak RZKeyboardAnimationDelegate *wSelf = self;
         [UIView animateWithDuration:animationDuration delay:0.0 options:(animationCurve << 16) animations:^{
             if (wSelf.animationBlock)
             {
@@ -103,7 +103,7 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
 {
     if (animations)
     {
-        KeyboardShownAnimationDelegate *animationDelegate = [[KeyboardShownAnimationDelegate alloc] initWithAnimationBlock:animations andViewController:self];
+        RZKeyboardAnimationDelegate *animationDelegate = [[RZKeyboardAnimationDelegate alloc] initWithAnimationBlock:animations andViewController:self];
         animationDelegate.animate = animated;
         [animationDelegate startKeyboardObservers];
         // save animations block
@@ -115,8 +115,8 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
 {
     // if we have a delegate, make sure it's not watching for keyboard notifications
     id object = objc_getAssociatedObject(self, kRZKeyboardAnimationsDelegateKey);
-    if (object && [object isKindOfClass:[KeyboardShownAnimationDelegate class]]) {
-        KeyboardShownAnimationDelegate *delegate = object;
+    if (object && [object isKindOfClass:[RZKeyboardAnimationDelegate class]]) {
+        RZKeyboardAnimationDelegate *delegate = object;
         [delegate removeKeyboardObservers];
     }
     
