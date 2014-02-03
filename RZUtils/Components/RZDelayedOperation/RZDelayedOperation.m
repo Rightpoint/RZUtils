@@ -9,7 +9,6 @@
 
 typedef NS_ENUM(NSInteger, RZDelayedOperationState)
 {
-    RZDelayedOperationStatePaused = -1,
     RZDelayedOperationStateReady = 1,
     RZDelayedOperationStateExecuting = 2,
     RZDelayedOperationStateFinished = 3
