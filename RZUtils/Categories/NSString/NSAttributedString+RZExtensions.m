@@ -3,7 +3,7 @@
 //  Raizlabs
 //
 //  Created by Alex Rouse on 12/13/13.
-//  Copyright (c) 2013 Raizlabs. All rights reserved.
+//  Copyright (c) 2013 Raizlabs. 
 //
 
 #import "NSAttributedString+RZExtensions.h"

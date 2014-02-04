@@ -3,7 +3,7 @@
 //  Raizlabs
 //
 //  Created by Nick Donaldson on 5/21/12.
-//  Copyright (c) 2012 Raizlabs Corporation. All rights reserved.
+//  Copyright (c) 2012 Raizlabs. 
 //
 
 #import "RZHud.h"

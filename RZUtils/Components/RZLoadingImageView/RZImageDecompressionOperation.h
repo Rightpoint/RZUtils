@@ -2,7 +2,7 @@
 //  RZImageDecompressionOperation.h
 //
 //  Created by Nick Donaldson on 2/27/13.
-//  Copyright (c) 2013 Raizlabs. All rights reserved.
+//  Copyright (c) 2013 Raizlabs. 
 //
 
 #import <Foundation/Foundation.h>

@@ -2,7 +2,7 @@
 //  RZCollectionTableViewCell.h
 //
 //  Created by Nick Donaldson on 9/13/13.
-//  Copyright (c) 2013 RaizLabs. All rights reserved.
+//  Copyright (c) 2013 RaizLabs. 
 //
 
 #import <UIKit/UIKit.h>

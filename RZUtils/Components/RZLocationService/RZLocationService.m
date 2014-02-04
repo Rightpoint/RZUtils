@@ -3,7 +3,7 @@
 //  RZUtils
 //
 //  Created by Nick Bonatsakis on 11/27/12.
-//  Copyright (c) 2013 Raizlabs Inc. All rights reserved.
+//  Copyright (c) 2013 Raizlabs Inc. 
 //
 
 #import "RZLocationService.h"

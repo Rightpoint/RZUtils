@@ -2,7 +2,7 @@
 //  RZViewFactory.h
 //
 //  Created by Stephen Barnes on 4/9/13.
-//  Copyright (c) 2013 Raizlabs. All rights reserved.
+//  Copyright (c) 2013 Raizlabs. 
 //
 
 #import <Foundation/Foundation.h>

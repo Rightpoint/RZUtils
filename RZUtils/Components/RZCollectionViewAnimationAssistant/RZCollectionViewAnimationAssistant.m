@@ -3,7 +3,7 @@
 //  Raizlabs
 //
 //  Created by Nick Donaldson on 1/9/14.
-//  Copyright (c) 2014 Raizlabs. All rights reserved.
+//  Copyright (c) 2014 Raizlabs. 
 //
 
 #import "RZCollectionViewAnimationAssistant.h"

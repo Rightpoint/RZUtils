@@ -3,7 +3,7 @@
 //  Raizlabs
 //
 //  Created by Nick Donaldson on 12/6/13.
-//  Copyright (c) 2013 Raizlabs. All rights reserved.
+//  Copyright (c) 2013 Raizlabs. 
 //
 
 #import <QuartzCore/QuartzCore.h>

@@ -3,7 +3,7 @@
 //  Raizlabs
 //
 //  Created by Nick Donaldson on 11/19/13.
-//  Copyright (c) 2013 Raizlabs. All rights reserved.
+//  Copyright (c) 2013 Raizlabs. 
 //
 
 #import <UIKit/UIKit.h>

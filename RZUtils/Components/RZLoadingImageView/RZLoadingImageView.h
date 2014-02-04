@@ -2,7 +2,7 @@
 //  RZLoadingImageView
 //
 //  Created by Nicholas Donaldson on 9/24/12.
-//  Copyright (c) 2012 Raizlabs. All rights reserved.
+//  Copyright (c) 2012 Raizlabs. 
 //
 
 #import <UIKit/UIKit.h>

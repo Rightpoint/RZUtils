@@ -3,7 +3,7 @@
 //  Raizlabs
 //
 //  Created by Alex Rouse on 12/11/13.
-//  Copyright (c) 2013 Raizlabs. All rights reserved.
+//  Copyright (c) 2013 Raizlabs. 
 //
 
 #import "RZCellHeightManager.h"

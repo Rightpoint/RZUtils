@@ -2,7 +2,7 @@
 //  RZSingleChildContainerViewController.m
 //
 //  Created by Nick Donaldson on 10/3/13.
-//  Copyright (c) 2013 Raizlabs. All rights reserved.
+//  Copyright (c) 2013 Raizlabs. 
 //
 
 #import "RZSingleChildContainerViewController.h"

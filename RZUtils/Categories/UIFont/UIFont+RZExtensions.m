@@ -3,7 +3,7 @@
 //  Raizlabs
 //
 //  Created by Alex Rouse on 11/7/13.
-//  Copyright (c) 2013 Raizlabs. All rights reserved.
+//  Copyright (c) 2013 Raizlabs. 
 //
 
 #import "UIFont+RZExtensions.h"

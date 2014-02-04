@@ -1,6 +1,6 @@
 //
 // Created by Joshua Leibsly on 1/15/14.
-// Copyright (c) 2014 Raizlabs. All rights reserved.
+// Copyright (c) 2014 Raizlabs. 
 //
 
 

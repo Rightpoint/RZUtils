@@ -3,7 +3,7 @@
 //  Raizlabs
 //
 //  Created by Alex Rouse on 11/12/13.
-//  Copyright (c) 2013 Raizlabs. All rights reserved.
+//  Copyright (c) 2013 Raizlabs. 
 //
 
 // A simple webview for displaying local/remote HTML content.

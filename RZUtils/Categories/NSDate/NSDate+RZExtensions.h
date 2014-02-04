@@ -2,7 +2,7 @@
 //  NSDate+RZExtensions.h
 //
 //  Created by Nicholas Bonatsakis on 7/3/13.
-//  Copyright (c) 2013 RaizLabs. All rights reserved.
+//  Copyright (c) 2013 RaizLabs. 
 //
 
 #import <Foundation/Foundation.h>

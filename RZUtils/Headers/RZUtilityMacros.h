@@ -2,7 +2,7 @@
 //  RZUtilityMacros.h
 //
 //  Created by Nick Donaldson on 10/11/13.
-//  Copyright (c) 2013 Raizlabs. All rights reserved.
+//  Copyright (c) 2013 Raizlabs. 
 //
 
 //  This file contains macros for quick conversions and whatnot.

@@ -2,7 +2,7 @@
 //  UITableViewCell+RZCellStyling.h
 //
 //  Created by Joshua Leibsly on 4/22/13.
-//  Copyright (c) 2013 Raizlabs. All rights reserved.
+//  Copyright (c) 2013 Raizlabs. 
 //
 
 #import <UIKit/UIKit.h>

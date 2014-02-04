@@ -2,7 +2,7 @@
 //  RZLogHelper.h
 //  Created by Nick Donaldson on 8/1/13.
 //
-//  Copyright (c) 2013 Raizlabs. All rights reserved.
+//  Copyright (c) 2013 Raizlabs. 
 
 
 // Include guard
