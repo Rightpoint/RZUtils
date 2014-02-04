@@ -1,5 +1,6 @@
 
 // Created by Nick Donaldson, 2013
+
 //
 // Faster version of Apple's blurred image category.
 // Since this is a modified version, I don't think the license is 100%

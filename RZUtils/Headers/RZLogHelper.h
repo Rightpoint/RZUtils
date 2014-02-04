@@ -1,6 +1,7 @@
 //
 //  RZLogHelper.h
 //  Created by Nick Donaldson on 8/1/13.
+
 //
 // Copyright 2014 Raizlabs and other contributors
 // http://raizlabs.com/

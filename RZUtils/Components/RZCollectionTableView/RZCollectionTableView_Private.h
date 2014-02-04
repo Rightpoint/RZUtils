@@ -2,6 +2,7 @@
 //  RZCollectionTableView_Private.h
 //
 //  Created by Nick D on 9/15/13.
+
 //  Copyright (c) 2013 RaizLabs. 
 //
 
