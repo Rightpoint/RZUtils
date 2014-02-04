@@ -81,6 +81,12 @@ This is a collection of helpful utilities and components which makes iOS develop
 
 	Easy adjustments to `UIView` frames
 
+### UIViewController
+
+- **UIViewController+RZKeyboardWatcher**
+
+	Utility for scripting animation blocks in response to keyboard appearance/disappearance notifications.
+
 ## Components Overview
 
 #### RZAnimatedCountingLabel
