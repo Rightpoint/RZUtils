@@ -410,6 +410,48 @@
     [self addConstraints:constraints];
 }
 
+- (void)rz_distributeSubviews:(NSArray *)subviews vertically:(BOOL)vertically
+{
+    NSAssert(subviews.count > 1, @"Must provide at least two items");
+    
+    NSMutableArray *constraints = [NSMutableArray array];
+    
+    NSLayoutAttribute centerAlongAxisAttribute = vertically ? NSLayoutAttributeCenterX : NSLayoutAttributeCenterY;
+    NSLayoutAttribute distributeAlongAxisAttribute = vertically ? NSLayoutAttributeCenterY : NSLayoutAttributeCenterX;
+    
+    // Calculate the incremental offset of each view as proportion of the container's center point: 1/((n + 1) / 2)
+    CGFloat distributionMultiplierIncrement = 1.0f / ((subviews.count + 1) / 2.0f);
+    
+    [subviews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop)
+    {
+         // Calculate the actual multiplier for this view index.
+         CGFloat distributionMultiplier = distributionMultiplierIncrement * (idx + 1);
+         
+         // Create a constraint representing distribution along the given axis using this multiplier.
+         NSLayoutConstraint *distributeConstraint = [NSLayoutConstraint constraintWithItem:view
+                                                                                 attribute:distributeAlongAxisAttribute
+                                                                                 relatedBy:NSLayoutRelationEqual
+                                                                                    toItem:self
+                                                                                 attribute:distributeAlongAxisAttribute
+                                                                                multiplier:distributionMultiplier
+                                                                                  constant:0];
+         
+         // Create a constraint to center the view along the other axis.
+         NSLayoutConstraint *centerConstraint = [NSLayoutConstraint constraintWithItem:view
+                                                                             attribute:centerAlongAxisAttribute
+                                                                             relatedBy:NSLayoutRelationEqual
+                                                                                toItem:self
+                                                                             attribute:centerAlongAxisAttribute
+                                                                            multiplier:1
+                                                                              constant:0];
+         // Add both constraints for the view.
+         [constraints addObject:distributeConstraint];
+         [constraints addObject:centerConstraint];
+     }];
+    
+    [self addConstraints:constraints];
+}
+
 - (void)rz_alignSubviews:(NSArray *)subviews byAttribute:(NSLayoutAttribute)attribute
 {
     NSAssert(subviews.count > 1, @"Must provide at least two items");
