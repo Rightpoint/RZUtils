@@ -1,5 +1,6 @@
 
 // Created by Nick Donaldson, 2013
+
 //
 // Faster version of Apple's blurred image category.
 // Since this is a modified version, I don't think the license is 100%
@@ -51,7 +52,7 @@
  Copyright (C) 2013 Apple Inc. All Rights Reserved.
  
  
- Copyright © 2013 Apple Inc. All rights reserved.
+ Copyright © 2013 Apple Inc. 
  WWDC 2013 License
  
  NOTE: This Apple Software was supplied by Apple as part of a WWDC 2013
