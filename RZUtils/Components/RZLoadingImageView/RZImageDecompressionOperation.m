@@ -152,7 +152,7 @@
                 CGRect rect;
                 if(resizing)
                 {
-                    CGSize size = [UIImage rz_sizeForImage:compressedImage scaledToSize:imageSize preserveAspectRation:self.preserveAspect];
+                    CGSize size = [UIImage rz_sizeForImage:compressedImage scaledToSize:imageSize preserveAspectRatio:self.preserveAspect];
                     rect = (CGRect){CGPointZero, size.width, size.height};
                 }
                 else

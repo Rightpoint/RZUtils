@@ -81,6 +81,12 @@ This is a collection of helpful utilities and components which makes iOS develop
 
 	Easy adjustments to `UIView` frames
 
+### UIViewController
+
+- **UIViewController+RZKeyboardWatcher**
+
+	Utility for scripting animation blocks in response to keyboard appearance/disappearance notifications.
+
 ## Components Overview
 
 #### RZAnimatedCountingLabel
@@ -110,6 +116,10 @@ Is it a Collection View or a Table View? The world may never know... (**Spoiler*
 #### RZCollectionViewAnimationAssistant
 
 Utility for making collection view item insertion/deletion animations easier.
+
+#### RZDelayedOperation
+
+Basic concurrent NSOperation class that takes a block and executes it after a given time interval. Can be cancelled or reset.
 
 #### RZHud
 

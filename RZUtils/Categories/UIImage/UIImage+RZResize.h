@@ -34,5 +34,6 @@
 
 // Returns the resulting size of an image after a resize operation. If the aspect ratio is preserved, then the resulting
 // size could be different than the provided newSize.
-+ (CGSize)rz_sizeForImage:(UIImage *)image scaledToSize:(CGSize)newSize preserveAspectRation:(BOOL)preserveAspect;
++ (CGSize)rz_sizeForImage:(UIImage *)image scaledToSize:(CGSize)newSize preserveAspectRatio:(BOOL)preserveAspect;
+
 @end
