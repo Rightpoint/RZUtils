@@ -111,7 +111,7 @@ Autolayout-based dynamic cell height utility.
 
 Is it a Collection View or a Table View? The world may never know... (**Spoiler**: It's a Collection View)
 
-`RZCollectionTableView` is a collection view layout and accomanying collection view and collection view cell subclasses that mimic the class/delegate interface, look, and feel of `UITableView`, with a few added enhancements such as customizable section insets, row spacings, and more.
+`RZCollectionTableView` is a collection view layout and accompanying collection view and collection view cell subclasses that mimic the class/delegate interface, look, and feel of `UITableView`, with a few added enhancements such as customizable section insets, row spacings, and more.
 
 #### RZCollectionViewAnimationAssistant
 
@@ -179,8 +179,8 @@ RZUtils is distributed under an [MIT License](http://opensource.org/licenses/MIT
 
 ## Guidelines for adding a new component
 
-When adding new components, please try and follow the following guidelines as closely as possible to ensure maximum ease of use and maintanability.
+When adding new components, please try and follow the following guidelines as closely as possible to ensure maximum ease of use and maintainability.
 
  * No need for unit tests, just make sure it works and solves problems rather than causing them.
  * Ensure that the component has well documented headers.
- * Aggressivly use namespacing (method prefix) for Objective-C categories in order to avoid potential naming collisions.
+ * Aggressively use namespacing (method prefix) for Objective-C categories in order to avoid potential naming collisions.
