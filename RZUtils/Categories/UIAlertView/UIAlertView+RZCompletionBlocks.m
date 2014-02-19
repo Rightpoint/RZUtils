@@ -1,5 +1,5 @@
 //
-//  UIAlertView+CompletionBlocks.m
+//  UIAlertView+RZCompletionBlocks.m
 //  Raizlabs
 //
 //  Created by Nick Donaldson on 4/10/13.
