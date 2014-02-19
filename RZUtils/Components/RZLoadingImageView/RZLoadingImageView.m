@@ -68,6 +68,7 @@
 
 - (void)commonInit
 {
+    self.imageRenderingMode = UIImageRenderingModeAutomatic;
     self.showPlaceholderOnError = YES;
     self.loadingSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.loadingSpinner.hidesWhenStopped = YES;
@@ -146,6 +147,7 @@
 
 - (void)setImage:(UIImage *)image animated:(BOOL)animated
 {
+    [image imageWithRenderingMode:self.imageRenderingMode];
     if (animated){
         
         self.image = image;

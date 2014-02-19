@@ -46,6 +46,7 @@
 @property (nonatomic, assign) UIViewContentMode imageContentMode;
 @property (nonatomic, assign) BOOL showPlaceholderOnError;
 @property (nonatomic, strong) UIImage *errorPlaceholderImage UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) UIImageRenderingMode imageRenderingMode;
 
 - (void)setLoading:(BOOL)loading;
 
