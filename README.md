@@ -139,6 +139,10 @@ A drop in solution for a image view that loads from an `NSURL` and caches to fil
 
 CoreLocation made easy.
 
+#### RZRevealViewController
+
+A basement/reveal menu component. 
+
 #### RZSingleChildContainerViewController
 
 A `UIViewController` subclass for managing a single child view controller contained in any subview container of a parent. Useful for keeping one view static while another view contains one of many potential child view controllers. iOS7+ only.
