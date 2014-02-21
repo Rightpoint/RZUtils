@@ -159,6 +159,10 @@ Extensions to `UIView` for easily loading a subclass from a XIB file.
 
 `UIViewController` that manages a web view, with associated chrome.
 
+##### RSSplitViewController
+
+Extends the functionality of `UISplitViewController` including allowing it to be presented Modally.
+
 ## Headers Overview
 
 #### RZDispatch
