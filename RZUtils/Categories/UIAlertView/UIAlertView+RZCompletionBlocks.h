@@ -1,5 +1,5 @@
 //
-//  UIAlertView+CompletionBlocks.h
+//  UIAlertView+RZCompletionBlocks.h
 //
 //  Created by Nick Donaldson on 4/10/13.
 

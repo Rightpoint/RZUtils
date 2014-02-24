@@ -68,6 +68,7 @@
 
 - (void)commonInit
 {
+    self.imageRenderingMode = UIImageRenderingModeAutomatic;
     self.showPlaceholderOnError = YES;
     self.loadingSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.loadingSpinner.hidesWhenStopped = YES;
@@ -88,14 +89,15 @@
 
 - (void)setLoading:(BOOL)loading
 {
-    if (loading){
+    if (loading)
+    {
         // Reset content mode
         self.image = nil;
         self.contentMode = UIViewContentModeScaleAspectFit;
         [self.loadingSpinner startAnimating];
     }
-    else{
-        self.contentMode = self.imageContentMode;
+    else
+    {
         [self.loadingSpinner stopAnimating];
     }
 }
@@ -146,6 +148,10 @@
 
 - (void)setImage:(UIImage *)image animated:(BOOL)animated
 {
+    if ([image respondsToSelector:@selector(imageWithRenderingMode:)])
+    {
+        image = [image imageWithRenderingMode:self.imageRenderingMode];
+    }
     if (animated){
         
         self.image = image;
