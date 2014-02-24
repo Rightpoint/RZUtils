@@ -148,7 +148,10 @@
 
 - (void)setImage:(UIImage *)image animated:(BOOL)animated
 {
-    image = [image imageWithRenderingMode:self.imageRenderingMode];
+    if ([image respondsToSelector:@selector(imageWithRenderingMode:)])
+    {
+        image = [image imageWithRenderingMode:self.imageRenderingMode];
+    }
     if (animated){
         
         self.image = image;
