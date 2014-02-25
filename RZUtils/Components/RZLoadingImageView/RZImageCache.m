@@ -93,7 +93,7 @@
 
 - (id)init
 {
-    [NSException raise:NSInternalInconsistencyException format:@"-init is not a valid initializer for singleton BHImageCache. Use +sharedCache."];
+    [NSException raise:NSInternalInconsistencyException format:@"-init is not a valid initializer for singleton RZImageCache. Use +sharedCache."];
     return nil;
 }
 
