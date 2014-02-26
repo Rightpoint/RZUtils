@@ -53,9 +53,11 @@
 - (void)loadImageFromPath:(NSString*)path;
 - (void)loadImageFromPath:(NSString*)path decompress:(BOOL)decompress;
 - (void)loadImageFromPath:(NSString *)path resizeToSize:(CGSize)newSize preserveAspectRatio:(BOOL)preserveAspect decompress:(BOOL)decompress;
+- (void)loadImageFromPath:(NSString *)path resizeToSize:(CGSize)newSize preserveAspectRatio:(BOOL)preserveAspect checkForUpdates:(BOOL)updates decompress:(BOOL)decompress;
+
 - (void)loadImageFromURL:(NSURL*)url;
 - (void)loadImageFromURL:(NSURL*)url decompress:(BOOL)decompress;
-
+- (void)loadImageFromURL:(NSURL*)url decompress:(BOOL)decompress checkForUpdates:(BOOL)checkForUpdates;
 - (void)setImage:(UIImage *)image animated:(BOOL)animated;
 
 - (void)cancelRequest;
