@@ -110,6 +110,11 @@
 
 - (void)loadImageFromPath:(NSString *)path resizeToSize:(CGSize)newSize preserveAspectRatio:(BOOL)preserveAspect decompress:(BOOL)decompress
 {
+    [self loadImageFromPath:path resizeToSize:newSize preserveAspectRatio:preserveAspect checkForUpdates:NO decompress:decompress];
+}
+
+- (void)loadImageFromPath:(NSString *)path resizeToSize:(CGSize)newSize preserveAspectRatio:(BOOL)preserveAspect checkForUpdates:(BOOL)updates decompress:(BOOL)decompress
+{
     [self cancelRequest];
 
     if (path == nil){
@@ -119,7 +124,7 @@
 
     [self setLoading:YES];
 
-    self.imageURL = [[RZImageCache sharedCache] downloadImageFromPath:path decompress:decompress resizeToSize:newSize preserveAspectRatio:preserveAspect delegate:self];
+    self.imageURL = [[RZImageCache sharedCache] downloadImageFromPath:path decompress:decompress resizeToSize:newSize preserveAspectRatio:preserveAspect checkForUpdates:updates delegate:self];
 }
 
 - (void)loadImageFromURL:(NSURL *)url
@@ -128,6 +133,11 @@
 }
 
 - (void)loadImageFromURL:(NSURL *)url decompress:(BOOL)decompress
+{
+    [self loadImageFromURL:url decompress:decompress checkForUpdates:NO];
+}
+
+- (void)loadImageFromURL:(NSURL*)url decompress:(BOOL)decompress checkForUpdates:(BOOL)checkForUpdates
 {
     [self cancelRequest];
     
@@ -139,7 +149,7 @@
     [self setLoading:YES];
     
     self.imageURL = url;
-    [[RZImageCache sharedCache] downloadImageFromURL:url decompress:decompress delegate:self];
+    [[RZImageCache sharedCache] downloadImageFromURL:url decompress:decompress resizeToSize:CGSizeZero preserveAspectRatio:YES checkForUpdates:checkForUpdates delegate:self];
 }
 
 - (void)setImage:(UIImage *)image animated:(BOOL)animated

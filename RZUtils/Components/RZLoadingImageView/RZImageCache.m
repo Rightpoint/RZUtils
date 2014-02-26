@@ -117,10 +117,26 @@
         
         self.delegates = [[NSMutableDictionary alloc] initWithCapacity:10];
         
+        // We should always purge the cache if we get a memory warning.
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didRecieveMemoryWarning)
+                                                     name:UIApplicationDidReceiveMemoryWarningNotification
+                                                   object:nil];
     }
     return self;
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationDidReceiveMemoryWarningNotification
+                                                  object:nil];
+}
+
+- (void)didRecieveMemoryWarning
+{
+    [self purgeInMemoryCache];
+}
 
 #pragma mark - Public
 
@@ -141,10 +157,16 @@
 
 - (NSURL*)downloadImageFromPath:(NSString *)path decompress:(BOOL)decompress resizeToSize:(CGSize)size preserveAspectRatio:(BOOL)preserveAspect delegate:(id<RZImageCacheDelegate>)delegate
 {
+    return [self downloadImageFromPath:path decompress:decompress resizeToSize:size preserveAspectRatio:preserveAspect checkForUpdates:NO delegate:delegate];
+}
+
+- (NSURL*)downloadImageFromPath:(NSString *)path decompress:(BOOL)decompress resizeToSize:(CGSize)size preserveAspectRatio:(BOOL)preserveAspect checkForUpdates:(BOOL)checkForUpdates delegate:(id<RZImageCacheDelegate>)delegate
+
+{
     NSURL *imageURL = nil;
     if (self.baseURL){
         imageURL = [NSURL URLWithString:path relativeToURL:self.baseURL];
-        [self downloadImageFromURL:imageURL decompress:decompress resizeToSize:size preserveAspectRatio:preserveAspect delegate:delegate];
+        [self downloadImageFromURL:imageURL decompress:decompress resizeToSize:size preserveAspectRatio:preserveAspect checkForUpdates:checkForUpdates delegate:delegate];
     }
     else{
         RZImageCacheError(@"No base URL has been set.");
@@ -162,6 +184,11 @@
 }
 
 - (void)downloadImageFromURL:(NSURL *)url decompress:(BOOL)decompress resizeToSize:(CGSize)size preserveAspectRatio:(BOOL)preserveAspect delegate:(id<RZImageCacheDelegate>)delegate
+{
+    [self downloadImageFromURL:url decompress:decompress resizeToSize:size preserveAspectRatio:preserveAspect checkForUpdates:NO delegate:delegate];
+}
+
+- (void)downloadImageFromURL:(NSURL *)url decompress:(BOOL)decompress resizeToSize:(CGSize)size preserveAspectRatio:(BOOL)preserveAspect checkForUpdates:(BOOL)checkForUpdates delegate:(id<RZImageCacheDelegate>)delegate
 {
     if (url){
 
@@ -186,9 +213,16 @@
             if (![self isDownloadingURL:url]){
                 
                 [self.downloadingUrls addObject:url];
-            
-                [self.fileManager downloadFileFromURL:url withProgressDelegate:nil completion:^(BOOL success, NSURL *downloadedFile, RZWebServiceRequest *request) {
-                    
+                RZFileManagerDownloadUpdateFileBlock updateBlock = nil;
+                if (checkForUpdates)
+                {
+                    updateBlock = ^(NSURL* fileURL, RZWebServiceRequest* downloadRequest) {
+                        [self addDelegate:delegate forURL:fileURL];
+                        [self.downloadingUrls addObject:url];
+                    };
+
+                }
+                [self.fileManager downloadFileFromURL:url withProgressDelegateSet:nil enqueue:YES completion:^(BOOL success, NSURL *downloadedFile, RZWebServiceRequest *request) {
                     if (success){
                         
                         BOOL loadedFromCache = (request == nil);
@@ -207,7 +241,7 @@
                                 }
                                 
                                 [self.downloadingUrls removeObject:url];
-
+                                
                             }];
                             
                             [self.decompressionQueue addOperation:decomp];
@@ -215,13 +249,13 @@
                         else{
                             NSData *imgData = [NSData dataWithContentsOfURL:downloadedFile];
                             UIImage *image = [UIImage imageWithData:imgData];
-
+                            
                             // If a resize size is provided, resize the image.
                             if(resizing)
                             {
                                 image = [UIImage rz_imageWithImage:image scaledToSize:size preserveAspectRatio:preserveAspect];
                             }
-
+                            
                             [self.downloadingUrls removeObject:url];
                             [self.inMemoryImageCache setObject:image forKey:cacheKey];
                             [self notifyDelegatesOfSuccessForURL:url withImage:image fromCache:loadedFromCache];
@@ -229,14 +263,12 @@
                         
                     }
                     else{
-                        
                         // The download failed
                         [self.downloadingUrls removeObject:url];
                         RZImageCacheError(@"Image download failed with error: %@", request.error);
                         [self notifyDelegatesOfFailureForURL:url withError:request.error];
                     }
-                                        
-                }];
+                } updateFileBlock:updateBlock];
                 
             } // Image was already downloading, do nothing else
             
