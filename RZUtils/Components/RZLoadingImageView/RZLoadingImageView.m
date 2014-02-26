@@ -153,7 +153,7 @@
     [self setLoading:YES];
     
     self.imageURL = url;
-    [[RZImageCache sharedCache] downloadImageFromURL:[NSURL URLWithString:@"http://alexrouse.me/testData/alex-orange.png"] decompress:decompress resizeToSize:CGSizeZero preserveAspectRatio:YES checkForUpdates:YES delegate:self];
+    [[RZImageCache sharedCache] downloadImageFromURL:url decompress:decompress resizeToSize:CGSizeZero preserveAspectRatio:YES checkForUpdates:checkForUpdates delegate:self];
 }
 
 - (void)setImage:(UIImage *)image animated:(BOOL)animated
