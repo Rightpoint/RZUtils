@@ -50,7 +50,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.contentMode = UIViewContentModeScaleAspectFit;
-        self.imageContentMode = UIViewContentModeScaleAspectFit;
         [self commonInit];
     }
     return self;
@@ -60,7 +59,6 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self){
-        self.imageContentMode = self.contentMode;
         [self commonInit];
     }
     return self;
@@ -91,9 +89,7 @@
 {
     if (loading)
     {
-        // Reset content mode
         self.image = nil;
-        self.contentMode = UIViewContentModeScaleAspectFit;
         [self.loadingSpinner startAnimating];
     }
     else
