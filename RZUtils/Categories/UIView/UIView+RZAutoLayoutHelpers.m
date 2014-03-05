@@ -184,6 +184,18 @@
     [self addConstraint:w];
 }
 
+- (void)rz_pinWidthToView:(UIView *)view
+{
+    NSLayoutConstraint *w = [NSLayoutConstraint constraintWithItem:self
+                                                         attribute:NSLayoutAttributeWidth
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:view
+                                                         attribute:NSLayoutAttributeWidth
+                                                        multiplier:1.f
+                                                          constant:0.f];
+    [self addConstraint:w];
+}
+
 - (void)rz_pinHeightTo:(CGFloat)height
 {
     NSLayoutConstraint *h = [NSLayoutConstraint constraintWithItem:self

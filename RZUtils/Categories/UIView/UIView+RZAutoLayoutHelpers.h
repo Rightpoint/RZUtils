@@ -51,6 +51,7 @@
 
 // Pinning dimensions
 - (void)rz_pinWidthTo:(CGFloat)width;
+- (void)rz_pinWidthToView:(UIView *)view;
 - (void)rz_pinHeightTo:(CGFloat)height;
 - (void)rz_pinSizeTo:(CGSize)size;
 
