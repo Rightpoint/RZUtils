@@ -32,6 +32,10 @@
 #import "RZFileManager.h"
 #import "UIImage+RZResize.h"
 
+#import <sys/xattr.h>
+
+#define RZImageCacheFileAttributeDecompressedName       "com.RZImageCache.Decompressed"
+
 #define RZImageCacheError(fmt, ...) NSLog((@"[RZImageCache] Error: " fmt), ##__VA_ARGS__)
 
 // 50 mb
@@ -229,22 +233,52 @@
                         
                         if (decompress){
                             
-                            RZImageDecompressionOperation *decomp = [[RZImageDecompressionOperation alloc] initWithFileURL:downloadedFile webUrl:url resizeToSize:size preserveAspectRatio:preserveAspect completion:^(UIImage *image) {
+                            const char *filePath = [downloadedFile fileSystemRepresentation];
+                            const char *name = RZImageCacheFileAttributeDecompressedName;
+
+                            //First we are going to see if it is already decompressed.
+                            u_int8_t value = 0;
+                            getxattr(filePath, name, &value, 255, 0, 0);
+                            
+                            if ( value == 0 )
+                            {
+                                RZImageDecompressionOperation *decomp = [[RZImageDecompressionOperation alloc] initWithFileURL:downloadedFile webUrl:url resizeToSize:size preserveAspectRatio:preserveAspect completion:^(UIImage *image) {
+                                    
+                                    if (image){
+                                        const char *decompressedFilePath = [downloadedFile fileSystemRepresentation];
+                                        u_int8_t value = 1;
+                                        
+                                        // We don't really care about the result.
+                                        setxattr(decompressedFilePath, name, &value, sizeof(value), 0, 0);
+                                        [self.inMemoryImageCache setObject:image forKey:cacheKey cost:[image approxSizeInBytes]];
+                                        [self notifyDelegatesOfSuccessForURL:url withImage:image fromCache:NO];
+                                    }
+                                    else{
+                                        RZImageCacheError(@"Unable to decompress image from URL: %@", url);
+                                        [self notifyDelegatesOfFailureForURL:url withError:nil];
+                                    }
+                                    
+                                    [self.downloadingUrls removeObject:url];
+                                    
+                                }];
+                            
+                                [self.decompressionQueue addOperation:decomp];
+                            }
+                            else
+                            {
+                                NSData *imgData = [NSData dataWithContentsOfURL:downloadedFile];
+                                UIImage *image = [UIImage imageWithData:imgData];
                                 
-                                if (image){
-                                    [self.inMemoryImageCache setObject:image forKey:cacheKey cost:[image approxSizeInBytes]];
-                                    [self notifyDelegatesOfSuccessForURL:url withImage:image fromCache:NO];
-                                }
-                                else{
-                                    RZImageCacheError(@"Unable to decompress image from URL: %@", url);
-                                    [self notifyDelegatesOfFailureForURL:url withError:nil];
+                                // If a resize size is provided, resize the image.
+                                if(resizing)
+                                {
+                                    image = [UIImage rz_imageWithImage:image scaledToSize:size preserveAspectRatio:preserveAspect];
                                 }
                                 
                                 [self.downloadingUrls removeObject:url];
-                                
-                            }];
-                            
-                            [self.decompressionQueue addOperation:decomp];
+                                [self.inMemoryImageCache setObject:image forKey:cacheKey];
+                                [self notifyDelegatesOfSuccessForURL:url withImage:image fromCache:loadedFromCache];
+                            }
                         }
                         else{
                             NSData *imgData = [NSData dataWithContentsOfURL:downloadedFile];
