@@ -66,6 +66,7 @@
 
 - (void)commonInit
 {
+    self.shouldAnimateImage = YES;
     self.imageRenderingMode = UIImageRenderingModeAutomatic;
     self.showPlaceholderOnError = YES;
     self.loadingSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -192,7 +193,7 @@
 {
     if (self.errorPlaceholderImage != nil && self.showPlaceholderOnError){
         self.contentMode = (self.errorPlaceholderImage.size.width > self.bounds.size.width || self.errorPlaceholderImage.size.height > self.bounds.size.height) ? UIViewContentModeScaleAspectFit : UIViewContentModeCenter;
-        [self setImage:self.errorPlaceholderImage animated:YES];
+        [self setImage:self.errorPlaceholderImage animated:self.shouldAnimateImage];
     }
     else{
         [self setImage:nil animated:NO];
@@ -203,7 +204,7 @@
 
 - (void)imageCacheFinishedLoadingImage:(UIImage *)image fromURL:(NSURL *)url wasCached:(BOOL)wasCached
 {        
-    [self setImage:image animated:!wasCached];
+    [self setImage:image animated:(!wasCached && self.shouldAnimateImage)];
     [self setLoading:NO];
     
     if ([self.delegate respondsToSelector:@selector(loadingImageView:finishedLoadingURL:)])
