@@ -32,10 +32,6 @@
 #import "RZFileManager.h"
 #import "UIImage+RZResize.h"
 
-#import <sys/xattr.h>
-
-#define RZImageCacheFileAttributeDecompressedName       "com.RZImageCache.Decompressed"
-
 #define RZImageCacheError(fmt, ...) NSLog((@"[RZImageCache] Error: " fmt), ##__VA_ARGS__)
 
 // 50 mb
@@ -247,7 +243,7 @@
                                 [self.downloadingUrls removeObject:url];
                                 
                             }];
-                        
+                            
                             [self.decompressionQueue addOperation:decomp];
                         }
                         else{
