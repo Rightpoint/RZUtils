@@ -147,6 +147,10 @@ A basement/reveal menu component.
 
 A `UIViewController` subclass for managing a single child view controller contained in any subview container of a parent. Useful for keeping one view static while another view contains one of many potential child view controllers. iOS7+ only.
 
+### RZTelprompt
+
+Makes NSURLRequest phone calls that use telprompt by making a tel request to a static UIView, which in turn privately calls telprompt. This gives you the benifits of using telprompt without calling it from UIApplication where it is not specifically supported by Apple.
+
 #### RZTweenSpirit
 
 Tweening animation utility. Allows tweening of any keypath from one value to another based on a settable timeline position. Similar to a certain "jazzy"-"handy" library, but more flexible.
