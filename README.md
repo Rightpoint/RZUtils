@@ -149,7 +149,7 @@ A `UIViewController` subclass for managing a single child view controller contai
 
 ### RZTelprompt
 
-Makes NSURLRequest phone calls that use telprompt by making a tel request to a static UIView, which in turn privately calls telprompt. This gives you the benifits of using telprompt without calling it from UIApplication where it is not specifically supported by Apple.
+Makes NSURLRequest phone calls that use telprompt by making a tel request to a static UIWebView, which in turn privately calls telprompt. This gives you the benifits of using telprompt without calling it from UIApplication where it is not specifically supported by Apple.
 
 #### RZTweenSpirit
 

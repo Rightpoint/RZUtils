@@ -4,7 +4,7 @@
 //
 //  Created by John Stricker on 3/6/14.
 //  RZTelprompt makes NSURLRequest phone calls by making a tel request to a
-//  static UIView, which in turn privately calls telprompt. This gives you the
+//  static UIWebView, which in turn privately calls telprompt. This gives you the
 //  benifits of using telprompt without calling it from UIApplication where it is
 //  not specifically supported by Apple.
 
