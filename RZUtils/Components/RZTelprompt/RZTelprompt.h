@@ -38,4 +38,4 @@
 + (void)callWithString:(NSString*)phoneString;
 + (void)callWithURL:(NSURL*)url;
 
-@endd
+@end
