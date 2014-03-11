@@ -69,7 +69,6 @@ typedef void (^RZRevealViewControllerCompletionBlock)(BOOL succeeded);
 @property (assign, nonatomic) CGFloat showHiddenOffset;                         // Defaults to self.view.bounds.size.width * 0.85
 @property (assign, nonatomic) CGFloat revealGestureThreshold;                   // Defaults to CGFLOAT_MAX
 @property (assign, nonatomic) CGFloat maxDragDistance;                          // Defaults to self.view.bounds.size.width
-@property (assign, nonatomic) CGFloat openRevealGestureThreashold;
 
 @property (weak, nonatomic) id<RZRevealViewControllerDelegate> delegate;
 

@@ -986,14 +986,16 @@
 {
     if (gestureRecognizer == self.revealPanGestureRecognizer || gestureRecognizer == self.revealEdgePanRecognizer)
     {
-        
         BOOL delegateAllowsReveal = YES;
         if ([self.delegate respondsToSelector:@selector(revealControllerShouldBeginReveal:)])
         {
             delegateAllowsReveal = [self.delegate revealControllerShouldBeginReveal:self];
         }
-        //if (!self.revealEnabled || (!self.leftHiddenViewControllerRevealed && location.x > self.revealGestureThreshold) || (self.leftHiddenViewControllerRevealed && location.x < self.openRevealGestureThreashold))
-        if (!delegateAllowsReveal || !self.revealEnabled)
+        
+        CGPoint location = [gestureRecognizer locationInView:self.view];
+        if (!delegateAllowsReveal || !self.revealEnabled ||
+            (self.rightHiddenViewController && location.x < (self.view.bounds.size.width - self.revealGestureThreshold) && !self.rightHiddenViewControllerRevealed) ||
+            (self.leftHiddenViewController && location.x > self.revealGestureThreshold && !self.leftHiddenViewController))
         {
             return NO;
         }
