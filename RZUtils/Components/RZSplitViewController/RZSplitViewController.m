@@ -132,7 +132,7 @@
 
 - (void)setViewControllers:(NSArray *)viewControllers
 {
-    NSAssert(2 == [viewControllers count], @"You must have exactly 2 view controllers in the array. This array has %d.", [viewControllers count]);
+    NSAssert(2 == [viewControllers count], @"You must have exactly 2 view controllers in the array. This array has %lu.", [viewControllers count]);
     
     [_viewControllers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         UIViewController *vc = (UIViewController*)obj;
