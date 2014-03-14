@@ -38,6 +38,11 @@ This is a collection of helpful utilities and components which makes iOS develop
 	
 	Common string formatting methods
 
+### NSUndoManager
+
+- **NSUndoManager+RZBlockUndo**
+
+	Block-based interface for undo manager.
 
 ### UIAlertView
 
