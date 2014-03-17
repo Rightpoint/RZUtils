@@ -21,6 +21,11 @@
 
 - (instancetype)invertedAction
 {
+    // Must have a redo block to return an inverted action
+    if ( self.redoBlock == nil ) {
+        return nil;
+    }
+    
     RZUndoRedoBlockAction *invertedAction = [[RZUndoRedoBlockAction alloc] init];
     invertedAction.undoBlock = self.redoBlock;
     invertedAction.redoBlock = self.undoBlock;
@@ -37,7 +42,11 @@
         action.undoBlock();
     }
     
-    [self registerUndoWithTarget:self selector:@selector(rz_performUndoAction:) object:[action invertedAction]];
+    RZUndoRedoBlockAction *redoAction = [action invertedAction];
+    
+    if ( redoAction != nil ) {
+        [self registerUndoWithTarget:self selector:@selector(rz_performUndoAction:) object:redoAction];
+    }
 }
 
 - (void)rz_registerUndoWithBlock:(void (^)())undoBlock redoBlock:(void (^)())redoBlock
