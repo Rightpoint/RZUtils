@@ -36,6 +36,7 @@ typedef void (^RZImageDecompressionCompletion)(UIImage* image);
 @property (nonatomic, readonly, strong) NSURL* fileUrl;
 @property (nonatomic, readonly, strong) UIImage* image;
 
+// Used to Limit the upper bounds of the image size.  
 @property (nonatomic, assign) CGSize maxImageSize;
 
 - (id)initWithFileURL:(NSURL*)fileUrl webUrl:(NSURL*)webUrl completion:(RZImageDecompressionCompletion)completion;

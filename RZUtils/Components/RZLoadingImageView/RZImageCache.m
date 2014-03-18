@@ -245,9 +245,9 @@
                                 
                             }];
                             
-                            if (self.maxImageSize.width > 0 && self.maxImageSize.height > 0)
+                            if (self.maxDecompressedImageSize.width > 0 && self.maxDecompressedImageSize.height > 0)
                             {
-                                [decomp setMaxImageSize:self.maxImageSize];
+                                [decomp setMaxImageSize:self.maxDecompressedImageSize];
                             }
                             
                             [self.decompressionQueue addOperation:decomp];
