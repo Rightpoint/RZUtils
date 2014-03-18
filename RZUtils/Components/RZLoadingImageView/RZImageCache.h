@@ -38,6 +38,9 @@
 
 @property (nonatomic, strong) NSURL *baseURL;
 
+// The maximum image size that will be returned for a decompressed image.  Helpful in cases where memory can be low.
+@property (nonatomic, assign) CGSize maxDecompressedImageSize;
+
 + (RZImageCache*)sharedCache;
 
 - (void)purgeInMemoryCache;
