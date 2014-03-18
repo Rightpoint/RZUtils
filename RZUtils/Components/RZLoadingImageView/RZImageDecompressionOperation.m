@@ -42,7 +42,6 @@
 
 @property (nonatomic, assign) CGSize newSize;
 @property (nonatomic, assign) BOOL preserveAspect;
-@property (nonatomic, assign) BOOL shouldCheckMaxImageSize;
 
 - (void)decompressImage;
 
@@ -66,12 +65,6 @@
         self.completion = completion;
     }
     return self;
-}
-
-- (void)setMaxImageSize:(CGSize)maxImageSize
-{
-    _maxImageSize = maxImageSize;
-    self.shouldCheckMaxImageSize = maxImageSize.height > 0 && maxImageSize.width > 0;
 }
 
 #pragma mark - NSOperation
@@ -127,7 +120,7 @@
             // if the downloaded image is not the supported format
             CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
 
-            BOOL resizing = (self.newSize.width > 0 && self.newSize.height > 0);
+            BOOL resizing = (!CGSizeEqualToSize(self.newSize, CGSizeZero));
             CGSize imageSize;
             if(resizing)
             {
@@ -143,7 +136,7 @@
             imageSize.width *= scale;
             imageSize.height *= scale;
 
-            if (self.shouldCheckMaxImageSize)
+            if (!CGSizeEqualToSize(self.maxImageSize, CGSizeZero))
             {
                 if (imageSize.width > self.maxImageSize.width)
                 {

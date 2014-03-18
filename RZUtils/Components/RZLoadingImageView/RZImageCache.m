@@ -245,7 +245,7 @@
                                 
                             }];
                             
-                            if (self.maxDecompressedImageSize.width > 0 && self.maxDecompressedImageSize.height > 0)
+                            if (!CGSizeEqualToSize(self.maxDecompressedImageSize, CGSizeZero))
                             {
                                 [decomp setMaxImageSize:self.maxDecompressedImageSize];
                             }
