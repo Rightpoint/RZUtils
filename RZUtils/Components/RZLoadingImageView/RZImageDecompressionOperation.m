@@ -42,6 +42,7 @@
 
 @property (nonatomic, assign) CGSize newSize;
 @property (nonatomic, assign) BOOL preserveAspect;
+@property (nonatomic, assign) BOOL shouldCheckMaxImageSize;
 
 - (void)decompressImage;
 
@@ -65,6 +66,12 @@
         self.completion = completion;
     }
     return self;
+}
+
+- (void)setMaxImageSize:(CGSize)maxImageSize
+{
+    _maxImageSize = maxImageSize;
+    self.shouldCheckMaxImageSize = maxImageSize.height > 0 && maxImageSize.width > 0;
 }
 
 #pragma mark - NSOperation
@@ -135,13 +142,38 @@
             CGFloat scale = [[UIScreen mainScreen] scale];
             imageSize.width *= scale;
             imageSize.height *= scale;
+
+            if (self.shouldCheckMaxImageSize)
+            {
+                if (imageSize.width > self.maxImageSize.width)
+                {
+                    imageSize.width = self.maxImageSize.width;
+                    resizing = YES;
+                }
+                if (imageSize.height > self.maxImageSize.height)
+                {
+                    imageSize.height = self.maxImageSize.height;
+                    resizing = YES;
+                }
+            }
+            
+            CGRect rect;
+            if(resizing)
+            {
+                CGSize size = [UIImage rz_sizeForImage:compressedImage scaledToSize:imageSize preserveAspectRatio:self.preserveAspect];
+                rect = (CGRect){CGPointZero, size.width, size.height};
+            }
+            else
+            {
+                rect = (CGRect){CGPointZero, imageSize.width, imageSize.height};
+            }
             
             CGContextRef context = CGBitmapContextCreate(NULL,
-                                                         imageSize.width,
-                                                         imageSize.height,
+                                                         rect.size.width,
+                                                         rect.size.height,
                                                          8,
                                                          // width * 4 will be enough because are in ARGB format, don't read from the image
-                                                         imageSize.width * 4,
+                                                         rect.size.width * 4,
                                                          colorSpace,
                                                          // kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Little
                                                          // makes system don't need to do extra conversion when displayed.
@@ -149,16 +181,7 @@
             CGColorSpaceRelease(colorSpace);
             
             if (context) {
-                CGRect rect;
-                if(resizing)
-                {
-                    CGSize size = [UIImage rz_sizeForImage:compressedImage scaledToSize:imageSize preserveAspectRatio:self.preserveAspect];
-                    rect = (CGRect){CGPointZero, size.width, size.height};
-                }
-                else
-                {
-                    rect = (CGRect){CGPointZero, imageSize.width, imageSize.height};
-                }
+                
 
                 CGContextDrawImage(context, rect, imageRef);
                 CGImageRef decompressedImageRef = CGBitmapContextCreateImage(context);

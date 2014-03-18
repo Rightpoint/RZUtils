@@ -36,6 +36,8 @@ typedef void (^RZImageDecompressionCompletion)(UIImage* image);
 @property (nonatomic, readonly, strong) NSURL* fileUrl;
 @property (nonatomic, readonly, strong) UIImage* image;
 
+@property (nonatomic, assign) CGSize maxImageSize;
+
 - (id)initWithFileURL:(NSURL*)fileUrl webUrl:(NSURL*)webUrl completion:(RZImageDecompressionCompletion)completion;
 - (id)initWithFileURL:(NSURL *)fileUrl webUrl:(NSURL *)webUrl resizeToSize:(CGSize)anySize preserveAspectRatio:(BOOL)preserveAspect completion:(RZImageDecompressionCompletion)completion;
 

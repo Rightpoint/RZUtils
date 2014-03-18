@@ -38,6 +38,8 @@
 
 @property (nonatomic, strong) NSURL *baseURL;
 
+@property (nonatomic, assign) CGSize maxImageSize;
+
 + (RZImageCache*)sharedCache;
 
 - (void)purgeInMemoryCache;
