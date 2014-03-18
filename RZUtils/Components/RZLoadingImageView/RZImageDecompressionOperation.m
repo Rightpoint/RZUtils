@@ -150,23 +150,23 @@
                 }
             }
             
-            CGRect rect;
+            CGRect imageDrawingRect;
             if(resizing)
             {
                 CGSize size = [UIImage rz_sizeForImage:compressedImage scaledToSize:imageSize preserveAspectRatio:self.preserveAspect];
-                rect = (CGRect){CGPointZero, size.width, size.height};
+                imageDrawingRect = (CGRect){CGPointZero, size.width, size.height};
             }
             else
             {
-                rect = (CGRect){CGPointZero, imageSize.width, imageSize.height};
+                imageDrawingRect = (CGRect){CGPointZero, imageSize.width, imageSize.height};
             }
             
             CGContextRef context = CGBitmapContextCreate(NULL,
-                                                         rect.size.width,
-                                                         rect.size.height,
+                                                         imageDrawingRect.size.width,
+                                                         imageDrawingRect.size.height,
                                                          8,
                                                          // width * 4 will be enough because are in ARGB format, don't read from the image
-                                                         rect.size.width * 4,
+                                                         imageDrawingRect.size.width * 4,
                                                          colorSpace,
                                                          // kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Little
                                                          // makes system don't need to do extra conversion when displayed.
@@ -176,7 +176,7 @@
             if (context) {
                 
 
-                CGContextDrawImage(context, rect, imageRef);
+                CGContextDrawImage(context, imageDrawingRect, imageRef);
                 CGImageRef decompressedImageRef = CGBitmapContextCreateImage(context);
                 CGContextRelease(context);
                 
