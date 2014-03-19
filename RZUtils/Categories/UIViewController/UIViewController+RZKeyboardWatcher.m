@@ -65,6 +65,7 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
     
     CGRect keyboardFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
+    BOOL keyboardVisible = [notification.name isEqualToString:UIKeyboardWillShowNotification];
     if (self.animate)
     {
         UIViewAnimationCurve animationCurve = [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue];
@@ -74,7 +75,7 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
         [UIView animateWithDuration:animationDuration delay:0.0 options:(animationCurve << 16) animations:^{
             if (wSelf.animationBlock)
             {
-                wSelf.animationBlock(keyboardFrame);
+                wSelf.animationBlock(keyboardVisible, keyboardFrame);
                 [wSelf.viewController.view layoutIfNeeded];
             }
         } completion:nil];
@@ -83,7 +84,7 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
     {
         if (self.animationBlock)
         {
-            self.animationBlock(keyboardFrame);
+            self.animationBlock(keyboardVisible, keyboardFrame);
             [self.viewController.view layoutIfNeeded];
         }
     }
