@@ -39,9 +39,15 @@ This is a collection of helpful utilities and components which makes iOS develop
 	Common string formatting methods
 
 - **NSString+RZStringSize**
-- 
-    Replacement for string sizing methods deprecated in iOS 7.
+
+	Replacement for string sizing methods deprecated in iOS 7.
     
+    
+### NSUndoManager
+
+- **NSUndoManager+RZBlockUndo**
+
+	Block-based interface for undo manager.
 
 ### UIAlertView
 
