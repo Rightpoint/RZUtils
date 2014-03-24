@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^RZAnimationBlock)(CGRect keyboardFrame);
+typedef void (^RZAnimationBlock)(BOOL keyboardVisible, CGRect keyboardFrame);
 
 @interface UIViewController (RZKeyboardWatcher)
 
