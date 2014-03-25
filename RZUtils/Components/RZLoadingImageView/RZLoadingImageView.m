@@ -146,6 +146,9 @@
 {
     [self cancelRequest];
     
+    // ensure that we use the correct content mode if we have to change it due to placeholder
+    self.originalContentMode = self.contentMode;
+    
     if (url == nil){
         [self showPlaceholder];
         return;
