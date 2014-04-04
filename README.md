@@ -149,6 +149,10 @@ A drop in solution for a image view that loads from an `NSURL` and caches to fil
 
 CoreLocation made easy.
 
+####RZProgressView
+
+`UIProgressView` is a little broken in iOS 7.0 (weird glitches when animating and resizing), and very broken in iOS 7.1 (can't set custom images; radar [here](http://www.openradar.me/16113307)). `RZProgressView` is a drop-in replacement that fixes these problems.
+
 #### RZRevealViewController
 
 A basement/reveal menu component. 
