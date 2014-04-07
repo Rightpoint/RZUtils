@@ -31,6 +31,7 @@
 
 const CGFloat kRZProgressDefaultHeight = 2.0;
 const CGFloat kRZProgressDefaultHeightBar = 2.5;
+const CGFloat kRZProgressAccessibilityMinimumHeight = 22.0;
 
 const CGFloat kRZProgressMinBarWidth = 4.0;
 
@@ -51,8 +52,6 @@ const CGFloat kRZProgressAnimationVelocity = 210;
 @property (strong, nonatomic) UIImageView *progressImageView;
 
 @property (strong, nonatomic) NSLayoutConstraint *progressConstraint;
-
-@property (strong, nonatomic) UIProgressView *internalAccessibilityProgressView;
 
 @end
 
@@ -226,7 +225,6 @@ const CGFloat kRZProgressAnimationVelocity = 210;
 - (void)setProgress:(float)progress animated:(BOOL)animated
 {
     progress = CLAMP(progress, kRZProgressMinValue, kRZProgressMaxValue);
-    self.internalAccessibilityProgressView.progress = progress;
     
     NSTimeInterval duration = 0;
     if ( animated ) {
@@ -274,7 +272,6 @@ const CGFloat kRZProgressAnimationVelocity = 210;
 
 - (void)setProgressImage:(UIImage *)progressImage
 {
-    self.internalAccessibilityProgressView.progressImage = progressImage;
     if ( progressImage ) {
         self.layer.cornerRadius = 0;
         self.layer.masksToBounds = NO;
@@ -290,7 +287,6 @@ const CGFloat kRZProgressAnimationVelocity = 210;
 
 - (void)setTrackImage:(UIImage *)trackImage
 {
-    self.internalAccessibilityProgressView.trackImage = trackImage;
     if ( trackImage ) {
         self.layer.cornerRadius = 0;
         self.layer.masksToBounds = NO;
@@ -318,40 +314,44 @@ const CGFloat kRZProgressAnimationVelocity = 210;
 
 #pragma mark - accessibility
 
-- (UIProgressView *)internalAccessibilityProgressView
-{
-    if ( !_internalAccessibilityProgressView ) {
-        _internalAccessibilityProgressView = [[UIProgressView alloc] initWithFrame:CGRectZero];
-        _internalAccessibilityProgressView.hidden = YES;
-        _internalAccessibilityProgressView.trackImage = self.trackImage;
-        _internalAccessibilityProgressView.progressImage = self.progressImage;
-    }
-    
-    return _internalAccessibilityProgressView;
-}
-
 - (CGRect)accessibilityFrame
 {
-    self.internalAccessibilityProgressView.frame = self.bounds;
-    [self addSubview:self.internalAccessibilityProgressView];
-    CGRect frame = self.internalAccessibilityProgressView.accessibilityFrame;
-    [self.internalAccessibilityProgressView removeFromSuperview];
-    return frame;
+    CGRect screenCoordinatesFrame = UIAccessibilityConvertFrameToScreenCoordinates(self.frame, self.superview);
+    if ( CGRectGetHeight(screenCoordinatesFrame) < kRZProgressAccessibilityMinimumHeight ) {
+        CGFloat difference = kRZProgressAccessibilityMinimumHeight - CGRectGetHeight(screenCoordinatesFrame);
+        screenCoordinatesFrame = CGRectInset(screenCoordinatesFrame, 0, - difference / 2);
+    }
+    
+    return screenCoordinatesFrame;
 }
 
 - (NSString *)accessibilityLabel
 {
-    return self.internalAccessibilityProgressView.accessibilityLabel;
+    return NSLocalizedString(@"Progress", @"Noun, as in Progress Bar");
 }
 
 - (NSString *)accessibilityValue
 {
-    return self.internalAccessibilityProgressView.accessibilityValue;
+    static NSNumberFormatter *numberFormatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        numberFormatter = [[NSNumberFormatter alloc] init];
+        numberFormatter.numberStyle = NSNumberFormatterPercentStyle;
+        numberFormatter.usesSignificantDigits = YES;
+        numberFormatter.minimumSignificantDigits = 0;
+        numberFormatter.maximumSignificantDigits = 0;
+    });
+
+    return [numberFormatter stringFromNumber:@(self.progress)];
 }
 
 - (UIAccessibilityTraits)accessibilityTraits
 {
-    return self.internalAccessibilityProgressView.accessibilityTraits;
+    // According to https://developer.apple.com/library/ios/documentation/userexperience/conceptual/UIKitUICatalog/UIProgressView.html
+    // UIProgressView returns Updates Frequently and User Interaction Enabled. But User Interaction Enabled makes no sense
+    // for a non-interactive slider, so we return only Updates Frequently. This is likely a documention bug, as
+    // UIProgressView returns only Updates Frequently.
+    return UIAccessibilityTraitUpdatesFrequently;
 }
 
 @end
