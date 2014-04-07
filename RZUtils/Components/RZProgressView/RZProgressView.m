@@ -53,6 +53,8 @@ const CGFloat kRZProgressAnimationVelocity = 210;
 
 @property (strong, nonatomic) NSLayoutConstraint *progressConstraint;
 
+@property (strong, nonatomic) NSNumberFormatter *numberFormatter;
+
 @end
 
 @implementation RZProgressView
@@ -312,6 +314,15 @@ const CGFloat kRZProgressAnimationVelocity = 210;
     return self.progressImageView.image;
 }
 
+- (NSNumberFormatter *)numberFormatter
+{
+    if ( !_numberFormatter ) {
+        _numberFormatter = [[NSNumberFormatter alloc] init];
+        _numberFormatter.numberStyle = NSNumberFormatterPercentStyle;
+    }
+    return _numberFormatter;
+}
+
 #pragma mark - accessibility
 
 - (CGRect)accessibilityFrame
@@ -332,25 +343,15 @@ const CGFloat kRZProgressAnimationVelocity = 210;
 
 - (NSString *)accessibilityValue
 {
-    static NSNumberFormatter *numberFormatter = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        numberFormatter = [[NSNumberFormatter alloc] init];
-        numberFormatter.numberStyle = NSNumberFormatterPercentStyle;
-        numberFormatter.usesSignificantDigits = YES;
-        numberFormatter.minimumSignificantDigits = 0;
-        numberFormatter.maximumSignificantDigits = 0;
-    });
-
-    return [numberFormatter stringFromNumber:@(self.progress)];
+    return [self.numberFormatter stringFromNumber:@(self.progress)];
 }
 
 - (UIAccessibilityTraits)accessibilityTraits
 {
     // According to https://developer.apple.com/library/ios/documentation/userexperience/conceptual/UIKitUICatalog/UIProgressView.html
-    // UIProgressView returns Updates Frequently and User Interaction Enabled. But User Interaction Enabled makes no sense
-    // for a non-interactive slider, so we return only Updates Frequently. This is likely a documention bug, as
-    // UIProgressView returns only Updates Frequently.
+    // UIProgressView returns Updates Frequently and User Interaction Enabled. But User Interaction Enabled is not
+    // a real UIAccessibilityTraits value, so this is most likely a documentation bug. By inspecting the iOS
+    // Simualator with the Accessibility Inspector, we see that UIProgressView returns only UIAccessibilityTraitUpdatesFrequently.
     return UIAccessibilityTraitUpdatesFrequently;
 }
 
