@@ -147,13 +147,13 @@ const CGFloat kRZProgressAnimationVelocity = 210;
     [self setNeedsUpdateConstraints];
 }
 
-- (CGFloat)roundUpToNearestScreenPixel:(CGFloat)number
++ (CGFloat)roundSizeUpToNearestScreenPixel:(CGFloat)sizeInPoints
 {
-    CGFloat screenPixel = 1 / [UIScreen mainScreen].scale;
-    CGFloat amountOverAnIntegerNumberOfScreenPixels = fmod(number, screenPixel);
-    CGFloat retVal = number;
-    if ( amountOverAnIntegerNumberOfScreenPixels != 0 ) {
-        retVal += (screenPixel - amountOverAnIntegerNumberOfScreenPixels);
+    CGFloat screenPixelsPerPoint = 1 / [UIScreen mainScreen].scale;
+    CGFloat amountGreaterThanWholeNumberOfScreenPixels = fmod(sizeInPoints, screenPixelsPerPoint);
+    CGFloat retVal = sizeInPoints;
+    if ( amountGreaterThanWholeNumberOfScreenPixels != 0 ) {
+        retVal += (screenPixelsPerPoint - amountGreaterThanWholeNumberOfScreenPixels);
     }
     return retVal;
 }
@@ -186,10 +186,10 @@ const CGFloat kRZProgressAnimationVelocity = 210;
     else {
         switch ( self.progressViewStyle ) {
             case RZProgressViewStyleDefault:
-                intrinsicHeight = [self roundUpToNearestScreenPixel:kRZProgressDefaultHeight];
+                intrinsicHeight = [[self class] roundSizeUpToNearestScreenPixel:kRZProgressDefaultHeight];
                 break;
             case RZProgressViewStyleBar:
-                intrinsicHeight = [self roundUpToNearestScreenPixel:kRZProgressDefaultHeightBar];
+                intrinsicHeight = [[self class] roundSizeUpToNearestScreenPixel:kRZProgressDefaultHeightBar];
                 break;
         }
     }
