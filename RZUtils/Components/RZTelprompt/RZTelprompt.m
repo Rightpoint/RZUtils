@@ -1,7 +1,8 @@
 //
-//  RZImageDecompressionOperation.h
+//  RZTelprompt.m
+//  Raizlabs
 //
-//  Created by Nick Donaldson on 2/27/13.
+//  Created by John Stricker on 3/6/14.
 
 // Copyright 2014 Raizlabs and other contributors
 // http://raizlabs.com/
@@ -26,20 +27,24 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+#import "RZTelprompt.h"
 
-typedef void (^RZImageDecompressionCompletion)(UIImage* image);
+@implementation RZTelprompt
 
-@interface RZImageDecompressionOperation : NSOperation
++ (void)callWithString:(NSString *)phoneString
+{
+    [self callWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",phoneString]]];
+}
 
-@property (nonatomic, readonly, strong) NSURL* webUrl;
-@property (nonatomic, readonly, strong) NSURL* fileUrl;
-@property (nonatomic, readonly, strong) UIImage* image;
-
-// Used to Limit the upper bounds of the image size.  
-@property (nonatomic, assign) CGSize maxImageSize;
-
-- (id)initWithFileURL:(NSURL*)fileUrl webUrl:(NSURL*)webUrl completion:(RZImageDecompressionCompletion)completion;
-- (id)initWithFileURL:(NSURL *)fileUrl webUrl:(NSURL *)webUrl resizeToSize:(CGSize)anySize preserveAspectRatio:(BOOL)preserveAspect completion:(RZImageDecompressionCompletion)completion;
++ (void)callWithURL:(NSURL *)url
+{
+    static UIWebView *webView = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        webView = [UIWebView new];
+    });
+    
+    [webView loadRequest:[NSURLRequest requestWithURL:url]];
+}
 
 @end

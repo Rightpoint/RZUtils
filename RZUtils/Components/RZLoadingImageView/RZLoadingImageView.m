@@ -36,6 +36,7 @@
 
 @property (nonatomic, strong) NSURL *imageURL;
 @property (nonatomic, retain) UIActivityIndicatorView *loadingSpinner;
+@property (nonatomic, assign) UIViewContentMode originalContentMode;
 
 - (void)showPlaceholder;
 
@@ -117,6 +118,9 @@
 - (void)loadImageFromPath:(NSString *)path resizeToSize:(CGSize)newSize preserveAspectRatio:(BOOL)preserveAspect checkForUpdates:(BOOL)updates decompress:(BOOL)decompress
 {
     [self cancelRequest];
+    
+    // ensure that we use the correct content mode if we have to change it due to placeholder
+    self.originalContentMode = self.contentMode;
 
     if (path == nil){
         [self showPlaceholder];
@@ -141,6 +145,9 @@
 - (void)loadImageFromURL:(NSURL*)url decompress:(BOOL)decompress checkForUpdates:(BOOL)checkForUpdates
 {
     [self cancelRequest];
+    
+    // ensure that we use the correct content mode if we have to change it due to placeholder
+    self.originalContentMode = self.contentMode;
     
     if (url == nil){
         [self showPlaceholder];
@@ -203,7 +210,8 @@
 #pragma mark - RZImageCache delegate
 
 - (void)imageCacheFinishedLoadingImage:(UIImage *)image fromURL:(NSURL *)url wasCached:(BOOL)wasCached
-{        
+{
+    self.contentMode = self.originalContentMode;
     [self setImage:image animated:(!wasCached && self.shouldAnimateImage)];
     [self setLoading:NO];
     

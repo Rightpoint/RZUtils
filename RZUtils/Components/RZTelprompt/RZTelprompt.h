@@ -1,7 +1,12 @@
 //
-//  RZImageDecompressionOperation.h
+//  RZTelprompt.h
+//  Raizlabs
 //
-//  Created by Nick Donaldson on 2/27/13.
+//  Created by John Stricker on 3/6/14.
+//  RZTelprompt makes NSURLRequest phone calls by making a tel request to a
+//  static UIWebView, which in turn privately calls telprompt. This gives you the
+//  benifits of using telprompt without calling it from UIApplication where it is
+//  not specifically supported by Apple.
 
 // Copyright 2014 Raizlabs and other contributors
 // http://raizlabs.com/
@@ -26,20 +31,11 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-typedef void (^RZImageDecompressionCompletion)(UIImage* image);
+@interface RZTelprompt : NSObject
 
-@interface RZImageDecompressionOperation : NSOperation
-
-@property (nonatomic, readonly, strong) NSURL* webUrl;
-@property (nonatomic, readonly, strong) NSURL* fileUrl;
-@property (nonatomic, readonly, strong) UIImage* image;
-
-// Used to Limit the upper bounds of the image size.  
-@property (nonatomic, assign) CGSize maxImageSize;
-
-- (id)initWithFileURL:(NSURL*)fileUrl webUrl:(NSURL*)webUrl completion:(RZImageDecompressionCompletion)completion;
-- (id)initWithFileURL:(NSURL *)fileUrl webUrl:(NSURL *)webUrl resizeToSize:(CGSize)anySize preserveAspectRatio:(BOOL)preserveAspect completion:(RZImageDecompressionCompletion)completion;
++ (void)callWithString:(NSString*)phoneString;
++ (void)callWithURL:(NSURL*)url;
 
 @end

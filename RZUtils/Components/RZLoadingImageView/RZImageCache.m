@@ -66,6 +66,7 @@
 
 @property (nonatomic, strong) NSMutableSet* downloadingUrls;
 
+
 // Manage multiple requests for the same image
 @property (nonatomic, strong) NSMutableDictionary *delegates;
 
@@ -243,6 +244,11 @@
                                 [self.downloadingUrls removeObject:url];
                                 
                             }];
+                            
+                            if (!CGSizeEqualToSize(self.maxDecompressedImageSize, CGSizeZero))
+                            {
+                                [decomp setMaxImageSize:self.maxDecompressedImageSize];
+                            }
                             
                             [self.decompressionQueue addOperation:decomp];
                         }

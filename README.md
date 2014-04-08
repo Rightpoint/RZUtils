@@ -38,6 +38,16 @@ This is a collection of helpful utilities and components which makes iOS develop
 	
 	Common string formatting methods
 
+- **NSString+RZStringSize**
+
+	Replacement for string sizing methods deprecated in iOS 7.
+    
+    
+### NSUndoManager
+
+- **NSUndoManager+RZBlockUndo**
+
+	Block-based interface for undo manager.
 
 ### UIAlertView
 
@@ -146,6 +156,10 @@ A basement/reveal menu component.
 #### RZSingleChildContainerViewController
 
 A `UIViewController` subclass for managing a single child view controller contained in any subview container of a parent. Useful for keeping one view static while another view contains one of many potential child view controllers. iOS7+ only.
+
+### RZTelprompt
+
+Makes NSURLRequest phone calls that use telprompt by making a tel request to a static UIWebView, which in turn privately calls telprompt. This gives you the benifits of using telprompt without calling it from UIApplication where it is not specifically supported by Apple.
 
 #### RZTweenSpirit
 

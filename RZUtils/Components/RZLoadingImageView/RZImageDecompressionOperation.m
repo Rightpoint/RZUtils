@@ -120,7 +120,7 @@
             // if the downloaded image is not the supported format
             CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
 
-            BOOL resizing = (self.newSize.width > 0 && self.newSize.height > 0);
+            BOOL resizing = (!CGSizeEqualToSize(self.newSize, CGSizeZero));
             CGSize imageSize;
             if(resizing)
             {
@@ -135,13 +135,38 @@
             CGFloat scale = [[UIScreen mainScreen] scale];
             imageSize.width *= scale;
             imageSize.height *= scale;
+
+            if (!CGSizeEqualToSize(self.maxImageSize, CGSizeZero))
+            {
+                if (imageSize.width > self.maxImageSize.width)
+                {
+                    imageSize.width = self.maxImageSize.width;
+                    resizing = YES;
+                }
+                if (imageSize.height > self.maxImageSize.height)
+                {
+                    imageSize.height = self.maxImageSize.height;
+                    resizing = YES;
+                }
+            }
+            
+            CGRect imageDrawingRect;
+            if(resizing)
+            {
+                CGSize size = [UIImage rz_sizeForImage:compressedImage scaledToSize:imageSize preserveAspectRatio:self.preserveAspect];
+                imageDrawingRect = (CGRect){CGPointZero, size.width, size.height};
+            }
+            else
+            {
+                imageDrawingRect = (CGRect){CGPointZero, imageSize.width, imageSize.height};
+            }
             
             CGContextRef context = CGBitmapContextCreate(NULL,
-                                                         imageSize.width,
-                                                         imageSize.height,
+                                                         imageDrawingRect.size.width,
+                                                         imageDrawingRect.size.height,
                                                          8,
                                                          // width * 4 will be enough because are in ARGB format, don't read from the image
-                                                         imageSize.width * 4,
+                                                         imageDrawingRect.size.width * 4,
                                                          colorSpace,
                                                          // kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Little
                                                          // makes system don't need to do extra conversion when displayed.
@@ -149,18 +174,9 @@
             CGColorSpaceRelease(colorSpace);
             
             if (context) {
-                CGRect rect;
-                if(resizing)
-                {
-                    CGSize size = [UIImage rz_sizeForImage:compressedImage scaledToSize:imageSize preserveAspectRatio:self.preserveAspect];
-                    rect = (CGRect){CGPointZero, size.width, size.height};
-                }
-                else
-                {
-                    rect = (CGRect){CGPointZero, imageSize.width, imageSize.height};
-                }
+                
 
-                CGContextDrawImage(context, rect, imageRef);
+                CGContextDrawImage(context, imageDrawingRect, imageRef);
                 CGImageRef decompressedImageRef = CGBitmapContextCreateImage(context);
                 CGContextRelease(context);
                 
