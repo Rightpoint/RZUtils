@@ -54,11 +54,11 @@
         CGFloat ratio = image.size.width / image.size.height;
         if(image.size.width > image.size.height)
         {
-            size.height = size.width / ratio;
+            size.height = ceilf(size.width / ratio);
         }
         else
         {
-            size.width = size.height * ratio;
+            size.width = ceilf(size.height * ratio);
         }
     }
 
