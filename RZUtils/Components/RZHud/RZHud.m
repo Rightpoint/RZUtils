@@ -203,8 +203,6 @@
     
     if (self.hudStyle == RZHudStyleBoxLoading || self.hudStyle == RZHudStyleBoxInfo)
     {
-        RZHudBoxStyle subStyle = self.hudStyle == RZHudStyleBoxLoading ? RZHudBoxStyleLoading : RZHudBoxStyleInfo;
-        self.hudBoxView = [[RZHudBoxView alloc] initWithStyle:subStyle color:self.hudColor cornerRadius:self.cornerRadius];
         self.hudBoxView.borderColor = self.borderColor;
         self.hudBoxView.borderWidth = self.borderWidth;
         self.hudBoxView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
@@ -344,6 +342,16 @@
         return @"Loading…";
     }
     return _labelText;
+}
+
+- (RZHudBoxView*)hudBoxView
+{
+    if(!_hudBoxView)
+    {
+        RZHudBoxStyle subStyle = self.hudStyle == RZHudStyleBoxLoading ? RZHudBoxStyleLoading : RZHudBoxStyleInfo;
+        _hudBoxView = [[RZHudBoxView alloc] initWithStyle:subStyle color:self.hudColor cornerRadius:self.cornerRadius];
+    }
+    return _hudBoxView;
 }
 
 - (void)setLabelText:(NSString *)labelText
