@@ -344,9 +344,9 @@
     return _labelText;
 }
 
-- (RZHudBoxView*)hudBoxView
+- (RZHudBoxView *)hudBoxView
 {
-    if(!_hudBoxView)
+    if ( !_hudBoxView )
     {
         RZHudBoxStyle subStyle = self.hudStyle == RZHudStyleBoxLoading ? RZHudBoxStyleLoading : RZHudBoxStyleInfo;
         _hudBoxView = [[RZHudBoxView alloc] initWithStyle:subStyle color:self.hudColor cornerRadius:self.cornerRadius];
