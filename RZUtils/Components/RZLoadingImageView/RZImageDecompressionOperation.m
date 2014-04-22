@@ -154,11 +154,11 @@
             if(resizing)
             {
                 CGSize size = [UIImage rz_sizeForImage:compressedImage scaledToSize:imageSize preserveAspectRatio:self.preserveAspect];
-                imageDrawingRect = (CGRect){CGPointZero, size.width, size.height};
+                imageDrawingRect = (CGRect){CGPointZero, {size.width, size.height}};
             }
             else
             {
-                imageDrawingRect = (CGRect){CGPointZero, imageSize.width, imageSize.height};
+                imageDrawingRect = (CGRect){CGPointZero, {imageSize.width, imageSize.height}};
             }
             
             CGContextRef context = CGBitmapContextCreate(NULL,
