@@ -1,0 +1,25 @@
+/* 
+  RZValidatorLocalizable.strings
+  RZLogin
+
+  Created by Daniel Kopyc on 5/23/13.
+  Copyright (c) 2013 Raizlabs. All rights reserved.
+*/
+
+/* Passwords should match when entered twice. */
+"passwords must match" = "Passwords must match.";
+
+/* Email address for login/sign-up/forgot password forms is invalid. */
+"invalid email address" = "This does not appear to be a valid email address. Please try again.";
+"invalid email address title" = "Invalid Email Address";
+
+/* Value required for field. */
+"field must not be empty" = "Field must not be empty.";
+"%@ must not be empty" = "%@ must not be empty.";
+
+/* Value required for password field. */
+"password required" = "Please enter a password and try again.";
+"password required title" = "Password Cannot Be Empty";
+
+/* Password strength: example. */
+"password strength:4-8/1" = "Password must be between 4 and 8 digits long, and include at least one numeric digit.";
