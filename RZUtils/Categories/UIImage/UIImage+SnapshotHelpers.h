@@ -30,6 +30,6 @@
 
 @interface UIImage (SnapshotHelpers)
 
-+ (UIImage *)imageByCapturingView:(UIView*)view afterScreenUpdate:(BOOL)waitForUpdate;
++ (UIImage *)imageByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate;
 
 @end
