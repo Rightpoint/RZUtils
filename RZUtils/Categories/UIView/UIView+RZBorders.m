@@ -45,7 +45,7 @@ static char kRZBorderViewKey;
 - (UIImage *)maskingImageForMask:(RZViewBorderMask)mask width:(CGFloat)width;
 
 // Returns a new or cached masking image that can be used to fill a rect area to produce a pill effect.
-- (UIImage *)maskingImageForCornerRadius:(CGFloat)cornerRadius width:(CGFloat)width;
+- (UIImage *)maskingImageForCornerRadius:(CGFloat)radius width:(CGFloat)width;
 
 // Returns a clear, stretchable image with the specified borders, width, and color
 - (UIImage *)coloredBorderImageWithMask:(RZViewBorderMask)mask width:(CGFloat)width color:(UIColor *)color;
