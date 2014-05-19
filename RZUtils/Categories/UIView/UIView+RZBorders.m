@@ -69,7 +69,8 @@ static char kRZBorderViewKey;
     RZBorderedImageView *imgView = objc_getAssociatedObject(self, &kRZBorderViewKey);
     if (imgView == nil)
     {
-        imgView = [[RZBorderedImageView alloc] initWithFrame:self.bounds];
+        CGRect frame = {.origin = CGPointZero, .size = self.bounds.size};
+        imgView = [[RZBorderedImageView alloc] initWithFrame:frame];
         imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [imgView setBorderMask:mask width:borderWidth color:color];
         [self addSubview:imgView];
@@ -80,7 +81,7 @@ static char kRZBorderViewKey;
     imgView.opaque = NO;
 }
 
-- (void)rz_addBordersWithCornerRadius:(CGFloat)radius width:(CGFloat)borderWidth color:(UIColor*)color
+- (void)rz_addBordersWithCornerRadius:(CGFloat)radius width:(CGFloat)borderWidth color:(UIColor *)color
 {
     RZBorderedImageView *imgView = objc_getAssociatedObject(self, &kRZBorderViewKey);
     if (imgView == nil)
@@ -259,7 +260,7 @@ static char kRZBorderViewKey;
         CGFloat imgDim = ceilf((width * 3) + (radius * 2));
         CGSize imgSize = CGSizeMake(imgDim, imgDim);
         
-        UIGraphicsBeginImageContextWithOptions(imgSize, NO, [[UIScreen mainScreen] scale]);
+        UIGraphicsBeginImageContextWithOptions(imgSize, NO, 0);
         
         CGContextRef ctx = UIGraphicsGetCurrentContext();
         
@@ -271,7 +272,7 @@ static char kRZBorderViewKey;
         CGContextSetStrokeColorWithColor(ctx, maskImageColorRef);
         CGContextSetLineWidth(ctx, width);
         
-        CGRect roundedRectFrame = CGRectInset( fullRect, width / 2, width / 2);
+        CGRect roundedRectFrame = CGRectInset(fullRect, width / 2, width / 2);
         CGPathRef roundedRectPath = CGPathCreateWithRoundedRect(roundedRectFrame, radius, radius, NULL);
         CGContextAddPath(ctx, roundedRectPath);
         CGContextStrokePath(ctx);
