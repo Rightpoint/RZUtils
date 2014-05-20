@@ -181,23 +181,19 @@ Extends the functionality of `UISplitViewController` including allowing it to be
 
 `UIViewController` container that uses a segment control to switch between an array of `UIViewControllers`
 
-## Headers Overview
+## Utility Methods Overview
+
+#### RZCommonUtils
+
+Useful macros, mathematical functions, and more.
 
 #### RZDispatch
 
-Useful inline functions for working with GCD.
+Useful extensions for working with GCD/libdispatch.
 
 #### RZLogHelper
 
 A header with debug log macros that extend `NSLog`, including verbosity levels.
-
-#### RZUIKitUtilityFunctions
-
-Useful inline functions for working with `UIKit`.
-
-#### RZUtilityMacros
-
-Useful conversion macros and more.
 
 ## License
 
