@@ -126,43 +126,6 @@ OBJC_EXTERN CGFloat RZMapFloat(CGFloat value,
                                CGFloat outMax,
                                BOOL clamp);
 
-//// ===============================================
-////          Color Conversion Functions
-//// ===============================================
-//
-///**
-// *  Convert 8-bit rgb values (0-255) to a UIColor
-// *
-// *  @param r Red value
-// *  @param g Green value
-// *  @param b Blue Value
-// *
-// *  @return A new UIColor built from the provided values.
-// */
-//OBJC_EXTERN UIColor * RZColorFromRGB(uint8_t r, uint8_t g, uint8_t b);
-//#define RZColorFromRGB(r,g,b) \
-//[UIColor colorWithRed:r/255.f green:g/255.f blue:b/255.f alpha:1.0]
-//
-///**
-// *  Convert 8-bit rgba values (0-255) to a UIColor
-// *
-// *  @param r Red value
-// *  @param g Green value
-// *  @param b Blue value
-// *  @param a Alpha value
-// *
-// *  @return A new UIColor built from the provided values.
-// */
-//OBJC_EXTERN UIColor * RZColorFromRGB(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
-//#define RZColorFromRGBA(r,g,b,a) \
-//[UIColor colorWithRed:r/255.f green:g/255.f blue:b/255.f alpha:a/255.f]
-//
-//OBJC_EXTERN UIColor * RZColorFromGrayscale(uint8_t grayscale);
-//OBJC_EXTERN UIColor * RZColorFromRGBHex(uint24_t hex);
-//OBJC_EXTERN UIColor * RZColorFromRGBAHex(uint24_t hex);
-//OBJC_EXTERN UIColor * RZColorFromGrayscaleHex(uint8_t hex);
-//OBJC_EXTERN UIColor * RZColorFromHexString(NSString *hexString);
-
 
 // ===============================================
 //                UIKit Helpers
