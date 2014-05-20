@@ -179,7 +179,7 @@
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:nil
                                                          attribute:NSLayoutAttributeNotAnAttribute
-                                                        multiplier:1.f
+                                                        multiplier:1.0f
                                                           constant:width];
     [self addConstraint:w];
 }
@@ -191,8 +191,8 @@
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:view
                                                          attribute:NSLayoutAttributeWidth
-                                                        multiplier:1.f
-                                                          constant:0.f];
+                                                        multiplier:1.0f
+                                                          constant:0.0f];
     [self addConstraint:w];
 }
 
@@ -203,8 +203,20 @@
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:nil
                                                          attribute:NSLayoutAttributeNotAnAttribute
-                                                        multiplier:1.f
+                                                        multiplier:1.0f
                                                           constant:height];
+    [self addConstraint:h];
+}
+
+- (void)rz_pinHeightToView:(UIView *)view
+{
+    NSLayoutConstraint *h = [NSLayoutConstraint constraintWithItem:self
+                                                         attribute:NSLayoutAttributeHeight
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:view
+                                                         attribute:NSLayoutAttributeHeight
+                                                        multiplier:1.0f
+                                                          constant:0.0f];
     [self addConstraint:h];
 }
 

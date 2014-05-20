@@ -53,6 +53,7 @@
 - (void)rz_pinWidthTo:(CGFloat)width;
 - (void)rz_pinWidthToView:(UIView *)view;
 - (void)rz_pinHeightTo:(CGFloat)height;
+- (void)rz_pinHeightToView:(UIView *)view;
 - (void)rz_pinSizeTo:(CGSize)size;
 
 // Pinning sides
