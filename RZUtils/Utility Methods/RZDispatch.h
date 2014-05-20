@@ -1,6 +1,8 @@
 //
 //  RZDispatch.h
 //
+//  Utility extensions for libdispatch
+//
 //  Created by Nick Donaldson on 10/11/13.
 
 // Copyright 2014 Raizlabs and other contributors
@@ -31,23 +33,20 @@
 #ifndef RZDispatch_h
 #define RZDispatch_h
 
-
 #import <Foundation/Foundation.h>
 
-// Dispatch to main queue synchronously, regardless of current thread.
-static inline void rz_dispatch_main_reentrant(void(^block)())
-{
-    if (block)
-    {
-        if ([NSThread isMainThread])
-        {
-            block();
-        }
-        else
-        {
-            dispatch_sync(dispatch_get_main_queue(), block);
-        }
-    }
-}
+/**
+ *  Convenience method to dispatch_async on the main queue.
+ *
+ *  @param block Block to perform on main queue
+ */
+OBJC_EXTERN void rz_dispatch_async_main(void(^block)());
+
+/**
+ *  Dispatch to main queue synchronously, regardless of current thread.
+ *
+ *  @param block Block to perform on main queue
+ */
+OBJC_EXTERN void rz_dispatch_main_reentrant(void(^block)());
 
 #endif
