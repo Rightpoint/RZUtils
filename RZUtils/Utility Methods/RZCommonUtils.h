@@ -34,13 +34,13 @@
 #import <UIKit/UIKit.h>
 
 // ===============================================
-//               Conversion Macros
+//                Foundation Macros
 // ===============================================
 
 /**
  *  If argument is nil, it will be converted to NSNull.
  */
-#define RZNilToNSNull(x) (x ? x : [NSNull null])
+#define RZNilToNSNull(x) (x != nil ? x : [NSNull null])
 
 /**
  *  If argument is NSNull, it will be converted to nil.
@@ -50,12 +50,12 @@
 /**
  *  If argument is nil, it will be converted to an empty string
  */
-#define RZNilToEmptyString(x) (x ? x : @"")
+#define RZNilToEmptyString(x) (x != nil ? x : @"")
 
 /**
  *  If argument is nil, it will be converted to @0
  */
-#define RZNilToZeroNumber(x) (x ? x : @0)
+#define RZNilToZeroNumber(x) (x != nil ? x : @0)
 
 /**
  *  If argument is an NSString, it will be converted to its NSNumber equivalent.
@@ -69,33 +69,23 @@
 #define RZNumberToString(x) \
     (NSString *)([x isKindOfClass:[NSString class]] ? x : ([x isKindOfClass:[NSNumber class]] ? [x stringValue] : nil))
 
-
-// ===============================================
-//            Color Conversion Macros
-// ===============================================
+/**
+ *  Convenience macro to create a key for use with objc associated objects.
+ */
+#define RZ_ASSOC_OBJ_KEY(name) \
+    static void * name = &name
 
 /**
- *  Convert 8-bit rgb values (0-255) to a UIColor
- *
- *  @param r Red value
- *  @param g Green value
- *  @param b Blue Value
- *
- *  @return A new UIColor built from the provided values.
+ *  Convenience macro to determine if the current device is the simulator.
  */
-#define RZColorFromRGB(r,g,b) [UIColor colorWithRed:r/255.f green:g/255.f blue:b/255.f alpha:1.0]
+#define RZ_IS_SIMULATOR() \
+    ([[[UIDevice currentDevice] model] rangeOfString:@"Simulator"].location != NSNotFound)
 
 /**
- *  Convert 8-bit rgba values (0-255) to a UIColor
- *
- *  @param r Red value
- *  @param g Green value
- *  @param b Blue value
- *  @param a Alpha value
- *
- *  @return A new UIColor built from the provided values.
+ *  Convenience macro to create a keypath fron an arbitrary number of string arguments.
  */
-#define RZColorFromRGBA(r,g,b,a) [UIColor colorWithRed:r/255.f green:g/255.f blue:b/255.f alpha:a/255.f]
+#define RZ_MAKE_KEYPATH(comp1, ...) \
+    [@[comp1, ##__VA_ARGS__] componentsJoinedByString:@"."]
 
 // ===============================================
 //                    Math
@@ -135,6 +125,43 @@ OBJC_EXTERN CGFloat RZMapFloat(CGFloat value,
                                CGFloat outMin,
                                CGFloat outMax,
                                BOOL clamp);
+
+//// ===============================================
+////          Color Conversion Functions
+//// ===============================================
+//
+///**
+// *  Convert 8-bit rgb values (0-255) to a UIColor
+// *
+// *  @param r Red value
+// *  @param g Green value
+// *  @param b Blue Value
+// *
+// *  @return A new UIColor built from the provided values.
+// */
+//OBJC_EXTERN UIColor * RZColorFromRGB(uint8_t r, uint8_t g, uint8_t b);
+//#define RZColorFromRGB(r,g,b) \
+//[UIColor colorWithRed:r/255.f green:g/255.f blue:b/255.f alpha:1.0]
+//
+///**
+// *  Convert 8-bit rgba values (0-255) to a UIColor
+// *
+// *  @param r Red value
+// *  @param g Green value
+// *  @param b Blue value
+// *  @param a Alpha value
+// *
+// *  @return A new UIColor built from the provided values.
+// */
+//OBJC_EXTERN UIColor * RZColorFromRGB(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+//#define RZColorFromRGBA(r,g,b,a) \
+//[UIColor colorWithRed:r/255.f green:g/255.f blue:b/255.f alpha:a/255.f]
+//
+//OBJC_EXTERN UIColor * RZColorFromGrayscale(uint8_t grayscale);
+//OBJC_EXTERN UIColor * RZColorFromRGBHex(uint24_t hex);
+//OBJC_EXTERN UIColor * RZColorFromRGBAHex(uint24_t hex);
+//OBJC_EXTERN UIColor * RZColorFromGrayscaleHex(uint8_t hex);
+//OBJC_EXTERN UIColor * RZColorFromHexString(NSString *hexString);
 
 
 // ===============================================
