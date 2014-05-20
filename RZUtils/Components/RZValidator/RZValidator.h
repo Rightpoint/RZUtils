@@ -19,16 +19,36 @@
 // keys for validation message:
 #define kFieldValidationFailureMessage @"msg"
 
-// a validation block type that returns YES if given string is valid
+/**
+ *  A validation block type that returns YES if given string is valid.
+ *
+ *  @param str String that will be tested for validity.
+ *
+ *  @return Whether or not str is valid.
+ */
 typedef BOOL (^ValidationBlock)(NSString *str);
 
-// use a distinct 'localization table' for RZValidator messages (i.e. the file 'RZValidatorLocalizable.strings')
+// Use a distinct 'localization table' for RZValidator messages (i.e. the file 'RZValidatorLocalizable.strings')
 #define RZValidatorLocalizedString(x, y) NSLocalizedStringFromTable((x), @"RZValidatorLocalizable", (y))
 
 @interface RZValidator : NSObject
 
-// initialize with either a validation-info dictionary or a block
+/**
+ *  Initialize with a validation-info dictionary
+ *
+ *  @param validationConditions Conditions that determine the rules for passing validity.
+ *
+ *  @return An instance of RZValidator.
+ */
 - (id)initWithValidationConditions:(NSDictionary *)validationConditions;
+
+/**
+ *  Initialize with a block.
+ *
+ *  @param validationBlock A block that determines validity.
+ *
+ *  @return An instance of RZValidator.
+ */
 - (id)initWithValidationBlock:(ValidationBlock)validationBlock;
 
 // a localized message describing the reason for failure
