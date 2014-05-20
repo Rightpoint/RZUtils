@@ -67,22 +67,22 @@ typedef NS_ENUM(NSInteger, RZProgressViewStyle) {
 /**
  *  The color shown for the portion of the progress bar that is filled.
  */
-@property (nonatomic, strong) UIColor* progressTintColor UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) UIColor *progressTintColor UI_APPEARANCE_SELECTOR;
 
 /**
  *  The color shown for the portion of the progress bar that is not filled.
  */
-@property (nonatomic, strong) UIColor* trackTintColor UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) UIColor *trackTintColor UI_APPEARANCE_SELECTOR;
 
 /**
  *  An image to use for the portion of the progress bar that is filled.
  */
-@property (nonatomic, strong) UIImage* progressImage UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) UIImage *progressImage UI_APPEARANCE_SELECTOR;
 
 /**
  *  An image to use for the portion of the track that is not filled.
  */
-@property (nonatomic, strong) UIImage* trackImage UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) UIImage *trackImage UI_APPEARANCE_SELECTOR;
 
 /**
  *  Adjusts the current progress shown by the receiver, optionally animating the change.
