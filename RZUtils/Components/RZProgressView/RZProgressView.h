@@ -46,7 +46,7 @@ typedef NS_ENUM(NSInteger, RZProgressViewStyle) {
 @interface RZProgressView : UIView
 
 /**
- *  Initializes and returns an progress-view object.
+ *  Initializes and returns a progress view object.
  *
  *  @param style A constant that specifies the style of the object to be created. See RZProgressViewStyle for descriptions of the style constants.
  *
