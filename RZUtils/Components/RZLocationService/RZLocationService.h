@@ -1,6 +1,6 @@
 //
 //  RZLocationService.h
-//  RZUtils
+//  RZExtensions
 //
 //  Created by Nick Bonatsakis on 11/27/12.
 

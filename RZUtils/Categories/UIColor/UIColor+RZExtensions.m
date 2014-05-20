@@ -1,5 +1,5 @@
 //
-//  UIColor+RZUtils.m
+//  UIColor+RZExtensions.m
 //  bartest
 //
 //  Created by Nick Donaldson on 5/20/14.
@@ -27,9 +27,9 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import "UIColor+RZUtils.h"
+#import "UIColor+RZExtensions.h"
 
-@implementation UIColor (RZUtils)
+@implementation UIColor (RZExtensions)
 
 + (UIColor *)rz_colorFromRed:(uint8_t)r green:(uint8_t)g blue:(uint8_t)b
 {

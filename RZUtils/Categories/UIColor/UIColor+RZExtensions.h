@@ -1,5 +1,5 @@
 //
-//  UIColor+RZUtils.h
+//  UIColor+RZExtensions.h
 //  bartest
 //
 //  Created by Nick Donaldson on 5/20/14.
@@ -29,7 +29,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIColor (RZUtils)
+@interface UIColor (RZExtensions)
 
 /**
  *  Convert 8-bit RGB values (0-255) to a UIColor
