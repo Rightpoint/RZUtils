@@ -241,7 +241,7 @@ const CGFloat kRZProgressAnimationVelocity = 210;
     
     [UIView animateWithDuration:duration
                           delay:0
-                        options:UIViewAnimationOptionCurveEaseOut
+                        options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          [self layoutIfNeeded];
                      }
