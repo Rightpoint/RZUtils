@@ -54,7 +54,13 @@ This is a collection of helpful utilities and components which makes iOS develop
 - **UIAlertView+RZCompletionBlocks**
 
 	Block API for `UIAlertView` actions
-	
+
+### UIColor
+
+- **UIColor+RZExtensions**
+
+  UIColor creation utilities
+  
 ### UIFont
 
 - **UIFont+RZExtensions**
@@ -181,7 +187,7 @@ Extends the functionality of `UISplitViewController` including allowing it to be
 
 `UIViewController` container that uses a segment control to switch between an array of `UIViewControllers`
 
-## Utility Methods Overview
+## Utilities Overview
 
 #### RZCommonUtils
 
