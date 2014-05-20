@@ -49,6 +49,8 @@ typedef NS_ENUM(NSInteger, RZValidationType)
 // validates a given string against the receiver (validator)
 - (BOOL)isValidForString:(NSString *)str
 {
+    BOOL isValid = YES;
+    
     // if validation type is a dictionary, iterate through the keys and validate appropriately...
     if ( self.validationType == RZValidationTypeDictionary ) {
         NSArray *allKeys = [self.validationConditions allKeys];
@@ -57,21 +59,21 @@ typedef NS_ENUM(NSInteger, RZValidationType)
                 // Regex case. Use NSPredicate to validate.
                 NSPredicate *regexPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", [self.validationConditions objectForKey:key]];
                 if ( ![regexPredicate evaluateWithObject:str] ) {
-                    return NO;
+                    isValid = NO;
                 }
             }
             else if ( [key isEqualToString:kFieldValidationMinCharsKey] ) {
                 // Min chars case. Check length of string.
                 int minChars = [[self.validationConditions objectForKey:key] intValue];
                 if ( str.length < minChars ) {
-                    return NO;
+                    isValid = NO;
                 }
             }
             else if ( [key isEqualToString:kFieldValidationMaxCharsKey] ) {
                 // Max chars case. Check length of string.
                 int maxChars = [[self.validationConditions objectForKey:key] intValue];
                 if ( str.length > maxChars ) {
-                    return NO;
+                    isValid = NO;
                 }
             }
         }
@@ -80,7 +82,8 @@ typedef NS_ENUM(NSInteger, RZValidationType)
         // if the validator uses a block, pass the string to the block and return the result
         return self.validationBlock(str);
     }
-    return YES;
+    
+    return isValid;
 }
 
 #pragma mark - Convenience constructors
