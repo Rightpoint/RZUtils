@@ -26,6 +26,8 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+#import "RZDispatch.h"
+
 void rz_dispatch_async_main(void(^block)())
 {
     dispatch_async(dispatch_get_main_queue(), block);

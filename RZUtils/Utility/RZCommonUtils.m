@@ -27,6 +27,8 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+#import "RZCommonUtils.h"
+
 #pragma mark - Math Funtions
 
 CGFloat RZClampFloat(CGFloat value, CGFloat min, CGFloat max)
@@ -36,7 +38,7 @@ CGFloat RZClampFloat(CGFloat value, CGFloat min, CGFloat max)
 
 CGFloat RZMapFloat(CGFloat value, CGFloat inMin, CGFloat inMax, CGFloat outMin, CGFloat outMax, BOOL clamp)
 {
-    CGFloat result = ((value - inMin)/(inMax - inMin)) * (outMax - outMin) + outMin;
+    CGFloat result = ((value - inMin) / (inMax - inMin)) * (outMax - outMin) + outMin;
     if ( clamp ) {
         result = RZClampFloat(result, MIN(outMin,outMax), MAX(outMin,outMax));
     }
@@ -48,7 +50,7 @@ CGFloat RZMapFloat(CGFloat value, CGFloat inMin, CGFloat inMax, CGFloat outMin, 
 UIViewAnimationOptions RZAnimationOptionFromCurve(UIViewAnimationCurve curve)
 {
     UIViewAnimationOptions option = 0;
-    switch (curve)
+    switch ( curve )
     {
         case UIViewAnimationCurveEaseIn:
             option = UIViewAnimationOptionCurveEaseIn;
@@ -66,13 +68,11 @@ UIViewAnimationOptions RZAnimationOptionFromCurve(UIViewAnimationCurve curve)
             option = UIViewAnimationOptionCurveLinear;
             break;
             
-        default:
-        {
+        default: {
             // This shows up for the keyboard curve in iOS7.
             // As of yet, not documented, but this works...
             // http://stackoverflow.com/questions/18957476/ios-7-keyboard-animation
-            if ((int)curve == 7)
-            {
+            if ( (int)curve == 7 ) {
                 option = (curve << 16);
             }
         }
