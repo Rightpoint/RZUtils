@@ -256,7 +256,7 @@
                                                                relatedBy:NSLayoutRelationGreaterThanOrEqual
                                                                   toItem:self.superview
                                                                attribute:NSLayoutAttributeLeft
-                                                              multiplier:1.0
+                                                              multiplier:1.0f
                                                                 constant:padding]];
     
     [self.superview addConstraint:[NSLayoutConstraint constraintWithItem:self
@@ -264,7 +264,7 @@
                                                                relatedBy:NSLayoutRelationLessThanOrEqual
                                                                   toItem:self.superview
                                                                attribute:NSLayoutAttributeRight
-                                                              multiplier:1.0
+                                                              multiplier:1.0f
                                                                 constant:padding]];
 }
 
@@ -277,7 +277,7 @@
                                                                relatedBy:NSLayoutRelationEqual
                                                                   toItem:self.superview
                                                                attribute:NSLayoutAttributeTop
-                                                              multiplier:1.0
+                                                              multiplier:1.0f
                                                                 constant:padding]];
 
     [self.superview addConstraint:[NSLayoutConstraint constraintWithItem:self
@@ -285,7 +285,7 @@
                                                                relatedBy:NSLayoutRelationEqual
                                                                   toItem:self.superview
                                                                attribute:NSLayoutAttributeBottom
-                                                              multiplier:1.0
+                                                              multiplier:1.0f
                                                                 constant:padding]];
 }
 
@@ -298,7 +298,7 @@
                                                                relatedBy:NSLayoutRelationGreaterThanOrEqual
                                                                   toItem:self.superview
                                                                attribute:NSLayoutAttributeTop
-                                                              multiplier:1.0
+                                                              multiplier:1.0f
                                                                 constant:padding]];
     
     [self.superview addConstraint:[NSLayoutConstraint constraintWithItem:self
@@ -306,7 +306,7 @@
                                                                relatedBy:NSLayoutRelationLessThanOrEqual
                                                                   toItem:self.superview
                                                                attribute:NSLayoutAttributeBottom
-                                                              multiplier:1.0
+                                                              multiplier:1.0f
                                                                 constant:padding]];
 }
 
@@ -319,7 +319,7 @@
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self.superview
                                                          attribute:NSLayoutAttributeTop
-                                                        multiplier:1.f
+                                                        multiplier:1.0f
                                                           constant:padding];
     [self.superview addConstraint:c];
 }
@@ -334,7 +334,7 @@
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self.superview
                                                          attribute:NSLayoutAttributeLeft
-                                                        multiplier:1.f
+                                                        multiplier:1.0f
                                                           constant:padding];
     [self.superview addConstraint:c];
 }
@@ -348,7 +348,7 @@
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self.superview
                                                          attribute:NSLayoutAttributeBottom
-                                                        multiplier:1.f
+                                                        multiplier:1.0f
                                                           constant:-padding];
     [self.superview addConstraint:c];
 }
@@ -362,7 +362,7 @@
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self.superview
                                                          attribute:NSLayoutAttributeRight
-                                                        multiplier:1.f
+                                                        multiplier:1.0f
                                                           constant:-padding];
     [self.superview addConstraint:c];
 }
@@ -382,7 +382,7 @@
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self.superview
                                                          attribute:NSLayoutAttributeCenterX
-                                                        multiplier:1.f
+                                                        multiplier:1.0f
                                                           constant:offset];
     [self.superview addConstraint:c];
 }
@@ -401,7 +401,7 @@
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self.superview
                                                          attribute:NSLayoutAttributeCenterY
-                                                        multiplier:1.f
+                                                        multiplier:1.0f
                                                           constant:offset];
     [self.superview addConstraint:c];
 }
@@ -444,7 +444,7 @@
                                                                  relatedBy:NSLayoutRelationGreaterThanOrEqual
                                                                     toItem:view
                                                                  attribute:a2
-                                                                multiplier:1.f
+                                                                multiplier:1.0f
                                                                   constant:itemSpacing];
 
             [constraints addObject:s];
@@ -514,8 +514,8 @@
                                                                  relatedBy:NSLayoutRelationEqual
                                                                     toItem:view
                                                                  attribute:attribute
-                                                                multiplier:1.f
-                                                                  constant:0.f];
+                                                                multiplier:1.0f
+                                                                  constant:0.0f];
             [constraints addObject:c];
         }
 
