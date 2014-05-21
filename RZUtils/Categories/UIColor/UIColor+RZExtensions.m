@@ -31,22 +31,22 @@
 
 @implementation UIColor (RZExtensions)
 
-+ (UIColor *)rz_colorFromRed:(uint8_t)r green:(uint8_t)g blue:(uint8_t)b
++ (UIColor *)rz_colorFrom8BitRed:(uint8_t)r green:(uint8_t)g blue:(uint8_t)b
 {
-    return [self rz_colorFromRed:r green:g blue:b alpha:255];
+    return [self rz_colorFrom8BitRed:r green:g blue:b alpha:255];
 }
 
-+ (UIColor *)rz_colorFromRed:(uint8_t)r green:(uint8_t)g blue:(uint8_t)b alpha:(uint8_t)a
++ (UIColor *)rz_colorFrom8BitRed:(uint8_t)r green:(uint8_t)g blue:(uint8_t)b alpha:(uint8_t)a
 {
     return [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a/255.0];
 }
 
-+ (UIColor *)rz_colorFromWhite:(uint8_t)white
++ (UIColor *)rz_colorFrom8BitWhite:(uint8_t)white
 {
-    return [self rz_colorFromWhite:white alpha:255];
+    return [self rz_colorFrom8BitWhite:white alpha:255];
 }
 
-+ (UIColor *)rz_colorFromWhite:(uint8_t)white alpha:(uint8_t)alpha
++ (UIColor *)rz_colorFrom8BitWhite:(uint8_t)white alpha:(uint8_t)alpha
 {
     return [UIColor colorWithWhite:white/255.0 alpha:alpha/255.0];
 }
@@ -57,7 +57,7 @@
     uint8_t g = (uint8_t)(hexLiteral >> 8);
     uint8_t b = (uint8_t)hexLiteral;
     
-    return [self rz_colorFromRed:r green:g blue:b];
+    return [self rz_colorFrom8BitRed:r green:g blue:b];
 }
 
 + (UIColor *)rz_colorFromHexString:(NSString *)string

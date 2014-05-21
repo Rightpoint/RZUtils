@@ -40,7 +40,7 @@
  *
  *  @return A new UIColor with the provided values
  */
-+ (UIColor *)rz_colorFromRed:(uint8_t)r green:(uint8_t)g blue:(uint8_t)b;
++ (UIColor *)rz_colorFrom8BitRed:(uint8_t)r green:(uint8_t)g blue:(uint8_t)b;
 
 /**
  *  Convert 8-bit RGBA values (0-255) to a UIColor
@@ -52,7 +52,7 @@
  *
  *  @return A new UIColor with the provided values
  */
-+ (UIColor *)rz_colorFromRed:(uint8_t)r green:(uint8_t)g blue:(uint8_t)b alpha:(uint8_t)a;
++ (UIColor *)rz_colorFrom8BitRed:(uint8_t)r green:(uint8_t)g blue:(uint8_t)b alpha:(uint8_t)a;
 
 /**
  *  Convert an 8-bit white value to a UIColor
@@ -61,7 +61,7 @@
  *
  *  @return A new UIColor with the provided white value
  */
-+ (UIColor *)rz_colorFromWhite:(uint8_t)white;
++ (UIColor *)rz_colorFrom8BitWhite:(uint8_t)white;
 
 /**
  *  Convert 8-bit white and alpha values to a UIColor
@@ -71,7 +71,7 @@
  *
  *  @return A new UIColor with the provided values
  */
-+ (UIColor *)rz_colorFromWhite:(uint8_t)white alpha:(uint8_t)alpha;
++ (UIColor *)rz_colorFrom8BitWhite:(uint8_t)white alpha:(uint8_t)alpha;
 
 /**
  *  Convert a hex literal to a UIColor.
