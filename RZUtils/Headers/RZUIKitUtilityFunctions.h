@@ -64,3 +64,26 @@ inline static UIViewAnimationOptions RZAnimationOptionFromCurve(UIViewAnimationC
     }
     return option;
 }
+
+typedef NS_ENUM(NSUInteger, RZUIScreenHeight)
+{
+    RZUIScreenHeightUnknown = 0,
+    RZUIScreenHeight480 = 480,
+    RZUIScreenHeight568 = 568
+};
+
+inline static RZUIScreenHeight RZUIScreenGetHeight()
+{
+    RZUIScreenHeight screenHeight = [UIScreen mainScreen].bounds.size.height;
+    switch ( screenHeight ) {
+        case RZUIScreenHeight480:
+        case RZUIScreenHeight568:
+            screenHeight = (RZUIScreenHeight)screenHeight;
+            break;
+        default:
+            screenHeight = RZUIScreenHeightUnknown;
+            break;
+    }
+    
+    return screenHeight;
+}
