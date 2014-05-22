@@ -69,7 +69,7 @@
 
 - (void)setSubviewsHighlighted:(BOOL)subviewsHighlighted
 {
-    if (_subviewsHighlighted != subviewsHighlighted)
+    if ( _subviewsHighlighted != subviewsHighlighted )
     {
         [self setSubviewsHighlighted:subviewsHighlighted forView:self];
         _subviewsHighlighted = subviewsHighlighted;
