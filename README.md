@@ -1,6 +1,6 @@
 # RZUtils
 
-This is a collection of helpful utilities and components which makes iOS development quicker and easier.
+A collection of helpful utilities and components for iOS development.
 
 ## Categories Overview
 
