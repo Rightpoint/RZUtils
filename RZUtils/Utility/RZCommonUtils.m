@@ -45,6 +45,8 @@ CGFloat RZMapFloat(CGFloat value, CGFloat inMin, CGFloat inMax, CGFloat outMin, 
     return result;
 }
 
+#if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
+
 #pragma mark - UIKit Helpers
 
 UIViewAnimationOptions RZAnimationOptionFromCurve(UIViewAnimationCurve curve)
@@ -80,3 +82,5 @@ UIViewAnimationOptions RZAnimationOptionFromCurve(UIViewAnimationCurve curve)
     }
     return option;
 }
+
+#endif

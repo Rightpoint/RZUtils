@@ -30,12 +30,11 @@
 #ifndef RZCommonUtils_h
 #define RZCommonUtils_h
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-
 // ===============================================
 //                Foundation Macros
 // ===============================================
+
+#import <Foundation/Foundation.h>
 
 /**
  *  If argument is nil, it will be converted to NSNull.
@@ -74,12 +73,6 @@
  */
 #define RZ_ASSOC_OBJ_KEY(name) \
     static void * name = &name
-
-/**
- *  Convenience macro to determine if the current device is the simulator.
- */
-#define RZ_IS_SIMULATOR() \
-    ([[[UIDevice currentDevice] model] rangeOfString:@"Simulator"].location != NSNotFound)
 
 /**
  *  Convenience macro to create a keypath fron an arbitrary number of string arguments.
@@ -128,8 +121,18 @@ OBJC_EXTERN CGFloat RZMapFloat(CGFloat value,
 
 
 // ===============================================
-//                UIKit Helpers
+//              UIKit/iOS Helpers
 // ===============================================
+
+#if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
+
+#import <UIKit/UIKit.h>
+
+/**
+ *  Convenience macro to determine if the current device is the simulator at runtime.
+ */
+#define RZ_IS_SIMULATOR() \
+    ([[[UIDevice currentDevice] model] rangeOfString:@"Simulator"].location != NSNotFound)
 
 /**
  *  Convert a UIViewAnimationCurve to the corresponding UIViewAnimationOption.
@@ -141,4 +144,7 @@ OBJC_EXTERN CGFloat RZMapFloat(CGFloat value,
  */
 OBJC_EXTERN UIViewAnimationOptions RZAnimationOptionFromCurve(UIViewAnimationCurve curve);
 
-#endif
+
+#endif // TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+
+#endif // Include guard
