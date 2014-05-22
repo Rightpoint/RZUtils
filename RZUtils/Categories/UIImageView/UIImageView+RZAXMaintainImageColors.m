@@ -1,12 +1,31 @@
 //
-//  UIImageView+AXMaintainImageColors.m
-//  RZUtils
+//  UIImageView+RZAXMaintainImageColors.m
 //
 //  Created by Justin Kaufman on 5/15/14.
-//  Copyright (c) 2014 Raizlabs. All rights reserved.
 //
-
-#import "UIImageView+AXMaintainImageColors.h"
+//  Copyright 2014 Raizlabs and other contributors
+//  http://raizlabs.com/
+//
+//  Permission is hereby granted, free of charge, to any person obtaining
+//  a copy of this software and associated documentation files (the
+//  "Software"), to deal in the Software without restriction, including
+//  without limitation the rights to use, copy, modify, merge, publish,
+//  distribute, sublicense, and/or sell copies of the Software, and to
+//  permit persons to whom the Software is furnished to do so, subject to
+//  the following conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+//  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+//  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+//  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+//  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+#import "UIImageView+RZAXMaintainImageColors.h"
 
 #import <objc/runtime.h>
 #import <CoreImage/CoreImage.h>
@@ -22,9 +41,9 @@ const NSTimeInterval kRZAccessibilityInvertColorsTransitionDuration = 0.2f;
 
 @end
 
-@implementation UIImageView (AXMaintainImageColors)
+@implementation UIImageView (RZAXMaintainImageColors)
 
-- (void)rz_invertImagesColorsForAccessibility
+- (void)rz_invertImageColorsForAccessibility
 {
     UIImage *outputUIImage = nil;
 
@@ -39,7 +58,7 @@ const NSTimeInterval kRZAccessibilityInvertColorsTransitionDuration = 0.2f;
     CIFilter *colorInvertFilter = [CIFilter filterWithName:kRZAccessibilityCIColorInvertFilterName];
     CIFilter *gammaAdjustFilter = [CIFilter filterWithName:kRZAccessibilityCIGammaAdjustFilterName];
     
-    [gammaAdjustFilter setValue:@(1/kRZAccessibilityCIGammaAdjustInputPowerValue)
+    [gammaAdjustFilter setValue:@( 1 / kRZAccessibilityCIGammaAdjustInputPowerValue )
                          forKey:kRZAccessibilityCIGammaAdjustInputPowerKey];
     [gammaAdjustFilter setValue:inputCIImage forKey:kCIInputImageKey];
     inputCIImage = gammaAdjustFilter.outputImage;
@@ -68,13 +87,13 @@ const NSTimeInterval kRZAccessibilityInvertColorsTransitionDuration = 0.2f;
                     } completion:nil];
 }
 
-- (void)accessibilityMaintainImageColorsWhenInverted
+- (void)rz_accessibilityMaintainImageColorsWhenInverted
 {
     [self setAccessibilityMaintainImageColors:YES];
     
     // Check invert state, inverting immediately if required.
     if ( UIAccessibilityIsInvertColorsEnabled() ) {
-        [self rz_invertImagesColorsForAccessibility];
+        [self rz_invertImageColorsForAccessibility];
     }
 }
 
@@ -98,7 +117,7 @@ const NSTimeInterval kRZAccessibilityInvertColorsTransitionDuration = 0.2f;
             __weak typeof(self) weakSelf = self;
             void (^accessibilityNotificationBlock)(NSNotification *note) = ^(NSNotification *note){
                 __strong typeof(self) strongSelf = weakSelf;
-                [strongSelf rz_invertImagesColorsForAccessibility];
+                [strongSelf rz_invertImageColorsForAccessibility];
             };
             
             [[NSNotificationCenter defaultCenter] addObserverForName:UIAccessibilityInvertColorsStatusDidChangeNotification
