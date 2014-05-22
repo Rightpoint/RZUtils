@@ -67,6 +67,13 @@
 
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
+    static BOOL s_highlighted = YES;
+    if (self.highlighted != s_highlighted)
+    {
+        [self setSubviewsHighlighted:self.highlighted forView:self];
+    }
+    s_highlighted = self.highlighted;
+
     return YES;
 }
 
