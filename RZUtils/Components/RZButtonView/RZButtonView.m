@@ -41,7 +41,6 @@
 
 - (void)setSubviewsHighlighted:(BOOL)highlighted forView:(UIView *)view
 {
-    self.subviewsHighlighted = highlighted;
     [[view subviews] enumerateObjectsUsingBlock:^(UIView *subview, NSUInteger idx, BOOL *stop) {
         
         if ([subview respondsToSelector:@selector(setHighlighted:)])
@@ -62,30 +61,19 @@
     }];
 }
 
-- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)setHighlighted:(BOOL)highlighted
 {
-    [self setSubviewsHighlighted:YES forView:self];
-    return YES;
+    [super setHighlighted:highlighted];
+    [self setSubviewsHighlighted:highlighted];
 }
 
-- (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)setSubviewsHighlighted:(BOOL)subviewsHighlighted
 {
-    if ( self.highlighted != self.subviewsHighlighted )
+    if (_subviewsHighlighted != subviewsHighlighted)
     {
-        [self setSubviewsHighlighted:self.highlighted forView:self];
+        [self setSubviewsHighlighted:subviewsHighlighted forView:self];
+        _subviewsHighlighted = subviewsHighlighted;
     }
-    
-    return YES;
-}
-
-- (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
-{
-    [self setSubviewsHighlighted:NO forView:self];
-}
-
-- (void)cancelTrackingWithEvent:(UIEvent *)event
-{
-    [self setSubviewsHighlighted:NO forView:self];
 }
 
 @end
