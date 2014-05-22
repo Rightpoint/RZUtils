@@ -1,6 +1,5 @@
 //
 //  UIColor+RZExtensions.h
-//  bartest
 //
 //  Created by Nick Donaldson on 5/20/14.
 
@@ -27,7 +26,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 @interface UIColor (RZExtensions)
 

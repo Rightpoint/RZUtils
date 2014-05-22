@@ -30,8 +30,8 @@
 #ifndef RZCommonUtils_h
 #define RZCommonUtils_h
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
+@import Foundation;
+@import UIKit;
 
 // ===============================================
 //                Foundation Macros

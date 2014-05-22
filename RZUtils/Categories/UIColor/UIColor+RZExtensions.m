@@ -1,6 +1,5 @@
 //
 //  UIColor+RZExtensions.m
-//  bartest
 //
 //  Created by Nick Donaldson on 5/20/14.
 
