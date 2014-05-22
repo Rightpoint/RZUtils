@@ -31,6 +31,8 @@
 
 @interface RZButtonView ()
 
+@property (nonatomic, assign) BOOL subviewsHighlighted;
+
 - (void)setSubviewsHighlighted:(BOOL)highlighted forView:(UIView *)view;
 
 @end
@@ -59,25 +61,19 @@
     }];
 }
 
-- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)setHighlighted:(BOOL)highlighted
 {
-    [self setSubviewsHighlighted:YES forView:self];
-    return YES;
+    [super setHighlighted:highlighted];
+    [self setSubviewsHighlighted:highlighted];
 }
 
-- (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)setSubviewsHighlighted:(BOOL)subviewsHighlighted
 {
-    return YES;
-}
-
-- (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
-{
-    [self setSubviewsHighlighted:NO forView:self];
-}
-
-- (void)cancelTrackingWithEvent:(UIEvent *)event
-{
-    [self setSubviewsHighlighted:NO forView:self];
+    if ( _subviewsHighlighted != subviewsHighlighted )
+    {
+        [self setSubviewsHighlighted:subviewsHighlighted forView:self];
+        _subviewsHighlighted = subviewsHighlighted;
+    }
 }
 
 @end
