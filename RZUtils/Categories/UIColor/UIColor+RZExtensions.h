@@ -102,4 +102,6 @@
  */
 + (UIColor *)rz_contrastForColor:(UIColor *)color;
 
+- (NSString *)rz_hexString;
+
 @end

@@ -98,4 +98,15 @@ const CGFloat kRZExtensionsYIQContrastMultiplierThreshold       = 0.5f;
     return ( yiq >= kRZExtensionsYIQContrastMultiplierThreshold ) ? [UIColor blackColor] : [UIColor whiteColor];
 }
 
+- (NSString *)rz_hexString
+{
+    NSString *hexString = nil;
+    CGFloat rValue, gValue, bValue;
+    if ( [self getRed:&rValue green:&gValue blue:&bValue alpha:NULL] ) {
+        hexString = [NSString stringWithFormat:@"#%02x%02x%02x", (int)(rValue * 255.0f), (int)(gValue * 255.0f), (int)(bValue * 255.0f)];
+    }
+    
+    return hexString;
+}
+
 @end
