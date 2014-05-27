@@ -10,7 +10,7 @@
 
 /**
  *  Returns the average color of a UIImage instance.
- *  @seealso @bUIColor+RZColorContrast
+ *  @see @p UIColor+RZExtensions.h to use this with @p +[UIColor rz_contrastForColor:]
  *
  *  @return The average color of a UIImage instance.
  */
