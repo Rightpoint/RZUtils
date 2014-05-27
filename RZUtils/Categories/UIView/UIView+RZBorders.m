@@ -39,12 +39,19 @@ static char kRZBorderViewKey;
 + (NSMutableDictionary *)coloredBorderImageCache;
 
 - (void)setBorderMask:(RZViewBorderMask)mask width:(CGFloat)width color:(UIColor *)color;
+- (void)setBorderCornerRadius:(CGFloat)radius width:(CGFloat)width color:(UIColor *)color;
 
 // Returns a new or cached masking image that can be used to fill a rect area to produce a bordered effect.
 - (UIImage *)maskingImageForMask:(RZViewBorderMask)mask width:(CGFloat)width;
 
+// Returns a new or cached masking image that can be used to fill a rect area to produce a pill effect.
+- (UIImage *)maskingImageForCornerRadius:(CGFloat)radius width:(CGFloat)width;
+
 // Returns a clear, stretchable image with the specified borders, width, and color
 - (UIImage *)coloredBorderImageWithMask:(RZViewBorderMask)mask width:(CGFloat)width color:(UIColor *)color;
+
+// Returns a clear, stretchable image with the specified corner radius, width, and color
+- (UIImage *)coloredBorderImageWithCornerRadius:(CGFloat)radius width:(CGFloat)width color:(UIColor *)color;
 
 @end
 
@@ -62,9 +69,26 @@ static char kRZBorderViewKey;
     RZBorderedImageView *imgView = objc_getAssociatedObject(self, &kRZBorderViewKey);
     if (imgView == nil)
     {
-        imgView = [[RZBorderedImageView alloc] initWithFrame:self.bounds];
+        CGRect frame = {.origin = CGPointZero, .size = self.bounds.size};
+        imgView = [[RZBorderedImageView alloc] initWithFrame:frame];
         imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [imgView setBorderMask:mask width:borderWidth color:color];
+        [self addSubview:imgView];
+        objc_setAssociatedObject(self, &kRZBorderViewKey, imgView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    
+    imgView.backgroundColor = [UIColor clearColor];
+    imgView.opaque = NO;
+}
+
+- (void)rz_addBordersWithCornerRadius:(CGFloat)radius width:(CGFloat)borderWidth color:(UIColor *)color
+{
+    RZBorderedImageView *imgView = objc_getAssociatedObject(self, &kRZBorderViewKey);
+    if (imgView == nil)
+    {
+        imgView = [[RZBorderedImageView alloc] initWithFrame:self.bounds];
+        imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [imgView setBorderCornerRadius:radius width:borderWidth color:color];
         [self addSubview:imgView];
         objc_setAssociatedObject(self, &kRZBorderViewKey, imgView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
@@ -114,6 +138,11 @@ static char kRZBorderViewKey;
 - (void)setBorderMask:(RZViewBorderMask)mask width:(CGFloat)width color:(UIColor *)color
 {
     self.image = [self coloredBorderImageWithMask:mask width:width color:color];
+}
+
+- (void)setBorderCornerRadius:(CGFloat)radius width:(CGFloat)width color:(UIColor *)color
+{
+    self.image = [self coloredBorderImageWithCornerRadius:radius width:width color:color];
 }
 
 #pragma mark - Caches
@@ -222,6 +251,47 @@ static char kRZBorderViewKey;
     return maskImage;
 }
 
+- (UIImage *)maskingImageForCornerRadius:(CGFloat)radius width:(CGFloat)width
+{
+    NSString *cacheKey = [NSString stringWithFormat:@"%.2f_%.2f", radius, width];
+    UIImage *maskImage = [[[self class] maskingImageCache] objectForKey:cacheKey];
+    if (maskImage == nil)
+    {
+        CGFloat imgDim = ceilf((width * 3) + (radius * 2));
+        CGSize imgSize = CGSizeMake(imgDim, imgDim);
+        
+        UIGraphicsBeginImageContextWithOptions(imgSize, NO, 0);
+        
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        
+        CGRect fullRect = (CGRect){CGPointZero, imgSize};
+        CGContextClearRect(ctx, fullRect);
+        
+        CGColorRef maskImageColorRef = [[UIColor whiteColor] CGColor];
+        
+        CGContextSetStrokeColorWithColor(ctx, maskImageColorRef);
+        CGContextSetLineWidth(ctx, width);
+        
+        CGRect roundedRectFrame = CGRectInset(fullRect, width / 2, width / 2);
+        CGPathRef roundedRectPath = CGPathCreateWithRoundedRect(roundedRectFrame, radius, radius, NULL);
+        CGContextAddPath(ctx, roundedRectPath);
+        CGContextStrokePath(ctx);
+        CGPathRelease(roundedRectPath);
+        
+        maskImage = UIGraphicsGetImageFromCurrentImageContext();
+        
+        if (maskImage)
+        {
+            [[[self class] maskingImageCache] setObject:maskImage forKey:cacheKey];
+        }
+        
+        UIGraphicsEndImageContext();
+    }
+    
+    return maskImage;
+}
+
+
 - (UIImage *)coloredBorderImageWithMask:(RZViewBorderMask)mask width:(CGFloat)width color:(UIColor *)color
 {
     CGFloat r, g, b, a;
@@ -238,37 +308,71 @@ static char kRZBorderViewKey;
     if (borderImage == nil)
     {
         UIImage *maskImage = [self maskingImageForMask:mask width:width];
-
-        if (maskImage)
+        borderImage = [self borderImageWithMaskImage:maskImage color:color];
+        
+        if (borderImage)
         {
-            CGSize imgSize = maskImage.size;
-
-            UIGraphicsBeginImageContextWithOptions(imgSize, NO, [[UIScreen mainScreen] scale]);
-
-            CGContextRef ctx = UIGraphicsGetCurrentContext();
-
-            CGRect fullRect = (CGRect){CGPointZero, imgSize};
-
-            // draw color border
-            CGContextSetFillColorWithColor(ctx, [color CGColor]);
-            CGContextFillRect(ctx, fullRect);
-            
-            // mask it out
-            CGContextSetBlendMode(ctx, kCGBlendModeDestinationIn);
-            CGContextDrawImage(ctx, fullRect, [maskImage CGImage]);
-            
-            borderImage = [UIGraphicsGetImageFromCurrentImageContext() resizableImageWithCapInsets:UIEdgeInsetsMake(imgSize.height * 0.5, imgSize.width * 0.5, imgSize.height * 0.5, imgSize.width * 0.5)
-                                                                                      resizingMode:UIImageResizingModeStretch];
-            if (borderImage)
-            {
-                [[[self class] coloredBorderImageCache] setObject:borderImage forKey:cacheKey];
-            }
-
-            UIGraphicsEndImageContext();
+            [[[self class] coloredBorderImageCache] setObject:borderImage forKey:cacheKey];
         }
-
     }
 
+    return borderImage;
+}
+
+- (UIImage *)coloredBorderImageWithCornerRadius:(CGFloat)radius width:(CGFloat)width color:(UIColor *)color
+{
+    CGFloat r, g, b, a;
+    [color getRed:&r green:&g blue:&b alpha:&a];
+    NSString *cacheKey = [NSString stringWithFormat:@"%.2f_%.2f-%lu_%lu_%lu_%lu",
+                          radius,
+                          width,
+                          (unsigned long)(r * 255),
+                          (unsigned long)(g * 255),
+                          (unsigned long)(b * 255),
+                          (unsigned long)(a * 255)];
+    
+    UIImage *borderImage = [[[self class] coloredBorderImageCache] objectForKey:cacheKey];
+    if (borderImage == nil)
+    {
+        UIImage *maskImage = [self maskingImageForCornerRadius:radius width:width];
+        borderImage = [self borderImageWithMaskImage:maskImage color:color];
+        
+        if (borderImage)
+        {
+            [[[self class] coloredBorderImageCache] setObject:borderImage forKey:cacheKey];
+        }
+    }
+    
+    return borderImage;
+}
+
+- (UIImage *)borderImageWithMaskImage:(UIImage *)maskImage color:(UIColor *)color
+{
+    UIImage *borderImage = nil;
+    
+    if (maskImage)
+    {
+        CGSize imgSize = maskImage.size;
+        
+        UIGraphicsBeginImageContextWithOptions(imgSize, NO, [[UIScreen mainScreen] scale]);
+        
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        
+        CGRect fullRect = (CGRect){CGPointZero, imgSize};
+        
+        // draw color border
+        CGContextSetFillColorWithColor(ctx, [color CGColor]);
+        CGContextFillRect(ctx, fullRect);
+        
+        // mask it out
+        CGContextSetBlendMode(ctx, kCGBlendModeDestinationIn);
+        CGContextDrawImage(ctx, fullRect, [maskImage CGImage]);
+        
+        borderImage = [UIGraphicsGetImageFromCurrentImageContext() resizableImageWithCapInsets:UIEdgeInsetsMake(imgSize.height * 0.5, imgSize.width * 0.5, imgSize.height * 0.5, imgSize.width * 0.5)
+                                                                                  resizingMode:UIImageResizingModeStretch];
+        UIGraphicsEndImageContext();
+    }
+    
     return borderImage;
 }
 
