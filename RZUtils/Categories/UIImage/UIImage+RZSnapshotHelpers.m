@@ -26,9 +26,9 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import "UIImage+SnapshotHelpers.h"
+#import "UIImage+RZSnapshotHelpers.h"
 
-@implementation UIImage (SnapshotHelpers)
+@implementation UIImage (RZSnapshotHelpers)
 
 + (UIImage *)imageByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate
 {

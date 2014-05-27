@@ -28,7 +28,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIImage (SnapshotHelpers)
+@interface UIImage (RZSnapshotHelpers)
 
 + (UIImage *)imageByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate;
 

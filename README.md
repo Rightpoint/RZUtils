@@ -63,6 +63,10 @@ This is a collection of helpful utilities and components which makes iOS develop
 	
 ### UIImage
 
+- **UIImage+RZSnapshotHelpers**
+
+	Method for snapshotting and creating a UIImage from a UIView using iOS7's `drawViewHierarchyInRect`.
+
 - **UIImage+RZFastImageBlur**
 
 	Faster version of Apple's image blur method for iOS7 (with view screenshot). iOS7+ only.
