@@ -1,14 +1,14 @@
 //
 //  UIColor+RZColorContrast.m
-//  UniFirst
+//  Raizlabs
 //
 //  Created by Connor Smith on 5/26/14.
 //  Copyright (c) 2014 Raizlabs. All rights reserved.
 //
 
-#import "UIColor+UFColorContrast.h"
+#import "UIColor+RZColorContrast.h"
 
-NS_ENUM(NSInteger, UFColorContrastColorIndex)
+NS_ENUM(NSInteger, RZColorContrastColorIndex)
 {
     r = 0,
     g,
