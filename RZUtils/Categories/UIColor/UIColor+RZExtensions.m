@@ -28,13 +28,10 @@
 
 #import "UIColor+RZExtensions.h"
 
-NS_ENUM(NSInteger, RZColorContrastColorIndex)
-{
-    r = 0,
-    g,
-    b,
-    a
-};
+const CGFloat kRZExtensionsYIQContrastMultiplierRed             = 0.299f;
+const CGFloat kRZExtensionsYIQContrastMultiplierGreen           = 0.587f;
+const CGFloat kRZExtensionsYIQContrastMultiplierBlue            = 0.114f;
+const CGFloat kRZExtensionsYIQContrastMultiplierThreshhold      = 0.5f;
 
 @implementation UIColor (RZExtensions)
 
@@ -85,15 +82,19 @@ NS_ENUM(NSInteger, RZColorContrastColorIndex)
 
 + (UIColor *)rz_contrastForColor:(UIColor *)color
 {
-    const CGFloat *colorValues = CGColorGetComponents(color.CGColor);
+    CGFloat rValue, gValue, bValue, aValue;
     
-    CGFloat rValue = colorValues[r];
-    CGFloat gValue = colorValues[g];
-    CGFloat bValue = colorValues[b];
+    if ( ![color getRed:&rValue green:&gValue blue:&bValue alpha:&aValue] ) {
+        // Set wValue to 1 so if this method fails, we will return black color
+        CGFloat wValue = 1.0f;
+        if ( [color getWhite:&wValue alpha:&aValue] ) {
+            rValue = gValue = bValue = wValue;
+        }
+    }
     
-    CGFloat yiq = ( (rValue * 299.0f) + (gValue * 587.0f) + (bValue * 114.0f) ) / 1000.0f;
+    CGFloat yiq = (rValue * kRZExtensionsYIQContrastMultiplierRed) + (gValue * kRZExtensionsYIQContrastMultiplierGreen) + (bValue * kRZExtensionsYIQContrastMultiplierBlue);
     
-    return ( yiq >= 128.0f ) ? [UIColor blackColor] : [UIColor whiteColor];
+    return ( yiq >= kRZExtensionsYIQContrastMultiplierThreshhold ) ? [UIColor blackColor] : [UIColor whiteColor];
 }
 
 @end
