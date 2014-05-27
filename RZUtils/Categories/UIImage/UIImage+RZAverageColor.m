@@ -18,7 +18,7 @@ NS_ENUM(NSInteger, RZColorContrastColorIndex)
 
 @implementation UIImage (RZAverageColor)
 
-- (UIColor *)averageColor
+- (UIColor *)rz_averageColor
 {
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     unsigned char rgba[4];

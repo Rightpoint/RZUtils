@@ -14,6 +14,6 @@
  *
  *  @return The average color of a UIImage instance.
  */
-- (UIColor *)averageColor;
+- (UIColor *)rz_averageColor;
 
 @end
