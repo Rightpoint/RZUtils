@@ -92,4 +92,14 @@
  */
 + (UIColor *)rz_colorFromHexString:(NSString *)string;
 
+/**
+ *  Determines whether text over a color should be displayed as black or white.
+ *  Uses YIQ color space with the technique decribes here: http://24ways.org/2010/calculating-color-contrast/
+ *
+ *  @param color The color that text will be displayed over.
+ *
+ *  @return @p[UIColor blackColor] or @p[UIColor whiteColor] depending on the contrast.
+ */
++ (UIColor *)rz_contrastForColor:(UIColor *)color;
+
 @end

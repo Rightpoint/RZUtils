@@ -28,6 +28,14 @@
 
 #import "UIColor+RZExtensions.h"
 
+NS_ENUM(NSInteger, RZColorContrastColorIndex)
+{
+    r = 0,
+    g,
+    b,
+    a
+};
+
 @implementation UIColor (RZExtensions)
 
 + (UIColor *)rz_colorFrom8BitRed:(uint8_t)r green:(uint8_t)g blue:(uint8_t)b
@@ -73,6 +81,19 @@
     [scanner scanHexInt:&hexInteger];
     
     return [self rz_colorFromHex:hexInteger];
+}
+
++ (UIColor *)rz_contrastForColor:(UIColor *)color
+{
+    const CGFloat *colorValues = CGColorGetComponents(color.CGColor);
+    
+    CGFloat rValue = colorValues[r];
+    CGFloat gValue = colorValues[g];
+    CGFloat bValue = colorValues[b];
+    
+    CGFloat yiq = ( (rValue * 299.0f) + (gValue * 587.0f) + (bValue * 114.0f) ) / 1000.0f;
+    
+    return ( yiq >= 128.0f ) ? [UIColor blackColor] : [UIColor whiteColor];
 }
 
 @end
