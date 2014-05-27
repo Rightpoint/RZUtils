@@ -33,11 +33,9 @@
 + (UIImage *)imageByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate
 {
     UIImage *outputImage = nil;
-    CGRect imageRect = CGRectMake(0, 0, view.bounds.size.width, view.bounds.size.height);
+    CGRect imageRect = CGRectMake(0, 0, CGRectGetWidth(view.bounds), CGRectGetHeight(view.bounds));
     UIGraphicsBeginImageContextWithOptions(imageRect.size, NO, 0.0);
     
-    // If afterScreenUpdates is set to YES, there is a super weird bug sometimes where all tap gestures (app-wide) will be delayed.
-    // This definitely needs to be filed in a radar at some point.
     BOOL success = [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:waitForUpdate];
     if ( success ) {
         outputImage = UIGraphicsGetImageFromCurrentImageContext();
