@@ -16,7 +16,7 @@
  *
  *  @param color The color that text will be displayed over.
  *
- *  @return [UIColor blackColor] or [UIColor whiteColor] depending on the contrast.
+ *  @return @p[UIColor blackColor] or @p[UIColor whiteColor] depending on the contrast.
  */
 + (UIColor *)rz_contrastForColor:(UIColor *)color;
 
