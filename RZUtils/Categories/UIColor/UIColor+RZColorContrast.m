@@ -18,7 +18,7 @@ NS_ENUM(NSInteger, RZColorContrastColorIndex)
 
 @implementation UIColor (UFColorContrast)
 
-+ (UIColor *)contrastForColor:(UIColor *)color
++ (UIColor *)rz_contrastForColor:(UIColor *)color
 {
     const CGFloat *colorValues = CGColorGetComponents(color.CGColor);
     

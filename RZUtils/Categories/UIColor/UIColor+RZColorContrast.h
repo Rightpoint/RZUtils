@@ -18,6 +18,6 @@
  *
  *  @return [UIColor blackColor] or [UIColor whiteColor] depending on the contrast.
  */
-+ (UIColor *)contrastForColor:(UIColor *)color;
++ (UIColor *)rz_contrastForColor:(UIColor *)color;
 
 @end
