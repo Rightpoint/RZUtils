@@ -31,7 +31,7 @@
 const CGFloat kRZExtensionsYIQContrastMultiplierRed             = 0.299f;
 const CGFloat kRZExtensionsYIQContrastMultiplierGreen           = 0.587f;
 const CGFloat kRZExtensionsYIQContrastMultiplierBlue            = 0.114f;
-const CGFloat kRZExtensionsYIQContrastMultiplierThreshold      = 0.5f;
+const CGFloat kRZExtensionsYIQContrastMultiplierThreshold       = 0.5f;
 
 @implementation UIColor (RZExtensions)
 
