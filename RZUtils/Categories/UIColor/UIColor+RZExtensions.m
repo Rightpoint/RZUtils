@@ -87,7 +87,7 @@ const CGFloat kRZExtensionsYIQContrastMultiplierThreshold       = 0.5f;
     if ( ![color getRed:&rValue green:&gValue blue:&bValue alpha:&aValue] ) {
         // Set wValue to 1 so if this method fails, we will return black color
         CGFloat wValue = 1.0f;
-        [color getWhite:&wValue alpha:&aValue];
+        [color getWhite:&wValue alpha:NULL];
         rValue = wValue;
         gValue = wValue;
         bValue = wValue;
