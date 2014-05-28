@@ -106,7 +106,14 @@
 @interface UIImage (RZFastImageBlur)
 
 // tint color ONLY APPLIES when blurring radius is non-negligible
-+ (UIImage *)rz_blurredImageByCapturingView:(UIView*)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor*)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
-- (UIImage *)rz_blurredImageWithRadius:(CGFloat)blurRadius tintColor:(UIColor*)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
++ (UIImage *)rz_blurredImageByCapturingView:(UIView *)view
+                          afterScreenUpdate:(BOOL)waitForUpdate
+                                 withRadius:(CGFloat)blurRadius
+                                  tintColor:(UIColor *)tintColor
+                      saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
+
+- (UIImage *)rz_blurredImageWithRadius:(CGFloat)blurRadius
+                             tintColor:(UIColor *)tintColor
+                 saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
 
 @end
