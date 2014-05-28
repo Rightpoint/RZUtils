@@ -30,38 +30,36 @@
 
 @implementation NSDictionary (RZExtensions)
 
-- (id)validObjectForKey:(id)aKey
+- (id)rz_validObjectForKey:(id)aKey
 {
     id obj = [self objectForKey:aKey];
-    if (obj == [NSNull null]) {
+    if ( obj == [NSNull null] ) {
         obj = nil;
     }
     
     return obj;
 }
 
-- (id)validObjectForKeyPath:(id)aKeyPath
+- (id)rz_validObjectForKeyPath:(id)aKeyPath
 {
     id obj = [self valueForKeyPath:aKeyPath];
-    if (obj == [NSNull null]) {
+    if ( obj == [NSNull null] ) {
         obj = nil;
     }
     
     return obj;
 }
 
-- (id)numberForKey:(id)aKey
+- (id)rz_numberForKey:(id)aKey
 {
     id object = [self validObjectForKey:aKey];
     
-    if([object isKindOfClass:[NSString class]])
-    {
+    if( [object isKindOfClass:[NSString class]] ) {
         NSNumberFormatter* formatter = [[NSNumberFormatter alloc] init];
         [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
         object = [formatter numberFromString:object];
     }
-    else if(![object isKindOfClass:[NSNumber class]])
-    {
+    else if( ![object isKindOfClass:[NSNumber class]] ) {
         object = nil;
     }
     
