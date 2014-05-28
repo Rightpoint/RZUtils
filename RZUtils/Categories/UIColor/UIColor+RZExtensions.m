@@ -88,7 +88,9 @@ const CGFloat kRZExtensionsYIQContrastMultiplierThreshold       = 0.5f;
         // Set wValue to 1 so if this method fails, we will return black color
         CGFloat wValue = 1.0f;
         [color getWhite:&wValue alpha:&aValue];
-        rValue = gValue = bValue = wValue;
+        rValue = wValue;
+        gValue = wValue;
+        bValue = wValue;
     }
     
     CGFloat yiq = (rValue * kRZExtensionsYIQContrastMultiplierRed) + (gValue * kRZExtensionsYIQContrastMultiplierGreen) + (bValue * kRZExtensionsYIQContrastMultiplierBlue);
