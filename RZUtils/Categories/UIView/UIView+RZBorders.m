@@ -368,7 +368,9 @@ static char kRZBorderViewKey;
         CGContextSetBlendMode(ctx, kCGBlendModeDestinationIn);
         CGContextDrawImage(ctx, fullRect, [maskImage CGImage]);
         
-        borderImage = [UIGraphicsGetImageFromCurrentImageContext() resizableImageWithCapInsets:UIEdgeInsetsMake(imgSize.height * 0.5, imgSize.width * 0.5, imgSize.height * 0.5, imgSize.width * 0.5)
+        UIEdgeInsets stretchInsets = UIEdgeInsetsMake(floor(imgSize.height * 0.5), floor(imgSize.width * 0.5), floor(imgSize.height * 0.5), floor(imgSize.width * 0.5));
+        
+        borderImage = [UIGraphicsGetImageFromCurrentImageContext() resizableImageWithCapInsets:stretchInsets
                                                                                   resizingMode:UIImageResizingModeStretch];
         UIGraphicsEndImageContext();
     }
