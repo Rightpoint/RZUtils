@@ -8,7 +8,7 @@
 
 #import "UIImage+RZAverageColor.h"
 
-NS_ENUM(NSInteger, RZColorContrastColorIndex)
+typedef NS_ENUM(NSInteger, RZColorContrastColorIndex)
 {
     r = 0,
     g,
