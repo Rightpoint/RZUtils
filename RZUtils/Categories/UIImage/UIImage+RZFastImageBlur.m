@@ -225,8 +225,7 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
     
     BOOL shouldRotate = (self.imageOrientation != UIImageOrientationUp);
     
-    if (shouldRotate)
-    {
+    if (shouldRotate) {
         inputImage = [UIImage imageWithCGImage:[self CGImage] scale:self.scale orientation:UIImageOrientationUp];
     }
     
@@ -244,8 +243,7 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
     
     outputImage = RZBlurredImageInCurrentContext(imageRect, blurRadius, tintColor, saturationDeltaFactor, inputImage.scale);
     
-    if (shouldRotate)
-    {
+    if (shouldRotate) {
         outputImage = [UIImage imageWithCGImage:[outputImage CGImage] scale:outputImage.scale orientation:self.imageOrientation];
     }
     
