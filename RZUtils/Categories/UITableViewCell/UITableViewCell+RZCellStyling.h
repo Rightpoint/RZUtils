@@ -30,6 +30,6 @@
 
 @interface UITableViewCell (RZCellStyling)
 
-- (void)setBackgroundImagesForIndex:(int)index totalRowsInSection:(int)totalRows;
+- (void)rz_setBackgroundImagesForIndex:(int)index totalRowsInSection:(int)totalRows;
 
 @end

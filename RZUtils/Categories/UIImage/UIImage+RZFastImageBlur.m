@@ -203,7 +203,7 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
 
 @implementation UIImage (ImageEffects)
 
-+ (UIImage *)blurredImageByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor
++ (UIImage *)rz_blurredImageByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor
 {
     UIImage *outputImage = nil;
     CGRect imageRect = { CGPointZero, view.bounds.size };
@@ -219,7 +219,7 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
     return outputImage;
 }
 
-- (UIImage *)blurredImageWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor
+- (UIImage *)rz_blurredImageWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor
 {
     UIImage *inputImage = self;
     

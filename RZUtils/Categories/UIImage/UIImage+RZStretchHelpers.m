@@ -31,14 +31,14 @@
 
 @implementation UIImage (RZStretchHelpers)
 
-- (UIImage*)makeStretchable
+- (UIImage*)rz_makeStretchable
 {
     CGFloat xCap = floorf(self.size.width/2.0f);
     CGFloat yCap = floorf(self.size.height/2.0f);
     return [self resizableImageWithCapInsets:UIEdgeInsetsMake(yCap, xCap, yCap, xCap)];
 }
 
-- (UIImage*)makeStretchableWithCapInsets:(UIEdgeInsets)insets
+- (UIImage*)rz_makeStretchableWithCapInsets:(UIEdgeInsets)insets
 {
     return [self resizableImageWithCapInsets:insets];
 }

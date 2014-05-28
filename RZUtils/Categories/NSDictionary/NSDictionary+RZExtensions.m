@@ -52,7 +52,7 @@
 
 - (id)rz_numberForKey:(id)aKey
 {
-    id object = [self validObjectForKey:aKey];
+    id object = [self rz_validObjectForKey:aKey];
     
     if( [object isKindOfClass:[NSString class]] ) {
         NSNumberFormatter* formatter = [[NSNumberFormatter alloc] init];

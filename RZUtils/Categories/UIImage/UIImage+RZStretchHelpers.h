@@ -31,7 +31,7 @@
 
 @interface UIImage (RZStretchHelpers)
 
-- (UIImage*)makeStretchable;
-- (UIImage*)makeStretchableWithCapInsets:(UIEdgeInsets)insets;
+- (UIImage*)rz_makeStretchable;
+- (UIImage*)rz_makeStretchableWithCapInsets:(UIEdgeInsets)insets;
 
 @end

@@ -31,7 +31,7 @@
 
 @implementation UITableViewCell (RZCellStyling)
 
-- (void)setBackgroundImagesForIndex:(int)index totalRowsInSection:(int)totalRows
+- (void)rz_setBackgroundImagesForIndex:(int)index totalRowsInSection:(int)totalRows
 {
     NSString *unselectedImageName = nil;
     NSString *selectedImageName = nil;
@@ -65,10 +65,10 @@
     }
     
     //regular
-    UIImage *backgroundImage = [[UIImage imageNamed:unselectedImageName] makeStretchable];
+    UIImage *backgroundImage = [[UIImage imageNamed:unselectedImageName] rz_makeStretchable];
     
     //pressed
-    UIImage *selectedImage = [[UIImage imageNamed:selectedImageName] makeStretchable];
+    UIImage *selectedImage = [[UIImage imageNamed:selectedImageName] rz_makeStretchable];
     
     
     if ([self.backgroundView isKindOfClass:[UIImageView class]])
