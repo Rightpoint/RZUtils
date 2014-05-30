@@ -82,9 +82,9 @@ const CGFloat kRZExtensionsYIQContrastMultiplierThreshold       = 0.5f;
 
 + (UIColor *)rz_contrastForColor:(UIColor *)color
 {
-    CGFloat rValue, gValue, bValue, aValue;
+    CGFloat rValue, gValue, bValue;
     
-    if ( ![color getRed:&rValue green:&gValue blue:&bValue alpha:&aValue] ) {
+    if ( ![color getRed:&rValue green:&gValue blue:&bValue alpha:NULL] ) {
         // Set wValue to 1 so if this method fails, we will return black color
         CGFloat wValue = 1.0f;
         [color getWhite:&wValue alpha:NULL];
