@@ -83,12 +83,15 @@ static const void * rz_NavigationControllerPreviousDelegateKey      = &rz_Naviga
 
 - (void)setupDelegateWithCompletion:(RZNavigationControllerCompletionBlock)completion
 {
-    if (self.delegate != nil)
+    if (completion != nil)
     {
-        objc_setAssociatedObject(self, rz_NavigationControllerPreviousDelegateKey, self.delegate, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        if (self.delegate != nil)
+        {
+            objc_setAssociatedObject(self, rz_NavigationControllerPreviousDelegateKey, self.delegate, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        }
+        self.delegate = self;
+        objc_setAssociatedObject(self, rz_NavigationControllerCompletionBlockKey, completion, OBJC_ASSOCIATION_COPY_NONATOMIC);
     }
-    self.delegate = self;
-    objc_setAssociatedObject(self, rz_NavigationControllerCompletionBlockKey, completion, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 #pragma mark - UINavigationControllerDelegate
@@ -114,7 +117,7 @@ static const void * rz_NavigationControllerPreviousDelegateKey      = &rz_Naviga
     }
     
     // call the completion block
-    if (completion)
+    if (completion != nil)
     {
         NSArray *poppedViewControllers = nil;
         if ([poppedObject isKindOfClass:[NSArray class]])
