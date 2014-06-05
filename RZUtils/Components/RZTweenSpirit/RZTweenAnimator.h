@@ -48,6 +48,8 @@ typedef void (^RZTweenAnimatorUpdateBlock)(NSValue *value);
  */
 - (void)addTween:(RZTween *)tween withUpdateBlock:(RZTweenAnimatorUpdateBlock)frameBlock;
 
+- (void)removeTween:(RZTween *)tween;
+
 /** 
  * Represents the current position of the animation timeline.
  * Set this to change the timeline position immediately

@@ -65,6 +65,11 @@ static float RZTweenMapFloat(float value, float inMin, float inMax, float outMin
     return kf;
 }
 
+- (NSString *)debugDescription
+{
+    return [NSString stringWithFormat:@"%@ - time:%f value:%@",[super debugDescription], self.time, self.value];
+}
+
 @end
 
 // -----------------------------
@@ -277,6 +282,46 @@ static float RZTweenMapFloat(float value, float inMin, float inMax, float outMin
         }
     }
     return transformValue;
+}
+
+@end
+
+@implementation RZRectTween
+
+- (void)addKeyRect:(CGRect)rect atTime:(NSTimeInterval)time
+{
+    [self addKeyFrame:[RZTweenKeyFrame keyFrameWithTime:time value:[NSValue valueWithCGRect:rect]]];
+}
+
+- (NSValue *)valueAtTime:(NSTimeInterval)time
+{
+    NSValue *rectValue = [NSValue valueWithCGRect:CGRectZero];
+    NSArray *nearestKeyFrames = [self nearestKeyFramesForTime:time];
+    if (nearestKeyFrames.count > 0)
+    {
+        if (nearestKeyFrames.count == 1)
+        {
+            RZTweenKeyFrame *kf = [nearestKeyFrames firstObject];
+            rectValue = kf.value;
+        }
+        else
+        {
+            RZTweenKeyFrame *kf1 = [nearestKeyFrames firstObject];
+            RZTweenKeyFrame *kf2 = [nearestKeyFrames lastObject];
+            
+            CGRect rect1 = [kf1.value CGRectValue];
+            CGRect rect2 = [kf2.value CGRectValue];
+            
+            CGRect finalRect;
+            finalRect.origin.x = RZTweenMapFloat(time, kf1.time, kf2.time, rect1.origin.x, rect2.origin.x, YES);
+            finalRect.origin.y = RZTweenMapFloat(time, kf1.time, kf2.time, rect1.origin.y, rect2.origin.y, YES);
+            finalRect.size.width = RZTweenMapFloat(time, kf1.time, kf2.time, rect1.size.width, rect2.size.width, YES);
+            finalRect.size.height = RZTweenMapFloat(time, kf1.time, kf2.time, rect1.size.height, rect2.size.height, YES);
+
+            rectValue = [NSValue valueWithCGRect:finalRect];
+        }
+    }
+    return rectValue;
 }
 
 @end

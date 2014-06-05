@@ -64,6 +64,12 @@
 
 @end
 
+@interface RZRectTween : RZTween
+
+- (void)addKeyRect:(CGRect)rect atTime:(NSTimeInterval)time;
+
+@end
+
 // TODO:
 // - Color
 // - CGRect
