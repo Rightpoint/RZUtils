@@ -35,7 +35,16 @@
  *  A tween can be used as-is or with RZTweenAnimator.
  */
 
+
+typedef NS_ENUM(u_int8_t, RZTweenCurveType)
+{
+    RZTweenCurveTypeLinear,
+    RZTweenCurveTypeQuadraticEaseInOut
+};
+
 @interface RZTween : NSObject <NSCopying>
+
+@property (nonatomic, assign) RZTweenCurveType curveType;
 
 // Returns @0 by default. Should subclass to return appropriate type wrapped in NSValue.
 - (NSValue *)valueAtTime:(NSTimeInterval)time;
