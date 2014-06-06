@@ -211,7 +211,7 @@ All utilities within this directory are intended for use in test code ONLY.
 
 #### RZWaiter
 
-A utility for aiding in testing asyncrinous operations.
+A utility for aiding in testing asynchronous operations.
 
 
 ## License

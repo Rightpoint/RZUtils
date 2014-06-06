@@ -20,10 +20,13 @@
          checkCondition:(RZWaiterPollBlock)conditionBlock
               onTimeout:(RZWaiterTimeout)timeoutBlock
 {
+    NSParameterAssert(conditionBlock);
+    NSParameterAssert(timeoutBlock);
+    
     int times = timeout / pollingInterval;
     for ( int i = 0; i < times; i++ ) {
         [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:pollingInterval]];
-        if ( conditionBlock()) {
+        if ( conditionBlock() ) {
             return;
         }
     }
