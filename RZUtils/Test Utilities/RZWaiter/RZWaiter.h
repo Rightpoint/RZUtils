@@ -21,13 +21,6 @@ typedef void (^RZWaiterTimeout)(void);
 @interface RZWaiter : NSObject
 
 /**
- *  Create a new instance of the waiter.
- *
- *  @return The new instance.
- */
-+ (instancetype)waiter;
-
-/**
  *  Wait for the given timeout, polling every N time interval. While waiting, the main runloop continues to run.
  *
  *  @param timeout         Overall timeout in sec.
@@ -35,7 +28,7 @@ typedef void (^RZWaiterTimeout)(void);
  *  @param conditionBlock  Evaluated condition to determine if expected condition has been satisfied. (required parameter)
  *  @param timeoutBlock    Executed when the "wait" period is exceeded (timeout). This is usually a good place to call XCTFail() (required parameter)
  */
-- (void)waitWithTimeout:(NSTimeInterval)timeout
++ (void)waitWithTimeout:(NSTimeInterval)timeout
            pollInterval:(NSTimeInterval)pollingInterval
          checkCondition:(RZWaiterPollBlock)conditionBlock
               onTimeout:(RZWaiterTimeout)timeoutBlock;

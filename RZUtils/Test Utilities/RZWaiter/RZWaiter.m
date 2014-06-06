@@ -10,12 +10,7 @@
 
 @implementation RZWaiter
 
-+ (instancetype)waiter
-{
-    return [[RZWaiter alloc] init];
-}
-
-- (void)waitWithTimeout:(NSTimeInterval)timeout
++ (void)waitWithTimeout:(NSTimeInterval)timeout
            pollInterval:(NSTimeInterval)pollingInterval
          checkCondition:(RZWaiterPollBlock)conditionBlock
               onTimeout:(RZWaiterTimeout)timeoutBlock
