@@ -117,12 +117,6 @@ Replacement for `UIImageView`-based animated .png sequences that calls a complet
 
 `UIControl` subclass that acts like a UIButton but allows the addition and layout of arbitrary subviews.
 
-#### RZCellHeightManager
-
-Autolayout-based dynamic cell height utility.
-
-**Deprecated**: This will soon be in its own repository.
-
 #### RZCollectionTableView
 
 Is it a Collection View or a Table View? The world may never know... (**Spoiler**: It's a Collection View)
