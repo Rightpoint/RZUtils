@@ -26,11 +26,11 @@
     int times = timeout / pollingInterval;
     for ( int i = 0; i < times; i++ ) {
         [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:pollingInterval]];
-        if ( conditionBlock() ) {
+        if ( conditionBlock != nil && conditionBlock() ) {
             return;
         }
     }
-    if ( timeoutBlock ) {
+    if ( timeoutBlock != nil ) {
         timeoutBlock();
     }
 }
