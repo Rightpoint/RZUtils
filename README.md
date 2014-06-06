@@ -199,6 +199,15 @@ Useful extensions for working with GCD/libdispatch.
 
 A header with debug log macros that extend `NSLog`, including verbosity levels.
 
+## Test Utilities Overview
+
+All utilities within this directory are intended for use in test code ONLY. 
+
+#### RZWaiter
+
+A utility for aiding in testing asynchronous operations.
+
+
 ## License
 
 RZUtils is distributed under an [MIT License](http://opensource.org/licenses/MIT). See the LICENSE file for more details.
@@ -210,3 +219,4 @@ When adding new components, please try and follow the following guidelines as cl
  * No need for unit tests, just make sure it works and solves problems rather than causing them.
  * Ensure that the component has well documented headers.
  * Aggressively use namespacing (method prefix) for Objective-C categories in order to avoid potential naming collisions.
+  
