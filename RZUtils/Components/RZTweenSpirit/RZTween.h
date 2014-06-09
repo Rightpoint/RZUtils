@@ -39,7 +39,12 @@
 typedef NS_ENUM(u_int8_t, RZTweenCurveType)
 {
     RZTweenCurveTypeLinear,
-    RZTweenCurveTypeQuadraticEaseInOut
+    RZTweenCurveTypeQuadraticEaseIn,
+    RZTweenCurveTypeQuadraticEaseOut,
+    RZTweenCurveTypeQuadraticEaseInOut,
+    RZTweenCurveTypeSineEaseIn,
+    RZTweenCurveTypeSineEaseOut,
+    RZTweenCurveTypeSineEaseInOut
 };
 
 @interface RZTween : NSObject <NSCopying>
@@ -79,7 +84,18 @@ typedef NS_ENUM(u_int8_t, RZTweenCurveType)
 
 @end
 
+@interface RZPointTween : RZTween
+
+- (void)addKeyPoint:(CGPoint)point atTime:(NSTimeInterval)time;
+
+@end
+
+// Currently only supports RGB color space.
+@interface RZColorTween : RZTween
+
+- (void)addKeyColor:(UIColor *)color atTime:(NSTimeInterval)time;
+
+@end
 // TODO:
 // - Color
-// - CGRect
-// - Other curves besides linear
+// - Bounce Curves.
