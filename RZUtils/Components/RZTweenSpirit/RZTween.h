@@ -27,7 +27,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 /*!
  *  A subclass of RZTween provides a way to interpolate a value of an arbitrary numerical type
@@ -36,22 +36,56 @@
  */
 
 
+/**
+ *  Different animation curves that are supported by the tween.
+ */
 typedef NS_ENUM(u_int8_t, RZTweenCurveType)
 {
+    /**
+     *  y = x
+     */
     RZTweenCurveTypeLinear,
+    /**
+     *  y = x^2
+     */
     RZTweenCurveTypeQuadraticEaseIn,
+    /**
+     *  y = -(x * (x-2))
+     */
     RZTweenCurveTypeQuadraticEaseOut,
+    /**
+     *  see RZTweenQuadraticEaseInOut for description.
+     */
     RZTweenCurveTypeQuadraticEaseInOut,
+    /**
+     *  y = sin(π/2 * (x-1))
+     */
     RZTweenCurveTypeSineEaseIn,
+    /**
+     *  y = sin(π/2 * x)
+     */
     RZTweenCurveTypeSineEaseOut,
+    /**
+     *  y = (1 - cos(π * x))/2
+     */
     RZTweenCurveTypeSineEaseInOut
 };
 
 @interface RZTween : NSObject <NSCopying>
 
+/**
+ *  The animation curve type to use for a paticular tween
+ */
 @property (nonatomic, assign) RZTweenCurveType curveType;
 
-// Returns @0 by default. Should subclass to return appropriate type wrapped in NSValue.
+// TODO: remove the requirement for NSValue to support objects (UIColor)
+/**
+ *  Returns @0 by default.  Should subclass to return appropriate type wrapped in NSValue
+ *
+ *  @param time animation offset
+ *
+ *  @return value for KVC.
+ */
 - (NSValue *)valueAtTime:(NSTimeInterval)time;
 
 - (BOOL)isEqualToTween:(RZTween *)tween;
@@ -64,8 +98,10 @@ typedef NS_ENUM(u_int8_t, RZTweenCurveType)
 
 @end
 
-// Obviously can't tween between bool values,
-// so this simply returns the most recent boolean keyframe value
+/**
+ *  Obviously can't tween between bool values,
+ *  so this simply returns the most recent boolean keyframe value.
+ */
 @interface RZBooleanTween : RZTween
 
 - (void)addKeyBool:(BOOL)keyBool atTime:(NSTimeInterval)time;

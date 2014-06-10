@@ -78,18 +78,10 @@
     [self.tweensToBlocks setObject:[frameBlock copy] forKey:tween];
 }
 
-#pragma mark - Removing tweens
-
-- (void)removeTween:(RZTween *)tween
-{
-    [self.tweensToBlocks removeObjectForKey:tween];
-}
-
 #pragma mark - Public animation
 
 - (void)setTime:(NSTimeInterval)time
 {
-//    NSLog(@"Setting AnimationTime:%f",time);
     [self cancelFrameTimer];
     _time = time;
     [self setValuesForCurrentTime];
