@@ -72,6 +72,7 @@ typedef NS_ENUM(u_int8_t, RZTweenCurveType)
 
 @end
 
+// TODO:  may need to look into a bug with rotation transforms.
 @interface RZTransformTween : RZTween
 
 - (void)addKeyTransform:(CGAffineTransform)transform atTime:(NSTimeInterval)time;
@@ -90,12 +91,6 @@ typedef NS_ENUM(u_int8_t, RZTweenCurveType)
 
 @end
 
-// Currently only supports RGB color space.
-@interface RZColorTween : RZTween
-
-- (void)addKeyColor:(UIColor *)color atTime:(NSTimeInterval)time;
-
-@end
 // TODO:
 // - Color
 // - Bounce Curves.

@@ -36,7 +36,6 @@ static float RZTweenClampFloat(float value, float min, float max)
     return MIN(max, MAX(value, min));
 }
 
-// Math functions taken from AHEasing
 static float RZTweenQuadraticEaseIn(float v)
 {
 	return powf(v, 2);
@@ -438,21 +437,6 @@ static float RZTweenMapFloat(float value, float inMin, float inMax, float outMin
         }
     }
     return pointValue;
-}
-
-@end
-
-@implementation RZColorTween
-
-- (void)addKeyColor:(UIColor *)color atTime:(NSTimeInterval)time
-{
-//    [self addKeyFrame:[RZTweenKeyFrame keyFrameWithTime:time value:color]];
-
-}
-
-- (NSValue *)valueAtTime:(NSTimeInterval)time
-{
-
 }
 
 @end
