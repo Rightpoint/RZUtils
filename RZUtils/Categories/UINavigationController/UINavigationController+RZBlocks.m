@@ -30,9 +30,49 @@
 
 #import <objc/runtime.h>
 
-static const void * kRZNavigationControllerCompletionBlockKey       = &kRZNavigationControllerCompletionBlockKey;
-static const void * kRZNavigationControllerPoppedViewControllersKey = &kRZNavigationControllerPoppedViewControllersKey;
-static const void * kRZNavigationControllerPreviousDelegateKey      = &kRZNavigationControllerPreviousDelegateKey;
+static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNavigationControllerCompletionBlockHelperKey;
+
+@interface RZUINavigationControllerCompletionBlockHelper : NSObject <UINavigationControllerDelegate>
+
+@property (copy, nonatomic) RZNavigationControllerCompletionBlock completionBlock;
+@property (strong, nonatomic) NSArray *poppedViewControllers;
+@property (weak, nonatomic) id<UINavigationControllerDelegate> previousDelegate;
+
+@end
+
+@implementation RZUINavigationControllerCompletionBlockHelper
+
+- (instancetype)init
+{
+    self = [super init];
+    if ( self == nil ) {
+        self.completionBlock = nil;
+        self.poppedViewControllers = nil;
+        self.previousDelegate = nil;
+    }
+    return self;
+}
+
+#pragma mark - UINavigationControllerDelegate
+
+- (void)navigationController:(UINavigationController *)navigationController
+       didShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated
+{
+    // reset previous delegate, if any
+    if (self.previousDelegate != nil)
+    {
+        navigationController.delegate = self.previousDelegate;
+    }
+    
+    // call the completion block
+    if (self.completionBlock != nil)
+    {
+        self.completionBlock(navigationController, self.poppedViewControllers, viewController);
+    }
+}
+
+@end
 
 @implementation UINavigationController (RZBlocks)
 
@@ -49,26 +89,26 @@ static const void * kRZNavigationControllerPreviousDelegateKey      = &kRZNaviga
 - (void)rz_popViewControllerAnimated:(BOOL)animated
                           completion:(RZNavigationControllerCompletionBlock)completion
 {
-    [self rz_setupDelegateWithCompletion:completion];
+    RZUINavigationControllerCompletionBlockHelper *helper = [self rz_setupDelegateWithCompletion:completion];
     UIViewController *poppedViewController = [self popViewControllerAnimated:animated];
-    objc_setAssociatedObject(self, kRZNavigationControllerPoppedViewControllersKey, poppedViewController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    helper.poppedViewControllers = @[poppedViewController];
 }
 
 - (void)rz_popToViewController:(UIViewController *)viewController
                       animated:(BOOL)animated
                     completion:(RZNavigationControllerCompletionBlock)completion
 {
-    [self rz_setupDelegateWithCompletion:completion];
+    RZUINavigationControllerCompletionBlockHelper *helper = [self rz_setupDelegateWithCompletion:completion];
     NSArray *poppedViewControllers = [self popToViewController:viewController animated:animated];
-    objc_setAssociatedObject(self, kRZNavigationControllerPoppedViewControllersKey, poppedViewControllers, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    helper.poppedViewControllers = poppedViewControllers;
 }
 
 - (void)rz_popToRootViewControllerAnimated:(BOOL)animated
                                 completion:(RZNavigationControllerCompletionBlock)completion
 {
-    [self rz_setupDelegateWithCompletion:completion];
+    RZUINavigationControllerCompletionBlockHelper *helper = [self rz_setupDelegateWithCompletion:completion];
     NSArray *poppedViewControllers = [self popToRootViewControllerAnimated:animated];
-    objc_setAssociatedObject(self, kRZNavigationControllerPoppedViewControllersKey, poppedViewControllers, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    helper.poppedViewControllers = poppedViewControllers;
 }
 
 - (void)rz_setViewControllers:(NSArray *)viewControllers
@@ -81,55 +121,22 @@ static const void * kRZNavigationControllerPreviousDelegateKey      = &kRZNaviga
 
 #pragma mark - Private
 
-- (void)rz_setupDelegateWithCompletion:(RZNavigationControllerCompletionBlock)completion
+- (RZUINavigationControllerCompletionBlockHelper *)rz_setupDelegateWithCompletion:(RZNavigationControllerCompletionBlock)completion
 {
+    RZUINavigationControllerCompletionBlockHelper *helper = [[RZUINavigationControllerCompletionBlockHelper alloc] init];
     if (completion != nil)
     {
         if (self.delegate != nil)
         {
-            objc_setAssociatedObject(self, kRZNavigationControllerPreviousDelegateKey, self.delegate, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            helper.previousDelegate = self.delegate;
         }
-        self.delegate = self;
-        objc_setAssociatedObject(self, kRZNavigationControllerCompletionBlockKey, completion, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    }
-}
-
-#pragma mark - UINavigationControllerDelegate
-
-- (void)navigationController:(UINavigationController *)navigationController
-       didShowViewController:(UIViewController *)viewController
-                    animated:(BOOL)animated
-{
-    // retrieve stored associated objects
-    RZNavigationControllerCompletionBlock completion = objc_getAssociatedObject(self, kRZNavigationControllerCompletionBlockKey);
-    id poppedObject = objc_getAssociatedObject(self, kRZNavigationControllerPoppedViewControllersKey);
-    id previousDelegate = objc_getAssociatedObject(self, kRZNavigationControllerPreviousDelegateKey);
-    
-    // set all associated objects for this category to nil
-    objc_setAssociatedObject(self, kRZNavigationControllerCompletionBlockKey, nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    objc_setAssociatedObject(self, kRZNavigationControllerPoppedViewControllersKey, nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    objc_setAssociatedObject(self, kRZNavigationControllerPreviousDelegateKey, nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    
-    // reset previous delegate, if any
-    if (previousDelegate != nil)
-    {
-        self.delegate = previousDelegate;
+        self.delegate = helper;
+        helper.completionBlock = completion;
     }
     
-    // call the completion block
-    if (completion != nil)
-    {
-        NSArray *poppedViewControllers = nil;
-        if ([poppedObject isKindOfClass:[NSArray class]])
-        {
-            poppedViewControllers = poppedObject;
-        }
-        else if ([poppedObject isKindOfClass:[UIViewController class]])
-        {
-            poppedViewControllers = @[poppedObject];
-        }
-        completion(self, poppedViewControllers, viewController);
-    }
+    objc_setAssociatedObject(self, kRZNavigationControllerCompletionBlockHelperKey, helper, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
+    return helper;
 }
 
 @end
