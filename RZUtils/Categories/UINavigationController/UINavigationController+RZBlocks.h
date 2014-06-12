@@ -33,27 +33,96 @@ typedef void(^RZNavigationControllerCompletionBlock)(UINavigationController *nav
                                                      UIViewController *presentedViewController);
 typedef void(^RZNavigationControllerPreparationBlock)(UINavigationController *navigationController,
                                                       UIViewController *presentingViewController);
+/**
+ *  Category that provides a block based interface for performing operations
+ *  after animated push/pop to/from a navigation controller. Using these block-
+ *  based methods is meant as a replacement for
+ *
+ *      navigationController:willShowViewController:animated
+ *      navigationController:didShowViewController:animated
+ *
+ *  and any delegate implementations of those methods will not be called.
+ */
 
 @interface UINavigationController (RZBlocks) <UINavigationControllerDelegate>
 
+/**
+ *  Push a view controller onto the nav stack, with preparation and completion 
+ *  blocks replacing callbacks to the UINavigationControllerDelegate methods:
+ *
+ *      navigationController:willShowViewController:animated
+ *      navigationController:didShowViewController:animated
+ *
+ *  @param viewController The view controller to push onto the nav stack.
+ *  @param animated       Whether or not the transition should be animated.
+ *  @param preparation    Block to be called before viewController is shown.
+ *  @param completion     Block to be called after viewController has been shown.
+ */
 - (void)rz_pushViewController:(UIViewController *)viewController
                      animated:(BOOL)animated
                   preparation:(RZNavigationControllerPreparationBlock)preparation
                    completion:(RZNavigationControllerCompletionBlock)completion;
 
+/**
+ *  Pop the topmost view controller from the nav stack, with preparation and
+ *  completion blocks replacing callbacks to the UINavigationControllerDelegate methods:
+ *
+ *      navigationController:willShowViewController:animated
+ *      navigationController:didShowViewController:animated
+ *
+ *  @param animated       Whether or not the transition should be animated.
+ *  @param preparation    Block to be called before viewController is shown.
+ *  @param completion     Block to be called after viewController has been shown.
+ */
 - (void)rz_popViewControllerAnimated:(BOOL)animated
                          preparation:(RZNavigationControllerPreparationBlock)preparation
                           completion:(RZNavigationControllerCompletionBlock)completion;
 
+/**
+ *  Pops view controllers from the nav stack to reveal a desired view controller,
+ *  with preparation and completion blocks replacing callbacks to the 
+ *  UINavigationControllerDelegate methods:
+ *
+ *      navigationController:willShowViewController:animated
+ *      navigationController:didShowViewController:animated
+ *
+ *  @param viewController The view controller reveal.
+ *  @param animated       Whether or not the transition should be animated.
+ *  @param preparation    Block to be called before viewController is shown.
+ *  @param completion     Block to be called after viewController has been shown.
+ */
 - (void)rz_popToViewController:(UIViewController *)viewController
                       animated:(BOOL)animated
                    preparation:(RZNavigationControllerPreparationBlock)preparation
                     completion:(RZNavigationControllerCompletionBlock)completion;
 
+/**
+ *  Pop all but the root view controller from the nav stack, with preparation and 
+ *  completion blocks replacing callbacks to the UINavigationControllerDelegate methods:
+ *
+ *      navigationController:willShowViewController:animated
+ *      navigationController:didShowViewController:animated
+ *
+ *  @param animated       Whether or not the transition should be animated.
+ *  @param preparation    Block to be called before viewController is shown.
+ *  @param completion     Block to be called after viewController has been shown.
+ */
 - (void)rz_popToRootViewControllerAnimated:(BOOL)animated
                                preparation:(RZNavigationControllerPreparationBlock)preparation
                                 completion:(RZNavigationControllerCompletionBlock)completion;
 
+/**
+ *  Push a collection of view controllers onto the nav stack, with preparation and
+ *  completion blocks replacing callbacks to the UINavigationControllerDelegate methods:
+ *
+ *      navigationController:willShowViewController:animated
+ *      navigationController:didShowViewController:animated
+ *
+ *  @param viewControllers The view controller to push onto the nav stack.
+ *  @param animated        Whether or not the transition should be animated.
+ *  @param preparation     Block to be called before viewController is shown.
+ *  @param completion      Block to be called after viewController has been shown.
+ */
 - (void)rz_setViewControllers:(NSArray *)viewControllers
                      animated:(BOOL)animated
                   preparation:(RZNavigationControllerPreparationBlock)preparation
