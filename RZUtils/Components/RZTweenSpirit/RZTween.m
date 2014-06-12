@@ -104,7 +104,7 @@ static float RZTweenMapFloat(float value, float inMin, float inMax, float outMin
             result = RZTweenSineEaseInOut(normalizedValue);
             break;
         default:
-            LogDebug(@"Invalid tween curve type :%d",curve);
+            RZLogDebug(@"Invalid tween curve type :%d",curve);
             result = normalizedValue;
             break;
     }
