@@ -43,11 +43,11 @@
  *  @param completion Animation completion block, always executed.
  *  @param animated   YES to animate the operations in animations block, NO to perform them immediately.
  */
-+ (void)animateWithDuration:(NSTimeInterval)duration
-                      delay:(NSTimeInterval)delay
-                    options:(UIViewAnimationOptions)options
-                 animations:(void (^)(void))animations
-                 completion:(void (^)(BOOL))completion
-                   animated:(BOOL)animated;
++ (void)rz_animateWithDuration:(NSTimeInterval)duration
+                         delay:(NSTimeInterval)delay
+                       options:(UIViewAnimationOptions)options
+                    animations:(void (^)(void))animations
+                    completion:(void (^)(BOOL))completion
+                      animated:(BOOL)animated;
 
 @end

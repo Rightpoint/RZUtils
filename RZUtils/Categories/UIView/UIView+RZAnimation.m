@@ -32,12 +32,12 @@
 
 @implementation UIView (RZAnimation)
 
-+ (void)animateWithDuration:(NSTimeInterval)duration
-                      delay:(NSTimeInterval)delay
-                    options:(UIViewAnimationOptions)options
-                 animations:(void (^)(void))animations
-                 completion:(void (^)(BOOL))completion
-                   animated:(BOOL)animated
++ (void)rz_animateWithDuration:(NSTimeInterval)duration
+                         delay:(NSTimeInterval)delay
+                       options:(UIViewAnimationOptions)options
+                    animations:(void (^)(void))animations
+                    completion:(void (^)(BOOL))completion
+                      animated:(BOOL)animated
 {
     if ( animated ) {
         [UIView animateWithDuration:duration delay:delay options:options animations:animations completion:completion];
