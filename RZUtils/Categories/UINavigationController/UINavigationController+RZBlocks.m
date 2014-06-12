@@ -142,7 +142,7 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
 - (RZUINavigationControllerCompletionBlockHelper *)rz_setupDelegateWithPreparation:(RZNavigationControllerPreparationBlock)preparation completion:(RZNavigationControllerCompletionBlock)completion
 {
     RZUINavigationControllerCompletionBlockHelper *helper = [[RZUINavigationControllerCompletionBlockHelper alloc] init];
-    if (completion != nil)
+    if (completion != nil || preparation != nil)
     {
         if (self.delegate != nil)
         {
