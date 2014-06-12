@@ -28,6 +28,10 @@
 
 #import <UIKit/UIKit.h>
 
+#define RZColorFromRGB(r,g,b)       [UIColor rz_colorFrom8BitRed:r green:g blue:b]
+#define RZColorFromRGBA(r,g,b,a)    [UIColor rz_colorFrom8BitRed:r green:g blue:b alpha:a]
+#define RZColorGrayscale(w)         [UIColor rz_colorFrom8BitWhite:w]
+
 @interface UIColor (RZExtensions)
 
 /**
