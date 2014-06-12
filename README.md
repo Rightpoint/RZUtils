@@ -69,13 +69,17 @@ A collection of helpful utilities and components for iOS development.
 	
 ### UIImage
 
+- **UIImage+RZAverageColor**
+	
+	Calculates the average color of a UIImage instance.
+
+- **UIImage+RZResize**
+	
+	Methods for resizing an image given an aspect ratio.
+
 - **UIImage+RZSnapshotHelpers**
 
-	Method for snapshotting and creating a UIImage from a UIView using iOS7's `drawViewHierarchyInRect`.
-
-- **UIImage+RZFastImageBlur**
-
-	Faster version of Apple's image blur method for iOS7 (with view screenshot). iOS7+ only.
+	Method for snapshotting and creating a UIImage from a UIView using iOS7's `drawViewHierarchyInRect`.  Contains a faster version of Apple's image blur method for iOS7 (with view screenshot). iOS7+ only.
 
 - **UIImage+RZStretchHelpers**
 
