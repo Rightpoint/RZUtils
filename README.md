@@ -1,6 +1,6 @@
 # RZUtils
 
-This is a collection of helpful utilities and components which makes iOS development quicker and easier.  A demo project is provided that demonstrates the use of most components.
+A collection of helpful utilities and components for iOS development.
 
 ## Categories Overview
 
@@ -54,7 +54,13 @@ This is a collection of helpful utilities and components which makes iOS develop
 - **UIAlertView+RZCompletionBlocks**
 
 	Block API for `UIAlertView` actions
-	
+
+### UIColor
+
+- **UIColor+RZExtensions**
+
+  UIColor creation utilities
+  
 ### UIFont
 
 - **UIFont+RZExtensions**
@@ -115,12 +121,6 @@ Replacement for `UIImageView`-based animated .png sequences that calls a complet
 
 `UIControl` subclass that acts like a UIButton but allows the addition and layout of arbitrary subviews.
 
-#### RZCellHeightManager
-
-Autolayout-based dynamic cell height utility.
-
-**Deprecated**: This will soon be in its own repository.
-
 #### RZCollectionTableView
 
 Is it a Collection View or a Table View? The world may never know... (**Spoiler**: It's a Collection View)
@@ -152,6 +152,10 @@ A drop in solution for a image view that loads from an `NSURL` and caches to fil
 #### RZLocationService
 
 CoreLocation made easy.
+
+####RZProgressView
+
+`UIProgressView` is a little broken in iOS 7.0 (weird glitches when animating and resizing), and very broken in iOS 7.1 (can't set custom images; radar [here](http://www.openradar.me/16113307)). `RZProgressView` is a drop-in replacement that fixes these problems.
 
 #### RZRevealViewController
 
@@ -185,23 +189,28 @@ Extends the functionality of `UISplitViewController` including allowing it to be
 
 `UIViewController` container that uses a segment control to switch between an array of `UIViewControllers`
 
-## Headers Overview
+## Utilities Overview
+
+#### RZCommonUtils
+
+Useful macros, mathematical functions, and more.
 
 #### RZDispatch
 
-Useful inline functions for working with GCD.
+Useful extensions for working with GCD/libdispatch.
 
 #### RZLogHelper
 
 A header with debug log macros that extend `NSLog`, including verbosity levels.
 
-#### RZUIKitUtilityFunctions
+## Test Utilities Overview
 
-Useful inline functions for working with `UIKit`.
+All utilities within this directory are intended for use in test code ONLY. 
 
-#### RZUtilityMacros
+#### RZWaiter
 
-Useful conversion macros and more.
+A utility for aiding in testing asynchronous operations.
+
 
 ## License
 
@@ -214,3 +223,4 @@ When adding new components, please try and follow the following guidelines as cl
  * No need for unit tests, just make sure it works and solves problems rather than causing them.
  * Ensure that the component has well documented headers.
  * Aggressively use namespacing (method prefix) for Objective-C categories in order to avoid potential naming collisions.
+  

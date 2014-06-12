@@ -27,8 +27,8 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
-#import <QuartzCore/QuartzCore.h>
+@import Foundation;
+@import QuartzCore;
 #import "RZTween.h"
 
 typedef void (^RZTweenAnimatorUpdateBlock)(NSValue *value);
@@ -37,29 +37,49 @@ typedef void (^RZTweenAnimatorUpdateBlock)(NSValue *value);
 
 @interface RZTweenAnimator : NSObject
 
+
 /**
- * Add a tween for a particular keyPath on an object. If the data type for the tween does not match the expected
- * type for the keyPath, an exception will likely be raised.
- */
+*  Adds a tween for a paticular keyPath on an object.  If the data type for the tween doesn not match the exptected
+*  type for the keyPath, an exception will likely be raised.
+*
+*  @param tween   An object of RZTween type to be modified when the time is changed.
+*  @param keyPath The keypath that will be called using KVC
+*  @param object  The object that will be modified by the animator.
+*/
 - (void)addTween:(RZTween *)tween forKeyPath:(NSString *)keyPath ofObject:(id)object;
 
 /**
- * Add a tween with a frame update block. Block is called for each update with current tweened value.
+ *  Add a tween with a frame update block.  Block is called for each update with the current tweened value.
+ *
+ *  @param tween      An object of RZTween type controlling the tween values.
+ *  @param frameBlock Block to be called when the animator updates its time.
  */
 - (void)addTween:(RZTween *)tween withUpdateBlock:(RZTweenAnimatorUpdateBlock)frameBlock;
 
-/** 
- * Represents the current position of the animation timeline.
- * Set this to change the timeline position immediately
+/**
+ *  Represents the current position of the animation timeline.
+ *  Set this to change the timeline position immediately.
  */
 @property (nonatomic, assign) NSTimeInterval time;
 
-/** Animate to a particular time */
+/**
+ *  Force an animation to a paticular time.
+ *
+ *  @param time The position to animate too.
+ */
 - (void)animateToTime:(NSTimeInterval)time;
 
-/** Animate to a particular time over a different duration */
+/**
+ *  Animate to a paticular time over a set duration
+ *
+ *  @param time     the position to animate too.
+ *  @param duration the duration of the animation.
+ */
 - (void)animateToTime:(NSTimeInterval)time overDuration:(NSTimeInterval)duration;
 
+/**
+ *  For notifying a delegate of the state of the RZTweenAnimator.
+ */
 @property (nonatomic, weak) id<RZTweenAnimatorDelegate> delegate;
 
 @end

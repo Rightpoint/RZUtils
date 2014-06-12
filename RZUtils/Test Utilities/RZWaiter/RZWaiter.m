@@ -1,12 +1,13 @@
 //
-//  RZUIKitMacros.h
-//  Raizlabs
+//  RZWaiter.h
+//  RZUtils
 //
-//  Created by Nick Donaldson on 10/3/13.
-
+//  Created by Nick Bonatsakis on 06/19/2013.
+//  Copyright (c) 2014 RaizLabs. All rights reserved.
+//
 // Copyright 2014 Raizlabs and other contributors
 // http://raizlabs.com/
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
 // "Software"), to deal in the Software without restriction, including
@@ -14,10 +15,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -27,40 +28,28 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
+#import "RZWaiter.h"
 
-inline static UIViewAnimationOptions RZAnimationOptionFromCurve(UIViewAnimationCurve curve)
+@implementation RZWaiter
+
++ (void)waitWithTimeout:(NSTimeInterval)timeout
+           pollInterval:(NSTimeInterval)pollingInterval
+         checkCondition:(RZWaiterPollBlock)conditionBlock
+              onTimeout:(RZWaiterTimeout)timeoutBlock
 {
-    UIViewAnimationOptions option = 0;
-    switch (curve)
-    {
-        case UIViewAnimationCurveEaseIn:
-            option = UIViewAnimationOptionCurveEaseIn;
-            break;
-            
-        case UIViewAnimationCurveEaseInOut:
-            option = UIViewAnimationOptionCurveEaseInOut;
-            break;
-            
-        case UIViewAnimationCurveEaseOut:
-            option = UIViewAnimationOptionCurveEaseOut;
-            break;
-            
-        case UIViewAnimationCurveLinear:
-            option = UIViewAnimationOptionCurveLinear;
-            break;
-            
-        default:
-        {
-            // This shows up for the keyboard curve in iOS7.
-            // As of yet, not documented, but this works...
-            // http://stackoverflow.com/questions/18957476/ios-7-keyboard-animation
-            if ((int)curve == 7)
-            {
-                option = (curve << 16);
-            }
+    NSParameterAssert(conditionBlock);
+    NSParameterAssert(timeoutBlock);
+    
+    int times = timeout / pollingInterval;
+    for ( int i = 0; i < times; i++ ) {
+        [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:pollingInterval]];
+        if ( conditionBlock != nil && conditionBlock() ) {
+            return;
         }
-            break;
     }
-    return option;
+    if ( timeoutBlock != nil ) {
+        timeoutBlock();
+    }
 }
+
+@end

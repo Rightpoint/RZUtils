@@ -1,12 +1,11 @@
 //
-//  RZCellHeightManager+RZCollectionList.h
-//  Raizlabs
+//  RZDispatch.m
 //
-//  Created by Alex Rouse on 12/12/13.
+//  Created by Nick Donaldson on 10/11/13.
 
 // Copyright 2014 Raizlabs and other contributors
 // http://raizlabs.com/
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
 // "Software"), to deal in the Software without restriction, including
@@ -14,10 +13,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -27,11 +26,21 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import "RZCellHeightManager.h"
-#import "RZCollectionList.h"
+#import "RZDispatch.h"
 
-@interface RZCellHeightManager (RZCollectionList)
+void rz_dispatch_async_main(void(^block)())
+{
+    dispatch_async(dispatch_get_main_queue(), block);
+}
 
-- (void)rz_autoInvalidateWithCollectionList:(id<RZCollectionList>)collectionList;
-
-@end
+void rz_dispatch_main_reentrant(void(^block)())
+{
+    if ( block ) {
+        if ( [NSThread isMainThread] ) {
+            block();
+        }
+        else {
+            dispatch_sync(dispatch_get_main_queue(), block);
+        }
+    }
+}
