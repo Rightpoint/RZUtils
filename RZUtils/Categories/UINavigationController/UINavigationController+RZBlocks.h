@@ -31,25 +31,32 @@
 typedef void(^RZNavigationControllerCompletionBlock)(UINavigationController *navigationController,
                                                      NSArray *poppedViewControllers,
                                                      UIViewController *presentedViewController);
+typedef void(^RZNavigationControllerPreparationBlock)(UINavigationController *navigationController,
+                                                      UIViewController *presentingViewController);
 
 @interface UINavigationController (RZBlocks) <UINavigationControllerDelegate>
 
 - (void)rz_pushViewController:(UIViewController *)viewController
                      animated:(BOOL)animated
+                  preparation:(RZNavigationControllerPreparationBlock)preparation
                    completion:(RZNavigationControllerCompletionBlock)completion;
 
 - (void)rz_popViewControllerAnimated:(BOOL)animated
+                         preparation:(RZNavigationControllerPreparationBlock)preparation
                           completion:(RZNavigationControllerCompletionBlock)completion;
 
 - (void)rz_popToViewController:(UIViewController *)viewController
                       animated:(BOOL)animated
+                   preparation:(RZNavigationControllerPreparationBlock)preparation
                     completion:(RZNavigationControllerCompletionBlock)completion;
 
 - (void)rz_popToRootViewControllerAnimated:(BOOL)animated
+                               preparation:(RZNavigationControllerPreparationBlock)preparation
                                 completion:(RZNavigationControllerCompletionBlock)completion;
 
 - (void)rz_setViewControllers:(NSArray *)viewControllers
                      animated:(BOOL)animated
+                  preparation:(RZNavigationControllerPreparationBlock)preparation
                    completion:(RZNavigationControllerCompletionBlock)completion NS_AVAILABLE_IOS(3_0);
 
 

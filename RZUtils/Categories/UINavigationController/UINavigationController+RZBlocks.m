@@ -35,6 +35,7 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
 @interface RZUINavigationControllerCompletionBlockHelper : NSObject <UINavigationControllerDelegate>
 
 @property (copy, nonatomic) RZNavigationControllerCompletionBlock completionBlock;
+@property (copy, nonatomic) RZNavigationControllerPreparationBlock preparationBlock;
 @property (strong, nonatomic) NSArray *poppedViewControllers;
 @property (weak, nonatomic) id<UINavigationControllerDelegate> previousDelegate;
 
@@ -45,7 +46,8 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
 - (instancetype)init
 {
     self = [super init];
-    if ( self == nil ) {
+    if (self == nil)
+    {
         self.completionBlock = nil;
         self.poppedViewControllers = nil;
         self.previousDelegate = nil;
@@ -56,6 +58,13 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
 #pragma mark - UINavigationControllerDelegate
 
 - (void)navigationController:(UINavigationController *)navigationController
+      willShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated
+{
+    
+}
+
+- (void)navigationController:(UINavigationController *)navigationController
        didShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated
 {
@@ -63,6 +72,7 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
     if (self.previousDelegate != nil)
     {
         navigationController.delegate = self.previousDelegate;
+        self.previousDelegate = nil;
     }
     
     // call the completion block
@@ -80,48 +90,57 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
 
 - (void)rz_pushViewController:(UIViewController *)viewController
                      animated:(BOOL)animated
+                  preparation:(RZNavigationControllerPreparationBlock)preparation
                    completion:(RZNavigationControllerCompletionBlock)completion
 {
-    [self rz_setupDelegateWithCompletion:completion];
+    [self rz_setupDelegateWithPreparation:preparation completion:completion];
+    if (preparation != nil)
+    {
+        preparation(self, viewController);
+    }
     [self pushViewController:viewController animated:animated];
 }
 
 - (void)rz_popViewControllerAnimated:(BOOL)animated
+                         preparation:(RZNavigationControllerPreparationBlock)preparation
                           completion:(RZNavigationControllerCompletionBlock)completion
 {
-    RZUINavigationControllerCompletionBlockHelper *helper = [self rz_setupDelegateWithCompletion:completion];
+    RZUINavigationControllerCompletionBlockHelper *helper = [self rz_setupDelegateWithPreparation:preparation completion:completion];
     UIViewController *poppedViewController = [self popViewControllerAnimated:animated];
     helper.poppedViewControllers = @[poppedViewController];
 }
 
 - (void)rz_popToViewController:(UIViewController *)viewController
                       animated:(BOOL)animated
+                   preparation:(RZNavigationControllerPreparationBlock)preparation
                     completion:(RZNavigationControllerCompletionBlock)completion
 {
-    RZUINavigationControllerCompletionBlockHelper *helper = [self rz_setupDelegateWithCompletion:completion];
+    RZUINavigationControllerCompletionBlockHelper *helper = [self rz_setupDelegateWithPreparation:preparation completion:completion];
     NSArray *poppedViewControllers = [self popToViewController:viewController animated:animated];
     helper.poppedViewControllers = poppedViewControllers;
 }
 
 - (void)rz_popToRootViewControllerAnimated:(BOOL)animated
+                               preparation:(RZNavigationControllerPreparationBlock)preparation
                                 completion:(RZNavigationControllerCompletionBlock)completion
 {
-    RZUINavigationControllerCompletionBlockHelper *helper = [self rz_setupDelegateWithCompletion:completion];
+    RZUINavigationControllerCompletionBlockHelper *helper = [self rz_setupDelegateWithPreparation:preparation completion:completion];
     NSArray *poppedViewControllers = [self popToRootViewControllerAnimated:animated];
     helper.poppedViewControllers = poppedViewControllers;
 }
 
 - (void)rz_setViewControllers:(NSArray *)viewControllers
                      animated:(BOOL)animated
+                  preparation:(RZNavigationControllerPreparationBlock)preparation
                    completion:(RZNavigationControllerCompletionBlock)completion
 {
-    [self rz_setupDelegateWithCompletion:completion];
+    [self rz_setupDelegateWithPreparation:preparation completion:completion];
     [self setViewControllers:viewControllers animated:animated];
 }
 
 #pragma mark - Private
 
-- (RZUINavigationControllerCompletionBlockHelper *)rz_setupDelegateWithCompletion:(RZNavigationControllerCompletionBlock)completion
+- (RZUINavigationControllerCompletionBlockHelper *)rz_setupDelegateWithPreparation:(RZNavigationControllerPreparationBlock)preparation completion:(RZNavigationControllerCompletionBlock)completion
 {
     RZUINavigationControllerCompletionBlockHelper *helper = [[RZUINavigationControllerCompletionBlockHelper alloc] init];
     if (completion != nil)
@@ -131,6 +150,7 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
             helper.previousDelegate = self.delegate;
         }
         self.delegate = helper;
+        helper.preparationBlock = preparation;
         helper.completionBlock = completion;
     }
     
