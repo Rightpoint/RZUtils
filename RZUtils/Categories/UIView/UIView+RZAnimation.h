@@ -1,6 +1,5 @@
 //
 //  UIView+RZAnimation.h
-//  UniFirst
 //
 //  Created by Andrew McKnight on 6/11/14.
 //  Copyright (c) 2014 Raizlabs. All rights reserved.
