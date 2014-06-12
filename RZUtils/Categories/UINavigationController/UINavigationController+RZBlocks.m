@@ -61,7 +61,10 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
       willShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated
 {
-    
+    if (self.preparationBlock != nil)
+    {
+        self.preparationBlock(navigationController, viewController);
+    }
 }
 
 - (void)navigationController:(UINavigationController *)navigationController
@@ -94,10 +97,6 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
                    completion:(RZNavigationControllerCompletionBlock)completion
 {
     [self rz_setupDelegateWithPreparation:preparation completion:completion];
-    if (preparation != nil)
-    {
-        preparation(self, viewController);
-    }
     [self pushViewController:viewController animated:animated];
 }
 
