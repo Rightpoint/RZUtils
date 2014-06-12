@@ -78,7 +78,7 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
     // call the completion block
     if (self.completionBlock != nil)
     {
-        self.completionBlock(navigationController, self.poppedViewControllers, viewController);
+        self.completionBlock(navigationController, viewController, self.poppedViewControllers);
     }
 }
 

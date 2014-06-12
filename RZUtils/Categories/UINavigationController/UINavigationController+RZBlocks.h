@@ -29,8 +29,8 @@
 #import <UIKit/UIKit.h>
 
 typedef void(^RZNavigationControllerCompletionBlock)(UINavigationController *navigationController,
-                                                     NSArray *poppedViewControllers,
-                                                     UIViewController *presentedViewController);
+                                                     UIViewController *presentedViewController,
+                                                     NSArray *poppedViewControllers);
 typedef void(^RZNavigationControllerPreparationBlock)(UINavigationController *navigationController,
                                                       UIViewController *presentingViewController);
 /**
