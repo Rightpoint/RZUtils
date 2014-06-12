@@ -71,17 +71,17 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
        didShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated
 {
+    // call the completion block
+    if (self.completionBlock != nil)
+    {
+        self.completionBlock(navigationController, viewController, self.poppedViewControllers);
+    }
+    
     // reset previous delegate, if any
     if (self.previousDelegate != nil)
     {
         navigationController.delegate = self.previousDelegate;
         self.previousDelegate = nil;
-    }
-    
-    // call the completion block
-    if (self.completionBlock != nil)
-    {
-        self.completionBlock(navigationController, viewController, self.poppedViewControllers);
     }
 }
 
