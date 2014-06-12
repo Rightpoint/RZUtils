@@ -42,14 +42,14 @@ static const void * kRZNavigationControllerPreviousDelegateKey      = &kRZNaviga
                      animated:(BOOL)animated
                    completion:(RZNavigationControllerCompletionBlock)completion
 {
-    [self setupDelegateWithCompletion:completion];
+    [self rz_setupDelegateWithCompletion:completion];
     [self pushViewController:viewController animated:animated];
 }
 
 - (void)rz_popViewControllerAnimated:(BOOL)animated
                           completion:(RZNavigationControllerCompletionBlock)completion
 {
-    [self setupDelegateWithCompletion:completion];
+    [self rz_setupDelegateWithCompletion:completion];
     UIViewController *poppedViewController = [self popViewControllerAnimated:animated];
     objc_setAssociatedObject(self, kRZNavigationControllerPoppedViewControllersKey, poppedViewController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
@@ -58,7 +58,7 @@ static const void * kRZNavigationControllerPreviousDelegateKey      = &kRZNaviga
                       animated:(BOOL)animated
                     completion:(RZNavigationControllerCompletionBlock)completion
 {
-    [self setupDelegateWithCompletion:completion];
+    [self rz_setupDelegateWithCompletion:completion];
     NSArray *poppedViewControllers = [self popToViewController:viewController animated:animated];
     objc_setAssociatedObject(self, kRZNavigationControllerPoppedViewControllersKey, poppedViewControllers, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
@@ -66,7 +66,7 @@ static const void * kRZNavigationControllerPreviousDelegateKey      = &kRZNaviga
 - (void)rz_popToRootViewControllerAnimated:(BOOL)animated
                                 completion:(RZNavigationControllerCompletionBlock)completion
 {
-    [self setupDelegateWithCompletion:completion];
+    [self rz_setupDelegateWithCompletion:completion];
     NSArray *poppedViewControllers = [self popToRootViewControllerAnimated:animated];
     objc_setAssociatedObject(self, kRZNavigationControllerPoppedViewControllersKey, poppedViewControllers, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
@@ -75,13 +75,13 @@ static const void * kRZNavigationControllerPreviousDelegateKey      = &kRZNaviga
                      animated:(BOOL)animated
                    completion:(RZNavigationControllerCompletionBlock)completion
 {
-    [self setupDelegateWithCompletion:completion];
+    [self rz_setupDelegateWithCompletion:completion];
     [self setViewControllers:viewControllers animated:animated];
 }
 
 #pragma mark - Private
 
-- (void)setupDelegateWithCompletion:(RZNavigationControllerCompletionBlock)completion
+- (void)rz_setupDelegateWithCompletion:(RZNavigationControllerCompletionBlock)completion
 {
     if (completion != nil)
     {
