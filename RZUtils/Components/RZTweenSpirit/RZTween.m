@@ -29,20 +29,96 @@
 
 #import "RZTween.h"
 
+
+
 static float RZTweenClampFloat(float value, float min, float max)
 {
     return MIN(max, MAX(value, min));
 }
 
-static float RZTweenMapFloat(float value, float inMin, float inMax, float outMin, float outMax, BOOL clamp)
+static float RZTweenQuadraticEaseIn(float v)
 {
-    float result = ((value - inMin)/(inMax - inMin)) * (outMax - outMin) + outMin;
+	return powf(v, 2);
+}
+
+static float RZTweenQuadraticEaseOut(float v)
+{
+	return -(v * (v - 2));
+}
+
+static float RZTweenQuadraticEaseInOut(float v)
+{
+    float ret;
+	if(v < 0.5)
+	{
+		ret = 2 * powf(v, 2);
+	}
+	else
+	{
+		ret = (-2 * powf(v, 2)) + (4 * v) - 1;
+	}
+    return ret;
+}
+
+static float RZTweenSineEaseIn(float v)
+{
+	return sin(M_PI_2 * (v - 1)) + 1;
+}
+
+static float RZTweenSineEaseOut(float v)
+{
+	return sin(M_PI_2 * v);
+}
+
+static float RZTweenSineEaseInOut(float v)
+{
+	return (1 - cos(M_PI * v))/2;
+}
+
+static float RZTweenMapFloat(float value, float inMin, float inMax, float outMin, float outMax, BOOL clamp, RZTweenCurveType curve)
+{
+    float result;
+
+    float normalizedValue = (value - inMin) / (inMax - inMin);
+
+    switch (curve) {
+        case RZTweenCurveTypeLinear:
+            result = normalizedValue;
+            break;
+        case RZTweenCurveTypeQuadraticEaseIn:
+            result = RZTweenQuadraticEaseIn(normalizedValue);
+            break;
+        case RZTweenCurveTypeQuadraticEaseOut:
+            result = RZTweenQuadraticEaseOut(normalizedValue);
+            break;
+        case RZTweenCurveTypeQuadraticEaseInOut:
+            result = RZTweenQuadraticEaseInOut(normalizedValue);
+            break;
+        case RZTweenCurveTypeSineEaseIn:
+            result = RZTweenSineEaseIn(normalizedValue);
+            break;
+        case RZTweenCurveTypeSineEaseOut:
+            result = RZTweenSineEaseOut(normalizedValue);
+            break;
+        case RZTweenCurveTypeSineEaseInOut:
+            result = RZTweenSineEaseInOut(normalizedValue);
+            break;
+        default:
+            LogDebug(@"Invalid tween curve type :%d",curve);
+            result = normalizedValue;
+            break;
+    }
+    
+    result = result * (outMax - outMin) + outMin;
+    
     if (clamp)
     {
         result = RZTweenClampFloat(result, MIN(outMin,outMax), MAX(outMin,outMax));
     }
+    
     return result;
 }
+
 
 // -----------------------------
 
@@ -63,6 +139,11 @@ static float RZTweenMapFloat(float value, float inMin, float inMax, float outMin
     kf.time = time;
     kf.value = value;
     return kf;
+}
+
+- (NSString *)debugDescription
+{
+    return [NSString stringWithFormat:@"%@ - time:%f value:%@",[super debugDescription], self.time, self.value];
 }
 
 @end
@@ -148,7 +229,8 @@ static float RZTweenMapFloat(float value, float inMin, float inMax, float outMin
   RZTween *copy = [[[self class] allocWithZone:zone] init];
 
   if (copy != nil) {
-    copy.sortedKeyFrames = [self.sortedKeyFrames copy];
+      copy.sortedKeyFrames = [self.sortedKeyFrames copy];
+      copy.curveType = self.curveType;
   }
 
   return copy;
@@ -204,7 +286,7 @@ static float RZTweenMapFloat(float value, float inMin, float inMax, float outMin
         {
             RZTweenKeyFrame *kf1 = [nearestKeyFrames firstObject];
             RZTweenKeyFrame *kf2 = [nearestKeyFrames lastObject];
-            value = @(RZTweenMapFloat(time, kf1.time, kf2.time, [(NSNumber*)kf1.value floatValue], [(NSNumber*)kf2.value floatValue], YES));
+            value = @(RZTweenMapFloat(time, kf1.time, kf2.time, [(NSNumber*)kf1.value floatValue], [(NSNumber*)kf2.value floatValue], YES, self.curveType));
         }
     }
     return value;
@@ -266,12 +348,12 @@ static float RZTweenMapFloat(float value, float inMin, float inMax, float outMin
             CGAffineTransform tf2 = [kf2.value CGAffineTransformValue];
             
             CGAffineTransform finalTf;
-            finalTf.a = RZTweenMapFloat(time, kf1.time, kf2.time, tf1.a, tf2.a, YES);
-            finalTf.b = RZTweenMapFloat(time, kf1.time, kf2.time, tf1.b, tf2.b, YES);
-            finalTf.c = RZTweenMapFloat(time, kf1.time, kf2.time, tf1.c, tf2.c, YES);
-            finalTf.d = RZTweenMapFloat(time, kf1.time, kf2.time, tf1.d, tf2.d, YES);
-            finalTf.tx = RZTweenMapFloat(time, kf1.time, kf2.time, tf1.tx, tf2.tx, YES);
-            finalTf.ty = RZTweenMapFloat(time, kf1.time, kf2.time, tf1.ty, tf2.ty, YES);
+            finalTf.a = RZTweenMapFloat(time, kf1.time, kf2.time, tf1.a, tf2.a, YES, self.curveType);
+            finalTf.b = RZTweenMapFloat(time, kf1.time, kf2.time, tf1.b, tf2.b, YES, self.curveType);
+            finalTf.c = RZTweenMapFloat(time, kf1.time, kf2.time, tf1.c, tf2.c, YES, self.curveType);
+            finalTf.d = RZTweenMapFloat(time, kf1.time, kf2.time, tf1.d, tf2.d, YES, self.curveType);
+            finalTf.tx = RZTweenMapFloat(time, kf1.time, kf2.time, tf1.tx, tf2.tx, YES, self.curveType);
+            finalTf.ty = RZTweenMapFloat(time, kf1.time, kf2.time, tf1.ty, tf2.ty, YES, self.curveType);
             
             transformValue = [NSValue valueWithCGAffineTransform:finalTf];
         }
@@ -281,4 +363,81 @@ static float RZTweenMapFloat(float value, float inMin, float inMax, float outMin
 
 @end
 
+@implementation RZRectTween
+
+- (void)addKeyRect:(CGRect)rect atTime:(NSTimeInterval)time
+{
+    [self addKeyFrame:[RZTweenKeyFrame keyFrameWithTime:time value:[NSValue valueWithCGRect:rect]]];
+}
+
+- (NSValue *)valueAtTime:(NSTimeInterval)time
+{
+    NSValue *rectValue = [NSValue valueWithCGRect:CGRectZero];
+    NSArray *nearestKeyFrames = [self nearestKeyFramesForTime:time];
+    if (nearestKeyFrames.count > 0)
+    {
+        if (nearestKeyFrames.count == 1)
+        {
+            RZTweenKeyFrame *kf = [nearestKeyFrames firstObject];
+            rectValue = kf.value;
+        }
+        else
+        {
+            RZTweenKeyFrame *kf1 = [nearestKeyFrames firstObject];
+            RZTweenKeyFrame *kf2 = [nearestKeyFrames lastObject];
+            
+            CGRect rect1 = [kf1.value CGRectValue];
+            CGRect rect2 = [kf2.value CGRectValue];
+            
+            CGRect finalRect;
+            finalRect.origin.x = RZTweenMapFloat(time, kf1.time, kf2.time, rect1.origin.x, rect2.origin.x, YES, self.curveType);
+            finalRect.origin.y = RZTweenMapFloat(time, kf1.time, kf2.time, rect1.origin.y, rect2.origin.y, YES, self.curveType);
+            finalRect.size.width = RZTweenMapFloat(time, kf1.time, kf2.time, rect1.size.width, rect2.size.width, YES, self.curveType);
+            finalRect.size.height = RZTweenMapFloat(time, kf1.time, kf2.time, rect1.size.height, rect2.size.height, YES, self.curveType);
+
+            rectValue = [NSValue valueWithCGRect:finalRect];
+        }
+    }
+    return rectValue;
+}
+
+@end
+
+@implementation RZPointTween
+
+- (void)addKeyPoint:(CGPoint)point atTime:(NSTimeInterval)time
+{
+    [self addKeyFrame:[RZTweenKeyFrame keyFrameWithTime:time value:[NSValue valueWithCGPoint:point]]];
+}
+
+- (NSValue *)valueAtTime:(NSTimeInterval)time
+{
+    NSValue *pointValue = [NSValue valueWithCGPoint:CGPointZero];
+    NSArray *nearestKeyFrames = [self nearestKeyFramesForTime:time];
+    if (nearestKeyFrames.count > 0)
+    {
+        if (nearestKeyFrames.count == 1)
+        {
+            RZTweenKeyFrame *kf = [nearestKeyFrames firstObject];
+            pointValue = kf.value;
+        }
+        else
+        {
+            RZTweenKeyFrame *kf1 = [nearestKeyFrames firstObject];
+            RZTweenKeyFrame *kf2 = [nearestKeyFrames lastObject];
+            
+            CGPoint p1 = [kf1.value CGPointValue];
+            CGPoint p2 = [kf2.value CGPointValue];
+
+            CGPoint finalPoint;
+            finalPoint.x = RZTweenMapFloat(time, kf1.time, kf2.time, p1.x, p2.x, YES, self.curveType);
+            finalPoint.y = RZTweenMapFloat(time, kf1.time, kf2.time, p1.y, p2.y, YES, self.curveType);
+            
+            pointValue = [NSValue valueWithCGPoint:finalPoint];
+        }
+    }
+    return pointValue;
+}
+
+@end
 
