@@ -33,6 +33,17 @@
 
 @interface UIView (RZAnimation)
 
+/**
+ *  Perform a UIView animation, with the option to execute the statements inside
+ *  the animation block as animated or not.
+ *
+ *  @param duration   Duration of the animations if animated is YES.
+ *  @param delay      Delay before animations start.
+ *  @param options    Animation options.
+ *  @param animations Block containing operations for optional animation, but always executed.
+ *  @param completion Animation completion block, always executed.
+ *  @param animated   YES to animate the operations in animations block, NO to perform them immediately.
+ */
 + (void)animateWithDuration:(NSTimeInterval)duration
                       delay:(NSTimeInterval)delay
                     options:(UIViewAnimationOptions)options
