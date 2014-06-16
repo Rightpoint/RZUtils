@@ -165,10 +165,6 @@ A `UIViewController` subclass for managing a single child view controller contai
 
 Makes NSURLRequest phone calls that use telprompt by making a tel request to a static UIWebView, which in turn privately calls telprompt. This gives you the benifits of using telprompt without calling it from UIApplication where it is not specifically supported by Apple.
 
-#### RZTweenSpirit
-
-Tweening animation utility. Allows tweening of any keypath from one value to another based on a settable timeline position. Similar to a certain "jazzy"-"handy" library, but more flexible.
-
 #### RZViewFactory
 
 Extensions to `UIView` for easily loading a subclass from a XIB file.
