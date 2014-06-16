@@ -37,17 +37,17 @@
     NSString *selectedImageName = nil;
     
     // Single Cell
-    if (totalRows == 1) {
+    if ( totalRows == 1 ) {
         unselectedImageName = @"bg-cell";
         selectedImageName = @"bg-cell-pressed";
     }
     // Top Cell
-    else if (index == 0) {
+    else if ( index == 0 ) {
         unselectedImageName = @"bg-cell-top";
         selectedImageName = @"bg-cell-top-pressed";
     }
     // Bottom Cell
-    else if (index == totalRows - 1) {
+    else if ( index == totalRows - 1 ) {
         unselectedImageName = @"bg-cell-bottom";
         selectedImageName = @"bg-cell-bottom-pressed";
     }
@@ -63,7 +63,7 @@
     // Pressed Image
     UIImage *selectedImage = [[UIImage imageNamed:selectedImageName] rz_stretchableVersion];
     
-    if ([self.backgroundView isKindOfClass:[UIImageView class]]) {
+    if ( [self.backgroundView isKindOfClass:[UIImageView class]] ) {
         [(UIImageView*)self.backgroundView setImage:backgroundImage];
     }
     else {
@@ -71,7 +71,7 @@
         [self setBackgroundView:backgroundStretchedView];
     }
     
-    if ([self.selectedBackgroundView isKindOfClass:[UIImageView class]]) {
+    if ( [self.selectedBackgroundView isKindOfClass:[UIImageView class]] ) {
         [(UIImageView*)self.selectedBackgroundView setImage:selectedImage];
     }
     else  {
