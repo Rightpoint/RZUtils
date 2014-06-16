@@ -36,7 +36,7 @@
  *
  *  @return a resizable UIImage.
  */
-- (UIImage*)makeStretchable;
+- (UIImage *)rz_stretchableVersion;
 
 /**
  *  Create and return a UIImage with specified vertical and horizontal edge insets.
@@ -45,6 +45,6 @@
  *
  *  @return a resizable UIImage.
  */
-- (UIImage*)makeStretchableWithCapInsets:(UIEdgeInsets)insets;
+- (UIImage *)rz_stretchableVersionWithCapInsets:(UIEdgeInsets)insets;
 
 @end

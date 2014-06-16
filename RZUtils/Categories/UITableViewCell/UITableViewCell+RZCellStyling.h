@@ -30,6 +30,12 @@
 
 @interface UITableViewCell (RZCellStyling)
 
-- (void)setBackgroundImagesForIndex:(int)index totalRowsInSection:(int)totalRows;
+/**
+ *  Sets the background image for cells in a @c UITableView depending on the cell's position in its section.  Call this category when configuring a cell for an index path.  Requires background images in the form of: @c "bg-cell" / @c "bg-cell-pressed" , @c "bg-cell-top" / @c "bg-cell-top-pressed" , @c "bg-cell-bottom" / @c "bg-cell-bottom-pressed" , @c "bg-cell-middle" / @c "bg-cell-middle-pressed".
+ *
+ *  @param index     the index for the @c UITableViewCell.
+ *  @param totalRows the total count of rows in the section.
+ */
+- (void)rz_setBackgroundImagesForIndex:(int)index totalRowsInSection:(int)totalRows;
 
 @end
