@@ -186,7 +186,6 @@
     self.showHiddenOffset = self.view.bounds.size.width  * 0.85;
     self.revealGestureThreshold = CGFLOAT_MAX;
     self.maxDragDistance = self.view.bounds.size.width;
-    self.revealPanGestureRecognizer.enabled = NO;
 }
 
 - (void)initializeGestureRecognizers
@@ -204,10 +203,7 @@
         [self.view addGestureRecognizer:self.revealPanGestureRecognizer];
     }
 
-    if(self.usesEdgeGestureRecognizer)
-    {
-        self.revealPanGestureRecognizer.enabled = NO;
-    }
+    self.revealPanGestureRecognizer.enabled = !self.usesEdgeGestureRecognizer;
 }
 
 #pragma mark - View lifecycle
