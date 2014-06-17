@@ -17,7 +17,7 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
 @property (weak, nonatomic) UIViewController *viewController;
 @property (assign, nonatomic) BOOL animate;
 
-- (id)initWithAnimationBlock:(RZAnimationBlock)animations completion:(RZAnimationCompletionBlock)completion andViewController:(UIViewController *)vc;
+- (instancetype)initWithAnimationBlock:(RZAnimationBlock)animations completion:(RZAnimationCompletionBlock)completion andViewController:(UIViewController *)vc;
 - (void)rz_keyboardWillShow:(NSNotification *)notification;
 - (void)rz_keyboardWillHide:(NSNotification *)notification;
 - (void)rz_startKeyboardObservers;
@@ -27,7 +27,7 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
 
 @implementation RZKeyboardAnimationDelegate
 
-- (id)initWithAnimationBlock:(RZAnimationBlock)animations completion:(RZAnimationCompletionBlock)completion andViewController:(UIViewController *)vc
+- (instancetype)initWithAnimationBlock:(RZAnimationBlock)animations completion:(RZAnimationCompletionBlock)completion andViewController:(UIViewController *)vc
 {
     self = [super init];
     if ( self != nil ) {
