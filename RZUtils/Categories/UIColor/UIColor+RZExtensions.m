@@ -109,17 +109,22 @@ const CGFloat kRZExtensionsYIQContrastMultiplierThreshold       = 0.5f;
             rValue = wValue;
             gValue = wValue;
             bValue = wValue;
-            hexString = [NSString stringWithFormat:@"#%02x%02x%02x", (int)(rValue * 255.0f), (int)(gValue * 255.0f), (int)(bValue * 255.0f)];
+            hexString = [self rz_buildHexStringFromRed:rValue green:gValue blue:bValue];;
         }
         else {
             hexString = nil;
         }
     }
     else {
-        hexString = [NSString stringWithFormat:@"#%02x%02x%02x", (int)(rValue * 255.0f), (int)(gValue * 255.0f), (int)(bValue * 255.0f)];
+        hexString = [self rz_buildHexStringFromRed:rValue green:gValue blue:bValue];;
     }
     
     return hexString;
+}
+
+- (NSString *)rz_buildHexStringFromRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue
+{
+    return [NSString stringWithFormat:@"#%02x%02x%02x", (int)(red * 255.0f), (int)(green * 255.0f), (int)(blue * 255.0f)];
 }
 
 @end
