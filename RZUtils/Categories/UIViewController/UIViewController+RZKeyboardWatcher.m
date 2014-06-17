@@ -87,10 +87,10 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
         if (self.animationBlock)
         {
             self.animationBlock(keyboardVisible, keyboardFrame);
+            [self.viewController.view layoutIfNeeded];
             if ( self.completionBlock ) {
                 self.completionBlock(YES);
             }
-            [self.viewController.view layoutIfNeeded];
         }
     }
 }
