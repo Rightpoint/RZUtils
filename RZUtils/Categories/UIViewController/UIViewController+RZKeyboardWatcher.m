@@ -18,10 +18,10 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
 @property (assign, nonatomic) BOOL animate;
 
 - (id)initWithAnimationBlock:(RZAnimationBlock)animations completion:(RZAnimationCompletionBlock)completion andViewController:(UIViewController *)vc;
-- (void)keyboardWillShow:(NSNotification *)notification;
-- (void)keyboardWillHide:(NSNotification *)notification;
-- (void)startKeyboardObservers;
-- (void)removeKeyboardObservers;
+- (void)rz_keyboardWillShow:(NSNotification *)notification;
+- (void)rz_keyboardWillHide:(NSNotification *)notification;
+- (void)rz_startKeyboardObservers;
+- (void)rz_removeKeyboardObservers;
 
 @end
 
@@ -38,29 +38,29 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
     return self;
 }
 
-- (void)startKeyboardObservers
+- (void)rz_startKeyboardObservers
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rz_keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rz_keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void)removeKeyboardObservers
+- (void)rz_removeKeyboardObservers
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void)keyboardWillShow:(NSNotification *)notification
+- (void)rz_keyboardWillShow:(NSNotification *)notification
 {
-    [self updateFromNotification:notification];
+    [self rz_updateFromNotification:notification];
 }
 
-- (void)keyboardWillHide:(NSNotification *)notification
+- (void)rz_keyboardWillHide:(NSNotification *)notification
 {
-    [self updateFromNotification:notification];
+    [self rz_updateFromNotification:notification];
 }
 
-- (void)updateFromNotification:(NSNotification *)notification
+- (void)rz_updateFromNotification:(NSNotification *)notification
 {
     // Use the animation curve provided by the keyboard notification
     NSDictionary *userInfo = notification.userInfo;
@@ -115,7 +115,7 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
     if ( animations ) {
         RZKeyboardAnimationDelegate *animationDelegate = [[RZKeyboardAnimationDelegate alloc] initWithAnimationBlock:animations completion:completion andViewController:self];
         animationDelegate.animate = animated;
-        [animationDelegate startKeyboardObservers];
+        [animationDelegate rz_startKeyboardObservers];
         // save animations block
         objc_setAssociatedObject(self, kRZKeyboardAnimationsDelegateKey, animationDelegate, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
@@ -127,7 +127,7 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
     id object = objc_getAssociatedObject(self, kRZKeyboardAnimationsDelegateKey);
     if ( object && [object isKindOfClass:[RZKeyboardAnimationDelegate class]] ) {
         RZKeyboardAnimationDelegate *delegate = object;
-        [delegate removeKeyboardObservers];
+        [delegate rz_removeKeyboardObservers];
     }
     
     // reset associated delegate to nil
