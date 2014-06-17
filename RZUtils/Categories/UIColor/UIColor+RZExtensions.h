@@ -102,4 +102,9 @@
  */
 + (UIColor *)rz_contrastForColor:(UIColor *)color;
 
+/**
+ *  @return A string, prefixed with “#”, followed by six lowercase hexadecimal digits. The alpha channel is ignored.
+ */
+- (NSString *)rz_hexString;
+
 @end
