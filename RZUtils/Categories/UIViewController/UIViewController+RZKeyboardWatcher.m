@@ -30,7 +30,7 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
 - (id)initWithAnimationBlock:(RZAnimationBlock)animations completion:(RZAnimationCompletionBlock)completion andViewController:(UIViewController *)vc
 {
     self = [super init];
-    if (self){
+    if ( self != nil ) {
         self.animationBlock = animations;
         self.completionBlock = completion;
         self.viewController = vc;
@@ -68,24 +68,24 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
     CGRect keyboardFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
     BOOL keyboardVisible = [notification.name isEqualToString:UIKeyboardWillShowNotification];
-    if (self.animate)
-    {
+    if ( self.animate ) {
         UIViewAnimationCurve animationCurve = [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue];
         double animationDuration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
         
         __weak RZKeyboardAnimationDelegate *wSelf = self;
-        [UIView animateWithDuration:animationDuration delay:0.0 options:(animationCurve << 16) animations:^{
-            if (wSelf.animationBlock)
-            {
-                wSelf.animationBlock(keyboardVisible, keyboardFrame);
-                [wSelf.viewController.view layoutIfNeeded];
-            }
-        } completion:self.completionBlock];
+        [UIView animateWithDuration:animationDuration
+                              delay:0.0
+                            options:( animationCurve << 16 )
+                         animations:^{
+                             if ( wSelf.animationBlock ) {
+                                 wSelf.animationBlock(keyboardVisible, keyboardFrame);
+                                 [wSelf.viewController.view layoutIfNeeded];
+                             }
+                         }
+                         completion:self.completionBlock];
     }
-    else
-    {
-        if (self.animationBlock)
-        {
+    else {
+        if ( self.animationBlock ) {
             self.animationBlock(keyboardVisible, keyboardFrame);
             [self.viewController.view layoutIfNeeded];
             if ( self.completionBlock ) {
@@ -112,8 +112,7 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
 
 - (void)rz_watchKeyboardShowWithAnimations:(RZAnimationBlock)animations completion:(RZAnimationCompletionBlock)completion animated:(BOOL)animated
 {
-    if (animations)
-    {
+    if ( animations ) {
         RZKeyboardAnimationDelegate *animationDelegate = [[RZKeyboardAnimationDelegate alloc] initWithAnimationBlock:animations completion:completion andViewController:self];
         animationDelegate.animate = animated;
         [animationDelegate startKeyboardObservers];
@@ -126,7 +125,7 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
 {
     // if we have a delegate, make sure it's not watching for keyboard notifications
     id object = objc_getAssociatedObject(self, kRZKeyboardAnimationsDelegateKey);
-    if (object && [object isKindOfClass:[RZKeyboardAnimationDelegate class]]) {
+    if ( object && [object isKindOfClass:[RZKeyboardAnimationDelegate class]] ) {
         RZKeyboardAnimationDelegate *delegate = object;
         [delegate removeKeyboardObservers];
     }
