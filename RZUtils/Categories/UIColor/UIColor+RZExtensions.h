@@ -103,7 +103,7 @@
 + (UIColor *)rz_contrastForColor:(UIColor *)color;
 
 /**
- *  @return A string, prefixed with a “#”, defining this color with a hex string (not including alpha channel).
+ *  @return A string, prefixed with a “#”, followed by six lowercase hexadecimal digits. The alpha channel is ignored.
  */
 - (NSString *)rz_hexString;
 
