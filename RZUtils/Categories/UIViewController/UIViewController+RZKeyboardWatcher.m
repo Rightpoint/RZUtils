@@ -13,10 +13,11 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
 @interface RZKeyboardAnimationDelegate : NSObject
 
 @property (copy, nonatomic) RZAnimationBlock animationBlock;
+@property (copy, nonatomic) RZAnimationCompletionBlock completionBlock;
 @property (weak, nonatomic) UIViewController *viewController;
 @property (assign, nonatomic) BOOL animate;
 
-- (id)initWithAnimationBlock:(RZAnimationBlock)animations andViewController:(UIViewController *)vc;
+- (id)initWithAnimationBlock:(RZAnimationBlock)animations completion:(RZAnimationCompletionBlock)completion andViewController:(UIViewController *)vc;
 - (void)keyboardWillShow:(NSNotification *)notification;
 - (void)keyboardWillHide:(NSNotification *)notification;
 - (void)startKeyboardObservers;
@@ -26,11 +27,12 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
 
 @implementation RZKeyboardAnimationDelegate
 
-- (id)initWithAnimationBlock:(RZAnimationBlock)animations andViewController:(UIViewController *)vc
+- (id)initWithAnimationBlock:(RZAnimationBlock)animations completion:(RZAnimationCompletionBlock)completion andViewController:(UIViewController *)vc
 {
     self = [super init];
     if (self){
         self.animationBlock = animations;
+        self.completionBlock = completion;
         self.viewController = vc;
     }
     return self;
@@ -78,13 +80,16 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
                 wSelf.animationBlock(keyboardVisible, keyboardFrame);
                 [wSelf.viewController.view layoutIfNeeded];
             }
-        } completion:nil];
+        } completion:self.completionBlock];
     }
     else
     {
         if (self.animationBlock)
         {
             self.animationBlock(keyboardVisible, keyboardFrame);
+            if ( self.completionBlock ) {
+                self.completionBlock(YES);
+            }
             [self.viewController.view layoutIfNeeded];
         }
     }
@@ -102,9 +107,14 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
 
 - (void)rz_watchKeyboardShowWithAnimations:(RZAnimationBlock)animations animated:(BOOL)animated
 {
+    [self rz_watchKeyboardShowWithAnimations:animations completion:nil animated:animated];
+}
+
+- (void)rz_watchKeyboardShowWithAnimations:(RZAnimationBlock)animations completion:(RZAnimationCompletionBlock)completion animated:(BOOL)animated
+{
     if (animations)
     {
-        RZKeyboardAnimationDelegate *animationDelegate = [[RZKeyboardAnimationDelegate alloc] initWithAnimationBlock:animations andViewController:self];
+        RZKeyboardAnimationDelegate *animationDelegate = [[RZKeyboardAnimationDelegate alloc] initWithAnimationBlock:animations completion:completion andViewController:self];
         animationDelegate.animate = animated;
         [animationDelegate startKeyboardObservers];
         // save animations block
