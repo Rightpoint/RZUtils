@@ -120,7 +120,7 @@
 
 
 NSString * const RZCollectionTableViewLayoutHeaderView = @"RZCollectionTableViewLayoutHeaderView";
-NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableViewLayoutHeaderView";
+NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableViewLayoutFooterView";
 
 
 @interface RZCollectionTableViewLayout ()
