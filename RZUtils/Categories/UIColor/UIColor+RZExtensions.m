@@ -100,17 +100,27 @@ const CGFloat kRZExtensionsYIQContrastMultiplierThreshold       = 0.5f;
 
 - (NSString *)rz_hexString
 {
+    NSString *hexString;
+    
     CGFloat rValue, gValue, bValue;
     if ( ![self getRed:&rValue green:&gValue blue:&bValue alpha:NULL] ) {
         // Set wValue to 1 so if this method fails, we will return black color
         CGFloat wValue = 1.0f;
-        [self getWhite:&wValue alpha:NULL];
-        rValue = wValue;
-        gValue = wValue;
-        bValue = wValue;
+        if ( [self getWhite:&wValue alpha:NULL] ) {
+            rValue = wValue;
+            gValue = wValue;
+            bValue = wValue;
+        }
+        else
+        {
+            hexString = nil;
+        }
+    }
+    else {
+        hexString = [NSString stringWithFormat:@"#%02x%02x%02x", (int)(rValue * 255.0f), (int)(gValue * 255.0f), (int)(bValue * 255.0f)];
     }
     
-    return [NSString stringWithFormat:@"#%02x%02x%02x", (int)(rValue * 255.0f), (int)(gValue * 255.0f), (int)(bValue * 255.0f)];
+    return hexString;
 }
 
 @end
