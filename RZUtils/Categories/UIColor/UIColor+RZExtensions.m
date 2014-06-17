@@ -111,8 +111,7 @@ const CGFloat kRZExtensionsYIQContrastMultiplierThreshold       = 0.5f;
             gValue = wValue;
             bValue = wValue;
         }
-        else
-        {
+        else {
             hexString = nil;
         }
     }
