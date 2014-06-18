@@ -423,7 +423,7 @@
     [self.superview addConstraints:[h arrayByAddingObjectsFromArray:v]];
 }
 
-- (void)rz_spaceSubviews:(NSArray *)subviews vertically:(BOOL)vertically mininimumItemSpacing:(CGFloat)itemSpacing
+- (void)rz_spaceSubviews:(NSArray *)subviews vertically:(BOOL)vertically minimumItemSpacing:(CGFloat)itemSpacing
 {
     [self rz_spaceSubviews:subviews vertically:vertically itemSpacing:itemSpacing relation:NSLayoutRelationGreaterThanOrEqual];
 }
