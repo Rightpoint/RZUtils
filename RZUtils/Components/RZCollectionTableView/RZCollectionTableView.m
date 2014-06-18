@@ -48,8 +48,8 @@
         [self endConfirmationState];
 
         if ( [self.collectionViewLayout isKindOfClass:[RZCollectionTableViewLayout class]] ) {
-            [(RZCollectionTableViewLayout *) self.collectionViewLayout _rz_editingButtonPressed:buttonIdx
-                                                                              forRowAtIndexPath:[self indexPathForCell:cell]];
+            [(RZCollectionTableViewLayout *)self.collectionViewLayout _rz_editingButtonPressed:buttonIdx
+                                                                             forRowAtIndexPath:[self indexPathForCell:cell]];
         }
     }
 }
@@ -62,7 +62,7 @@
     [self.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 
         if ( [obj isKindOfClass:[RZCollectionTableViewCell class]] && obj != cell ) {
-            [(RZCollectionTableViewCell *) obj setRzEditing:NO animated:YES];
+            [(RZCollectionTableViewCell *)obj setRzEditing:NO animated:YES];
         }
 
     }];
@@ -78,7 +78,7 @@
     [self.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 
         if ( [obj isKindOfClass:[RZCollectionTableViewCell class]] ) {
-            [(RZCollectionTableViewCell *) obj setRzEditing:NO animated:YES];
+            [(RZCollectionTableViewCell *)obj setRzEditing:NO animated:YES];
         }
 
     }];
@@ -130,8 +130,8 @@ NSString *const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableViewL
 
 // ===== Helpers ======
 
-@property (nonatomic, readonly) NSInteger                                totalRows;
-@property (nonatomic, readonly) id <RZCollectionTableViewLayoutDelegate> layoutDelegate;
+@property (nonatomic, readonly) NSInteger                               totalRows;
+@property (nonatomic, readonly) id<RZCollectionTableViewLayoutDelegate> layoutDelegate;
 
 @end
 
@@ -202,7 +202,7 @@ NSString *const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableViewL
             NSInteger       startRowIndex = firstRowIndexPath.item;
             for ( NSInteger s             = firstRowIndexPath.section; s < [self.collectionView numberOfSections] && !outOfBounds; s++ ) {
                 for ( NSInteger i = startRowIndex; i < [self.collectionView numberOfItemsInSection:s] && !outOfBounds; i++ ) {
-                    RZCollectionTableViewCellAttributes *rowAttributes = (RZCollectionTableViewCellAttributes *) [self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:s]];
+                    RZCollectionTableViewCellAttributes *rowAttributes = (RZCollectionTableViewCellAttributes *)[self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:s]];
                     outOfBounds = !CGRectIntersectsRect(rowAttributes.frame, rect);
                     if ( !outOfBounds ) {
                         [newAttributes addObject:rowAttributes];
@@ -330,7 +330,7 @@ NSString *const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableViewL
     }
 
     if ( [self.collectionView isKindOfClass:[RZCollectionTableView class]] ) {
-        rowAttributes._rz_parentCollectionTableView = (RZCollectionTableView *) self.collectionView;
+        rowAttributes._rz_parentCollectionTableView = (RZCollectionTableView *)self.collectionView;
     }
 
     return [rowAttributes copy];
@@ -379,10 +379,10 @@ NSString *const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableViewL
     return rows;
 }
 
-- (id <RZCollectionTableViewLayoutDelegate>)layoutDelegate
+- (id<RZCollectionTableViewLayoutDelegate>)layoutDelegate
 {
     // If the delegate conforms to our protocol, return it, otherwise nil
-    return ( [self.collectionView.delegate conformsToProtocol:@protocol(RZCollectionTableViewLayoutDelegate)] ) ? (id <RZCollectionTableViewLayoutDelegate>) self.collectionView.delegate : nil;
+    return ( [self.collectionView.delegate conformsToProtocol:@protocol(RZCollectionTableViewLayoutDelegate)] ) ? (id<RZCollectionTableViewLayoutDelegate>)self.collectionView.delegate : nil;
 }
 
 - (BOOL)sectionHasHeader:(NSInteger)section
@@ -556,7 +556,7 @@ NSString *const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableViewL
         origin.y += [self heightForSection:s estimated:estimated];
     }
 
-    return (CGRect) { origin, size };
+    return (CGRect){ origin, size };
 }
 
 - (CGRect)rectForHeaderInSection:(NSInteger)section
@@ -577,7 +577,7 @@ NSString *const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableViewL
 
         origin.y += [self insetsForSection:section].top;
 
-        rect = (CGRect) { origin, size };
+        rect = (CGRect){ origin, size };
     }
     return rect;
 }
@@ -603,7 +603,7 @@ NSString *const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableViewL
         // Back up by the footer height and the inset height
         origin.y -= ( footerHeight + [self insetsForSection:section].bottom );
 
-        rect = (CGRect) { origin, size };
+        rect = (CGRect){ origin, size };
     }
     return rect;
 }
@@ -634,7 +634,7 @@ NSString *const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableViewL
         origin.y += [self heightForRowAtIndexPath:[NSIndexPath indexPathForItem:r inSection:indexPath.section] estimated:estimated] + spacing;
     }
 
-    return (CGRect) { origin, size };
+    return (CGRect){ origin, size };
 }
 
 - (NSIndexPath *)indexPathForRawRowIndex:(NSInteger)rowIndex

@@ -273,7 +273,7 @@ NSString *const RZCollectionTableViewCellEditingCommitted    = @"RZCollectionTab
 {
     [super applyLayoutAttributes:layoutAttributes];
     if ( [layoutAttributes isKindOfClass:[RZCollectionTableViewCellAttributes class]] ) {
-        RZCollectionTableViewCellAttributes *rzLayoutAttributes = (RZCollectionTableViewCellAttributes *) layoutAttributes;
+        RZCollectionTableViewCellAttributes *rzLayoutAttributes = (RZCollectionTableViewCellAttributes *)layoutAttributes;
         self.rzEditingEnabled              = rzLayoutAttributes.rzEditingEnabled;
         self._rz_parentCollectionTableView = rzLayoutAttributes._rz_parentCollectionTableView;
     }
@@ -338,7 +338,7 @@ NSString *const RZCollectionTableViewCellEditingCommitted    = @"RZCollectionTab
 {
     BOOL shouldBegin = NO;
     if ( gestureRecognizer == self.panGesture ) {
-        UIPanGestureRecognizer *pan = (UIPanGestureRecognizer *) gestureRecognizer;
+        UIPanGestureRecognizer *pan = (UIPanGestureRecognizer *)gestureRecognizer;
         CGPoint                vel  = [pan velocityInView:self];
         // if it's more X than y
         if ( fabsf(vel.x) > fabsf(vel.y) ) {
