@@ -12,10 +12,10 @@
 #define RZCVTL_HEADER_ITEM 0
 #define RZCVTL_FOOTER_ITEM 1
 
-@interface RZCollectionTableView () {
-    BOOL _inEditingConfirmationState;
-}
+@interface RZCollectionTableView ()
 
+@property (nonatomic, assign) BOOL inEditingConfirmationState;
+    
 @end
 
 @implementation RZCollectionTableView
@@ -24,11 +24,6 @@
 {
     [super reloadData];
     self.panGestureRecognizer.enabled = YES;
-}
-
-- (BOOL)_rz_inEditingConfirmationState
-{
-    return _inEditingConfirmationState;
 }
 
 #pragma mark - Editing State Management
@@ -69,8 +64,7 @@
 
     // disable pan gesture on collection view
     self.panGestureRecognizer.enabled = NO;
-
-    _inEditingConfirmationState = YES;
+    self.inEditingConfirmationState   = YES;
 }
 
 - (void)endConfirmationState
@@ -84,15 +78,14 @@
     }];
 
     self.panGestureRecognizer.enabled = YES;
-
-    _inEditingConfirmationState = NO;
+    self.inEditingConfirmationState   = NO;
 }
 
 #pragma mark - Touch swallowing
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if ( _inEditingConfirmationState ) {
+    if ( self.inEditingConfirmationState ) {
         // Any touch immediately kills the editing state
         // Designed to work just like a UITableView
         [self endConfirmationState];

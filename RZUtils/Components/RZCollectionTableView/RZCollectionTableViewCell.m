@@ -14,9 +14,6 @@
 #define kRZCTEditingButtonWidth       80.f
 #define kRZCTEditStateAnimDuration    0.3
 
-NSString *const RZCollectionTableViewCellEditingStateChanged = @"RZCollectionTableViewCellEditingStateChanged";
-NSString *const RZCollectionTableViewCellEditingCommitted    = @"RZCollectionTableViewCellEditingCommitted";
-
 @interface RZCollectionTableViewCell () <UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) NSArray *rzEditingItems;
