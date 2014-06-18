@@ -75,7 +75,7 @@
 - (void)rz_centerVerticallyInContainerWithOffset:(CGFloat)offset;
 
 // Batch alignment
-- (void)rz_spaceSubviews:(NSArray *)subviews vertically:(BOOL)vertically mininimumItemSpacing:(CGFloat)itemSpacing;
+- (void)rz_spaceSubviews:(NSArray *)subviews vertically:(BOOL)vertically minimumItemSpacing:(CGFloat)itemSpacing __attribute__((deprecated("Use rz_spaceSubViews:vertically:itemSpacing:relation: instead.")));
 - (void)rz_spaceSubviews:(NSArray *)subviews vertically:(BOOL)vertically itemSpacing:(CGFloat)itemSpacing relation:(NSLayoutRelation)relation;
 - (void)rz_distributeSubviews:(NSArray *)subviews vertically:(BOOL)vertically;
 - (void)rz_alignSubviews:(NSArray *)subviews byAttribute:(NSLayoutAttribute)attribute;
