@@ -16,10 +16,6 @@
     BOOL _inEditingConfirmationState;
 }
 
-- (void)enterConfirmationStateForCell:(RZCollectionTableViewCell *)cell;
-
-- (void)endConfirmationState;
-
 @end
 
 @implementation RZCollectionTableView
@@ -136,40 +132,6 @@ NSString *const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableViewL
 
 @property (nonatomic, readonly) NSInteger                                totalRows;
 @property (nonatomic, readonly) id <RZCollectionTableViewLayoutDelegate> layoutDelegate;
-
-- (BOOL)sectionHasHeader:(NSInteger)section;
-
-- (BOOL)sectionHasFooter:(NSInteger)section;
-
-- (void)clearCaches;
-
-// These account for the delegate's response - use these internally
-- (UIEdgeInsets)insetsForSection:(NSInteger)section;
-
-- (CGFloat)rowSpacingForSection:(NSInteger)section;
-
-- (CGFloat)headerHeightForSection:(NSInteger)section;
-
-- (CGFloat)footerHeightForSection:(NSInteger)section;
-
-- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath;
-
-- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath estimated:(BOOL)estimated;
-
-- (CGFloat)heightForSection:(NSInteger)section;
-
-- (CGFloat)heightForSection:(NSInteger)section estimated:(BOOL)estimated;
-
-- (CGRect)rectForSection:(NSInteger)section estimated:(BOOL)estimated;
-
-- (CGRect)rectForHeaderInSection:(NSInteger)section estimated:(BOOL)estimated;
-
-- (CGRect)rectForFooterInSection:(NSInteger)section estimated:(BOOL)estimated;
-
-- (CGRect)rectForRowAtIndexPath:(NSIndexPath *)indexPath estimated:(BOOL)estimated;
-
-- (NSIndexPath *)indexPathForRawRowIndex:(NSInteger)rowIndex; // converts expanded index to sectioned index path
-- (NSIndexPath *)indexPathOfFirstRowInRect:(CGRect)rect;
 
 @end
 
