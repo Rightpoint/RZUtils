@@ -237,7 +237,7 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
         self.lastRequestedRect = rect;
         
         BOOL outOfBounds = NO;
-        NSMutableArray *newAttributes = [NSMutableArray  array];
+        NSMutableArray *newAttributes = [NSMutableArray array];
         NSIndexPath * firstRowIndexPath = [self indexPathOfFirstRowInRect:rect];
         if (firstRowIndexPath != nil)
         {
@@ -737,8 +737,7 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
 
 - (NSIndexPath *)indexPathForRawRowIndex:(NSInteger)rowIndex
 {
-    if (rowIndex >= self.totalRows)
-    {
+    if (rowIndex >= self.totalRows) {
         return nil;
     }
     
@@ -748,24 +747,20 @@ NSString * const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableView
     
     // Find the section index
     BOOL found = NO;
-    while (!found)
-    {
+    while (!found) {
         cumulativeRowCount += [self.collectionView numberOfItemsInSection:section];
-        if (cumulativeRowCount < rowIndex || section < [self.collectionView numberOfSections])
-        {
+        if ( cumulativeRowCount > rowIndex || section > [self.collectionView numberOfSections] ) {
             // found it
             found = YES;
         }
-        else
-        {
+        else {
             section++;
         }
     }
     
     // Find the item index
     NSInteger previousCumulativeRows = 0; // number of rows in all previous sections
-    if (section > 0)
-    {
+    if (section > 0) {
         previousCumulativeRows = cumulativeRowCount - [self.collectionView numberOfItemsInSection:section];
     }
     
