@@ -75,6 +75,14 @@
 - (void)rz_centerVerticallyInContainerWithOffset:(CGFloat)offset;
 
 // Batch alignment
+/**
+ *  Create a vertical or horizontal minimum space constraint between each adjacent pair of views in an array. This method is 
+ *  deprecated in favor of rz_spaceSubViews:vertically:itemSpacing:relation:
+ *
+ *  @param subviews    The array of views to space. The order of the array should reflect their spatial order.
+ *  @param vertically  YES if the spaces should exist between views' top and bottom edges, NO if between left and right edges.
+ *  @param itemSpacing The minimum amount of space that should exist between adjacent views.
+ */
 - (void)rz_spaceSubviews:(NSArray *)subviews vertically:(BOOL)vertically minimumItemSpacing:(CGFloat)itemSpacing __attribute__((deprecated("Use rz_spaceSubViews:vertically:itemSpacing:relation: instead.")));
 
 /**
