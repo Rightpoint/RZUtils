@@ -195,11 +195,34 @@ Pod::Spec.new do |s|
   # Utility Subspecs
   #
   
-  s.subspec "Utilities" do |ss|
+  s.subspec "TestUtilities" do |ss|
+    
+    ss.dependency 'RZUtils/TestUtilities/RZWaiter'
+    ss.subspec "RZWaiter" do |sss|
+      sss.source_files = "RZUtils/Test Utilities/RZWaiter/*.{h,m}"
+    end
     
   end
   
+  s.subspec "Utilities" do |ss|
+    
+    ss.dependency 'RZUtils/Utilities/RZCommonUtils'
+    ss.subspec "RZCommonUtils" do |sss|
+      sss.source_files = "RZUtils/Utility/RZCommonUtils/*.{h,m}"
+    end
+    
+    ss.dependency 'RZUtils/Utilities/RZDispatch'
+    ss.subspec "RZDispatch" do |sss|
+      sss.source_files = "RZUtils/Utility/RZDispatch/*.{h,m}"
+    end
+    
+  end
+  
+  #
   # Catch-all subspec
+  # NOTE: Test utils not included here
+  #
+  
   s.subspec "All" do |ss|
     ss.dependency 'RZUtils/Categories'
     ss.dependency 'RZUtils/Components'
