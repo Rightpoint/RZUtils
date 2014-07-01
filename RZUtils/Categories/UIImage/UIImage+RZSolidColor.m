@@ -37,16 +37,16 @@
     if ( ![color getRed:NULL green:NULL blue:NULL alpha:&alpha] ) {
         if ( ![color getWhite:NULL alpha:&alpha] ) {
             // coudln’t get alpha, so assume opaque
-            alpha = 1;
+            alpha = 1.0f;
         }
     }
 
-    BOOL opaque = ( alpha == 1 );
+    BOOL opaque = ( alpha == 1.0f );
     UIGraphicsBeginImageContextWithOptions(size, opaque, 0.0f);
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     
     CGContextSetFillColorWithColor(ctx, color.CGColor);
-    CGContextFillRect(ctx, CGRectMake(0, 0, size.width, size.height));
+    CGContextFillRect(ctx, CGRectMake(0.0f, 0.0f, size.width, size.height));
 
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
