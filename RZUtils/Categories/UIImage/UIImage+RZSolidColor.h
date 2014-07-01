@@ -31,6 +31,14 @@
 
 @interface UIImage (RZSolidColor)
 
+/**
+ *  Return a solid color image of a specified size.
+ *
+ *  @param size  The size of the image you want.
+ *  @param color The color of the image. The alpha of the color is maintained in the final image.
+ *
+ *  @return A new solid color image of the specified size.
+ */
 + (UIImage *)rz_solidColorImageWithSize:(CGSize)size color:(UIColor *)color;
 
 @end
