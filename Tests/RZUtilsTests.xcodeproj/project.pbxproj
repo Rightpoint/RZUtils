@@ -7,55 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A175505AE684DAFB8613F72 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22BAB0697B95400AAAD3740C /* libPods.a */; };
 		9A8D4DF4196335CC00AFAB21 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8D4DF3196335CC00AFAB21 /* XCTest.framework */; };
 		9A8D4DF5196335CC00AFAB21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8D4DD1196335CC00AFAB21 /* Foundation.framework */; };
 		9A8D4DF6196335CC00AFAB21 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8D4DD5196335CC00AFAB21 /* UIKit.framework */; };
 		9A8D4DFE196335CC00AFAB21 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A8D4DFC196335CC00AFAB21 /* InfoPlist.strings */; };
-		9A8D4E00196335CC00AFAB21 /* RZUtilsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4DFF196335CC00AFAB21 /* RZUtilsTests.m */; };
-		9A8D4E8A1963366600AFAB21 /* CAAnimation+RZBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E161963366600AFAB21 /* CAAnimation+RZBlocks.m */; };
-		9A8D4E8B1963366600AFAB21 /* NSObject+RZBlockKVO.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E191963366600AFAB21 /* NSObject+RZBlockKVO.m */; };
-		9A8D4E8C1963366600AFAB21 /* NSDate+RZExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E1C1963366600AFAB21 /* NSDate+RZExtensions.m */; };
-		9A8D4E8D1963366600AFAB21 /* NSDictionary+RZExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E1F1963366600AFAB21 /* NSDictionary+RZExtensions.m */; };
-		9A8D4E8E1963366600AFAB21 /* NSAttributedString+RZExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E221963366600AFAB21 /* NSAttributedString+RZExtensions.m */; };
-		9A8D4E8F1963366600AFAB21 /* NSString+RZStringFormatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E241963366600AFAB21 /* NSString+RZStringFormatting.m */; };
-		9A8D4E901963366600AFAB21 /* NSString+RZStringSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E261963366600AFAB21 /* NSString+RZStringSize.m */; };
-		9A8D4E911963366600AFAB21 /* NSUndoManager+RZBlockUndo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E291963366600AFAB21 /* NSUndoManager+RZBlockUndo.m */; };
-		9A8D4E921963366600AFAB21 /* UIAlertView+RZCompletionBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E2C1963366600AFAB21 /* UIAlertView+RZCompletionBlocks.m */; };
-		9A8D4E931963366600AFAB21 /* UIColor+RZExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E2F1963366600AFAB21 /* UIColor+RZExtensions.m */; };
-		9A8D4E941963366600AFAB21 /* UIFont+RZExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E321963366600AFAB21 /* UIFont+RZExtensions.m */; };
-		9A8D4E951963366600AFAB21 /* UIImage+RZAverageColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E351963366600AFAB21 /* UIImage+RZAverageColor.m */; };
-		9A8D4E961963366600AFAB21 /* UIImage+RZResize.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E371963366600AFAB21 /* UIImage+RZResize.m */; };
-		9A8D4E971963366600AFAB21 /* UIImage+RZSnapshotHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E391963366600AFAB21 /* UIImage+RZSnapshotHelpers.m */; };
-		9A8D4E981963366600AFAB21 /* UIImage+RZSolidColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E3B1963366600AFAB21 /* UIImage+RZSolidColor.m */; };
-		9A8D4E991963366600AFAB21 /* UIImage+RZStretchHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E3D1963366600AFAB21 /* UIImage+RZStretchHelpers.m */; };
-		9A8D4E9A1963366600AFAB21 /* UIImageView+RZAXMaintainImageColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E401963366600AFAB21 /* UIImageView+RZAXMaintainImageColors.m */; };
-		9A8D4E9C1963366600AFAB21 /* UIView+RZAutoLayoutHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E461963366600AFAB21 /* UIView+RZAutoLayoutHelpers.m */; };
-		9A8D4E9D1963366600AFAB21 /* UIView+RZBorders.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E481963366600AFAB21 /* UIView+RZBorders.m */; };
-		9A8D4E9E1963366600AFAB21 /* UIView+RZFrameUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E4A1963366600AFAB21 /* UIView+RZFrameUtils.m */; };
-		9A8D4E9F1963366600AFAB21 /* UIViewController+RZKeyboardWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E4D1963366600AFAB21 /* UIViewController+RZKeyboardWatcher.m */; };
-		9A8D4EA01963366600AFAB21 /* RZAnimatedCountingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E511963366600AFAB21 /* RZAnimatedCountingLabel.m */; };
-		9A8D4EA11963366600AFAB21 /* RZAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E541963366600AFAB21 /* RZAnimatedImageView.m */; };
-		9A8D4EA21963366600AFAB21 /* RZButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E571963366600AFAB21 /* RZButtonView.m */; };
-		9A8D4EA31963366600AFAB21 /* RZCollectionTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E5A1963366600AFAB21 /* RZCollectionTableView.m */; };
-		9A8D4EA41963366600AFAB21 /* RZCollectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E5D1963366600AFAB21 /* RZCollectionTableViewCell.m */; };
-		9A8D4EA51963366600AFAB21 /* RZCollectionViewAnimationAssistant.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E601963366600AFAB21 /* RZCollectionViewAnimationAssistant.m */; };
-		9A8D4EA61963366600AFAB21 /* RZDelayedOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E631963366600AFAB21 /* RZDelayedOperation.m */; };
-		9A8D4EA71963366600AFAB21 /* RZLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E661963366600AFAB21 /* RZLocationService.m */; };
-		9A8D4EA81963366600AFAB21 /* RZProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E691963366600AFAB21 /* RZProgressView.m */; };
-		9A8D4EA91963366600AFAB21 /* RZRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E6C1963366600AFAB21 /* RZRevealViewController.m */; };
-		9A8D4EAA1963366600AFAB21 /* RZSegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E6F1963366600AFAB21 /* RZSegmentViewController.m */; };
-		9A8D4EAB1963366600AFAB21 /* RZViewControllerTransitioningContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E711963366600AFAB21 /* RZViewControllerTransitioningContext.m */; };
-		9A8D4EAC1963366600AFAB21 /* RZSingleChildContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E741963366600AFAB21 /* RZSingleChildContainerViewController.m */; };
-		9A8D4EAD1963366600AFAB21 /* RZSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E771963366600AFAB21 /* RZSplitViewController.m */; };
-		9A8D4EAE1963366600AFAB21 /* RZTelprompt.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E7A1963366600AFAB21 /* RZTelprompt.m */; };
-		9A8D4EAF1963366600AFAB21 /* RZViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E7D1963366600AFAB21 /* RZViewFactory.m */; };
-		9A8D4EB01963366600AFAB21 /* RZWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E801963366600AFAB21 /* RZWebViewController.m */; };
-		9A8D4EB11963366600AFAB21 /* RZWaiter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E841963366600AFAB21 /* RZWaiter.m */; };
-		9A8D4EB21963366600AFAB21 /* RZCommonUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E871963366600AFAB21 /* RZCommonUtils.m */; };
-		9A8D4EB31963366600AFAB21 /* RZDispatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E891963366600AFAB21 /* RZDispatch.m */; };
+		9A8D4EB61963431900AFAB21 /* RZBlockKVOTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4EB51963431900AFAB21 /* RZBlockKVOTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		22BAB0697B95400AAAD3740C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A8D4DD1196335CC00AFAB21 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9A8D4DD3196335CC00AFAB21 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		9A8D4DD5196335CC00AFAB21 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -64,91 +25,9 @@
 		9A8D4DF3196335CC00AFAB21 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		9A8D4DFB196335CC00AFAB21 /* RZUtilsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RZUtilsTests-Info.plist"; sourceTree = "<group>"; };
 		9A8D4DFD196335CC00AFAB21 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		9A8D4DFF196335CC00AFAB21 /* RZUtilsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZUtilsTests.m; sourceTree = "<group>"; };
-		9A8D4E151963366600AFAB21 /* CAAnimation+RZBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAAnimation+RZBlocks.h"; sourceTree = "<group>"; };
-		9A8D4E161963366600AFAB21 /* CAAnimation+RZBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAAnimation+RZBlocks.m"; sourceTree = "<group>"; };
-		9A8D4E181963366600AFAB21 /* NSObject+RZBlockKVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+RZBlockKVO.h"; sourceTree = "<group>"; };
-		9A8D4E191963366600AFAB21 /* NSObject+RZBlockKVO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+RZBlockKVO.m"; sourceTree = "<group>"; };
-		9A8D4E1B1963366600AFAB21 /* NSDate+RZExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+RZExtensions.h"; sourceTree = "<group>"; };
-		9A8D4E1C1963366600AFAB21 /* NSDate+RZExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+RZExtensions.m"; sourceTree = "<group>"; };
-		9A8D4E1E1963366600AFAB21 /* NSDictionary+RZExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+RZExtensions.h"; sourceTree = "<group>"; };
-		9A8D4E1F1963366600AFAB21 /* NSDictionary+RZExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+RZExtensions.m"; sourceTree = "<group>"; };
-		9A8D4E211963366600AFAB21 /* NSAttributedString+RZExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+RZExtensions.h"; sourceTree = "<group>"; };
-		9A8D4E221963366600AFAB21 /* NSAttributedString+RZExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+RZExtensions.m"; sourceTree = "<group>"; };
-		9A8D4E231963366600AFAB21 /* NSString+RZStringFormatting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RZStringFormatting.h"; sourceTree = "<group>"; };
-		9A8D4E241963366600AFAB21 /* NSString+RZStringFormatting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RZStringFormatting.m"; sourceTree = "<group>"; };
-		9A8D4E251963366600AFAB21 /* NSString+RZStringSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RZStringSize.h"; sourceTree = "<group>"; };
-		9A8D4E261963366600AFAB21 /* NSString+RZStringSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RZStringSize.m"; sourceTree = "<group>"; };
-		9A8D4E281963366600AFAB21 /* NSUndoManager+RZBlockUndo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUndoManager+RZBlockUndo.h"; sourceTree = "<group>"; };
-		9A8D4E291963366600AFAB21 /* NSUndoManager+RZBlockUndo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUndoManager+RZBlockUndo.m"; sourceTree = "<group>"; };
-		9A8D4E2B1963366600AFAB21 /* UIAlertView+RZCompletionBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+RZCompletionBlocks.h"; sourceTree = "<group>"; };
-		9A8D4E2C1963366600AFAB21 /* UIAlertView+RZCompletionBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+RZCompletionBlocks.m"; sourceTree = "<group>"; };
-		9A8D4E2E1963366600AFAB21 /* UIColor+RZExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+RZExtensions.h"; sourceTree = "<group>"; };
-		9A8D4E2F1963366600AFAB21 /* UIColor+RZExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+RZExtensions.m"; sourceTree = "<group>"; };
-		9A8D4E311963366600AFAB21 /* UIFont+RZExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+RZExtensions.h"; sourceTree = "<group>"; };
-		9A8D4E321963366600AFAB21 /* UIFont+RZExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+RZExtensions.m"; sourceTree = "<group>"; };
-		9A8D4E341963366600AFAB21 /* UIImage+RZAverageColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RZAverageColor.h"; sourceTree = "<group>"; };
-		9A8D4E351963366600AFAB21 /* UIImage+RZAverageColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RZAverageColor.m"; sourceTree = "<group>"; };
-		9A8D4E361963366600AFAB21 /* UIImage+RZResize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RZResize.h"; sourceTree = "<group>"; };
-		9A8D4E371963366600AFAB21 /* UIImage+RZResize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RZResize.m"; sourceTree = "<group>"; };
-		9A8D4E381963366600AFAB21 /* UIImage+RZSnapshotHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RZSnapshotHelpers.h"; sourceTree = "<group>"; };
-		9A8D4E391963366600AFAB21 /* UIImage+RZSnapshotHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RZSnapshotHelpers.m"; sourceTree = "<group>"; };
-		9A8D4E3A1963366600AFAB21 /* UIImage+RZSolidColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RZSolidColor.h"; sourceTree = "<group>"; };
-		9A8D4E3B1963366600AFAB21 /* UIImage+RZSolidColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RZSolidColor.m"; sourceTree = "<group>"; };
-		9A8D4E3C1963366600AFAB21 /* UIImage+RZStretchHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RZStretchHelpers.h"; sourceTree = "<group>"; };
-		9A8D4E3D1963366600AFAB21 /* UIImage+RZStretchHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RZStretchHelpers.m"; sourceTree = "<group>"; };
-		9A8D4E3F1963366600AFAB21 /* UIImageView+RZAXMaintainImageColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+RZAXMaintainImageColors.h"; sourceTree = "<group>"; };
-		9A8D4E401963366600AFAB21 /* UIImageView+RZAXMaintainImageColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+RZAXMaintainImageColors.m"; sourceTree = "<group>"; };
-		9A8D4E451963366600AFAB21 /* UIView+RZAutoLayoutHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RZAutoLayoutHelpers.h"; sourceTree = "<group>"; };
-		9A8D4E461963366600AFAB21 /* UIView+RZAutoLayoutHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RZAutoLayoutHelpers.m"; sourceTree = "<group>"; };
-		9A8D4E471963366600AFAB21 /* UIView+RZBorders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RZBorders.h"; sourceTree = "<group>"; };
-		9A8D4E481963366600AFAB21 /* UIView+RZBorders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RZBorders.m"; sourceTree = "<group>"; };
-		9A8D4E491963366600AFAB21 /* UIView+RZFrameUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RZFrameUtils.h"; sourceTree = "<group>"; };
-		9A8D4E4A1963366600AFAB21 /* UIView+RZFrameUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RZFrameUtils.m"; sourceTree = "<group>"; };
-		9A8D4E4C1963366600AFAB21 /* UIViewController+RZKeyboardWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RZKeyboardWatcher.h"; sourceTree = "<group>"; };
-		9A8D4E4D1963366600AFAB21 /* UIViewController+RZKeyboardWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RZKeyboardWatcher.m"; sourceTree = "<group>"; };
-		9A8D4E501963366600AFAB21 /* RZAnimatedCountingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZAnimatedCountingLabel.h; sourceTree = "<group>"; };
-		9A8D4E511963366600AFAB21 /* RZAnimatedCountingLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZAnimatedCountingLabel.m; sourceTree = "<group>"; };
-		9A8D4E531963366600AFAB21 /* RZAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZAnimatedImageView.h; sourceTree = "<group>"; };
-		9A8D4E541963366600AFAB21 /* RZAnimatedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZAnimatedImageView.m; sourceTree = "<group>"; };
-		9A8D4E561963366600AFAB21 /* RZButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZButtonView.h; sourceTree = "<group>"; };
-		9A8D4E571963366600AFAB21 /* RZButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZButtonView.m; sourceTree = "<group>"; };
-		9A8D4E591963366600AFAB21 /* RZCollectionTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZCollectionTableView.h; sourceTree = "<group>"; };
-		9A8D4E5A1963366600AFAB21 /* RZCollectionTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZCollectionTableView.m; sourceTree = "<group>"; };
-		9A8D4E5B1963366600AFAB21 /* RZCollectionTableView_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZCollectionTableView_Private.h; sourceTree = "<group>"; };
-		9A8D4E5C1963366600AFAB21 /* RZCollectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZCollectionTableViewCell.h; sourceTree = "<group>"; };
-		9A8D4E5D1963366600AFAB21 /* RZCollectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZCollectionTableViewCell.m; sourceTree = "<group>"; };
-		9A8D4E5F1963366600AFAB21 /* RZCollectionViewAnimationAssistant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZCollectionViewAnimationAssistant.h; sourceTree = "<group>"; };
-		9A8D4E601963366600AFAB21 /* RZCollectionViewAnimationAssistant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZCollectionViewAnimationAssistant.m; sourceTree = "<group>"; };
-		9A8D4E621963366600AFAB21 /* RZDelayedOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZDelayedOperation.h; sourceTree = "<group>"; };
-		9A8D4E631963366600AFAB21 /* RZDelayedOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZDelayedOperation.m; sourceTree = "<group>"; };
-		9A8D4E651963366600AFAB21 /* RZLocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZLocationService.h; sourceTree = "<group>"; };
-		9A8D4E661963366600AFAB21 /* RZLocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZLocationService.m; sourceTree = "<group>"; };
-		9A8D4E681963366600AFAB21 /* RZProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZProgressView.h; sourceTree = "<group>"; };
-		9A8D4E691963366600AFAB21 /* RZProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZProgressView.m; sourceTree = "<group>"; };
-		9A8D4E6B1963366600AFAB21 /* RZRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZRevealViewController.h; sourceTree = "<group>"; };
-		9A8D4E6C1963366600AFAB21 /* RZRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZRevealViewController.m; sourceTree = "<group>"; };
-		9A8D4E6E1963366600AFAB21 /* RZSegmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZSegmentViewController.h; sourceTree = "<group>"; };
-		9A8D4E6F1963366600AFAB21 /* RZSegmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZSegmentViewController.m; sourceTree = "<group>"; };
-		9A8D4E701963366600AFAB21 /* RZViewControllerTransitioningContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZViewControllerTransitioningContext.h; sourceTree = "<group>"; };
-		9A8D4E711963366600AFAB21 /* RZViewControllerTransitioningContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZViewControllerTransitioningContext.m; sourceTree = "<group>"; };
-		9A8D4E731963366600AFAB21 /* RZSingleChildContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZSingleChildContainerViewController.h; sourceTree = "<group>"; };
-		9A8D4E741963366600AFAB21 /* RZSingleChildContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZSingleChildContainerViewController.m; sourceTree = "<group>"; };
-		9A8D4E761963366600AFAB21 /* RZSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZSplitViewController.h; sourceTree = "<group>"; };
-		9A8D4E771963366600AFAB21 /* RZSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZSplitViewController.m; sourceTree = "<group>"; };
-		9A8D4E791963366600AFAB21 /* RZTelprompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZTelprompt.h; sourceTree = "<group>"; };
-		9A8D4E7A1963366600AFAB21 /* RZTelprompt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZTelprompt.m; sourceTree = "<group>"; };
-		9A8D4E7C1963366600AFAB21 /* RZViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZViewFactory.h; sourceTree = "<group>"; };
-		9A8D4E7D1963366600AFAB21 /* RZViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZViewFactory.m; sourceTree = "<group>"; };
-		9A8D4E7F1963366600AFAB21 /* RZWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZWebViewController.h; sourceTree = "<group>"; };
-		9A8D4E801963366600AFAB21 /* RZWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZWebViewController.m; sourceTree = "<group>"; };
-		9A8D4E831963366600AFAB21 /* RZWaiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZWaiter.h; sourceTree = "<group>"; };
-		9A8D4E841963366600AFAB21 /* RZWaiter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZWaiter.m; sourceTree = "<group>"; };
-		9A8D4E861963366600AFAB21 /* RZCommonUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZCommonUtils.h; sourceTree = "<group>"; };
-		9A8D4E871963366600AFAB21 /* RZCommonUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZCommonUtils.m; sourceTree = "<group>"; };
-		9A8D4E881963366600AFAB21 /* RZDispatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZDispatch.h; sourceTree = "<group>"; };
-		9A8D4E891963366600AFAB21 /* RZDispatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZDispatch.m; sourceTree = "<group>"; };
 		9A8D4EB4196336C500AFAB21 /* RZUtilsTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RZUtilsTests-Prefix.pch"; sourceTree = "<group>"; };
+		9A8D4EB51963431900AFAB21 /* RZBlockKVOTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZBlockKVOTests.m; sourceTree = "<group>"; };
+		CFC331EF976D4DEC8CB9094C /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +38,7 @@
 				9A8D4DF4196335CC00AFAB21 /* XCTest.framework in Frameworks */,
 				9A8D4DF6196335CC00AFAB21 /* UIKit.framework in Frameworks */,
 				9A8D4DF5196335CC00AFAB21 /* Foundation.framework in Frameworks */,
+				7A175505AE684DAFB8613F72 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,10 +48,10 @@
 		9A8D4DC5196335CC00AFAB21 = {
 			isa = PBXGroup;
 			children = (
-				9A8D4E121963366600AFAB21 /* RZUtils */,
 				9A8D4DF9196335CC00AFAB21 /* RZUtilsTests */,
 				9A8D4DD0196335CC00AFAB21 /* Frameworks */,
 				9A8D4DCF196335CC00AFAB21 /* Products */,
+				CFC331EF976D4DEC8CB9094C /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -191,6 +71,7 @@
 				9A8D4DD5196335CC00AFAB21 /* UIKit.framework */,
 				9A8D4DD7196335CC00AFAB21 /* QuartzCore.framework */,
 				9A8D4DF3196335CC00AFAB21 /* XCTest.framework */,
+				22BAB0697B95400AAAD3740C /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -198,8 +79,8 @@
 		9A8D4DF9196335CC00AFAB21 /* RZUtilsTests */ = {
 			isa = PBXGroup;
 			children = (
-				9A8D4DFF196335CC00AFAB21 /* RZUtilsTests.m */,
 				9A8D4DFA196335CC00AFAB21 /* Supporting Files */,
+				9A8D4EB51963431900AFAB21 /* RZBlockKVOTests.m */,
 			);
 			path = RZUtilsTests;
 			sourceTree = "<group>";
@@ -214,361 +95,6 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		9A8D4E121963366600AFAB21 /* RZUtils */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E131963366600AFAB21 /* Categories */,
-				9A8D4E4E1963366600AFAB21 /* Components */,
-				9A8D4E811963366600AFAB21 /* Test Utilities */,
-				9A8D4E851963366600AFAB21 /* Utility */,
-			);
-			name = RZUtils;
-			path = ../RZUtils;
-			sourceTree = "<group>";
-		};
-		9A8D4E131963366600AFAB21 /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E141963366600AFAB21 /* CoreAnimation */,
-				9A8D4E171963366600AFAB21 /* KVO */,
-				9A8D4E1A1963366600AFAB21 /* NSDate */,
-				9A8D4E1D1963366600AFAB21 /* NSDictionary */,
-				9A8D4E201963366600AFAB21 /* NSString */,
-				9A8D4E271963366600AFAB21 /* NSUndoManager */,
-				9A8D4E2A1963366600AFAB21 /* UIAlertView */,
-				9A8D4E2D1963366600AFAB21 /* UIColor */,
-				9A8D4E301963366600AFAB21 /* UIFont */,
-				9A8D4E331963366600AFAB21 /* UIImage */,
-				9A8D4E3E1963366600AFAB21 /* UIImageView */,
-				9A8D4E441963366600AFAB21 /* UIView */,
-				9A8D4E4B1963366600AFAB21 /* UIViewController */,
-			);
-			path = Categories;
-			sourceTree = "<group>";
-		};
-		9A8D4E141963366600AFAB21 /* CoreAnimation */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E151963366600AFAB21 /* CAAnimation+RZBlocks.h */,
-				9A8D4E161963366600AFAB21 /* CAAnimation+RZBlocks.m */,
-			);
-			path = CoreAnimation;
-			sourceTree = "<group>";
-		};
-		9A8D4E171963366600AFAB21 /* KVO */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E181963366600AFAB21 /* NSObject+RZBlockKVO.h */,
-				9A8D4E191963366600AFAB21 /* NSObject+RZBlockKVO.m */,
-			);
-			path = KVO;
-			sourceTree = "<group>";
-		};
-		9A8D4E1A1963366600AFAB21 /* NSDate */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E1B1963366600AFAB21 /* NSDate+RZExtensions.h */,
-				9A8D4E1C1963366600AFAB21 /* NSDate+RZExtensions.m */,
-			);
-			path = NSDate;
-			sourceTree = "<group>";
-		};
-		9A8D4E1D1963366600AFAB21 /* NSDictionary */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E1E1963366600AFAB21 /* NSDictionary+RZExtensions.h */,
-				9A8D4E1F1963366600AFAB21 /* NSDictionary+RZExtensions.m */,
-			);
-			path = NSDictionary;
-			sourceTree = "<group>";
-		};
-		9A8D4E201963366600AFAB21 /* NSString */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E211963366600AFAB21 /* NSAttributedString+RZExtensions.h */,
-				9A8D4E221963366600AFAB21 /* NSAttributedString+RZExtensions.m */,
-				9A8D4E231963366600AFAB21 /* NSString+RZStringFormatting.h */,
-				9A8D4E241963366600AFAB21 /* NSString+RZStringFormatting.m */,
-				9A8D4E251963366600AFAB21 /* NSString+RZStringSize.h */,
-				9A8D4E261963366600AFAB21 /* NSString+RZStringSize.m */,
-			);
-			path = NSString;
-			sourceTree = "<group>";
-		};
-		9A8D4E271963366600AFAB21 /* NSUndoManager */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E281963366600AFAB21 /* NSUndoManager+RZBlockUndo.h */,
-				9A8D4E291963366600AFAB21 /* NSUndoManager+RZBlockUndo.m */,
-			);
-			path = NSUndoManager;
-			sourceTree = "<group>";
-		};
-		9A8D4E2A1963366600AFAB21 /* UIAlertView */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E2B1963366600AFAB21 /* UIAlertView+RZCompletionBlocks.h */,
-				9A8D4E2C1963366600AFAB21 /* UIAlertView+RZCompletionBlocks.m */,
-			);
-			path = UIAlertView;
-			sourceTree = "<group>";
-		};
-		9A8D4E2D1963366600AFAB21 /* UIColor */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E2E1963366600AFAB21 /* UIColor+RZExtensions.h */,
-				9A8D4E2F1963366600AFAB21 /* UIColor+RZExtensions.m */,
-			);
-			path = UIColor;
-			sourceTree = "<group>";
-		};
-		9A8D4E301963366600AFAB21 /* UIFont */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E311963366600AFAB21 /* UIFont+RZExtensions.h */,
-				9A8D4E321963366600AFAB21 /* UIFont+RZExtensions.m */,
-			);
-			path = UIFont;
-			sourceTree = "<group>";
-		};
-		9A8D4E331963366600AFAB21 /* UIImage */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E341963366600AFAB21 /* UIImage+RZAverageColor.h */,
-				9A8D4E351963366600AFAB21 /* UIImage+RZAverageColor.m */,
-				9A8D4E361963366600AFAB21 /* UIImage+RZResize.h */,
-				9A8D4E371963366600AFAB21 /* UIImage+RZResize.m */,
-				9A8D4E381963366600AFAB21 /* UIImage+RZSnapshotHelpers.h */,
-				9A8D4E391963366600AFAB21 /* UIImage+RZSnapshotHelpers.m */,
-				9A8D4E3A1963366600AFAB21 /* UIImage+RZSolidColor.h */,
-				9A8D4E3B1963366600AFAB21 /* UIImage+RZSolidColor.m */,
-				9A8D4E3C1963366600AFAB21 /* UIImage+RZStretchHelpers.h */,
-				9A8D4E3D1963366600AFAB21 /* UIImage+RZStretchHelpers.m */,
-			);
-			path = UIImage;
-			sourceTree = "<group>";
-		};
-		9A8D4E3E1963366600AFAB21 /* UIImageView */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E3F1963366600AFAB21 /* UIImageView+RZAXMaintainImageColors.h */,
-				9A8D4E401963366600AFAB21 /* UIImageView+RZAXMaintainImageColors.m */,
-			);
-			path = UIImageView;
-			sourceTree = "<group>";
-		};
-		9A8D4E441963366600AFAB21 /* UIView */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E451963366600AFAB21 /* UIView+RZAutoLayoutHelpers.h */,
-				9A8D4E461963366600AFAB21 /* UIView+RZAutoLayoutHelpers.m */,
-				9A8D4E471963366600AFAB21 /* UIView+RZBorders.h */,
-				9A8D4E481963366600AFAB21 /* UIView+RZBorders.m */,
-				9A8D4E491963366600AFAB21 /* UIView+RZFrameUtils.h */,
-				9A8D4E4A1963366600AFAB21 /* UIView+RZFrameUtils.m */,
-			);
-			path = UIView;
-			sourceTree = "<group>";
-		};
-		9A8D4E4B1963366600AFAB21 /* UIViewController */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E4C1963366600AFAB21 /* UIViewController+RZKeyboardWatcher.h */,
-				9A8D4E4D1963366600AFAB21 /* UIViewController+RZKeyboardWatcher.m */,
-			);
-			path = UIViewController;
-			sourceTree = "<group>";
-		};
-		9A8D4E4E1963366600AFAB21 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E4F1963366600AFAB21 /* RZAnimatedCountingLabel */,
-				9A8D4E521963366600AFAB21 /* RZAnimatedImageView */,
-				9A8D4E551963366600AFAB21 /* RZButtonView */,
-				9A8D4E581963366600AFAB21 /* RZCollectionTableView */,
-				9A8D4E5E1963366600AFAB21 /* RZCollectionViewAnimationAssistant */,
-				9A8D4E611963366600AFAB21 /* RZDelayedOperation */,
-				9A8D4E641963366600AFAB21 /* RZLocationService */,
-				9A8D4E671963366600AFAB21 /* RZProgressView */,
-				9A8D4E6A1963366600AFAB21 /* RZRevealViewController */,
-				9A8D4E6D1963366600AFAB21 /* RZSegmentedViewController */,
-				9A8D4E721963366600AFAB21 /* RZSingleChildContainerViewController */,
-				9A8D4E751963366600AFAB21 /* RZSplitViewController */,
-				9A8D4E781963366600AFAB21 /* RZTelprompt */,
-				9A8D4E7B1963366600AFAB21 /* RZViewFactory */,
-				9A8D4E7E1963366600AFAB21 /* RZWebViewController */,
-			);
-			path = Components;
-			sourceTree = "<group>";
-		};
-		9A8D4E4F1963366600AFAB21 /* RZAnimatedCountingLabel */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E501963366600AFAB21 /* RZAnimatedCountingLabel.h */,
-				9A8D4E511963366600AFAB21 /* RZAnimatedCountingLabel.m */,
-			);
-			path = RZAnimatedCountingLabel;
-			sourceTree = "<group>";
-		};
-		9A8D4E521963366600AFAB21 /* RZAnimatedImageView */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E531963366600AFAB21 /* RZAnimatedImageView.h */,
-				9A8D4E541963366600AFAB21 /* RZAnimatedImageView.m */,
-			);
-			path = RZAnimatedImageView;
-			sourceTree = "<group>";
-		};
-		9A8D4E551963366600AFAB21 /* RZButtonView */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E561963366600AFAB21 /* RZButtonView.h */,
-				9A8D4E571963366600AFAB21 /* RZButtonView.m */,
-			);
-			path = RZButtonView;
-			sourceTree = "<group>";
-		};
-		9A8D4E581963366600AFAB21 /* RZCollectionTableView */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E591963366600AFAB21 /* RZCollectionTableView.h */,
-				9A8D4E5A1963366600AFAB21 /* RZCollectionTableView.m */,
-				9A8D4E5B1963366600AFAB21 /* RZCollectionTableView_Private.h */,
-				9A8D4E5C1963366600AFAB21 /* RZCollectionTableViewCell.h */,
-				9A8D4E5D1963366600AFAB21 /* RZCollectionTableViewCell.m */,
-			);
-			path = RZCollectionTableView;
-			sourceTree = "<group>";
-		};
-		9A8D4E5E1963366600AFAB21 /* RZCollectionViewAnimationAssistant */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E5F1963366600AFAB21 /* RZCollectionViewAnimationAssistant.h */,
-				9A8D4E601963366600AFAB21 /* RZCollectionViewAnimationAssistant.m */,
-			);
-			path = RZCollectionViewAnimationAssistant;
-			sourceTree = "<group>";
-		};
-		9A8D4E611963366600AFAB21 /* RZDelayedOperation */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E621963366600AFAB21 /* RZDelayedOperation.h */,
-				9A8D4E631963366600AFAB21 /* RZDelayedOperation.m */,
-			);
-			path = RZDelayedOperation;
-			sourceTree = "<group>";
-		};
-		9A8D4E641963366600AFAB21 /* RZLocationService */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E651963366600AFAB21 /* RZLocationService.h */,
-				9A8D4E661963366600AFAB21 /* RZLocationService.m */,
-			);
-			path = RZLocationService;
-			sourceTree = "<group>";
-		};
-		9A8D4E671963366600AFAB21 /* RZProgressView */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E681963366600AFAB21 /* RZProgressView.h */,
-				9A8D4E691963366600AFAB21 /* RZProgressView.m */,
-			);
-			path = RZProgressView;
-			sourceTree = "<group>";
-		};
-		9A8D4E6A1963366600AFAB21 /* RZRevealViewController */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E6B1963366600AFAB21 /* RZRevealViewController.h */,
-				9A8D4E6C1963366600AFAB21 /* RZRevealViewController.m */,
-			);
-			path = RZRevealViewController;
-			sourceTree = "<group>";
-		};
-		9A8D4E6D1963366600AFAB21 /* RZSegmentedViewController */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E6E1963366600AFAB21 /* RZSegmentViewController.h */,
-				9A8D4E6F1963366600AFAB21 /* RZSegmentViewController.m */,
-				9A8D4E701963366600AFAB21 /* RZViewControllerTransitioningContext.h */,
-				9A8D4E711963366600AFAB21 /* RZViewControllerTransitioningContext.m */,
-			);
-			path = RZSegmentedViewController;
-			sourceTree = "<group>";
-		};
-		9A8D4E721963366600AFAB21 /* RZSingleChildContainerViewController */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E731963366600AFAB21 /* RZSingleChildContainerViewController.h */,
-				9A8D4E741963366600AFAB21 /* RZSingleChildContainerViewController.m */,
-			);
-			path = RZSingleChildContainerViewController;
-			sourceTree = "<group>";
-		};
-		9A8D4E751963366600AFAB21 /* RZSplitViewController */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E761963366600AFAB21 /* RZSplitViewController.h */,
-				9A8D4E771963366600AFAB21 /* RZSplitViewController.m */,
-			);
-			path = RZSplitViewController;
-			sourceTree = "<group>";
-		};
-		9A8D4E781963366600AFAB21 /* RZTelprompt */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E791963366600AFAB21 /* RZTelprompt.h */,
-				9A8D4E7A1963366600AFAB21 /* RZTelprompt.m */,
-			);
-			path = RZTelprompt;
-			sourceTree = "<group>";
-		};
-		9A8D4E7B1963366600AFAB21 /* RZViewFactory */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E7C1963366600AFAB21 /* RZViewFactory.h */,
-				9A8D4E7D1963366600AFAB21 /* RZViewFactory.m */,
-			);
-			path = RZViewFactory;
-			sourceTree = "<group>";
-		};
-		9A8D4E7E1963366600AFAB21 /* RZWebViewController */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E7F1963366600AFAB21 /* RZWebViewController.h */,
-				9A8D4E801963366600AFAB21 /* RZWebViewController.m */,
-			);
-			path = RZWebViewController;
-			sourceTree = "<group>";
-		};
-		9A8D4E811963366600AFAB21 /* Test Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E821963366600AFAB21 /* RZWaiter */,
-			);
-			path = "Test Utilities";
-			sourceTree = "<group>";
-		};
-		9A8D4E821963366600AFAB21 /* RZWaiter */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E831963366600AFAB21 /* RZWaiter.h */,
-				9A8D4E841963366600AFAB21 /* RZWaiter.m */,
-			);
-			path = RZWaiter;
-			sourceTree = "<group>";
-		};
-		9A8D4E851963366600AFAB21 /* Utility */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E861963366600AFAB21 /* RZCommonUtils.h */,
-				9A8D4E871963366600AFAB21 /* RZCommonUtils.m */,
-				9A8D4E881963366600AFAB21 /* RZDispatch.h */,
-				9A8D4E891963366600AFAB21 /* RZDispatch.m */,
-			);
-			path = Utility;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -576,9 +102,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9A8D4E08196335CC00AFAB21 /* Build configuration list for PBXNativeTarget "RZUtilsTests" */;
 			buildPhases = (
+				DFCEA1E42D714A99949F834D /* Check Pods Manifest.lock */,
 				9A8D4DEE196335CC00AFAB21 /* Sources */,
 				9A8D4DEF196335CC00AFAB21 /* Frameworks */,
 				9A8D4DF0196335CC00AFAB21 /* Resources */,
+				DB328C2D17B7432F9AFBFA98 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -627,53 +155,45 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		DB328C2D17B7432F9AFBFA98 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DFCEA1E42D714A99949F834D /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9A8D4DEE196335CC00AFAB21 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A8D4E9A1963366600AFAB21 /* UIImageView+RZAXMaintainImageColors.m in Sources */,
-				9A8D4EAF1963366600AFAB21 /* RZViewFactory.m in Sources */,
-				9A8D4EA91963366600AFAB21 /* RZRevealViewController.m in Sources */,
-				9A8D4EAD1963366600AFAB21 /* RZSplitViewController.m in Sources */,
-				9A8D4EA21963366600AFAB21 /* RZButtonView.m in Sources */,
-				9A8D4EA31963366600AFAB21 /* RZCollectionTableView.m in Sources */,
-				9A8D4EB31963366600AFAB21 /* RZDispatch.m in Sources */,
-				9A8D4EA01963366600AFAB21 /* RZAnimatedCountingLabel.m in Sources */,
-				9A8D4EB21963366600AFAB21 /* RZCommonUtils.m in Sources */,
-				9A8D4EA71963366600AFAB21 /* RZLocationService.m in Sources */,
-				9A8D4E9F1963366600AFAB21 /* UIViewController+RZKeyboardWatcher.m in Sources */,
-				9A8D4EA81963366600AFAB21 /* RZProgressView.m in Sources */,
-				9A8D4E911963366600AFAB21 /* NSUndoManager+RZBlockUndo.m in Sources */,
-				9A8D4E8B1963366600AFAB21 /* NSObject+RZBlockKVO.m in Sources */,
-				9A8D4EAB1963366600AFAB21 /* RZViewControllerTransitioningContext.m in Sources */,
-				9A8D4EA61963366600AFAB21 /* RZDelayedOperation.m in Sources */,
-				9A8D4E951963366600AFAB21 /* UIImage+RZAverageColor.m in Sources */,
-				9A8D4E981963366600AFAB21 /* UIImage+RZSolidColor.m in Sources */,
-				9A8D4E8E1963366600AFAB21 /* NSAttributedString+RZExtensions.m in Sources */,
-				9A8D4E971963366600AFAB21 /* UIImage+RZSnapshotHelpers.m in Sources */,
-				9A8D4E8A1963366600AFAB21 /* CAAnimation+RZBlocks.m in Sources */,
-				9A8D4E941963366600AFAB21 /* UIFont+RZExtensions.m in Sources */,
-				9A8D4E901963366600AFAB21 /* NSString+RZStringSize.m in Sources */,
-				9A8D4E8D1963366600AFAB21 /* NSDictionary+RZExtensions.m in Sources */,
-				9A8D4E8F1963366600AFAB21 /* NSString+RZStringFormatting.m in Sources */,
-				9A8D4EAE1963366600AFAB21 /* RZTelprompt.m in Sources */,
-				9A8D4EB01963366600AFAB21 /* RZWebViewController.m in Sources */,
-				9A8D4E961963366600AFAB21 /* UIImage+RZResize.m in Sources */,
-				9A8D4E8C1963366600AFAB21 /* NSDate+RZExtensions.m in Sources */,
-				9A8D4E921963366600AFAB21 /* UIAlertView+RZCompletionBlocks.m in Sources */,
-				9A8D4EA11963366600AFAB21 /* RZAnimatedImageView.m in Sources */,
-				9A8D4E9E1963366600AFAB21 /* UIView+RZFrameUtils.m in Sources */,
-				9A8D4EB11963366600AFAB21 /* RZWaiter.m in Sources */,
-				9A8D4E9D1963366600AFAB21 /* UIView+RZBorders.m in Sources */,
-				9A8D4E931963366600AFAB21 /* UIColor+RZExtensions.m in Sources */,
-				9A8D4E9C1963366600AFAB21 /* UIView+RZAutoLayoutHelpers.m in Sources */,
-				9A8D4EA41963366600AFAB21 /* RZCollectionTableViewCell.m in Sources */,
-				9A8D4E991963366600AFAB21 /* UIImage+RZStretchHelpers.m in Sources */,
-				9A8D4E00196335CC00AFAB21 /* RZUtilsTests.m in Sources */,
-				9A8D4EAC1963366600AFAB21 /* RZSingleChildContainerViewController.m in Sources */,
-				9A8D4EAA1963366600AFAB21 /* RZSegmentViewController.m in Sources */,
-				9A8D4EA51963366600AFAB21 /* RZCollectionViewAnimationAssistant.m in Sources */,
+				9A8D4EB61963431900AFAB21 /* RZBlockKVOTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -803,6 +323,7 @@
 		};
 		9A8D4E09196335CC00AFAB21 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CFC331EF976D4DEC8CB9094C /* Pods.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -824,6 +345,7 @@
 		};
 		9A8D4E0A196335CC00AFAB21 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CFC331EF976D4DEC8CB9094C /* Pods.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -841,6 +363,7 @@
 		};
 		9A8D4E0B196335CC00AFAB21 /* Enterprise-QA */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CFC331EF976D4DEC8CB9094C /* Pods.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
