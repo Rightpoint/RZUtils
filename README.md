@@ -143,25 +143,11 @@ Utility for making collection view item insertion/deletion animations easier.
 
 Basic concurrent NSOperation class that takes a block and executes it after a given time interval. Can be cancelled or reset.
 
-#### RZHud
-
-Loading or informational HUD that fills a given view, with custom message and UIAppearance support.
-
-#### RZKeychain
-
-Easier manipulation of the secure keychain.
-
-#### RZLoadingImageView
-
-A drop in solution for a image view that loads from an `NSURL` and caches to file. 
-
-**Note**: This needs some love. Should probably be rewritten to use native URL caching with an additional in-memory cache, to reduce disk bloat.
-
 #### RZLocationService
 
 CoreLocation made easy.
 
-####RZProgressView
+#### RZProgressView
 
 `UIProgressView` is a little broken in iOS 7.0 (weird glitches when animating and resizing), and very broken in iOS 7.1 (can't set custom images; radar [here](http://www.openradar.me/16113307)). `RZProgressView` is a drop-in replacement that fixes these problems.
 
@@ -169,11 +155,19 @@ CoreLocation made easy.
 
 A basement/reveal menu component. 
 
+#### RZSegmentedViewController
+
+`UIViewController` container that uses a segment control to switch between an array of `UIViewControllers`
+
 #### RZSingleChildContainerViewController
 
 A `UIViewController` subclass for managing a single child view controller contained in any subview container of a parent. Useful for keeping one view static while another view contains one of many potential child view controllers. iOS7+ only.
 
-### RZTelprompt
+#### RZSplitViewController
+
+Extends the functionality of `UISplitViewController` including allowing it to be presented Modally.
+
+#### RZTelprompt
 
 Makes NSURLRequest phone calls that use telprompt by making a tel request to a static UIWebView, which in turn privately calls telprompt. This gives you the benifits of using telprompt without calling it from UIApplication where it is not specifically supported by Apple.
 
@@ -181,17 +175,10 @@ Makes NSURLRequest phone calls that use telprompt by making a tel request to a s
 
 Extensions to `UIView` for easily loading a subclass from a XIB file.
 
-##### RZWebviewController
+#### RZWebviewController
 
 `UIViewController` that manages a web view, with associated chrome.
 
-##### RZSplitViewController
-
-Extends the functionality of `UISplitViewController` including allowing it to be presented Modally.
-
-##### RZSegmentedViewController
-
-`UIViewController` container that uses a segment control to switch between an array of `UIViewControllers`
 
 ## Utilities Overview
 
