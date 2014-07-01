@@ -32,6 +32,6 @@ typedef void (^RZAlertViewCompletionBlock)(NSInteger dismissalButtonIndex);
 
 @interface UIAlertView (RZCompletionBlocks)
 
-- (void)showWithCompletionBlock:(RZAlertViewCompletionBlock)completion;
+- (void)rz_showWithCompletionBlock:(RZAlertViewCompletionBlock)completion;
 
 @end
