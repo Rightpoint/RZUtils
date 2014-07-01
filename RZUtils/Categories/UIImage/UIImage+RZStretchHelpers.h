@@ -31,7 +31,20 @@
 
 @interface UIImage (RZStretchHelpers)
 
-- (UIImage*)rz_makeStretchable;
-- (UIImage*)rz_makeStretchableWithCapInsets:(UIEdgeInsets)insets;
+/**
+ *  Create and return a UIImage with default vertical and horizontal stretching in the center of the image.
+ *
+ *  @return a resizable UIImage.
+ */
+- (UIImage *)rz_stretchableVersion;
+
+/**
+ *  Create and return a UIImage with specified vertical and horizontal edge insets.
+ *
+ *  @param insets the UIEdgeInsets to use as non-stretchable image end caps.
+ *
+ *  @return a resizable UIImage.
+ */
+- (UIImage *)rz_stretchableVersionWithCapInsets:(UIEdgeInsets)insets;
 
 @end

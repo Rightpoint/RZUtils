@@ -69,9 +69,17 @@ A collection of helpful utilities and components for iOS development.
 	
 ### UIImage
 
-- **UIImage+RZFastImageBlur**
+- **UIImage+RZAverageColor**
+	
+	Calculates the average color of a UIImage instance.
 
-	Faster version of Apple's image blur method for iOS7 (with view screenshot). iOS7+ only.
+- **UIImage+RZResize**
+	
+	Methods for resizing an image given an aspect ratio.
+
+- **UIImage+RZSnapshotHelpers**
+
+	Method for snapshotting and creating a UIImage from a UIView using iOS7's `drawViewHierarchyInRect`.  Contains a faster version of Apple's image blur method for iOS7 (with view screenshot). iOS7+ only.
 
 - **UIImage+RZStretchHelpers**
 
@@ -116,12 +124,6 @@ Replacement for `UIImageView`-based animated .png sequences that calls a complet
 #### RZButtonView
 
 `UIControl` subclass that acts like a UIButton but allows the addition and layout of arbitrary subviews.
-
-#### RZCellHeightManager
-
-Autolayout-based dynamic cell height utility.
-
-**Deprecated**: This will soon be in its own repository.
 
 #### RZCollectionTableView
 
@@ -171,10 +173,6 @@ A `UIViewController` subclass for managing a single child view controller contai
 
 Makes NSURLRequest phone calls that use telprompt by making a tel request to a static UIWebView, which in turn privately calls telprompt. This gives you the benifits of using telprompt without calling it from UIApplication where it is not specifically supported by Apple.
 
-#### RZTweenSpirit
-
-Tweening animation utility. Allows tweening of any keypath from one value to another based on a settable timeline position. Similar to a certain "jazzy"-"handy" library, but more flexible.
-
 #### RZViewFactory
 
 Extensions to `UIView` for easily loading a subclass from a XIB file.
@@ -205,6 +203,15 @@ Useful extensions for working with GCD/libdispatch.
 
 A header with debug log macros that extend `NSLog`, including verbosity levels.
 
+## Test Utilities Overview
+
+All utilities within this directory are intended for use in test code ONLY. 
+
+#### RZWaiter
+
+A utility for aiding in testing asynchronous operations.
+
+
 ## License
 
 RZUtils is distributed under an [MIT License](http://opensource.org/licenses/MIT). See the LICENSE file for more details.
@@ -216,3 +223,4 @@ When adding new components, please try and follow the following guidelines as cl
  * No need for unit tests, just make sure it works and solves problems rather than causing them.
  * Ensure that the component has well documented headers.
  * Aggressively use namespacing (method prefix) for Objective-C categories in order to avoid potential naming collisions.
+  

@@ -28,6 +28,11 @@
 
 #import "UIColor+RZExtensions.h"
 
+const CGFloat kRZExtensionsYIQContrastMultiplierRed             = 0.299f;
+const CGFloat kRZExtensionsYIQContrastMultiplierGreen           = 0.587f;
+const CGFloat kRZExtensionsYIQContrastMultiplierBlue            = 0.114f;
+const CGFloat kRZExtensionsYIQContrastMultiplierThreshold       = 0.5f;
+
 @implementation UIColor (RZExtensions)
 
 + (UIColor *)rz_colorFrom8BitRed:(uint8_t)r green:(uint8_t)g blue:(uint8_t)b
@@ -73,6 +78,42 @@
     [scanner scanHexInt:&hexInteger];
     
     return [self rz_colorFromHex:hexInteger];
+}
+
++ (UIColor *)rz_contrastForColor:(UIColor *)color
+{
+    CGFloat rValue, gValue, bValue;
+    
+    if ( ![color getRed:&rValue green:&gValue blue:&bValue alpha:NULL] ) {
+        // Set wValue to 1 so if this method fails, we will return black color
+        CGFloat wValue = 1.0f;
+        [color getWhite:&wValue alpha:NULL];
+        rValue = wValue;
+        gValue = wValue;
+        bValue = wValue;
+    }
+    
+    CGFloat yiq = (rValue * kRZExtensionsYIQContrastMultiplierRed) + (gValue * kRZExtensionsYIQContrastMultiplierGreen) + (bValue * kRZExtensionsYIQContrastMultiplierBlue);
+    
+    return ( yiq >= kRZExtensionsYIQContrastMultiplierThreshold ) ? [UIColor blackColor] : [UIColor whiteColor];
+}
+
+- (NSString *)rz_hexString
+{
+    CGFloat rValue, gValue, bValue;
+    if ( ![self getRed:&rValue green:&gValue blue:&bValue alpha:NULL] ) {
+        CGFloat wValue;
+        if ( ![self getWhite:&wValue alpha:NULL] ) {
+            return nil;
+        }
+        else {
+            rValue = wValue;
+            gValue = wValue;
+            bValue = wValue;
+        }
+    }
+    
+    return [NSString stringWithFormat:@"#%02x%02x%02x", (int)(rValue * 255.0f), (int)(gValue * 255.0f), (int)(bValue * 255.0f)];
 }
 
 @end

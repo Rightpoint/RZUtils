@@ -180,6 +180,10 @@ static char kRZBorderViewKey;
 
 - (UIImage *)maskingImageForMask:(RZViewBorderMask)mask width:(CGFloat)width
 {
+    // must round the width to nearest pixel for current screen scale
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    width = round(width * scale) / scale;
+    
     NSString *cacheKey = [NSString stringWithFormat:@"%lu_%.2f", (unsigned long)mask, width];
     UIImage *maskImage = [[[self class] maskingImageCache] objectForKey:cacheKey];
     if (maskImage == nil)
@@ -253,6 +257,10 @@ static char kRZBorderViewKey;
 
 - (UIImage *)maskingImageForCornerRadius:(CGFloat)radius width:(CGFloat)width
 {
+    // must round the width to nearest pixel for current screen scale
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    width = round(width * scale) / scale;
+    
     NSString *cacheKey = [NSString stringWithFormat:@"%.2f_%.2f", radius, width];
     UIImage *maskImage = [[[self class] maskingImageCache] objectForKey:cacheKey];
     if (maskImage == nil)
@@ -368,7 +376,9 @@ static char kRZBorderViewKey;
         CGContextSetBlendMode(ctx, kCGBlendModeDestinationIn);
         CGContextDrawImage(ctx, fullRect, [maskImage CGImage]);
         
-        borderImage = [UIGraphicsGetImageFromCurrentImageContext() resizableImageWithCapInsets:UIEdgeInsetsMake(imgSize.height * 0.5, imgSize.width * 0.5, imgSize.height * 0.5, imgSize.width * 0.5)
+        UIEdgeInsets stretchInsets = UIEdgeInsetsMake(floor(imgSize.height * 0.5), floor(imgSize.width * 0.5), floor(imgSize.height * 0.5), floor(imgSize.width * 0.5));
+        
+        borderImage = [UIGraphicsGetImageFromCurrentImageContext() resizableImageWithCapInsets:stretchInsets
                                                                                   resizingMode:UIImageResizingModeStretch];
         UIGraphicsEndImageContext();
     }

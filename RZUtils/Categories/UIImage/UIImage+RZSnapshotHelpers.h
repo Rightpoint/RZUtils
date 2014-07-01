@@ -1,14 +1,12 @@
-
-// Created by Nick Donaldson, 2013
+//
+//  UIImage+SnapshotHelpers.h
+//
+//  Created by Stephen Barnes on 4/30/14.
 
 //
-// Faster version of Apple's blurred image category.
-// Since this is a modified version, I don't think the license is 100%
-// necessary, but here it is.
-//
-// (See line: ..if you redistribute the Apple Software in its entirety and
-// WITHOUT MODIFICATIONS, you must retain this notice and the following
-// text and disclaimers in all such redistributions of the Apple Software.)
+//  (See line: ..if you redistribute the Apple Software in its entirety and
+//  WITHOUT MODIFICATIONS, you must retain this notice and the following
+//  text and disclaimers in all such redistributions of the Apple Software.)
 
 /*
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
@@ -52,7 +50,7 @@
  Copyright (C) 2013 Apple Inc. All Rights Reserved.
  
  
- Copyright © 2013 Apple Inc. 
+ Copyright © 2013 Apple Inc.
  WWDC 2013 License
  
  NOTE: This Apple Software was supplied by Apple as part of a WWDC 2013
@@ -101,19 +99,44 @@
  5/3/2013
  */
 
-@import UIKit;
+#import <UIKit/UIKit.h>
 
-@interface UIImage (RZFastImageBlur)
+@interface UIImage (RZSnapshotHelpers)
 
-// tint color ONLY APPLIES when blurring radius is non-negligible
-+ (UIImage *)rz_blurredImageByCapturingView:(UIView *)view
-                          afterScreenUpdate:(BOOL)waitForUpdate
-                                 withRadius:(CGFloat)blurRadius
-                                  tintColor:(UIColor *)tintColor
-                      saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
+/**
+ *  Blur the contents of a given UIView and return the result as a UIImage.  Faster than Apple's supplied
+ *  image blur method for iOS7.  iOS7+.
+ *
+ *  @param view                  the UIView to be blurred.
+ *  @param waitForUpdate         A Boolean value that indicates whether the snapshot should be rendered after recent changes have been incorporated. Specify the value NO if you want to render a snapshot in the view hierarchy’s current state, which might not include recent changes.
+ *  @param blurRadius            the Gaussian blur radius. Specify higher values for more blurring.
+ *  @param tintColor             Apply tint color to the returned UIImage*. Tint color ONLY APPLIES when blurring radius is non-negligible.
+ *  @param saturationDeltaFactor the color saturation of the resulting blurred image.  Ranges between 0-1.0f. A value of 1.0f is fully saturated, while a value of 0.0f is completely unsaturated.
+ *
+ *  @return a blurred, UIImage created from the supplied UIView.
+ */
++ (UIImage *)rz_blurredImageByCapturingView:(UIView*)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor*)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
 
-- (UIImage *)rz_blurredImageWithRadius:(CGFloat)blurRadius
-                             tintColor:(UIColor *)tintColor
-                 saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
+/**
+ *  Blur the contents of a given UIView and return the result as a UIImage.  Faster than Apple's supplied
+ *  image blur method for iOS7.  iOS7+.
+ *
+ *  @param blurRadius            the Gaussian blur radius. Specify higher values for more blurring.
+ *  @param tintColor             Apply tint color to the returned UIImage*. Tint color ONLY APPLIES when blurring radius is non-negligible.
+ *  @param saturationDeltaFactor the color saturation of the resulting blurred image.  Ranges between 0-1.0f. A value of 1.0f is fully saturated, while a value of 0.0f is completely unsaturated.
+ *
+ *  @return a blurred, UIImage created from the supplied UIView.
+ */
+- (UIImage *)rz_blurredImageWithRadius:(CGFloat)blurRadius tintColor:(UIColor*)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
+
+/**
+ *  Take a snapshot of a supplied UIView and return it as an UIImage*.  iOS7+.
+ *
+ *  @param view          the UIView to be captured.
+ *  @param waitForUpdate A Boolean value that indicates whether the snapshot should be rendered after recent changes have been incorporated. Specify the value NO if you want to render a snapshot in the view hierarchy’s current state, which might not include recent changes.
+ *
+ *  @return a UIImage created from the supplied UIView.
+ */
++ (UIImage *)rz_imageByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate;
 
 @end

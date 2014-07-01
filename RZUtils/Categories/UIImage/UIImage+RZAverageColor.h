@@ -1,11 +1,11 @@
 //
-//  UITableViewCell+RZCellStyling.h
+//  UIImage+RZAverageColor.h
 //
-//  Created by Joshua Leibsly on 4/22/13.
-
+// Created by Connor Smith on 5/27/14.
+//
 // Copyright 2014 Raizlabs and other contributors
 // http://raizlabs.com/
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
 // "Software"), to deal in the Software without restriction, including
@@ -13,10 +13,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -26,16 +26,15 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
 
-@interface UITableViewCell (RZCellStyling)
+@interface UIImage (RZAverageColor)
 
 /**
- *  Sets the background image for cells in a @c UITableView depending on the cell's position in its section.  Call this category when configuring a cell for an index path.  Requires background images in the form of: @c "bg-cell" / @c "bg-cell-pressed" , @c "bg-cell-top" / @c "bg-cell-top-pressed" , @c "bg-cell-bottom" / @c "bg-cell-bottom-pressed" , @c "bg-cell-middle" / @c "bg-cell-middle-pressed".
+ *  Returns the average color of a UIImage instance.
+ *  @see @p UIColor+RZExtensions.h to use this with @p +[UIColor rz_contrastForColor:]
  *
- *  @param index     the index for the @c UITableViewCell.
- *  @param totalRows the total count of rows in the section.
+ *  @return The average color of a UIImage instance.
  */
-- (void)rz_setBackgroundImagesForIndex:(int)index totalRowsInSection:(int)totalRows;
+- (UIColor *)rz_averageColor;
 
 @end
