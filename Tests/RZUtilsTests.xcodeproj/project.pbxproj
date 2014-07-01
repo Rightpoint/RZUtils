@@ -29,7 +29,6 @@
 		9A8D4E981963366600AFAB21 /* UIImage+RZSolidColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E3B1963366600AFAB21 /* UIImage+RZSolidColor.m */; };
 		9A8D4E991963366600AFAB21 /* UIImage+RZStretchHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E3D1963366600AFAB21 /* UIImage+RZStretchHelpers.m */; };
 		9A8D4E9A1963366600AFAB21 /* UIImageView+RZAXMaintainImageColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E401963366600AFAB21 /* UIImageView+RZAXMaintainImageColors.m */; };
-		9A8D4E9B1963366600AFAB21 /* UITableViewCell+RZCellStyling.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E431963366600AFAB21 /* UITableViewCell+RZCellStyling.m */; };
 		9A8D4E9C1963366600AFAB21 /* UIView+RZAutoLayoutHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E461963366600AFAB21 /* UIView+RZAutoLayoutHelpers.m */; };
 		9A8D4E9D1963366600AFAB21 /* UIView+RZBorders.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E481963366600AFAB21 /* UIView+RZBorders.m */; };
 		9A8D4E9E1963366600AFAB21 /* UIView+RZFrameUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4E4A1963366600AFAB21 /* UIView+RZFrameUtils.m */; };
@@ -100,8 +99,6 @@
 		9A8D4E3D1963366600AFAB21 /* UIImage+RZStretchHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RZStretchHelpers.m"; sourceTree = "<group>"; };
 		9A8D4E3F1963366600AFAB21 /* UIImageView+RZAXMaintainImageColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+RZAXMaintainImageColors.h"; sourceTree = "<group>"; };
 		9A8D4E401963366600AFAB21 /* UIImageView+RZAXMaintainImageColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+RZAXMaintainImageColors.m"; sourceTree = "<group>"; };
-		9A8D4E421963366600AFAB21 /* UITableViewCell+RZCellStyling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+RZCellStyling.h"; sourceTree = "<group>"; };
-		9A8D4E431963366600AFAB21 /* UITableViewCell+RZCellStyling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+RZCellStyling.m"; sourceTree = "<group>"; };
 		9A8D4E451963366600AFAB21 /* UIView+RZAutoLayoutHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RZAutoLayoutHelpers.h"; sourceTree = "<group>"; };
 		9A8D4E461963366600AFAB21 /* UIView+RZAutoLayoutHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RZAutoLayoutHelpers.m"; sourceTree = "<group>"; };
 		9A8D4E471963366600AFAB21 /* UIView+RZBorders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RZBorders.h"; sourceTree = "<group>"; };
@@ -243,7 +240,6 @@
 				9A8D4E301963366600AFAB21 /* UIFont */,
 				9A8D4E331963366600AFAB21 /* UIImage */,
 				9A8D4E3E1963366600AFAB21 /* UIImageView */,
-				9A8D4E411963366600AFAB21 /* UITableViewCell */,
 				9A8D4E441963366600AFAB21 /* UIView */,
 				9A8D4E4B1963366600AFAB21 /* UIViewController */,
 			);
@@ -359,15 +355,6 @@
 				9A8D4E401963366600AFAB21 /* UIImageView+RZAXMaintainImageColors.m */,
 			);
 			path = UIImageView;
-			sourceTree = "<group>";
-		};
-		9A8D4E411963366600AFAB21 /* UITableViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				9A8D4E421963366600AFAB21 /* UITableViewCell+RZCellStyling.h */,
-				9A8D4E431963366600AFAB21 /* UITableViewCell+RZCellStyling.m */,
-			);
-			path = UITableViewCell;
 			sourceTree = "<group>";
 		};
 		9A8D4E441963366600AFAB21 /* UIView */ = {
@@ -647,7 +634,6 @@
 			files = (
 				9A8D4E9A1963366600AFAB21 /* UIImageView+RZAXMaintainImageColors.m in Sources */,
 				9A8D4EAF1963366600AFAB21 /* RZViewFactory.m in Sources */,
-				9A8D4E9B1963366600AFAB21 /* UITableViewCell+RZCellStyling.m in Sources */,
 				9A8D4EA91963366600AFAB21 /* RZRevealViewController.m in Sources */,
 				9A8D4EAD1963366600AFAB21 /* RZSplitViewController.m in Sources */,
 				9A8D4EA21963366600AFAB21 /* RZButtonView.m in Sources */,

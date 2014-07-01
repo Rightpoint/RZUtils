@@ -110,6 +110,85 @@ Pod::Spec.new do |s|
   
   s.subspec "Components" do |ss|
     
+    ss.dependency 'RZUtils/Components/RZAnimatedCountingLabel'
+    ss.subspec "RZAnimatedCountingLabel" do |sss|
+      sss.source_files = "RZUtils/Components/RZAnimatedCountingLabel/*.{h,m}"
+      sss.frameworks = "QuartzCore"
+    end
+    
+    ss.dependency 'RZUtils/Components/RZAnimatedImageView'
+    ss.subspec "RZAnimatedImageView" do |sss|
+      sss.source_files = "RZUtils/Components/RZAnimatedImageView/*.{h,m}"
+      sss.frameworks = "QuartzCore"
+    end
+    
+    ss.dependency 'RZUtils/Components/RZButtonView'
+    ss.subspec "RZButtonView" do |sss|
+      sss.source_files = "RZUtils/Components/RZButtonView/*.{h,m}"
+    end
+    
+    ss.dependency 'RZUtils/Components/RZCollectionTableView'
+    ss.subspec "RZCollectionTableView" do |sss|
+      sss.source_files = "RZUtils/Components/RZCollectionTableView/*.{h,m}"
+      sss.private_header_files = "RZUtils/Components/RZCollectionTableView/*Private.h"
+    end
+    
+    ss.dependency 'RZUtils/Components/RZCollectionViewAnimationAssistant'
+    ss.subspec "RZCollectionViewAnimationAssistant" do |sss|
+      sss.source_files = "RZUtils/Components/RZCollectionViewAnimationAssistant/*.{h,m}"
+    end
+    
+    ss.dependency 'RZUtils/Components/RZDelayedOperation'
+    ss.subspec "RZDelayedOperation" do |sss|
+      sss.source_files = "RZUtils/Components/RZDelayedOperation/*.{h,m}"
+    end
+    
+    ss.dependency 'RZUtils/Components/RZLocationService'
+    ss.subspec "RZLocationService" do |sss|
+      sss.source_files = "RZUtils/Components/RZLocationService/*.{h,m}"
+      sss.frameworks = "CoreLocation"
+    end
+    
+    ss.dependency 'RZUtils/Components/RZProgressView'
+    ss.subspec "RZProgressView" do |sss|
+      sss.source_files = "RZUtils/Components/RZProgressView/*.{h,m}"
+    end
+    
+    ss.dependency 'RZUtils/Components/RZRevealViewController'
+    ss.subspec "RZRevealViewController" do |sss|
+      sss.source_files = "RZUtils/Components/RZRevealViewController/*.{h,m}"
+    end
+    
+    ss.dependency 'RZUtils/Components/RZSegmentedViewController'
+    ss.subspec "RZSegmentedViewController" do |sss|
+      sss.source_files = "RZUtils/Components/RZSegmentedViewController/*.{h,m}"
+    end
+    
+    ss.dependency 'RZUtils/Components/RZSingleChildContainerViewController'
+    ss.subspec "RZSingleChildContainerViewController" do |sss|
+      sss.source_files = "RZUtils/Components/RZSingleChildContainerViewController/*.{h,m}"
+    end
+    
+    ss.dependency 'RZUtils/Components/RZSplitViewController'
+    ss.subspec "RZSplitViewController" do |sss|
+      sss.source_files = "RZUtils/Components/RZSplitViewController/*.{h,m}"
+    end
+    
+    ss.dependency 'RZUtils/Components/RZTelprompt'
+    ss.subspec "RZTelprompt" do |sss|
+      sss.source_files = "RZUtils/Components/RZTelprompt/*.{h,m}"
+    end
+    
+    ss.dependency 'RZUtils/Components/RZViewFactory'
+    ss.subspec "RZViewFactory" do |sss|
+      sss.source_files = "RZUtils/Components/RZViewFactory/*.{h,m}"
+    end
+    
+    ss.dependency 'RZUtils/Components/RZWebViewController'
+    ss.subspec "RZWebViewController" do |sss|
+      sss.source_files = "RZUtils/Components/RZWebViewController/*.{h,m}"
+    end
+    
   end
   
   #
