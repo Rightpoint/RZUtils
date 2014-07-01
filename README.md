@@ -81,6 +81,10 @@ A collection of helpful utilities and components for iOS development.
 
 	Method for snapshotting and creating a UIImage from a UIView using iOS7's `drawViewHierarchyInRect`.  Contains a faster version of Apple's image blur method for iOS7 (with view screenshot). iOS7+ only.
 
+- **UIImage+RZSolidColor**
+
+	Category on `UIImage` to return a solid color image of a specified size. Especially useful to set a state-dependent background color on `UIButton`, like: `[aButton setBackgroundImage:[UIImage rz_solidColorImageWithSize:CGSizeMake(1.0f, 1.0f) color:[UIColor redColor]]]`.
+
 - **UIImage+RZStretchHelpers**
 
 	Stretch and cap inset methods for `UIImage`   
