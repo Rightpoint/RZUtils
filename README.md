@@ -2,6 +2,42 @@
 
 A collection of helpful utilities and components for iOS development.
 
+## Installation
+
+### CocoaPods
+
+The podspec for RZUtils is fully segmented into subspecs by directory (effectively one subspec per individual category type or component). See below for examples.
+
+##### All of RZUtils
+
+`pod 'RZUtils'`
+
+##### All Categories
+
+`pod 'RZUtils/Categories'`
+
+##### All Components
+
+`pod 'RZUtils/Components'`
+
+##### All Utilities or Test Utilities
+
+`pod 'RZUtils/Utilities'`
+`pod 'RZUtils/TestUtilities'`
+
+##### Specific Classes
+
+To import only a specific category, component, or utility, the subspec should mirror the directory structure.
+For example:
+
+`pod 'RZUtils/Categories/NSString'`
+`pod 'RZUtils/Categories/KVO'`
+`pod 'RZUtils/Components/RZProgressView'`
+
+### Manual Installation
+
+Simply copy the relevant file into your project. If the files import any frameworks, link against those frameworks.
+
 ## Categories Overview
 
 ### CoreAnimation
@@ -207,11 +243,11 @@ A utility for aiding in testing asynchronous operations.
 
 RZUtils is distributed under an [MIT License](http://opensource.org/licenses/MIT). See the LICENSE file for more details.
 
-## Guidelines for adding a new component
+## Contributing
 
-When adding new components, please try and follow the following guidelines as closely as possible to ensure maximum ease of use and maintainability.
+Contributions and pull requests are welcome. Please adhere to the following guidelines:
 
- * No need for unit tests, just make sure it works and solves problems rather than causing them.
- * Ensure that the component has well documented headers.
- * Aggressively use namespacing (method prefix) for Objective-C categories in order to avoid potential naming collisions.
+- Please open Pull Requests against the `develop` branch. We periodically coalesce updates into tagged releases with semantic version numbers, which are pushed as podspec updates then merged to master.
+- Ensure that headers are documented using appledoc-style comments. This will allow CocoaDocs to automatically create documentation when the updated podspec is pushed.
+- Aggressively use prefixes ('RZ' for classes, 'rz_' for methods) for category methods and class names in order to avoid potential naming collisions.
   
