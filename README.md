@@ -249,5 +249,5 @@ Contributions and pull requests are welcome. Please adhere to the following guid
 
 - Please open Pull Requests against the `develop` branch. We periodically coalesce updates into tagged releases with semantic version numbers, which are pushed as podspec updates then merged to master.
 - Ensure that headers are documented using appledoc-style comments. This will allow CocoaDocs to automatically create documentation when the updated podspec is pushed.
-- Aggressively use prefixes ('RZ' for classes, 'rz_' for methods) for category methods and class names in order to avoid potential naming collisions.
+- Aggressively use prefixes (`RZ` for classes, `rz_` for methods) for category methods and class names in order to avoid potential naming collisions.
   
