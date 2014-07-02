@@ -22,7 +22,7 @@ The podspec for RZUtils is fully segmented into subspecs by directory (effective
 
 ##### All Utilities or Test Utilities
 
-`pod 'RZUtils/Utilities'`
+`pod 'RZUtils/Utilities'`<br>
 `pod 'RZUtils/TestUtilities'`
 
 ##### Specific Classes
@@ -30,8 +30,8 @@ The podspec for RZUtils is fully segmented into subspecs by directory (effective
 To import only a specific category, component, or utility, the subspec should mirror the directory structure.
 For example:
 
-`pod 'RZUtils/Categories/NSString'`
-`pod 'RZUtils/Categories/KVO'`
+`pod 'RZUtils/Categories/NSString'`<br>
+`pod 'RZUtils/Categories/KVO'`<br>
 `pod 'RZUtils/Components/RZProgressView'`
 
 ### Manual Installation
