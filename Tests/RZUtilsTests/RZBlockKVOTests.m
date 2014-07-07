@@ -43,7 +43,7 @@
                           value = nil;
                       }
                       
-                      XCTAssertEqual(value, weakTestObj.aString, @"Change not reflecting current value");
+                      XCTAssertEqualObjects(value, weakTestObj.aString, @"Change not reflecting current value");
                       called = YES;
                   }];
     
