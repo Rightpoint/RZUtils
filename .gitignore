@@ -18,5 +18,5 @@ DerivedData
 .idea/
 
 # Pods
-Pods/
-Podfile.lock
+Tests/Pods/
+Tests/Podfile.lock
