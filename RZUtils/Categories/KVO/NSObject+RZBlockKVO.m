@@ -49,8 +49,7 @@ static char kRZAssociatedObservationsKey;
 - (NSMutableArray*)rz_blockObservations
 {
     NSMutableArray *observations = objc_getAssociatedObject(self, &kRZAssociatedObservationsKey);
-    if (observations == nil)
-    {
+    if ( observations == nil ) {
         observations = [NSMutableArray array];
         objc_setAssociatedObject(self, &kRZAssociatedObservationsKey, observations, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
@@ -69,8 +68,7 @@ static char kRZAssociatedObservationsKey;
         return (([obs.observer isEqual:observer] || obs.observer == nil) && (keyPath == nil || [keyPath isEqualToString:obs.keyPath]));
     }];
     
-    if (indexes.count > 0)
-    {
+    if ( indexes.count > 0 ) {
         [[observer rz_blockObservations] removeObjectsAtIndexes:indexes];
     }
 }
@@ -84,8 +82,7 @@ static char kRZAssociatedObservationsKey;
 - (instancetype)initWithObservedObject:(NSObject *)object observer:(NSObject *)observer keyPath:(NSString *)keypPath options:(NSKeyValueObservingOptions)options block:(RZKVOBlock)block
 {
     self = [super init];
-    if (self)
-    {
+    if ( self ) {
         self.observedObject = object;
         self.observer = observer;
         self.keyPath = keypPath;
@@ -99,8 +96,7 @@ static char kRZAssociatedObservationsKey;
 
 - (void)dealloc
 {
-    if (self.observedObject)
-    {
+    if ( self.observedObject ) {
         @try {
             [self.observedObject removeObserver:self forKeyPath:self.keyPath];
         }
@@ -110,8 +106,7 @@ static char kRZAssociatedObservationsKey;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if (self.block)
-    {
+    if ( self.block ) {
         self.block(change);
     }
 }

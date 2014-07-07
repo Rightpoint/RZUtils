@@ -2,6 +2,42 @@
 
 A collection of helpful utilities and components for iOS development.
 
+## Installation
+
+### CocoaPods
+
+The podspec for RZUtils is fully segmented into subspecs by directory (effectively one subspec per individual category type or component). See below for examples.
+
+##### All of RZUtils
+
+`pod 'RZUtils'`
+
+##### All Categories
+
+`pod 'RZUtils/Categories'`
+
+##### All Components
+
+`pod 'RZUtils/Components'`
+
+##### All Utilities or Test Utilities
+
+`pod 'RZUtils/Utilities'`<br>
+`pod 'RZUtils/TestUtilities'`
+
+##### Specific Classes
+
+To import only a specific category, component, or utility, the subspec should mirror the directory structure.
+For example:
+
+`pod 'RZUtils/Categories/NSString'`<br>
+`pod 'RZUtils/Categories/KVO'`<br>
+`pod 'RZUtils/Components/RZProgressView'`
+
+### Manual Installation
+
+Simply copy the relevant file into your project. If the files import any frameworks, link against those frameworks.
+
 ## Categories Overview
 
 ### CoreAnimation
@@ -143,25 +179,11 @@ Utility for making collection view item insertion/deletion animations easier.
 
 Basic concurrent NSOperation class that takes a block and executes it after a given time interval. Can be cancelled or reset.
 
-#### RZHud
-
-Loading or informational HUD that fills a given view, with custom message and UIAppearance support.
-
-#### RZKeychain
-
-Easier manipulation of the secure keychain.
-
-#### RZLoadingImageView
-
-A drop in solution for a image view that loads from an `NSURL` and caches to file. 
-
-**Note**: This needs some love. Should probably be rewritten to use native URL caching with an additional in-memory cache, to reduce disk bloat.
-
 #### RZLocationService
 
 CoreLocation made easy.
 
-####RZProgressView
+#### RZProgressView
 
 `UIProgressView` is a little broken in iOS 7.0 (weird glitches when animating and resizing), and very broken in iOS 7.1 (can't set custom images; radar [here](http://www.openradar.me/16113307)). `RZProgressView` is a drop-in replacement that fixes these problems.
 
@@ -169,11 +191,19 @@ CoreLocation made easy.
 
 A basement/reveal menu component. 
 
+#### RZSegmentedViewController
+
+`UIViewController` container that uses a segment control to switch between an array of `UIViewControllers`
+
 #### RZSingleChildContainerViewController
 
 A `UIViewController` subclass for managing a single child view controller contained in any subview container of a parent. Useful for keeping one view static while another view contains one of many potential child view controllers. iOS7+ only.
 
-### RZTelprompt
+#### RZSplitViewController
+
+Extends the functionality of `UISplitViewController` including allowing it to be presented Modally.
+
+#### RZTelprompt
 
 Makes NSURLRequest phone calls that use telprompt by making a tel request to a static UIWebView, which in turn privately calls telprompt. This gives you the benifits of using telprompt without calling it from UIApplication where it is not specifically supported by Apple.
 
@@ -181,17 +211,10 @@ Makes NSURLRequest phone calls that use telprompt by making a tel request to a s
 
 Extensions to `UIView` for easily loading a subclass from a XIB file.
 
-##### RZWebviewController
+#### RZWebviewController
 
 `UIViewController` that manages a web view, with associated chrome.
 
-##### RZSplitViewController
-
-Extends the functionality of `UISplitViewController` including allowing it to be presented Modally.
-
-##### RZSegmentedViewController
-
-`UIViewController` container that uses a segment control to switch between an array of `UIViewControllers`
 
 ## Utilities Overview
 
@@ -220,11 +243,11 @@ A utility for aiding in testing asynchronous operations.
 
 RZUtils is distributed under an [MIT License](http://opensource.org/licenses/MIT). See the LICENSE file for more details.
 
-## Guidelines for adding a new component
+## Contributing
 
-When adding new components, please try and follow the following guidelines as closely as possible to ensure maximum ease of use and maintainability.
+Contributions and pull requests are welcome. Please adhere to the following guidelines:
 
- * No need for unit tests, just make sure it works and solves problems rather than causing them.
- * Ensure that the component has well documented headers.
- * Aggressively use namespacing (method prefix) for Objective-C categories in order to avoid potential naming collisions.
+- Please open Pull Requests against the `develop` branch. We periodically coalesce updates into tagged releases with semantic version numbers, which are pushed as podspec updates then merged to master.
+- Ensure that headers are documented using appledoc-style comments. This will allow CocoaDocs to automatically create documentation when the updated podspec is pushed.
+- Aggressively use prefixes (`RZ` for classes, `rz_` for methods) for category methods and class names in order to avoid potential naming collisions.
   

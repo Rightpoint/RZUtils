@@ -31,72 +31,72 @@
 
 @implementation UIView (RZFrameUtils)
 
-- (void)setFrameOriginX:(CGFloat)originX
+- (void)rz_setFrameOriginX:(CGFloat)originX
 {
-    [self setFrameOriginX:originX lockRight:NO];
+    [self rz_setFrameOriginX:originX lockRight:NO];
 }
 
-- (void)setFrameOriginX:(CGFloat)originX lockRight:(BOOL)lockRight
+- (void)rz_setFrameOriginX:(CGFloat)originX lockRight:(BOOL)lockRight
 {
     CGFloat rightEdge = CGRectGetMaxX(self.frame);
-    [self setFrameOrigin:CGPointMake(originX, self.frame.origin.y)];
+    [self rz_setFrameOrigin:CGPointMake(originX, self.frame.origin.y)];
     if (lockRight){
-        [self setFrameWidth:rightEdge - originX];
+        [self rz_setFrameWidth:rightEdge - originX];
     }
 }
 
-- (void)setFrameOriginY:(CGFloat)originY
+- (void)rz_setFrameOriginY:(CGFloat)originY
 {
-    [self setFrameOriginY:originY lockBottom:NO];
+    [self rz_setFrameOriginY:originY lockBottom:NO];
 }
 
-- (void)setFrameOriginY:(CGFloat)originY lockBottom:(BOOL)lockBottom
+- (void)rz_setFrameOriginY:(CGFloat)originY lockBottom:(BOOL)lockBottom
 {
     CGFloat bottomEdge = CGRectGetMaxY(self.frame);
-    [self setFrameOrigin:CGPointMake(self.frame.origin.x, originY)];
+    [self rz_setFrameOrigin:CGPointMake(self.frame.origin.x, originY)];
     if (lockBottom)
     {
-        [self setFrameHeight:bottomEdge - originY];
+        [self rz_setFrameHeight:bottomEdge - originY];
     }
 }
 
-- (void)setFrameOrigin:(CGPoint)point
+- (void)rz_setFrameOrigin:(CGPoint)point
 {
     CGRect frame = self.frame;
     frame.origin = point;
     self.frame = frame;
 }
 
-- (void)setFrameWidth:(CGFloat)width
+- (void)rz_setFrameWidth:(CGFloat)width
 {
-    [self setFrameWidth:width alignRight:NO];
+    [self rz_setFrameWidth:width alignRight:NO];
 }
 
-- (void)setFrameWidth:(CGFloat)width alignRight:(BOOL)alignRight
+- (void)rz_setFrameWidth:(CGFloat)width alignRight:(BOOL)alignRight
 {
     if (alignRight){
         CGFloat rightX = CGRectGetMaxX(self.frame);
-        [self setFrameSize:CGSizeMake(width, self.frame.size.height)];
-        [self setFrameOriginX:rightX-width];
+        [self rz_setFrameSize:CGSizeMake(width, self.frame.size.height)];
+        [self rz_setFrameOriginX:rightX-width];
     }
     else{
-        [self setFrameSize:CGSizeMake(width, self.frame.size.height)];
+        [self rz_setFrameSize:CGSizeMake(width, self.frame.size.height)];
     }
 }
 
-- (void)setFrameHeight:(CGFloat)height
+- (void)rz_setFrameHeight:(CGFloat)height
 {
-    [self setFrameSize:CGSizeMake(self.frame.size.width, height)];
+    [self rz_setFrameSize:CGSizeMake(self.frame.size.width, height)];
 }
 
-- (void)setFrameSize:(CGSize)size
+- (void)rz_setFrameSize:(CGSize)size
 {
     CGRect frame = self.frame;
     frame.size = size;
     self.frame = frame;
 }
 
-- (void)nudgeFrameOriginX:(CGFloat)nx originY:(CGFloat)ny width:(CGFloat)nw height:(CGFloat)nh
+- (void)rz_nudgeFrameOriginX:(CGFloat)nx originY:(CGFloat)ny width:(CGFloat)nw height:(CGFloat)nh
 {
     CGRect frame = self.frame;
     frame.origin.x += nx;
@@ -106,7 +106,7 @@
     self.frame = frame;
 }
 
-- (void)moveFrameToTheRightOf:(CGRect)leftFrame withPadding:(int)padding
+- (void)rz_moveFrameToTheRightOf:(CGRect)leftFrame withPadding:(int)padding
 {
     self.frame = CGRectMake(leftFrame.origin.x + leftFrame.size.width + padding,
                       self.frame.origin.y,

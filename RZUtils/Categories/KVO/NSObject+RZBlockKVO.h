@@ -30,13 +30,28 @@
 
 typedef void (^RZKVOBlock)(NSDictionary *change);
 
+/**
+ *  Block-based KVO extensions. 
+ *  @warning NOT THREAD SAFE.
+ */
 @interface NSObject (RZBlockKVO)
 
-// Add observer for changes on an object/keypath, using a change block. Will automatically remove observer when observer is deallocated.
+/**
+ *  Add observer for changes on an object/keypath, using a change block. Will automatically remove observer when observer is deallocated.
+ *
+ *  @param observer The observer to add for the receiver. Used only as hash for block - not retained. Must not be nil.
+ *  @param keyPath  The keypath on the receiver to observe. Must not be nil.
+ *  @param options  The options for observing.
+ *  @param block    The block that will be performed for KVO observation events. Must not be nil.
+ */
 - (void)rz_addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options withBlock:(RZKVOBlock)block;
 
-// Remove observer for keypath
-// If keyPath is nil, will stop observing all observed keypaths
+/**
+ *  Remove observer for keypath on receiver.
+ *
+ *  @param observer The observer to remove. Must not be nil.
+ *  @param keyPath  The keypath for which to remove the observer. If nil, all observers for reciever are removed.
+ */
 - (void)rz_removeObserver:(NSObject *)observer keyPath:(NSString *)keyPath;
 
 @end

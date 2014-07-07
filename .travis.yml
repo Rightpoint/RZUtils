@@ -1,0 +1,14 @@
+language: objective-c
+before_install: 
+    - export LANG=en_US.UTF-8
+    - rake install
+script: 
+    - rake clean:tests
+    - rake test
+    - rake analyze
+notifications:
+    email:
+        recipients:
+         - nick.donaldson@raizlabs.com
+        on_success: change
+        on_failure: always
