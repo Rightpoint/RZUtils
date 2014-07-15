@@ -43,18 +43,6 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
 
 @implementation RZUINavigationControllerCompletionBlockHelper
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self == nil)
-    {
-        self.completionBlock = nil;
-        self.poppedViewControllers = nil;
-        self.previousDelegate = nil;
-    }
-    return self;
-}
-
 #pragma mark - UINavigationControllerDelegate
 
 - (void)navigationController:(UINavigationController *)navigationController
