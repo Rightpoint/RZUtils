@@ -61,9 +61,11 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
       willShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated
 {
-    if (self.preparationBlock != nil)
-    {
+    if ( self.preparationBlock != nil ) {
         self.preparationBlock(navigationController, viewController);
+        if ( [self.previousDelegate respondsToSelector:@selector(navigationController:willShowViewController:animated:)] ) {
+            [self.previousDelegate navigationController:navigationController willShowViewController:viewController animated:animated];
+        }
     }
 }
 
@@ -72,17 +74,20 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
                     animated:(BOOL)animated
 {
     // call the completion block
-    if (self.completionBlock != nil)
-    {
+    if ( self.completionBlock != nil ) {
         self.completionBlock(navigationController, viewController, self.poppedViewControllers);
     }
     
     // reset previous delegate, if any
-    if (self.previousDelegate != nil)
-    {
+    if ( self.previousDelegate != nil ) {
+        if ( [self.previousDelegate respondsToSelector:@selector(navigationController:didShowViewController:animated:)] ) {
+            [self.previousDelegate navigationController:navigationController didShowViewController:viewController animated:animated];
+        }
         navigationController.delegate = self.previousDelegate;
         self.previousDelegate = nil;
     }
+    
+    objc_setAssociatedObject(self, kRZNavigationControllerCompletionBlockHelperKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end
@@ -142,10 +147,8 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
 - (RZUINavigationControllerCompletionBlockHelper *)rz_setupDelegateWithPreparation:(RZNavigationControllerPreparationBlock)preparation completion:(RZNavigationControllerCompletionBlock)completion
 {
     RZUINavigationControllerCompletionBlockHelper *helper = [[RZUINavigationControllerCompletionBlockHelper alloc] init];
-    if (completion != nil || preparation != nil)
-    {
-        if (self.delegate != nil)
-        {
+    if ( completion != nil || preparation != nil ) {
+        if ( self.delegate != nil ) {
             helper.previousDelegate = self.delegate;
         }
         self.delegate = helper;
