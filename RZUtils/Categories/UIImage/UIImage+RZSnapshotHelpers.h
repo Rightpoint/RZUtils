@@ -139,4 +139,13 @@
  */
 + (UIImage *)rz_imageByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate;
 
+/**
+ *  Take a snapshot of a supplied UIView and return it as an UIImage*.
+ *
+ *  @param view The UIView to be captured.
+ *
+ *  @return A UIImage created from the supplied UIView.
+ */
++ (UIImage *)rz_imageByRenderingLayerInView:(UIView *)view;
+
 @end
