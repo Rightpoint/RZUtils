@@ -120,8 +120,9 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
                           completion:(RZNavigationControllerCompletionBlock)completion
 {
     RZUINavigationControllerCompletionBlockHelper *helper = [self rz_setupDelegateWithPreparation:preparation completion:completion];
-    UIViewController *poppedViewController = [self popViewControllerAnimated:animated];
+    UIViewController *poppedViewController = self.viewControllers.lastObject;
     helper.poppedViewControllers = @[poppedViewController];
+    [self popViewControllerAnimated:animated];
 }
 
 - (void)rz_popToViewController:(UIViewController *)viewController
@@ -130,8 +131,10 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
                     completion:(RZNavigationControllerCompletionBlock)completion
 {
     RZUINavigationControllerCompletionBlockHelper *helper = [self rz_setupDelegateWithPreparation:preparation completion:completion];
-    NSArray *poppedViewControllers = [self popToViewController:viewController animated:animated];
+    NSUInteger indexOfVCToPopTo = [self.viewControllers indexOfObject:viewController];
+    NSArray *poppedViewControllers = [self.viewControllers objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(indexOfVCToPopTo + 1, self.viewControllers.count - indexOfVCToPopTo + 1)]];
     helper.poppedViewControllers = poppedViewControllers;
+    [self popToViewController:viewController animated:animated];
 }
 
 - (void)rz_popToRootViewControllerAnimated:(BOOL)animated
@@ -139,8 +142,9 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
                                 completion:(RZNavigationControllerCompletionBlock)completion
 {
     RZUINavigationControllerCompletionBlockHelper *helper = [self rz_setupDelegateWithPreparation:preparation completion:completion];
-    NSArray *poppedViewControllers = [self popToRootViewControllerAnimated:animated];
+    NSArray *poppedViewControllers = [self.viewControllers objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, self.viewControllers.count - 1)]];
     helper.poppedViewControllers = poppedViewControllers;
+    [self popToRootViewControllerAnimated:animated];
 }
 
 - (void)rz_setViewControllers:(NSArray *)viewControllers
