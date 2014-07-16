@@ -50,10 +50,13 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
                     animated:(BOOL)animated
 {
     if ( self.preparationBlock != nil ) {
-        self.preparationBlock(navigationController, viewController);
-        if ( [self.previousDelegate respondsToSelector:@selector(navigationController:willShowViewController:animated:)] ) {
-            [self.previousDelegate navigationController:navigationController willShowViewController:viewController animated:animated];
-        }
+        RZNavigationControllerPreparationBlock preparation = self.preparationBlock;
+        self.preparationBlock = nil;
+        preparation(navigationController, viewController);
+    }
+    
+    if ( [self.previousDelegate respondsToSelector:@selector(navigationController:willShowViewController:animated:)] ) {
+        [self.previousDelegate navigationController:navigationController willShowViewController:viewController animated:animated];
     }
 }
 
@@ -61,18 +64,20 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
        didShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated
 {
-    // call the completion block
-    if ( self.completionBlock != nil ) {
-        self.completionBlock(navigationController, viewController, self.poppedViewControllers);
+    // call previous delegate's callback implementation, if any
+    if ( [self.previousDelegate respondsToSelector:@selector(navigationController:didShowViewController:animated:)] ) {
+        [self.previousDelegate navigationController:navigationController didShowViewController:viewController animated:animated];
     }
     
-    // reset previous delegate, if any
-    if ( self.previousDelegate != nil ) {
-        if ( [self.previousDelegate respondsToSelector:@selector(navigationController:didShowViewController:animated:)] ) {
-            [self.previousDelegate navigationController:navigationController didShowViewController:viewController animated:animated];
-        }
-        navigationController.delegate = self.previousDelegate;
-        self.previousDelegate = nil;
+    // reset the delegates to the way they were before calling the block-based method
+    navigationController.delegate = self.previousDelegate;
+    self.previousDelegate = nil;
+    
+    // call the completion block
+    if ( self.completionBlock != nil ) {
+        RZNavigationControllerCompletionBlock completion = self.completionBlock;
+        self.completionBlock = nil;
+        completion(navigationController, viewController, self.poppedViewControllers);
     }
     
     objc_setAssociatedObject(self, kRZNavigationControllerCompletionBlockHelperKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
