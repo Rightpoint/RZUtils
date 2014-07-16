@@ -425,6 +425,11 @@
 
 - (void)rz_spaceSubviews:(NSArray *)subviews vertically:(BOOL)vertically minimumItemSpacing:(CGFloat)itemSpacing
 {
+    [self rz_spaceSubviews:subviews vertically:vertically itemSpacing:itemSpacing relation:NSLayoutRelationGreaterThanOrEqual];
+}
+
+- (void)rz_spaceSubviews:(NSArray *)subviews vertically:(BOOL)vertically itemSpacing:(CGFloat)itemSpacing relation:(NSLayoutRelation)relation
+{
     NSAssert(subviews.count > 1, @"Must provide at least two items");
     
     NSMutableArray *constraints = [NSMutableArray array];
@@ -441,7 +446,7 @@
         {
             NSLayoutConstraint *s = [NSLayoutConstraint constraintWithItem:nextView
                                                                  attribute:a1
-                                                                 relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                                 relatedBy:relation
                                                                     toItem:view
                                                                  attribute:a2
                                                                 multiplier:1.0f

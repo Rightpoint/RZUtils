@@ -32,19 +32,19 @@
 
 @interface UIView (RZFrameUtils)
 
-- (void)setFrameOriginX:(CGFloat)originX;
-- (void)setFrameOriginX:(CGFloat)originX lockRight:(BOOL)lockRight;
-- (void)setFrameOriginY:(CGFloat)originY;
-- (void)setFrameOriginY:(CGFloat)originY lockBottom:(BOOL)lockBottom;
-- (void)setFrameOrigin:(CGPoint)point;
+- (void)rz_setFrameOriginX:(CGFloat)originX;
+- (void)rz_setFrameOriginX:(CGFloat)originX lockRight:(BOOL)lockRight;
+- (void)rz_setFrameOriginY:(CGFloat)originY;
+- (void)rz_setFrameOriginY:(CGFloat)originY lockBottom:(BOOL)lockBottom;
+- (void)rz_setFrameOrigin:(CGPoint)point;
 
-- (void)setFrameWidth:(CGFloat)width;
-- (void)setFrameWidth:(CGFloat)width alignRight:(BOOL)alignRight;
-- (void)setFrameHeight:(CGFloat)height;
-- (void)setFrameSize:(CGSize)size;
+- (void)rz_setFrameWidth:(CGFloat)width;
+- (void)rz_setFrameWidth:(CGFloat)width alignRight:(BOOL)alignRight;
+- (void)rz_setFrameHeight:(CGFloat)height;
+- (void)rz_setFrameSize:(CGSize)size;
 
 // "nudge" by an amount - add that amount to each frame property
-- (void)nudgeFrameOriginX:(CGFloat)nx originY:(CGFloat)ny width:(CGFloat)nw height:(CGFloat)nh;
-- (void)moveFrameToTheRightOf:(CGRect)leftFrame withPadding:(int)padding;
+- (void)rz_nudgeFrameOriginX:(CGFloat)nx originY:(CGFloat)ny width:(CGFloat)nw height:(CGFloat)nh;
+- (void)rz_moveFrameToTheRightOf:(CGRect)leftFrame withPadding:(int)padding;
 
 @end

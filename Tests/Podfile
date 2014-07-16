@@ -1,0 +1,3 @@
+platform :ios, '7.0'
+pod 'RZUtils', :path => '../'
+pod 'RZUtils/TestUtilities', :path => '../'

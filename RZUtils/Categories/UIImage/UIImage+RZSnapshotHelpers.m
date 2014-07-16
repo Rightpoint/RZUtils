@@ -1,5 +1,14 @@
-/*
+//
+//  UIImage+SnapshotHelpers.m
+//
+//  Created by Stephen Barnes on 4/30/14.
+//
+//  (See line: ..if you redistribute the Apple Software in its entirety and
+//  WITHOUT MODIFICATIONS, you must retain this notice and the following
+//  text and disclaimers in all such redistributions of the Apple Software.)
 
+/*
+ 
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
  terms, and your use, installation, modification or redistribution of
@@ -41,7 +50,7 @@
  Copyright (C) 2013 Apple Inc. All Rights Reserved.
  
  
- Copyright © 2013 Apple Inc. 
+ Copyright © 2013 Apple Inc.
  WWDC 2013 License
  
  NOTE: This Apple Software was supplied by Apple as part of a WWDC 2013
@@ -90,15 +99,16 @@
  5/3/2013
  */
 
-#import "UIImage+RZFastImageBlur.h"
-
 @import Accelerate;
 #import <float.h>
+#import "UIImage+RZSnapshotHelpers.h"
+
+@implementation UIImage (RZSnapshotHelpers)
 
 static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRadius, UIColor * tintColor, CGFloat saturationDeltaFactor, CGFloat scale)
 {
     UIImage *outputImage = nil;
-
+    
     BOOL hasBlur = blurRadius > __FLT_EPSILON__;
     BOOL hasSaturationChange = fabs(saturationDeltaFactor - 1.) > __FLT_EPSILON__;
     if (hasBlur || hasSaturationChange) {
@@ -201,9 +211,7 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
     return outputImage;
 }
 
-@implementation UIImage (ImageEffects)
-
-+ (UIImage *)blurredImageByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor
++ (UIImage *)rz_blurredImageByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor
 {
     UIImage *outputImage = nil;
     CGRect imageRect = { CGPointZero, view.bounds.size };
@@ -219,7 +227,7 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
     return outputImage;
 }
 
-- (UIImage *)blurredImageWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor
+- (UIImage *)rz_blurredImageWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor
 {
     UIImage *inputImage = self;
     
@@ -234,7 +242,7 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
     CGRect imageRect = { CGPointZero, inputImage.size };
     
     UIGraphicsBeginImageContextWithOptions(imageRect.size, NO, self.scale);
-
+    
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSaveGState(ctx);
     CGContextTranslateCTM(ctx, 0, imageRect.size.height);
@@ -247,6 +255,22 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
     if (shouldRotate)
     {
         outputImage = [UIImage imageWithCGImage:[outputImage CGImage] scale:outputImage.scale orientation:self.imageOrientation];
+    }
+    
+    UIGraphicsEndImageContext();
+    
+    return outputImage;
+}
+
++ (UIImage *)rz_imageByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate
+{
+    UIImage *outputImage = nil;
+    CGRect imageRect = CGRectMake(0, 0, CGRectGetWidth(view.bounds), CGRectGetHeight(view.bounds));
+    UIGraphicsBeginImageContextWithOptions(imageRect.size, NO, 0.0);
+    
+    BOOL success = [view drawViewHierarchyInRect:imageRect afterScreenUpdates:waitForUpdate];
+    if ( success ) {
+        outputImage = UIGraphicsGetImageFromCurrentImageContext();
     }
     
     UIGraphicsEndImageContext();

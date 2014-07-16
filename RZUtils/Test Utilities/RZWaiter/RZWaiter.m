@@ -1,12 +1,13 @@
 //
-//  RZTween.h
-//  Raizlabs
+//  RZWaiter.h
+//  RZUtils
 //
-//  Created by Nick D on 1/3/14.
-
+//  Created by Nick Bonatsakis on 06/19/2013.
+//  Copyright (c) 2014 RaizLabs. All rights reserved.
+//
 // Copyright 2014 Raizlabs and other contributors
 // http://raizlabs.com/
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
 // "Software"), to deal in the Software without restriction, including
@@ -14,10 +15,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -27,44 +28,28 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+#import "RZWaiter.h"
 
-/*!
- *  A subclass of RZTween provides a way to interpolate a value of an arbitrary numerical type
- *  between several keyframes. Currently only linear interpolation is supported.
- *  A tween can be used as-is or with RZTweenAnimator.
- */
+@implementation RZWaiter
 
-@interface RZTween : NSObject <NSCopying>
-
-// Returns @0 by default. Should subclass to return appropriate type wrapped in NSValue.
-- (NSValue *)valueAtTime:(NSTimeInterval)time;
-
-- (BOOL)isEqualToTween:(RZTween *)tween;
-
-@end
-
-@interface RZFloatTween : RZTween
-
-- (void)addKeyFloat:(CGFloat)keyFloat atTime:(NSTimeInterval)time;
-
-@end
-
-// Obviously can't tween between bool values,
-// so this simply returns the most recent boolean keyframe value
-@interface RZBooleanTween : RZTween
-
-- (void)addKeyBool:(BOOL)keyBool atTime:(NSTimeInterval)time;
++ (void)waitWithTimeout:(NSTimeInterval)timeout
+           pollInterval:(NSTimeInterval)pollingInterval
+         checkCondition:(RZWaiterPollBlock)conditionBlock
+              onTimeout:(RZWaiterTimeout)timeoutBlock
+{
+    NSParameterAssert(conditionBlock);
+    NSParameterAssert(timeoutBlock);
+    
+    int times = timeout / pollingInterval;
+    for ( int i = 0; i < times; i++ ) {
+        [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:pollingInterval]];
+        if ( conditionBlock != nil && conditionBlock() ) {
+            return;
+        }
+    }
+    if ( timeoutBlock != nil ) {
+        timeoutBlock();
+    }
+}
 
 @end
-
-@interface RZTransformTween : RZTween
-
-- (void)addKeyTransform:(CGAffineTransform)transform atTime:(NSTimeInterval)time;
-
-@end
-
-// TODO:
-// - Color
-// - CGRect
-// - Other curves besides linear

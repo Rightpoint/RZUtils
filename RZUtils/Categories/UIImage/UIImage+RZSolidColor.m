@@ -1,12 +1,12 @@
 //
-//  RZHudBoxView.h
-//  Rue La La
+//  UIImage+RZSolidColor.m
+//  Raizlabs
 //
-//  Created by Nick Donaldson on 6/12/12.
+//  Created by Zev Eisenberg on 7/1/14.
 
 // Copyright 2014 Raizlabs and other contributors
 // http://raizlabs.com/
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
 // "Software"), to deal in the Software without restriction, including
@@ -14,10 +14,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -27,36 +27,31 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
+#import "UIImage+RZSolidColor.h"
 
-typedef enum {
-    RZHudBoxStyleInfo,
-    RZHudBoxStyleLoading,
-    RZHudBoxStyleProgress  // not implemented yet
-} RZHudBoxStyle;
+@implementation UIImage (RZSolidColor)
 
-@interface RZHudBoxView : UIView
++ (UIImage *)rz_solidColorImageWithSize:(CGSize)size color:(UIColor *)color
+{
+    CGFloat alpha;
+    if ( ![color getRed:NULL green:NULL blue:NULL alpha:&alpha] ) {
+        if ( ![color getWhite:NULL alpha:&alpha] ) {
+            // coudln’t get alpha, so assume opaque
+            alpha = 1.0f;
+        }
+    }
 
-/// @name style
-@property (nonatomic, assign) RZHudBoxStyle style;
+    BOOL opaque = ( alpha == 1.0f );
+    UIGraphicsBeginImageContextWithOptions(size, opaque, 0.0f);
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(ctx, color.CGColor);
+    CGContextFillRect(ctx, CGRectMake(0.0f, 0.0f, size.width, size.height));
 
-/// @name Appearance Properties
-@property (nonatomic, strong) UIView *customView;
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
 
-@property (nonatomic, strong) UIColor *color;
-@property (nonatomic, strong) UIColor *borderColor;
-
-@property (nonatomic, assign) CGFloat borderWidth;
-@property (nonatomic, assign) CGFloat cornerRadius;
-@property (nonatomic, assign) CGFloat shadowAlpha;
-
-@property (nonatomic, copy)   NSString *labelText;
-
-// These are assign becuase they are overridden
-@property (nonatomic, assign) UIColor *labelColor;
-@property (nonatomic, assign) UIFont *labelFont;
-@property (nonatomic, assign) UIColor *spinnerColor;
-
-- (id)initWithStyle:(RZHudBoxStyle)style color:(UIColor*)color cornerRadius:(CGFloat)cornerRadius;
+    return image;
+}
 
 @end

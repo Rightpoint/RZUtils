@@ -30,11 +30,11 @@
 
 @interface NSDictionary (RZExtensions)
 
-- (id)validObjectForKey:(id)aKey;
-- (id)validObjectForKeyPath:(id)aKeyPath;
+- (id)rz_validObjectForKey:(id)aKey;
+- (id)rz_validObjectForKeyPath:(id)aKeyPath;
 
 // Ensures the value returned is a NSNumber. Converts from NSString if possible.
 // returns nil if not valid.
-- (id)numberForKey:(id)aKey;
+- (id)rz_numberForKey:(id)aKey;
 
 @end

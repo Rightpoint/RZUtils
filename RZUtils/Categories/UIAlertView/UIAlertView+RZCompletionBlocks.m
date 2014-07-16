@@ -61,7 +61,7 @@
 
 @implementation UIAlertView (RZCompletionBlocks)
 
-- (void)showWithCompletionBlock:(RZAlertViewCompletionBlock)completion
+- (void)rz_showWithCompletionBlock:(RZAlertViewCompletionBlock)completion
 {
     if (completion){
         AlertViewCompletionDelegate *alertDelegate = [[AlertViewCompletionDelegate alloc] initWithCompletionBlock:completion];

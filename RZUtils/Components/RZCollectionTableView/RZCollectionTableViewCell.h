@@ -8,10 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
-OBJC_EXTERN NSString * const RZCollectionTableViewCellEditingStateChanged;
-OBJC_EXTERN NSString * const RZCollectionTableViewCellEditingCommitted;
-
 @class RZCollectionTableViewCellEditingItem;
 
 //! UICollectionViewCell subclass intended to be used with RZCollectionTableView.
