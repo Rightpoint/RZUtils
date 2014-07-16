@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		493974EF19772908001F6CA0 /* RZUINavigationControllerBlocksTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 493974EE19772908001F6CA0 /* RZUINavigationControllerBlocksTests.m */; };
 		7A175505AE684DAFB8613F72 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22BAB0697B95400AAAD3740C /* libPods.a */; };
 		9A8D4DF4196335CC00AFAB21 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8D4DF3196335CC00AFAB21 /* XCTest.framework */; };
 		9A8D4DF5196335CC00AFAB21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8D4DD1196335CC00AFAB21 /* Foundation.framework */; };
@@ -17,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		22BAB0697B95400AAAD3740C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		493974EE19772908001F6CA0 /* RZUINavigationControllerBlocksTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZUINavigationControllerBlocksTests.m; sourceTree = "<group>"; };
 		9A8D4DD1196335CC00AFAB21 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9A8D4DD3196335CC00AFAB21 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		9A8D4DD5196335CC00AFAB21 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -81,6 +83,7 @@
 			children = (
 				9A8D4DFA196335CC00AFAB21 /* Supporting Files */,
 				9A8D4EB51963431900AFAB21 /* RZBlockKVOTests.m */,
+				493974EE19772908001F6CA0 /* RZUINavigationControllerBlocksTests.m */,
 			);
 			path = RZUtilsTests;
 			sourceTree = "<group>";
@@ -194,6 +197,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A8D4EB61963431900AFAB21 /* RZBlockKVOTests.m in Sources */,
+				493974EF19772908001F6CA0 /* RZUINavigationControllerBlocksTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
