@@ -89,6 +89,10 @@ Pod::Spec.new do |s|
       sss.source_files = "RZUtils/Categories/UIViewController/*.{h,m}"
     end
     
+    ss.subspec “UINavigationController” do |sss|
+      sss.source_files = "RZUtils/Categories/UINavigationController/*.{h,m}”
+    end
+    
   end
   
   #
