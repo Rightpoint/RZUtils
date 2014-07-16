@@ -82,6 +82,23 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
 
 @implementation UINavigationController (RZBlocks)
 
+#pragma mark - Private
+
+- (RZUINavigationControllerCompletionBlockHelper *)rz_setupDelegateWithPreparation:(RZNavigationControllerPreparationBlock)preparation completion:(RZNavigationControllerCompletionBlock)completion
+{
+    RZUINavigationControllerCompletionBlockHelper *helper = [[RZUINavigationControllerCompletionBlockHelper alloc] init];
+    if ( completion != nil || preparation != nil ) {
+        helper.previousDelegate = self.delegate;
+        self.delegate = helper;
+        helper.preparationBlock = preparation;
+        helper.completionBlock = completion;
+    }
+    
+    objc_setAssociatedObject(self, kRZNavigationControllerCompletionBlockHelperKey, helper, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
+    return helper;
+}
+
 #pragma mark - Public
 
 - (void)rz_pushViewController:(UIViewController *)viewController
@@ -128,25 +145,6 @@ static const void * kRZNavigationControllerCompletionBlockHelperKey = &kRZNaviga
 {
     [self rz_setupDelegateWithPreparation:preparation completion:completion];
     [self setViewControllers:viewControllers animated:animated];
-}
-
-#pragma mark - Private
-
-- (RZUINavigationControllerCompletionBlockHelper *)rz_setupDelegateWithPreparation:(RZNavigationControllerPreparationBlock)preparation completion:(RZNavigationControllerCompletionBlock)completion
-{
-    RZUINavigationControllerCompletionBlockHelper *helper = [[RZUINavigationControllerCompletionBlockHelper alloc] init];
-    if ( completion != nil || preparation != nil ) {
-        if ( self.delegate != nil ) {
-            helper.previousDelegate = self.delegate;
-        }
-        self.delegate = helper;
-        helper.preparationBlock = preparation;
-        helper.completionBlock = completion;
-    }
-    
-    objc_setAssociatedObject(self, kRZNavigationControllerCompletionBlockHelperKey, helper, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    
-    return helper;
 }
 
 @end
