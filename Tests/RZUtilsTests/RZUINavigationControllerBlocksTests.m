@@ -69,7 +69,7 @@ static NSString* const kRZUINavigationControllerBlockTestVC4Title = @"Fouth VC";
     self.navController.delegate = self;
     
     self.preparationBlockCalled = NO;
-    self.completionBlockCalled = YES;
+    self.completionBlockCalled = NO;
 }
 
 - (void)testNavigationControllerPushPopWithBlocks
@@ -94,6 +94,7 @@ static NSString* const kRZUINavigationControllerBlockTestVC4Title = @"Fouth VC";
                                                          
                                                          [self checkIfNavigationController:navigationController hasVCs:@[self.vc1, self.vc2]];
                                                          self.preparationBlockCalled = YES;
+                                                         self.completionBlockCalled = NO;
                                                          
                                                      }
                                                       completion:^(UINavigationController *navigationController,
@@ -119,6 +120,7 @@ static NSString* const kRZUINavigationControllerBlockTestVC4Title = @"Fouth VC";
                                             
                                             [self checkIfNavigationController:navigationController hasVCs:@[self.vc1, self.vc2, self.vc3]];
                                             self.preparationBlockCalled = YES;
+                                            self.completionBlockCalled = NO;
                                             
                                         }
                                          completion:^(UINavigationController *navigationController,
@@ -132,6 +134,7 @@ static NSString* const kRZUINavigationControllerBlockTestVC4Title = @"Fouth VC";
                                                                                   
                                                                                   [self checkIfNavigationController:navigationController hasVCs:self.allVCs];
                                                                                   self.preparationBlockCalled = YES;
+                                                                                  self.completionBlockCalled = NO;
                                                                                   
                                                                               }
                                                                                completion:popToRootTestBlock];
@@ -152,6 +155,7 @@ static NSString* const kRZUINavigationControllerBlockTestVC4Title = @"Fouth VC";
                                                    
                                                    [self checkIfNavigationController:navigationController hasVCs:self.allVCs];
                                                    self.preparationBlockCalled = YES;
+                                                   self.completionBlockCalled = NO;
                                                    
                                                }
                                                 completion:popMultipleVCsTestBlock];
@@ -171,6 +175,7 @@ static NSString* const kRZUINavigationControllerBlockTestVC4Title = @"Fouth VC";
                                             
                                             [self checkIfNavigationController:navigationController hasVCs:@[self.vc1, self.vc2]];
                                             self.preparationBlockCalled = YES;
+                                            self.completionBlockCalled = NO;
                                             
                                         }
                                          completion:popOneVCTestBlock];
@@ -185,6 +190,7 @@ static NSString* const kRZUINavigationControllerBlockTestVC4Title = @"Fouth VC";
                                       
                                       [self checkIfNavigationController:navigationController hasVCs:@[self.vc1]];
                                       self.preparationBlockCalled = YES;
+                                      self.completionBlockCalled = NO;
                                       
                                   }
                                    completion:pushRemainingVCsTestBlock];
@@ -212,7 +218,6 @@ static NSString* const kRZUINavigationControllerBlockTestVC4Title = @"Fouth VC";
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     XCTAssert(!self.completionBlockCalled, @"navigationController:didShowViewController:animated: called after completion block finished.");
-    self.preparationBlockCalled = YES;
 }
 
 @end
