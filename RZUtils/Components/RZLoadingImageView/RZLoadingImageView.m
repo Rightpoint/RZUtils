@@ -91,11 +91,12 @@
 {
     if (loading)
     {
-        self.image = nil;
+        [self bringSubviewToFront:self.loadingSpinner];
         [self.loadingSpinner startAnimating];
     }
     else
     {
+        [self sendSubviewToBack:self.loadingSpinner];
         [self.loadingSpinner stopAnimating];
     }
 }
@@ -192,8 +193,6 @@
         [[RZImageCache sharedCache] cancelImageDownloadFromURL:self.imageURL withDelegate:self];
         self.imageURL = nil;
     }
-
-    [self setImage:nil animated:NO];
 }
 
 - (void)showPlaceholder
