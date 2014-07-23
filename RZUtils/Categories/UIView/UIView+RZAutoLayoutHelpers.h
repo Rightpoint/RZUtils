@@ -42,42 +42,259 @@
 
 /** @name Constraint Getters */
 
+/**
+ *  Return the receiver's pinned width constraint, if it exsists.
+ *
+ *  @return The constraint or nil.
+ */
 - (NSLayoutConstraint*)rz_pinnedWidthConstraint;
+
+/**
+ *  Return the receiver's pinned height constraint, if it exsists.
+ *
+ *  @return The constraint or nil.
+ */
 - (NSLayoutConstraint*)rz_pinnedHeightConstraint;
 
+/**
+ *  Return the receiver's pinned top constraint, if it exsists.
+ *
+ *  @return The constraint or nil.
+ */
 - (NSLayoutConstraint*)rz_pinnedTopConstraint;
+
+/**
+ *  Return the receiver's pinned left side constraint, if it exsists.
+ *
+ *  @return The constraint or nil.
+ */
 - (NSLayoutConstraint*)rz_pinnedLeftConstraint;
+
+/**
+ *  Return the receiver's pinned right side constraint, if it exsists.
+ *
+ *  @return The constraint or nil.
+ */
 - (NSLayoutConstraint*)rz_pinnedRightConstraint;
+
+/**
+ *  Return the receiver's pinned bottom constraint, if it exsists.
+ *
+ *  @return The constraint or nil.
+ */
 - (NSLayoutConstraint*)rz_pinnedBottomConstraint;
 
+/**
+ *  Return the receiver's pinned center X constraint, if it exsists.
+ *
+ *  @return The constraint or nil.
+ */
 - (NSLayoutConstraint*)rz_pinnedCenterXConstraint;
+
+/**
+ *  Return the receiver's pinned center Y constraint, if it exsists.
+ *
+ *  @return The constraint or nil.
+ */
 - (NSLayoutConstraint*)rz_pinnedCenterYConstraint;
 
 /** @name Constraint Creation */
 
+/**
+ *  Pin the receiver's width to a constant.
+ *
+ *  @param width Deisred width.
+ *
+ *  @return The pinned width constraint that was added.
+ */
 - (NSLayoutConstraint *)rz_pinWidthTo:(CGFloat)width;
+
+/**
+ *  Pin the receiver's width to the width of another view.
+ *  By default pins to the other view's exact width, but the
+ *  returned constraint can be edited as desired.
+ *
+ *  @param view The view to pin width to.
+ *
+ *  @return The pinned width constraint that was added.
+ */
 - (NSLayoutConstraint *)rz_pinWidthToView:(UIView *)view;
+
+/**
+ *  Pin the receiver's width to a constant.
+ *
+ *  @param width Deisred height.
+ *
+ *  @return The pinned height constraint that was added.
+ */
 - (NSLayoutConstraint *)rz_pinHeightTo:(CGFloat)height;
+
+/**
+ *  Pin the receiver's height to the height of another view.
+ *  By default pins to the other view's exact height, but the
+ *  returned constraint can be edited as desired.
+ *
+ *  @param view The view to pin height to.
+ *
+ *  @return The pinned height constraint that was added.
+ */
 - (NSLayoutConstraint *)rz_pinHeightToView:(UIView *)view;
+
+/**
+ *  Pin the receiver's size to a particular value.
+ *
+ *  @param size The size to pin to.
+ *
+ *  @return The constraints that were added: [width, height].
+ */
 - (NSArray *)rz_pinSizeTo:(CGSize)size;
 
+/**
+ *  Pin the receiver's top space to its superview's top with a fixed amount of padding.
+ *
+ *  @param padding The amount of padding between the top of the receiver and the superview.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The constraint that was added.
+ */
 - (NSLayoutConstraint *)rz_pinTopSpaceToSuperviewWithPadding:(CGFloat)padding;
+
+/**
+ *  Pin the receiver's left space to its superview's left side with a fixed amount of padding.
+ *
+ *  @param padding The amount of padding between the left side of the receiver and the superview.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The constraint that was added.
+ */
 - (NSLayoutConstraint *)rz_pinLeftSpaceToSuperviewWithPadding:(CGFloat)padding;
+
+/**
+ *  Pin the receiver's bottom space to its superview's bottom with a fixed amount of padding.
+ *
+ *  @param padding The amount of padding between the bottom of the receiver and the superview.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The constraint that was added.
+ */
 - (NSLayoutConstraint *)rz_pinBottomSpaceToSuperviewWithPadding:(CGFloat)padding;
+
+/**
+ *  Pin the receiver's right space to its superview's right side with a fixed amount of padding.
+ *
+ *  @param padding The amount of padding between the right side of the receiver and the superview.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The constraint that was added.
+ */
 - (NSLayoutConstraint *)rz_pinRightSpaceToSuperviewWithPadding:(CGFloat)padding;
+
+/**
+ *  Pin all sides of the receiver to its superview's sides with fixed insets.
+ *
+ *  @param insets Insets between receiver's sides and superview.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The constraints that were added: [left, right, top, bottom]
+ */
 - (NSArray *)rz_fillContainerWithInsets:(UIEdgeInsets)insets;
 
+/**
+ *  Make the receiver fill its superview horizontally with a fixed amount of padding.
+ *  Equivalent to pinning left and right sides to superview.
+ *
+ *  @param padding The horizontal padding between the receiver and it superview.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The constraints that were added: [left, right]
+ */
 - (NSArray *)rz_fillContainerHorizontallyWithPadding:(CGFloat)padding;
+
+/**
+ *  Make the receiver fill its superview horizontally with a minimum amount of padding.
+ *  Equivalent to pinning left and right sides to superview with relation >=.
+ *
+ *  @param padding The minimum padding between the receiver and it superview.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The constraints that were added: [left, right]
+ */
 - (NSArray *)rz_fillContainerHorizontallyWithMinimumPadding:(CGFloat)padding;
+
+/**
+ *  Make the receiver fill its superview vertically with a fixed amount of padding.
+ *  Equivalent to pinning top and bottom to superview.
+ *
+ *  @param padding The vertical padding between the receiver and it superview.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The constraints that were added: [top, bottom]
+ */
 - (NSArray *)rz_fillContainerVerticallyWithPadding:(CGFloat)padding;
+
+/**
+ *  Make the receiver fill its superview vertically with a fixed amount of padding.
+ *  Equivalent to pinning top and bottom to superview with relation >=.
+ *
+ *  @param padding The vertical padding between the receiver and it superview.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The constraints that were added: [top, bottom]
+ */
 - (NSArray *)rz_fillContainerVerticallyWithMinimumPadding:(CGFloat)padding;
 
+/**
+ *  Center the receiver horizontally in its superview.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The constraint that was added.
+ */
 - (NSLayoutConstraint *)rz_centerHorizontallyInContainer;
+
+/**
+ *  Center the receiver horizontally in its superview with an offset.
+ *
+ *  @param offset The horizontal offset for the center pinning. Negative = left.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The constraint that was added.
+ */
 - (NSLayoutConstraint *)rz_centerHorizontallyInContainerWithOffset:(CGFloat)offset;
+
+/**
+ *  Center the receiver vertically in its superview.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The constraint that was added.
+ */
 - (NSLayoutConstraint *)rz_centerVerticallyInContainer;
+
+/**
+ *  Center the receiver vertically in its superview with an offset.
+ *
+ *  @param offset The vertical offset for the center pinning. Negative = up.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The constraint that was added.
+ */
 - (NSLayoutConstraint *)rz_centerVerticallyInContainerWithOffset:(CGFloat)offset;
 
-// Batch alignment
+
+/** @name Batch Alignment */
+
 /**
  *  Create a vertical or horizontal minimum space constraint between each adjacent pair of views in an array. This method is 
  *  deprecated in favor of rz_spaceSubViews:vertically:itemSpacing:relation:
