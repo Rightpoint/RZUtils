@@ -188,12 +188,17 @@
 
 - (NSLayoutConstraint *)rz_pinWidthToView:(UIView *)view
 {
+    return [self rz_pinWidthToView:view multiplier:1.0f];
+}
+
+- (NSLayoutConstraint *)rz_pinWidthToView:(UIView *)view multiplier:(CGFloat)multiplier
+{
     NSLayoutConstraint *w = [NSLayoutConstraint constraintWithItem:self
                                                          attribute:NSLayoutAttributeWidth
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:view
                                                          attribute:NSLayoutAttributeWidth
-                                                        multiplier:1.0f
+                                                        multiplier:multiplier
                                                           constant:0.0f];
     [self addConstraint:w];
 
@@ -216,12 +221,17 @@
 
 - (NSLayoutConstraint *)rz_pinHeightToView:(UIView *)view
 {
+    return [self rz_pinHeightToView:view multiplier:1.0f];
+}
+
+- (NSLayoutConstraint *)rz_pinHeightToView:(UIView *)view multiplier:(CGFloat)multiplier
+{
     NSLayoutConstraint *h = [NSLayoutConstraint constraintWithItem:self
                                                          attribute:NSLayoutAttributeHeight
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:view
                                                          attribute:NSLayoutAttributeHeight
-                                                        multiplier:1.0f
+                                                        multiplier:multiplier
                                                           constant:0.0f];
     [self addConstraint:h];
 

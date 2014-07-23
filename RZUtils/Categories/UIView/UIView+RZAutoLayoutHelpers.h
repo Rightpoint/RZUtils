@@ -111,14 +111,24 @@
 
 /**
  *  Pin the receiver's width to the width of another view.
- *  By default pins to the other view's exact width, but the
- *  returned constraint can be edited as desired.
  *
  *  @param view The view to pin width to.
  *
  *  @return The pinned width constraint that was added.
  */
 - (NSLayoutConstraint *)rz_pinWidthToView:(UIView *)view;
+
+/**
+ *  Pin the receiver's width to the width of another view with a particular multiplier.
+ *
+ *  @param view The view to pin width to.
+ *  @param multiplier The multiplier to use for the pinning. 1.0 = exact width, 0.5 = half the width, etc.
+ *
+ *  @note The constant on the returned constraint may also be edited.
+ *
+ *  @return The pinned width constraint that was added.
+ */
+- (NSLayoutConstraint *)rz_pinWidthToView:(UIView *)view multiplier:(CGFloat)multiplier;
 
 /**
  *  Pin the receiver's width to a constant.
@@ -131,14 +141,24 @@
 
 /**
  *  Pin the receiver's height to the height of another view.
- *  By default pins to the other view's exact height, but the
- *  returned constraint can be edited as desired.
  *
  *  @param view The view to pin height to.
  *
  *  @return The pinned height constraint that was added.
  */
 - (NSLayoutConstraint *)rz_pinHeightToView:(UIView *)view;
+
+/**
+ *  Pin the receiver's height to the height of another view with a particular multiplier.
+ *
+ *  @param view The view to pin height to.
+ *  @param multiplier The multiplier to use for the pinning. 1.0 = exact height, 0.5 = half the height, etc.
+ *
+ *  @note The constant on the returned constraint may also be edited.
+ *
+ *  @return The pinned height constraint that was added.
+ */
+- (NSLayoutConstraint *)rz_pinHeightToView:(UIView *)view multiplier:(CGFloat)multiplier;
 
 /**
  *  Pin the receiver's size to a particular value.
