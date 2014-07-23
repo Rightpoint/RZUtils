@@ -40,7 +40,7 @@ typedef void (^RZSingleChildContainerViewControllerCompletionBlock)(void);
 /**
  *  The transition that is used when changing the content view controller. Defaults to a simple alpha crossfade animation.
  */
-@property (nonatomic, strong) id<UIViewControllerAnimatedTransitioning> contentVCAnimatedTransition;
+@property (strong, nonatomic) id <UIViewControllerAnimatedTransitioning> contentVCAnimatedTransition;
 
 /**
  *  Whether the child view controller is currently transitioning to another view controller.

@@ -39,6 +39,8 @@
 
 @end
 
+static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration = 0.25;
+
 @interface RZSingleChildContainerAlphaTransitioner : NSObject <UIViewControllerAnimatedTransitioning>
 
 @end
@@ -55,12 +57,12 @@
 
 @implementation RZSingleChildContainerViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if ( self ) {
         _viewLoadedBlocks = [NSMutableArray array];
-        _contentVCAnimatedTransition = [RZSingleChildContainerAlphaTransitioner new];
+        _contentVCAnimatedTransition = [[RZSingleChildContainerAlphaTransitioner alloc] init];
     }
     return self;
 }
@@ -68,8 +70,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    for (void(^block)() in self.viewLoadedBlocks)
-    {
+    for ( void(^block)() in self.viewLoadedBlocks ) {
         block();
     }
     [self.viewLoadedBlocks removeAllObjects];
@@ -104,7 +105,7 @@
     return NO;
 }
 
-- (UIViewController*)childViewControllerForStatusBarStyle
+- (UIViewController *)childViewControllerForStatusBarStyle
 {
     return self.currentContentViewController;
 }
@@ -117,27 +118,24 @@
 - (UIViewController *)currentContentViewController
 {
     UIViewController *currentChild = nil;
-    if (self.childViewControllers.count > 0)
-    {
-        currentChild = [self.childViewControllers objectAtIndex:0];
+    if ( self.childViewControllers.count > 0 ) {
+        currentChild = self.childViewControllers[0];
     }
     return currentChild;
 }
 
-- (void)setContentVCAnimatedTransition:(id<UIViewControllerAnimatedTransitioning>)contentVCAnimatedTransition
+- (void)setContentVCAnimatedTransition:(id <UIViewControllerAnimatedTransitioning>)contentVCAnimatedTransition
 {
-    _contentVCAnimatedTransition = contentVCAnimatedTransition ? contentVCAnimatedTransition : [RZSingleChildContainerAlphaTransitioner new];
+    self.contentVCAnimatedTransition = contentVCAnimatedTransition ? contentVCAnimatedTransition : [[RZSingleChildContainerAlphaTransitioner alloc] init];
 }
 
 - (void)performBlockWhenViewLoaded:(void (^)())block
 {
     NSParameterAssert(block);
-    if (self.isViewLoaded)
-    {
+    if ( self.isViewLoaded ) {
         block();
     }
-    else
-    {
+    else {
         [self.viewLoadedBlocks addObject:[block copy]];
     }
 }
@@ -171,18 +169,15 @@
         // this can happen when the view hasn't been presented yet - don't prematurely pass appearance transition methods
         BOOL hasWindow = [self.view window] != nil;
 
-        if (animated)
-        {
-            if (hasWindow)
-            {
+        if ( animated ) {
+            if ( hasWindow ) {
                 [currentChild beginAppearanceTransition:NO animated:YES];
             }
             [currentChild willMoveToParentViewController:nil];
             [wself addChildViewController:viewController];
             viewController.view.frame = [wself childContentContainerView].bounds;
             viewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-            if (hasWindow)
-            {
+            if ( hasWindow ) {
                 [viewController beginAppearanceTransition:YES animated:YES];
             }
             RZSingleChildContainerTransitionContext *ctx = [[RZSingleChildContainerTransitionContext alloc] initWithContainerVC:wself
@@ -191,30 +186,25 @@
                                                                                                                      completion:compoundCompletion];
             [wself.contentVCAnimatedTransition animateTransition:ctx];
         }
-        else
-        {
-            if (hasWindow)
-            {
+        else {
+            if ( hasWindow ) {
                 [currentChild beginAppearanceTransition:NO animated:NO];
             }
             [currentChild.view removeFromSuperview];
             [currentChild removeFromParentViewController];
-            if (hasWindow)
-            {
+            if ( hasWindow ) {
                 [currentChild endAppearanceTransition];
             }
 
             [wself addChildViewController:viewController];
             viewController.view.frame = [wself childContentContainerView].bounds;
             viewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-            if (hasWindow)
-            {
+            if ( hasWindow ) {
                 [viewController beginAppearanceTransition:YES animated:NO];
             }
             [[wself childContentContainerView] addSubview:viewController.view];
             [viewController didMoveToParentViewController:wself];
-            if (hasWindow)
-            {
+            if ( hasWindow ) {
                 [viewController endAppearanceTransition];
             }
             [self setNeedsStatusBarAppearanceUpdate];
@@ -233,11 +223,10 @@
 
 @implementation RZSingleChildContainerTransitionContext
 
-- (id)initWithContainerVC:(RZSingleChildContainerViewController *)containerVC fromVC:(UIViewController *)fromVC toVC:(UIViewController *)toVC completion:(RZSingleChildContainerViewControllerCompletionBlock)completion;
+- (instancetype)initWithContainerVC:(RZSingleChildContainerViewController *)containerVC fromVC:(UIViewController *)fromVC toVC:(UIViewController *)toVC completion:(RZSingleChildContainerViewControllerCompletionBlock)completion;
 {
     self = [super init];
-    if (self)
-    {
+    if ( self ) {
         _containerVC = containerVC;
         _fromVC = fromVC;
         _toVC = toVC;
@@ -281,8 +270,7 @@
     [self.fromVC.view removeFromSuperview]; // just in case it didn't happen in the animation
     [self.fromVC removeFromParentViewController];
     [self.toVC didMoveToParentViewController:self.containerVC];
-    if ([self.containerVC.view window] != nil)
-    {
+    if ( [self.containerVC.view window] != nil ) {
         [self.fromVC endAppearanceTransition];
         [self.toVC endAppearanceTransition];
     }
@@ -295,12 +283,10 @@
 
 - (UIViewController *)viewControllerForKey:(NSString *)key
 {
-    if ([key isEqualToString:UITransitionContextFromViewControllerKey])
-    {
+    if ( [key isEqualToString:UITransitionContextFromViewControllerKey] ) {
         return self.fromVC;
     }
-    else if ([key isEqualToString:UITransitionContextToViewControllerKey])
-    {
+    else if ( [key isEqualToString:UITransitionContextToViewControllerKey] ) {
         return self.toVC;
     }
     
@@ -309,52 +295,53 @@
 
 - (CGRect)initialFrameForViewController:(UIViewController *)vc
 {
-    if ([self.fromVC isEqual:vc])
-    {
+    if ( [self.fromVC isEqual:vc] ) {
         return [[self.containerVC childContentContainerView] frame];
     }
     
-    // to VC starts off screen
+    // the "to" VC starts off-screen
     return CGRectZero;
 }
 
 - (CGRect)finalFrameForViewController:(UIViewController *)vc
 {
-    if ([self.toVC isEqual:vc])
-    {
+    if ( [self.toVC isEqual:vc] ) {
         return [[self.containerVC childContentContainerView] frame];
     }
     
-    // from VC starts off screen
+    // the "from" VC starts off-screen
     return CGRectZero;
 }
 
 @end
 
-
 @implementation RZSingleChildContainerAlphaTransitioner
 
-- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
+- (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext
 {
     UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     UIView *container = [transitionContext containerView];
     
-    toViewController.view.alpha = 0.f;
+    toViewController.view.alpha = 0.0f;
     [container addSubview:toViewController.view];
-    
-    [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0 options:0 animations:^{
-        [fromViewController.view setAlpha:0.f];
-        [toViewController.view setAlpha:1.f];
-    } completion:^(BOOL finished) {
-        fromViewController.view.alpha = 1.f;
-        [transitionContext completeTransition:finished];
-    }];
+
+    [UIView animateWithDuration:[self transitionDuration:transitionContext]
+                          delay:0.0
+                        options:0
+                     animations:^{
+                         [fromViewController.view setAlpha:0.0f];
+                         [toViewController.view setAlpha:1.0f];
+                     }
+                     completion:^(BOOL finished) {
+                         fromViewController.view.alpha = 1.0f;
+                         [transitionContext completeTransition:finished];
+                     }];
 }
 
-- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext
+- (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning>)transitionContext
 {
-    return 0.25;
+    return kRZSingleChildContainerAlphaTransitionerAnimationDuration;
 }
 
 @end
