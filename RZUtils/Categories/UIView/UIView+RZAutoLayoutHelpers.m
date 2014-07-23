@@ -460,8 +460,8 @@
     
     NSLayoutConstraint *top     = [self rz_pinTopSpaceToSuperviewWithPadding:insets.top];
     NSLayoutConstraint *left    = [self rz_pinLeftSpaceToSuperviewWithPadding:insets.left];
-    NSLayoutConstraint *bottom  = [self rz_pinTopSpaceToSuperviewWithPadding:insets.bottom];
-    NSLayoutConstraint *right   = [self rz_pinBottomSpaceToSuperviewWithPadding:insets.right];
+    NSLayoutConstraint *bottom  = [self rz_pinBottomSpaceToSuperviewWithPadding:insets.bottom];
+    NSLayoutConstraint *right   = [self rz_pinRightSpaceToSuperviewWithPadding:insets.right];
 
     NSArray *constraints = @[top, left, bottom, right];
 
