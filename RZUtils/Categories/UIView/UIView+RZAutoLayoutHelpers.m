@@ -457,19 +457,13 @@
 - (NSArray *)rz_fillContainerWithInsets:(UIEdgeInsets)insets
 {
     NSAssert(self.superview != nil, @"Must have superview");
-
-    NSArray *h = [NSLayoutConstraint constraintsWithVisualFormat:@"|-left-[self]-right-|"
-                                                         options:0
-                                                         metrics:@{@"left" : @(insets.left), @"right" : @(insets.right)}
-                                                           views:@{@"self" : self}];
     
-    NSArray *v = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-top-[self]-bottom-|"
-                                                         options:0
-                                                         metrics:@{@"top" : @(insets.top), @"bottom" : @(insets.bottom)}
-                                                           views:@{@"self" : self}];
+    NSLayoutConstraint *top     = [self rz_pinTopSpaceToSuperviewWithPadding:insets.top];
+    NSLayoutConstraint *left    = [self rz_pinLeftSpaceToSuperviewWithPadding:insets.left];
+    NSLayoutConstraint *bottom  = [self rz_pinTopSpaceToSuperviewWithPadding:insets.bottom];
+    NSLayoutConstraint *right   = [self rz_pinBottomSpaceToSuperviewWithPadding:insets.right];
 
-    // Reorder to top, left bottom, right for consistency with UIKit
-    NSArray *constraints = @[v[0], h[0], v[1], h[1]];
+    NSArray *constraints = @[top, left, bottom, right];
 
     [self.superview addConstraints:constraints];
 
