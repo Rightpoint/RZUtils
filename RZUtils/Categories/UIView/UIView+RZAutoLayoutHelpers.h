@@ -28,16 +28,20 @@
 
 #import <UIKit/UIKit.h>
 
-// Less-verbose implementations of common tasks when using autolayout.
-//
-// More complex tasks with specific constants should be implemented elsewhere.
-//
-// These methods make NO guarantee about existing constraints. If you've already added constraints,
-// it's up to you to make sure that adding these won't break your layout.
-
+/**
+ *  Less-verbose implementations of common tasks when using autolayout.
+ *  More complex tasks with specific constants should be implemented elsewhere.
+ *
+ *  @note Unless documented otherwise, each method which creates constraints also returns the constraint
+ *        (or constraints) that were added.
+ *
+ *  @warning These methods make NO guarantee about existing constraints. If you've already added constraints,
+ *           it's up to you to make sure that adding these won't break your layout.
+ */
 @interface UIView (RZAutoLayoutHelpers)
 
-// Return a particular constraint of this view if it exists
+/** @name Constraint Getters */
+
 - (NSLayoutConstraint*)rz_pinnedWidthConstraint;
 - (NSLayoutConstraint*)rz_pinnedHeightConstraint;
 
@@ -49,14 +53,14 @@
 - (NSLayoutConstraint*)rz_pinnedCenterXConstraint;
 - (NSLayoutConstraint*)rz_pinnedCenterYConstraint;
 
-// Pinning dimensions
+/** @name Constraint Creation */
+
 - (NSLayoutConstraint *)rz_pinWidthTo:(CGFloat)width;
 - (NSLayoutConstraint *)rz_pinWidthToView:(UIView *)view;
 - (NSLayoutConstraint *)rz_pinHeightTo:(CGFloat)height;
 - (NSLayoutConstraint *)rz_pinHeightToView:(UIView *)view;
 - (NSArray *)rz_pinSizeTo:(CGSize)size;
 
-// Pinning sides
 - (NSLayoutConstraint *)rz_pinTopSpaceToSuperviewWithPadding:(CGFloat)padding;
 - (NSLayoutConstraint *)rz_pinLeftSpaceToSuperviewWithPadding:(CGFloat)padding;
 - (NSLayoutConstraint *)rz_pinBottomSpaceToSuperviewWithPadding:(CGFloat)padding;
@@ -68,7 +72,6 @@
 - (NSArray *)rz_fillContainerVerticallyWithPadding:(CGFloat)padding;
 - (NSArray *)rz_fillContainerVerticallyWithMinimumPadding:(CGFloat)padding;
 
-// Centering
 - (NSLayoutConstraint *)rz_centerHorizontallyInContainer;
 - (NSLayoutConstraint *)rz_centerHorizontallyInContainerWithOffset:(CGFloat)offset;
 - (NSLayoutConstraint *)rz_centerVerticallyInContainer;
@@ -98,7 +101,25 @@
  *  @return An array of the constraints that were added.
  */
 - (NSArray *)rz_spaceSubviews:(NSArray *)subviews vertically:(BOOL)vertically itemSpacing:(CGFloat)itemSpacing relation:(NSLayoutRelation)relation;
+
+/**
+ *  Distribute views vertically or horizontally along the same axis with equal spacing in the receiver.
+ *
+ *  @param subviews   Array of subviews to distribute. Must be subviews of the receiver.
+ *  @param vertically YES to distribute vertically, NO for horizontally
+ *
+ *  @return An array of the constraints that were added.
+ */
 - (NSArray *)rz_distributeSubviews:(NSArray *)subviews vertically:(BOOL)vertically;
+
+/**
+ *  Align views within the receiver by a particular attribute.
+ *
+ *  @param subviews  An array of views to align. Must be subviews of the receiver.
+ *  @param attribute Attribute by which to align.
+ *
+ *  @return An array of constraints that were added.
+ */
 - (NSArray *)rz_alignSubviews:(NSArray *)subviews byAttribute:(NSLayoutAttribute)attribute;
 
 @end
