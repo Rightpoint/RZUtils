@@ -316,8 +316,9 @@
 /** @name Batch Alignment */
 
 /**
- *  Create a vertical or horizontal minimum space constraint between each adjacent pair of views in an array. This method is 
- *  deprecated in favor of rz_spaceSubViews:vertically:itemSpacing:relation:
+ *  Create a vertical or horizontal minimum space constraint between each adjacent pair of views in an array. 
+ *
+ *  @warning This method is deprecated in favor of @c rz_spaceSubViews:vertically:itemSpacing:relation:
  *
  *  @param subviews    The array of views to space. The order of the array should reflect their spatial order.
  *  @param vertically  @c YES if the spaces should exist between views' top and bottom edges, @c NO if between left and right edges.
