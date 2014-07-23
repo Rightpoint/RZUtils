@@ -320,7 +320,7 @@
  *  deprecated in favor of rz_spaceSubViews:vertically:itemSpacing:relation:
  *
  *  @param subviews    The array of views to space. The order of the array should reflect their spatial order.
- *  @param vertically  YES if the spaces should exist between views' top and bottom edges, NO if between left and right edges.
+ *  @param vertically  @c YES if the spaces should exist between views' top and bottom edges, NO if between left and right edges.
  *  @param itemSpacing The minimum amount of space that should exist between adjacent views.
  *
  *  @return An array of the constraints that were added.
@@ -331,9 +331,9 @@
  *  Create a vertical or horizontal space constraint between each adjacent pair of views in an array.
  *
  *  @param subviews    The array of views to space. The order of the array should reflect their spatial order.
- *  @param vertically  YES if the spaces should exist between views' top and bottom edges, NO if between left and right edges.
+ *  @param vertically  @c YES if the spaces should exist between views' top and bottom edges, NO if between left and right edges.
  *  @param itemSpacing The amount (or minimum/maximum) of space that should exist between adjacent views.
- *  @param relation    Either NSLayoutRelationEqual, NSLayoutRelationEqualLessThanOrEqual, NSLayoutRelationGreaterThanOrEqual.
+ *  @param relation    Either @c NSLayoutRelationEqual, @c NSLayoutRelationEqualLessThanOrEqual, @c NSLayoutRelationGreaterThanOrEqual.
  *
  *  @return An array of the constraints that were added.
  */
@@ -343,7 +343,7 @@
  *  Distribute views vertically or horizontally along the same axis with equal spacing in the receiver.
  *
  *  @param subviews   Array of subviews to distribute. Must be subviews of the receiver.
- *  @param vertically YES to distribute vertically, NO for horizontally
+ *  @param vertically @c YES to distribute vertically, @c NO for horizontally
  *
  *  @return An array of the constraints that were added.
  */
