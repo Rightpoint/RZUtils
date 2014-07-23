@@ -30,6 +30,11 @@
 
 @interface RZSingleChildContainerTransitionContext : NSObject <UIViewControllerContextTransitioning>
 
+@property (weak, nonatomic, readonly) RZSingleChildContainerViewController *containerVC;
+@property (strong, nonatomic, readonly) UIViewController *fromVC;
+@property (strong, nonatomic, readonly) UIViewController *toVC;
+@property (copy, nonatomic, readonly) RZSingleChildContainerViewControllerCompletionBlock completionBlock;
+
 - (id)initWithContainerVC:(RZSingleChildContainerViewController *)containerVC fromVC:(UIViewController *)fromVC toVC:(UIViewController *)toVC completion:(RZSingleChildContainerViewControllerCompletionBlock)completion;
 
 @end
@@ -202,15 +207,6 @@
 {
     return self.view;
 }
-
-@end
-
-@interface RZSingleChildContainerTransitionContext ()
-
-@property (weak, nonatomic, readonly) RZSingleChildContainerViewController *containerVC;
-@property (strong, nonatomic, readonly) UIViewController *fromVC;
-@property (strong, nonatomic, readonly) UIViewController *toVC;
-@property (copy, nonatomic, readonly) RZSingleChildContainerViewControllerCompletionBlock completionBlock;
 
 @end
 
