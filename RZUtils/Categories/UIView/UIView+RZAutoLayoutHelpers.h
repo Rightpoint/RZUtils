@@ -220,7 +220,7 @@
  *
  *  @warning The receiver must have a superview when this method is called.
  *
- *  @return The constraints that were added: [left, right, top, bottom]
+ *  @return The constraints that were added: [top, left, bottom, right]
  */
 - (NSArray *)rz_fillContainerWithInsets:(UIEdgeInsets)insets;
 

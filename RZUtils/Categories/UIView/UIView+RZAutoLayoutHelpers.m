@@ -255,7 +255,7 @@
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self.superview
                                                          attribute:NSLayoutAttributeLeft
-                                                        multiplier:1.0
+                                                        multiplier:1.0f
                                                           constant:padding];
     [self.superview addConstraint:l];
 
@@ -264,7 +264,7 @@
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self.superview
                                                          attribute:NSLayoutAttributeRight
-                                                        multiplier:1.0
+                                                        multiplier:1.0f
                                                           constant:padding];
     [self.superview addConstraint:r];
 
@@ -468,7 +468,8 @@
                                                          metrics:@{@"top" : @(insets.top), @"bottom" : @(insets.bottom)}
                                                            views:@{@"self" : self}];
 
-    NSArray *constraints = [h arrayByAddingObjectsFromArray:v];
+    // Reorder to top, left bottom, right for consistency with UIKit
+    NSArray *constraints = @[v[0], h[0], v[1], h[1]];
 
     [self.superview addConstraints:constraints];
 
@@ -538,7 +539,7 @@
                                                                                     toItem:self
                                                                                  attribute:distributeAlongAxisAttribute
                                                                                 multiplier:distributionMultiplier
-                                                                                  constant:0];
+                                                                                  constant:0.0f];
          
          // Create a constraint to center the view along the other axis.
          NSLayoutConstraint *centerConstraint = [NSLayoutConstraint constraintWithItem:view
@@ -546,8 +547,8 @@
                                                                              relatedBy:NSLayoutRelationEqual
                                                                                 toItem:self
                                                                              attribute:centerAlongAxisAttribute
-                                                                            multiplier:1
-                                                                              constant:0];
+                                                                            multiplier:1.0f
+                                                                              constant:0.0f];
          // Add both constraints for the view.
          [constraints addObject:distributeConstraint];
          [constraints addObject:centerConstraint];
