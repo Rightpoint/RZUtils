@@ -28,6 +28,8 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^RZSingleChildContainerViewControllerCompletionBlock)(void);
+
 @interface RZSingleChildContainerViewController : UIViewController
 
 // The current content child (if any)
@@ -42,7 +44,11 @@
 
 // Supports only a single child VC in its content area
 // Subclasses should not override - override animation methods to customize animation transitions
-- (void)setContentViewController:(UIViewController *)viewController animated:(BOOL)animated;
+- (void)setContentViewController:(UIViewController *)viewController animated:(BOOL)animated __attribute__((deprecated("Use setContentViewController:animated:completion: instead.")));
+
+// Supports only a single child VC in its content area
+// Subclasses should not override - override animation methods to customize animation transitions
+- (void)setContentViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(RZSingleChildContainerViewControllerCompletionBlock)completion;
 
 /* ---------- Override in Subclasses ------------
  *     Do not call these methods directly
