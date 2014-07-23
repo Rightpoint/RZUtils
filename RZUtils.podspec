@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "RZUtils"
-  s.version      = "2.1.0"
+  s.version      = "2.1.1"
   s.summary      = "Commonly used iOS categories and components from the Raizlabs development team"
 
   s.description  = <<-DESC
@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
   s.social_media_url   = "http://twitter.com/raizlabs"
   
   s.platform     = :ios, '7.0'
-  s.source       = { :git => "https://github.com/Raizlabs/RZUtils.git", :tag => "2.1.0" }
+  s.source       = { :git => "https://github.com/Raizlabs/RZUtils.git", :tag => "2.1.1" }
   s.requires_arc = true
   s.frameworks   = "Foundation", "UIKit"
   
