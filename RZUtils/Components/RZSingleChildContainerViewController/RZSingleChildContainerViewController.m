@@ -47,6 +47,8 @@
 
 @interface RZSingleChildContainerViewController ()
 
+@property (nonatomic, readwrite) BOOL isTransitioning; // internal readwrite redefinition
+
 @property (nonatomic, strong) NSMutableArray *viewLoadedBlocks;
 
 @end
@@ -107,6 +109,11 @@
     return self.currentContentViewController;
 }
 
+- (UIViewController *)childViewControllerForStatusBarHidden
+{
+    return self.currentContentViewController;
+}
+
 - (UIViewController *)currentContentViewController
 {
     UIViewController *currentChild = nil;
@@ -142,15 +149,28 @@
 
 - (void)setContentViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(RZSingleChildContainerViewControllerCompletionBlock)completion
 {
+    if ( self.isTransitioning ) {
+        [NSException raise:NSInternalInconsistencyException format:@"%@: Cannot start a transition while a transition is already in place.", [self class]];
+    }
+
     __weak __typeof(self) wself = self;
-    
+
+    // We need to set isTransitioning to NO once the transition completes.
+    // Then we run the passed-in completion block if it is not nil.
+    void (^compoundCompletion)(void) = ^{
+        self.isTransitioning = NO;
+        if ( completion ) {
+            completion();
+        }
+    };
+
     [self performBlockWhenViewLoaded:^{
-        
+        self.isTransitioning = YES;
         UIViewController *currentChild = wself.currentContentViewController;
-        
+
         // this can happen when the view hasn't been presented yet - don't prematurely pass appearance transition methods
         BOOL hasWindow = [self.view window] != nil;
-        
+
         if (animated)
         {
             if (hasWindow)
@@ -168,7 +188,7 @@
             RZSingleChildContainerTransitionContext *ctx = [[RZSingleChildContainerTransitionContext alloc] initWithContainerVC:wself
                                                                                                                          fromVC:currentChild
                                                                                                                            toVC:viewController
-                                                                                                                     completion:completion];
+                                                                                                                     completion:compoundCompletion];
             [wself.contentVCAnimatedTransition animateTransition:ctx];
         }
         else
@@ -183,7 +203,7 @@
             {
                 [currentChild endAppearanceTransition];
             }
-            
+
             [wself addChildViewController:viewController];
             viewController.view.frame = [wself childContentContainerView].bounds;
             viewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -198,6 +218,7 @@
                 [viewController endAppearanceTransition];
             }
             [self setNeedsStatusBarAppearanceUpdate];
+            compoundCompletion();
         }
     }];
 }
