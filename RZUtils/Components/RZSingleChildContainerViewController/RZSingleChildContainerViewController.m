@@ -30,7 +30,7 @@
 
 @interface RZSingleChildContainerTransitionContext : NSObject <UIViewControllerContextTransitioning>
 
-- (id)initWithContainerVC:(RZSingleChildContainerViewController *)containerVC fromVC:(UIViewController *)fromVC toVC:(UIViewController *)toVC;
+- (id)initWithContainerVC:(RZSingleChildContainerViewController *)containerVC fromVC:(UIViewController *)fromVC toVC:(UIViewController *)toVC completion:(RZSingleChildContainerViewControllerCompletionBlock)completion;
 
 @end
 
@@ -132,6 +132,11 @@
 
 - (void)setContentViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
+    [self setContentViewController:viewController animated:animated completion:nil];
+}
+
+- (void)setContentViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(RZSingleChildContainerViewControllerCompletionBlock)completion
+{
     __weak __typeof(self) wself = self;
     
     [self performBlockWhenViewLoaded:^{
@@ -157,7 +162,8 @@
             }
             RZSingleChildContainerTransitionContext *ctx = [[RZSingleChildContainerTransitionContext alloc] initWithContainerVC:wself
                                                                                                                          fromVC:currentChild
-                                                                                                                           toVC:viewController];
+                                                                                                                           toVC:viewController
+                                                                                                                     completion:completion];
             [wself.contentVCAnimatedTransition animateTransition:ctx];
         }
         else
@@ -199,14 +205,18 @@
 
 @end
 
-@implementation RZSingleChildContainerTransitionContext
-{
-    __weak RZSingleChildContainerViewController *_containerVC;
-    __strong UIViewController *_fromVC;
-    __strong UIViewController *_toVC;
-}
+@interface RZSingleChildContainerTransitionContext ()
 
-- (id)initWithContainerVC:(RZSingleChildContainerViewController *)containerVC fromVC:(UIViewController *)fromVC toVC:(UIViewController *)toVC
+@property (weak, nonatomic, readonly) RZSingleChildContainerViewController *containerVC;
+@property (strong, nonatomic, readonly) UIViewController *fromVC;
+@property (strong, nonatomic, readonly) UIViewController *toVC;
+@property (copy, nonatomic, readonly) RZSingleChildContainerViewControllerCompletionBlock completionBlock;
+
+@end
+
+@implementation RZSingleChildContainerTransitionContext
+
+- (id)initWithContainerVC:(RZSingleChildContainerViewController *)containerVC fromVC:(UIViewController *)fromVC toVC:(UIViewController *)toVC completion:(RZSingleChildContainerViewControllerCompletionBlock)completion;
 {
     self = [super init];
     if (self)
@@ -214,13 +224,14 @@
         _containerVC = containerVC;
         _fromVC = fromVC;
         _toVC = toVC;
+        _completionBlock = [completion copy];
     }
     return self;
 }
 
 - (UIView *)containerView
 {
-    return [_containerVC childContentContainerView];
+    return [self.containerVC childContentContainerView];
 }
 
 - (BOOL)isAnimated
@@ -250,26 +261,30 @@
 
 - (void)completeTransition:(BOOL)didComplete
 {
-    [_fromVC.view removeFromSuperview]; // just in case it didn't happen in the animation
-    [_fromVC removeFromParentViewController];
-    [_toVC didMoveToParentViewController:_containerVC];
-    if ([_containerVC.view window] != nil)
+    [self.fromVC.view removeFromSuperview]; // just in case it didn't happen in the animation
+    [self.fromVC removeFromParentViewController];
+    [self.toVC didMoveToParentViewController:self.containerVC];
+    if ([self.containerVC.view window] != nil)
     {
-        [_fromVC endAppearanceTransition];
-        [_toVC endAppearanceTransition];
+        [self.fromVC endAppearanceTransition];
+        [self.toVC endAppearanceTransition];
     }
-    [_containerVC setNeedsStatusBarAppearanceUpdate];
+    [self.containerVC setNeedsStatusBarAppearanceUpdate];
+
+    if ( self.completionBlock ) {
+        self.completionBlock();
+    }
 }
 
 - (UIViewController *)viewControllerForKey:(NSString *)key
 {
     if ([key isEqualToString:UITransitionContextFromViewControllerKey])
     {
-        return _fromVC;
+        return self.fromVC;
     }
     else if ([key isEqualToString:UITransitionContextToViewControllerKey])
     {
-        return _toVC;
+        return self.toVC;
     }
     
     return nil;
@@ -277,9 +292,9 @@
 
 - (CGRect)initialFrameForViewController:(UIViewController *)vc
 {
-    if ([_fromVC isEqual:vc])
+    if ([self.fromVC isEqual:vc])
     {
-        return [[_containerVC childContentContainerView] frame];
+        return [[self.containerVC childContentContainerView] frame];
     }
     
     // to VC starts off screen
@@ -288,9 +303,9 @@
 
 - (CGRect)finalFrameForViewController:(UIViewController *)vc
 {
-    if ([_toVC isEqual:vc])
+    if ([self.toVC isEqual:vc])
     {
-        return [[_containerVC childContentContainerView] frame];
+        return [[self.containerVC childContentContainerView] frame];
     }
     
     // from VC starts off screen
