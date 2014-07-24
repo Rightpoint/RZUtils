@@ -115,6 +115,11 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
     return self.currentContentViewController;
 }
 
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return self.currentContentViewController.supportedInterfaceOrientations;
+}
+
 - (UIViewController *)currentContentViewController
 {
     UIViewController *currentChild = nil;
