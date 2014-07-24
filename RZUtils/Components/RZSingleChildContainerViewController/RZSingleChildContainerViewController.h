@@ -28,29 +28,56 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^RZSingleChildContainerViewControllerCompletionBlock)(void);
+
 @interface RZSingleChildContainerViewController : UIViewController
 
-// The current content child (if any)
+/**
+ *  The current child content view controller, if any.
+ */
 @property (nonatomic, readonly) UIViewController *currentContentViewController;
 
-// Defaults to a simple alpha-fade transitioner. Set to another object to implement a custom transition
-@property (nonatomic, strong) id<UIViewControllerAnimatedTransitioning> contentVCAnimatedTransition;
+/**
+ *  The transition that is used when changing the content view controller. Defaults to a simple alpha crossfade animation.
+ */
+@property (strong, nonatomic) id <UIViewControllerAnimatedTransitioning> contentVCAnimatedTransition;
 
-// Perform this block when the view is loaded. If already loaded, happens immediately.
-// Useful for pre-configuring child viewcontrollers just after allocation, when view is not loaded yet.
-- (void)performBlockWhenViewLoaded:(void(^)())block;
+/**
+ *  Whether the child view controller is currently transitioning to another view controller.
+ */
+@property (nonatomic, readonly) BOOL isTransitioning;
+
+/**
+ *  Transitions to the passed view controller
+ *
+ *  @param viewController The view controller you want to transition to.
+ *  @param animated       Whether or not to animate the transition. If you want to customize the animation, set a custom transition for the @c contentVCAnimatedTransition property.
+ *
+ *  @deprecated Use @p setContentViewController:animated:completion: instead.
+ */
+- (void)setContentViewController:(UIViewController *)viewController animated:(BOOL)animated __attribute__((deprecated("Use setContentViewController:animated:completion: instead.")));
 
 // Supports only a single child VC in its content area
 // Subclasses should not override - override animation methods to customize animation transitions
-- (void)setContentViewController:(UIViewController *)viewController animated:(BOOL)animated;
 
-/* ---------- Override in Subclasses ------------
- *     Do not call these methods directly
+/**
+ *  Transitions to the passed view controller.
+ *
+ *  @param viewController The view controller you want to transition to.
+ *  @param animated       Whether or not to animate the transition. If you want to customize the animation, set a custom transition for the @c contentVCAnimatedTransition property.
+ *  @param completion     A completion block. Run when the transition is done. If @c animated is @NO, it is run as soon as the new child view controller’s view has loaded.
+ *
+ *  @see @c contentVCAnimatedTransition
+ *  @warning If you call this method while a transition is in progress (i.e. while @c isTransitioning is @c YES), an exception is raised.
  */
+- (void)setContentViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(RZSingleChildContainerViewControllerCompletionBlock)completion;
 
-// Container view for the children. Defaults to self.view.
+/**
+ *  Returns the view of the child content
+ *
+ *  @return The view that should be used as the container view for the child view controller.
+ *  @note Override this in a subclass if you want to return a view other than the child view controller’s view.
+ */
 - (UIView *)childContentContainerView;
-
-// --------------------------------------------
 
 @end
