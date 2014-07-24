@@ -171,20 +171,17 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
         self.isTransitioning = YES;
         UIViewController *currentChild = wself.currentContentViewController;
 
-        // this can happen when the view hasn't been presented yet - don't prematurely pass appearance transition methods
-        BOOL hasWindow = [self.view window] != nil;
-
         if ( animated ) {
-            if ( hasWindow ) {
-                [currentChild beginAppearanceTransition:NO animated:YES];
-            }
+
+            [currentChild beginAppearanceTransition:NO animated:YES];
+
             [currentChild willMoveToParentViewController:nil];
             [wself addChildViewController:viewController];
             viewController.view.frame = [wself childContentContainerView].bounds;
             viewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-            if ( hasWindow ) {
-                [viewController beginAppearanceTransition:YES animated:YES];
-            }
+
+            [viewController beginAppearanceTransition:YES animated:YES];
+
             RZSingleChildContainerTransitionContext *ctx = [[RZSingleChildContainerTransitionContext alloc] initWithContainerVC:wself
                                                                                                                          fromVC:currentChild
                                                                                                                            toVC:viewController
@@ -192,26 +189,24 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
             [wself.contentVCAnimatedTransition animateTransition:ctx];
         }
         else {
-            if ( hasWindow ) {
-                [currentChild beginAppearanceTransition:NO animated:NO];
-            }
+            [currentChild beginAppearanceTransition:NO animated:NO];
+
             [currentChild.view removeFromSuperview];
             [currentChild removeFromParentViewController];
-            if ( hasWindow ) {
-                [currentChild endAppearanceTransition];
-            }
+
+            [currentChild endAppearanceTransition];
 
             [wself addChildViewController:viewController];
             viewController.view.frame = [wself childContentContainerView].bounds;
             viewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-            if ( hasWindow ) {
-                [viewController beginAppearanceTransition:YES animated:NO];
-            }
+
+            [viewController beginAppearanceTransition:YES animated:NO];
+
             [[wself childContentContainerView] addSubview:viewController.view];
             [viewController didMoveToParentViewController:wself];
-            if ( hasWindow ) {
-                [viewController endAppearanceTransition];
-            }
+
+            [viewController endAppearanceTransition];
+
             [self setNeedsStatusBarAppearanceUpdate];
             compoundCompletion();
         }
