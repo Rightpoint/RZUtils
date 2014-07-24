@@ -189,24 +189,27 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
             [wself.contentVCAnimatedTransition animateTransition:ctx];
         }
         else {
+            
+            // If a child is added before the container is in a window yet, viewWillAppear and viewDidAppear will be called twice.
+            // The solution is not to send appearance transitions here but rather to let the container forward them from its own appearance cycle.
+            BOOL hasWindow = [self.view window] != nil;
+            
             [currentChild beginAppearanceTransition:NO animated:NO];
-
             [currentChild.view removeFromSuperview];
             [currentChild removeFromParentViewController];
-
             [currentChild endAppearanceTransition];
 
             [wself addChildViewController:viewController];
             viewController.view.frame = [wself childContentContainerView].bounds;
             viewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-
-            [viewController beginAppearanceTransition:YES animated:NO];
-
+            if ( hasWindow ) {
+                [viewController beginAppearanceTransition:YES animated:NO];
+            }
             [[wself childContentContainerView] addSubview:viewController.view];
             [viewController didMoveToParentViewController:wself];
-
-            [viewController endAppearanceTransition];
-
+            if ( hasWindow ) {
+                [viewController endAppearanceTransition];
+            }
             [self setNeedsStatusBarAppearanceUpdate];
             compoundCompletion();
         }
