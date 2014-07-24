@@ -265,7 +265,7 @@
                                                             toItem:self.superview
                                                          attribute:NSLayoutAttributeRight
                                                         multiplier:1.0f
-                                                          constant:padding];
+                                                          constant:-padding];
     [self.superview addConstraint:r];
 
     return @[l, r];
@@ -290,7 +290,7 @@
                                                             toItem:self.superview
                                                          attribute:NSLayoutAttributeRight
                                                         multiplier:1.0f
-                                                          constant:padding];
+                                                          constant:-padding];
     [self.superview addConstraint:r];
 
     return @[l, r];
@@ -315,7 +315,7 @@
                                                             toItem:self.superview
                                                          attribute:NSLayoutAttributeBottom
                                                         multiplier:1.0f
-                                                          constant:padding];
+                                                          constant:-padding];
     [self.superview addConstraint:b];
 
     return @[t, b];
@@ -340,7 +340,7 @@
                                                             toItem:self.superview
                                                          attribute:NSLayoutAttributeBottom
                                                         multiplier:1.0f
-                                                          constant:padding];
+                                                          constant:-padding];
     [self.superview addConstraint:b];
 
     return @[t, b];
