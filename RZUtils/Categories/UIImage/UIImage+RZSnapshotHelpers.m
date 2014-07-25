@@ -227,6 +227,28 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
     return outputImage;
 }
 
++ (NSArray *)rz_unblurredAndblurredImagesByCapturingView:(UIView*)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor*)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
+{
+    UIImage *unblurredImage = nil;
+    UIImage *blurredImage = nil;
+    
+    CGRect imageRect = { CGPointZero, view.bounds.size };
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    UIGraphicsBeginImageContextWithOptions(imageRect.size, NO, scale);
+    
+    BOOL success = [view drawViewHierarchyInRect:imageRect afterScreenUpdates:waitForUpdate];
+    if ( success ) {
+        unblurredImage = UIGraphicsGetImageFromCurrentImageContext();
+        blurredImage = RZBlurredImageInCurrentContext(imageRect, blurRadius, tintColor, saturationDeltaFactor, scale);
+    }
+    
+    UIGraphicsEndImageContext();
+    
+    NSArray *outputArray = @[(unblurredImage) ? unblurredImage : [NSNull null], (blurredImage) ? blurredImage : [NSNull null]];
+    
+    return outputArray;
+}
+
 - (UIImage *)rz_blurredImageWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor
 {
     UIImage *inputImage = self;
