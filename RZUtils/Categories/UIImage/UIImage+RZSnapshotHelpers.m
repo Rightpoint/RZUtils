@@ -227,12 +227,12 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
     return outputImage;
 }
 
-+ (NSArray *)rz_unblurredAndblurredImagesByCapturingView:(UIView*)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor*)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
++ (NSArray *)rz_unblurredAndblurredImagesByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
 {
     UIImage *unblurredImage = nil;
     UIImage *blurredImage = nil;
     
-    CGRect imageRect = { CGPointZero, view.bounds.size };
+    CGRect imageRect = { CGPointZero, CGRectGetWidth(view.bounds), CGRectGetHeight(view.bounds) };
     CGFloat scale = [[UIScreen mainScreen] scale];
     UIGraphicsBeginImageContextWithOptions(imageRect.size, NO, scale);
     
@@ -244,7 +244,10 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
     
     UIGraphicsEndImageContext();
     
-    NSArray *outputArray = @[(unblurredImage) ? unblurredImage : [NSNull null], (blurredImage) ? blurredImage : [NSNull null]];
+    id unblurredImageOrNull = (unblurredImage) ? unblurredImage : [NSNull null];
+    id blurredImageOrNull = (blurredImage) ? blurredImage : [NSNull null];
+   
+    NSArray *outputArray = @[ unblurredImageOrNull, blurredImageOrNull ];
     
     return outputArray;
 }

@@ -104,50 +104,50 @@
 @interface UIImage (RZSnapshotHelpers)
 
 /**
- *  Blur the contents of a given UIView and return the result as a UIImage.  Faster than Apple's supplied
- *  image blur method for iOS7.  iOS7+.
+ *  Blur the contents of a given UIView and return the result as a UIImage. Faster than Apple's supplied
+ *  image blur method for iOS 7. iOS 7+.
  *
- *  @param view                  the UIView to be blurred.
+ *  @param view                  The UIView to be blurred.
  *  @param waitForUpdate         A Boolean value that indicates whether the snapshot should be rendered after recent changes have been incorporated. Specify the value NO if you want to render a snapshot in the view hierarchy’s current state, which might not include recent changes.
- *  @param blurRadius            the Gaussian blur radius. Specify higher values for more blurring.
+ *  @param blurRadius            The Gaussian blur radius. Specify higher values for more blurring.
  *  @param tintColor             Apply tint color to the returned UIImage*. Tint color ONLY APPLIES when blurring radius is non-negligible.
- *  @param saturationDeltaFactor the color saturation of the resulting blurred image.  Ranges between 0-1.0f. A value of 1.0f is fully saturated, while a value of 0.0f is completely unsaturated.
+ *  @param saturationDeltaFactor The color saturation of the resulting blurred image.  Ranges between 0-1.0f. A value of 1.0f is fully saturated, while a value of 0.0f is completely unsaturated.
  *
  *  @return a blurred, UIImage created from the supplied UIView.
  */
-+ (UIImage *)rz_blurredImageByCapturingView:(UIView*)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor*)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
++ (UIImage *)rz_blurredImageByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
 
 /**
- *  Blur the contents of a given UIView and return an NSArray contining two images: the first being the image snapshot and the second being blurred image. 
+ *  Blur the contents of a given UIView and return an NSArray contining two images: the first being the image snapshot and the second being the blurred image.
  *  This can be useful for applying a continuous blur effect (by overlaying these two images and modifiying the alpha of the blurred image) without having to take repeated snapshots.
- *  Faster than Apple's supplied image blur method for iOS7.  iOS7+.
+ *  Faster than Apple's supplied image blur method for iOS 7. iOS 7+.
  *
- *  @param view                  the UIView to be blurred.
+ *  @param view                  The UIView to be blurred.
  *  @param waitForUpdate         A Boolean value that indicates whether the snapshot should be rendered after recent changes have been incorporated. Specify the value NO if you want to render a snapshot in the view hierarchy’s current state, which might not include recent changes.
- *  @param blurRadius            the Gaussian blur radius. Specify higher values for more blurring.
+ *  @param blurRadius            The Gaussian blur radius. Specify higher values for more blurring.
  *  @param tintColor             Apply tint color to the returned UIImage*. Tint color ONLY APPLIES when blurring radius is non-negligible.
- *  @param saturationDeltaFactor the color saturation of the resulting blurred image.  Ranges between 0-1.0f. A value of 1.0f is fully saturated, while a value of 0.0f is completely unsaturated.
+ *  @param saturationDeltaFactor The color saturation of the resulting blurred image.  Ranges between 0-1.0f. A value of 1.0f is fully saturated, while a value of 0.0f is completely unsaturated.
  *
  *  @return an NSArray with [0]: the snapshot of the view as a UIImage and [1]: the blurred snapshot of the view as a UIImage.
  */
-+ (NSArray *)rz_unblurredAndblurredImagesByCapturingView:(UIView*)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor*)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
++ (NSArray *)rz_unblurredAndblurredImagesByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
 
 /**
  *  Blur the contents of a given UIView and return the result as a UIImage.  Faster than Apple's supplied
- *  image blur method for iOS7.  iOS7+.
+ *  image blur method for iOS 7. iOS 7+.
  *
- *  @param blurRadius            the Gaussian blur radius. Specify higher values for more blurring.
+ *  @param blurRadius            The Gaussian blur radius. Specify higher values for more blurring.
  *  @param tintColor             Apply tint color to the returned UIImage*. Tint color ONLY APPLIES when blurring radius is non-negligible.
- *  @param saturationDeltaFactor the color saturation of the resulting blurred image.  Ranges between 0-1.0f. A value of 1.0f is fully saturated, while a value of 0.0f is completely unsaturated.
+ *  @param saturationDeltaFactor The color saturation of the resulting blurred image.  Ranges between 0-1.0f. A value of 1.0f is fully saturated, while a value of 0.0f is completely unsaturated.
  *
  *  @return a blurred, UIImage created from the supplied UIView.
  */
-- (UIImage *)rz_blurredImageWithRadius:(CGFloat)blurRadius tintColor:(UIColor*)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
+- (UIImage *)rz_blurredImageWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
 
 /**
  *  Take a snapshot of a supplied UIView and return it as an UIImage*.  iOS7+.
  *
- *  @param view          the UIView to be captured.
+ *  @param view          The UIView to be captured.
  *  @param waitForUpdate A Boolean value that indicates whether the snapshot should be rendered after recent changes have been incorporated. Specify the value NO if you want to render a snapshot in the view hierarchy’s current state, which might not include recent changes.
  *
  *  @return a UIImage created from the supplied UIView.
