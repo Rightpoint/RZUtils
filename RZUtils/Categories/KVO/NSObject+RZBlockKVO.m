@@ -79,17 +79,17 @@ static char kRZAssociatedObservationsKey;
 
 @implementation RZBlockObservation
 
-- (instancetype)initWithObservedObject:(NSObject *)object observer:(NSObject *)observer keyPath:(NSString *)keypPath options:(NSKeyValueObservingOptions)options block:(RZKVOBlock)block
+- (instancetype)initWithObservedObject:(NSObject *)object observer:(NSObject *)observer keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options block:(RZKVOBlock)block
 {
     self = [super init];
     if ( self ) {
         self.observedObject = object;
         self.observer = observer;
-        self.keyPath = keypPath;
+        self.keyPath = keyPath;
         self.block = block;
         
         
-        [object addObserver:self forKeyPath:keypPath options:options context:nil];
+        [object addObserver:self forKeyPath:keyPath options:options context:nil];
     }
     return self;
 }
@@ -107,7 +107,7 @@ static char kRZAssociatedObservationsKey;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ( self.block ) {
-        self.block(change);
+        self.block(object, keyPath, change);
     }
 }
 
