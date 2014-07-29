@@ -107,7 +107,7 @@ static char kRZAssociatedObservationsKey;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ( self.block ) {
-        self.block(object, keyPath, change);
+        self.block(object, change);
     }
 }
 

@@ -36,7 +36,7 @@
     [testObj rz_addObserver:self
                  forKeyPath:@"aString"
                     options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
-                  withBlock:^(NSDictionary *change) {
+                  withBlock:^(id object, NSDictionary *change) {
                       
                       id value = [change objectForKey:NSKeyValueChangeNewKey];
                       if ( [value isEqual:[NSNull null]] ) {
@@ -69,7 +69,7 @@
         [testObj rz_addObserver:observerObj
                      forKeyPath:@"aString"
                         options:NSKeyValueObservingOptionNew
-                      withBlock:^(NSDictionary *change) {
+                      withBlock:^(id object, NSDictionary *change) {
                           called = YES;
                       }];
     
