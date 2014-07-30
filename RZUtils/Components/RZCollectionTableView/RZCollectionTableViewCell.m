@@ -191,7 +191,8 @@
         [self.editingButtonsHostView addConstraint:[NSLayoutConstraint constraintWithItem:button
                                                                                 attribute:NSLayoutAttributeWidth
                                                                                 relatedBy:NSLayoutRelationEqual
-                                                                                   toItem:nil attribute:NSLayoutAttributeNotAnAttribute
+                                                                                   toItem:nil
+                                                                                attribute:NSLayoutAttributeNotAnAttribute
                                                                                multiplier:1.0
                                                                                  constant:kRZCTEditingButtonWidth]];
 
