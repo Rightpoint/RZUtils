@@ -188,7 +188,12 @@
 
         [self.editingButtonsHostView addSubview:button];
         [self.editingButtonsHostView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[button]-0-|" options:0 metrics:nil views:@{ @"button" : button }]];
-        [self.editingButtonsHostView addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:kRZCTEditingButtonWidth]];
+        [self.editingButtonsHostView addConstraint:[NSLayoutConstraint constraintWithItem:button
+                                                                                attribute:NSLayoutAttributeWidth
+                                                                                relatedBy:NSLayoutRelationEqual
+                                                                                   toItem:nil attribute:NSLayoutAttributeNotAnAttribute
+                                                                               multiplier:1.0
+                                                                                 constant:kRZCTEditingButtonWidth]];
 
         if ( idx > 0 ) {
             // right-align to previous button
