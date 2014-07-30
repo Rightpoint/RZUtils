@@ -193,11 +193,23 @@
         if ( idx > 0 ) {
             // right-align to previous button
             UIButton *prevButton = [newButtons objectAtIndex:idx - 1];
-            [self.editingButtonsHostView addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:prevButton attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
+            [self.editingButtonsHostView addConstraint:[NSLayoutConstraint constraintWithItem:button
+                                                                                    attribute:NSLayoutAttributeRight
+                                                                                    relatedBy:NSLayoutRelationEqual
+                                                                                       toItem:prevButton
+                                                                                    attribute:NSLayoutAttributeLeft
+                                                                                   multiplier:1.0
+                                                                                     constant:0]];
         }
         else {
             // right-align to container
-            [self.editingButtonsHostView addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.editingButtonsHostView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
+            [self.editingButtonsHostView addConstraint:[NSLayoutConstraint constraintWithItem:button
+                                                                                    attribute:NSLayoutAttributeRight
+                                                                                    relatedBy:NSLayoutRelationEqual
+                                                                                       toItem:self.editingButtonsHostView
+                                                                                    attribute:NSLayoutAttributeRight
+                                                                                   multiplier:1.0
+                                                                                     constant:0]];
         }
 
         [newButtons addObject:button];
