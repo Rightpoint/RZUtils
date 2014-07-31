@@ -104,8 +104,8 @@
 /**
  * Class for returning unmodified and blurred snapshots as a single object.
  *
- * @param unmodifiedSnapshot      The unblurred snapshot
- * @param blurredSnapshot         The blurred snapshot
+ * @param unmodifiedSnapshot      The unblurred snapshot.
+ * @param blurredSnapshot         The blurred snapshot.
  **/
 @interface RZSnapshotHelperSnapshots : NSObject
 
