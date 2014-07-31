@@ -101,6 +101,19 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ * Class for returning unmodified and blurred snapshots as a single object.
+ *
+ * @param unmodifiedSnapshot      The unblurred snapshot
+ * @param blurredSnapshot         The blurred snapshot
+ **/
+@interface RZSnapshotHelperSnapshots : NSObject
+
+@property (nonatomic, strong) UIImage *unmodifiedSnapshot;
+@property (nonatomic, strong) UIImage *blurredSnapshot;
+
+@end
+
 @interface UIImage (RZSnapshotHelpers)
 
 /**
@@ -128,9 +141,9 @@
  *  @param tintColor             Apply tint color to the returned UIImage*. Tint color ONLY APPLIES when blurring radius is non-negligible.
  *  @param saturationDeltaFactor The color saturation of the resulting blurred image.  Ranges between 0-1.0f. A value of 1.0f is fully saturated, while a value of 0.0f is completely unsaturated.
  *
- *  @return an NSArray with [0]: the snapshot of the view as a UIImage and [1]: the blurred snapshot of the view as a UIImage.
+ *  @return an RZOriginalAndModifiedSnapshots object with the unmodified and blurred snapshots.
  */
-+ (NSArray *)rz_unblurredAndblurredImagesByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
++ (RZOriginalAndModifiedSnapshots *)rz_unblurredAndblurredImagesByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
 
 /**
  *  Blur the contents of a given UIView and return the result as a UIImage.  Faster than Apple's supplied
