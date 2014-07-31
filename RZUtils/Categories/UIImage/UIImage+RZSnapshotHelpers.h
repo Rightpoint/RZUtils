@@ -109,8 +109,8 @@
  **/
 @interface RZSnapshotHelperSnapshots : NSObject
 
-@property (nonatomic, strong) UIImage *unmodifiedSnapshot;
-@property (nonatomic, strong) UIImage *blurredSnapshot;
+@property (strong, nonatomic) UIImage *unmodifiedSnapshot;
+@property (strong, nonatomic) UIImage *blurredSnapshot;
 
 @end
 
