@@ -143,7 +143,7 @@
  *
  *  @return an RZOriginalAndModifiedSnapshots object with the unmodified and blurred snapshots.
  */
-+ (RZOriginalAndModifiedSnapshots *)rz_unblurredAndblurredImagesByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
++ (RZSnapshotHelperSnapshots *)rz_unblurredAndblurredImagesByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
 
 /**
  *  Blur the contents of a given UIView and return the result as a UIImage.  Faster than Apple's supplied

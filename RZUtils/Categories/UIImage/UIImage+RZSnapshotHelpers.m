@@ -231,7 +231,7 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
     return outputImage;
 }
 
-+ (RZOriginalAndModifiedSnapshots *)rz_unblurredAndblurredImagesByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
++ (RZSnapshotHelperSnapshots *)rz_unblurredAndblurredImagesByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
 {
     UIImage *unblurredImage = nil;
     UIImage *blurredImage = nil;
@@ -248,7 +248,7 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
     
     UIGraphicsEndImageContext();
     
-    RZOriginalAndModifiedSnapshots *outputImages = [[RZOriginalAndModifiedSnapshots alloc] init];
+    RZSnapshotHelperSnapshots *outputImages = [[RZSnapshotHelperSnapshots alloc] init];
     outputImages.unmodifiedSnapshot = unblurredImage;
     outputImages.blurredSnapshot = blurredImage;
     
