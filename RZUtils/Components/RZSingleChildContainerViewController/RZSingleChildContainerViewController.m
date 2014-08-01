@@ -131,7 +131,7 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
 
 - (void)setContentVCAnimatedTransition:(id <UIViewControllerAnimatedTransitioning>)contentVCAnimatedTransition
 {
-    self.contentVCAnimatedTransition = contentVCAnimatedTransition ? contentVCAnimatedTransition : [[RZSingleChildContainerAlphaTransitioner alloc] init];
+    _contentVCAnimatedTransition = contentVCAnimatedTransition ?: [[RZSingleChildContainerAlphaTransitioner alloc] init];
 }
 
 - (void)performBlockWhenViewLoaded:(void (^)())block
