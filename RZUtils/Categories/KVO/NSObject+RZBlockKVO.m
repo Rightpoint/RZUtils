@@ -33,7 +33,7 @@ static char kRZAssociatedObservationsKey;
 
 @interface RZBlockObservation : NSObject
 
-- (instancetype)initWithObservedObject:(NSObject *)object observer:(NSObject *)observer keyPath:(NSString *)keypPath options:(NSKeyValueObservingOptions)options block:(RZKVOChangeBlock)block;
+- (instancetype)initWithObservedObject:(NSObject *)object observer:(NSObject *)observer keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options block:(RZKVOChangeBlock)block;
 
 @property (nonatomic, weak) NSObject *observedObject;
 @property (nonatomic, weak) NSObject *observer;
