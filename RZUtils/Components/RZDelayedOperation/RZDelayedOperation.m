@@ -107,9 +107,13 @@ typedef NS_ENUM(NSInteger, RZDelayedOperationState)
 
 - (void)timerFired:(NSTimer *)timer
 {
-    dispatch_async(self.blockQueue, self.block);
-    [self invalidateTimer];
-    [self finish];
+    dispatch_async(self.blockQueue, ^{
+        if ( !self.isCancelled ) {
+            self.block();
+            [self invalidateTimer];
+            [self finish];
+        }
+    });
 }
 
 #pragma mark - NSOperation
