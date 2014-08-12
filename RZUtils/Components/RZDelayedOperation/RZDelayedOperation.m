@@ -113,7 +113,7 @@ typedef NS_ENUM(NSInteger, RZDelayedOperationState)
             
             self.block();
             
-            if ([NSThread isMainThread]) {
+            if ( [NSThread isMainThread] ) {
                 [self invalidateTimer];
                 [self finish];
             }
