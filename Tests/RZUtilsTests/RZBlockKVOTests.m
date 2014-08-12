@@ -38,6 +38,8 @@
                     options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
                   withChangeBlock:^(id object, NSDictionary *change) {
                       
+                      XCTAssertEqualObjects(weakTestObj, object, @"Object in block does not match observed object");
+                      
                       id value = [change objectForKey:NSKeyValueChangeNewKey];
                       if ( [value isEqual:[NSNull null]] ) {
                           value = nil;
@@ -62,6 +64,7 @@
     RZKVOTestObject *testObj = [RZKVOTestObject new];
     RZKVOTestObject *observerObj = [RZKVOTestObject new];
     
+    __weak RZKVOTestObject *weakTestObj = testObj;
     __block BOOL called = NO;
 
     @autoreleasepool {
@@ -70,6 +73,8 @@
                      forKeyPath:@"aString"
                         options:NSKeyValueObservingOptionNew
                       withChangeBlock:^(id object, NSDictionary *change) {
+                          XCTAssertEqualObjects(weakTestObj, object, @"Object in block does not match observed object");
+
                           called = YES;
                       }];
     
