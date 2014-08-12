@@ -33,12 +33,12 @@ static char kRZAssociatedObservationsKey;
 
 @interface RZBlockObservation : NSObject
 
-- (instancetype)initWithObservedObject:(NSObject *)object observer:(NSObject *)observer keyPath:(NSString *)keypPath options:(NSKeyValueObservingOptions)options block:(RZKVOBlock)block;
+- (instancetype)initWithObservedObject:(NSObject *)object observer:(NSObject *)observer keyPath:(NSString *)keypPath options:(NSKeyValueObservingOptions)options block:(RZKVOChangeBlock)block;
 
 @property (nonatomic, weak) NSObject *observedObject;
 @property (nonatomic, weak) NSObject *observer;
 @property (nonatomic, copy) NSString *keyPath;
-@property (nonatomic, copy) RZKVOBlock block;
+@property (nonatomic, copy) RZKVOChangeBlock block;
 
 @end
 
@@ -56,8 +56,14 @@ static char kRZAssociatedObservationsKey;
     return observations;
 }
 
-
 - (void)rz_addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options withBlock:(RZKVOBlock)block
+{
+    [self rz_addObserver:observer forKeyPath:keyPath options:options withChangeBlock:^(id object, NSDictionary *change) {
+        block(change);
+    }];
+}
+
+- (void)rz_addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options withChangeBlock:(RZKVOChangeBlock)block
 {
     [[observer rz_blockObservations] addObject:[[RZBlockObservation alloc] initWithObservedObject:self observer:observer keyPath:keyPath options:options block:block]];
 }
@@ -79,7 +85,7 @@ static char kRZAssociatedObservationsKey;
 
 @implementation RZBlockObservation
 
-- (instancetype)initWithObservedObject:(NSObject *)object observer:(NSObject *)observer keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options block:(RZKVOBlock)block
+- (instancetype)initWithObservedObject:(NSObject *)object observer:(NSObject *)observer keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options block:(RZKVOChangeBlock)block
 {
     self = [super init];
     if ( self ) {
