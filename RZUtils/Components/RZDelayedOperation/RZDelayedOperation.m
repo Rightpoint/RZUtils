@@ -110,20 +110,19 @@ typedef NS_ENUM(NSInteger, RZDelayedOperationState)
     dispatch_async(self.blockQueue, ^{
         
         if ( !self.isCancelled ) {
+            
             self.block();
-        }
-        
-        if ([NSThread isMainThread])
-        {
-            [self invalidateTimer];
-            [self finish];
-        }
-        else
-        {
-            dispatch_sync(dispatch_get_main_queue(), ^{
+            
+            if ([NSThread isMainThread]) {
                 [self invalidateTimer];
                 [self finish];
-            });
+            }
+            else {
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    [self invalidateTimer];
+                    [self finish];
+                });
+            }
         }
     });
 }
