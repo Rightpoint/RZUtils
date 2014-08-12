@@ -28,7 +28,8 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^RZKVOBlock)(NSDictionary *change);
+typedef void (^RZKVOBlock)(NSDictionary *change) __attribute__((deprecated("Use use RZKVOChangeBlock instead.")));
+typedef void (^RZKVOChangeBlock)(id object, NSDictionary *change);
 
 /**
  *  Block-based KVO extensions. 
@@ -44,7 +45,17 @@ typedef void (^RZKVOBlock)(NSDictionary *change);
  *  @param options  The options for observing.
  *  @param block    The block that will be performed for KVO observation events. Must not be nil.
  */
-- (void)rz_addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options withBlock:(RZKVOBlock)block;
+- (void)rz_addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options withBlock:(RZKVOBlock)block __attribute__((deprecated("Use rz_addObserver:forKeyPath:options:withChangeBlock: instead.")));
+
+/**
+ *  Add observer for changes on an object/keypath, using a change block. Will automatically remove observer when observer is deallocated.
+ *
+ *  @param observer The observer to add for the receiver. Used only as hash for block - not retained. Must not be nil.
+ *  @param keyPath  The keypath on the receiver to observe. Must not be nil.
+ *  @param options  The options for observing.
+ *  @param block    The block that will be performed for KVO observation events. Must not be nil.
+ */
+- (void)rz_addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options withChangeBlock:(RZKVOChangeBlock)block;
 
 /**
  *  Remove observer for keypath on receiver.

@@ -36,7 +36,9 @@
     [testObj rz_addObserver:self
                  forKeyPath:@"aString"
                     options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
-                  withBlock:^(NSDictionary *change) {
+                  withChangeBlock:^(id object, NSDictionary *change) {
+                      
+                      XCTAssertEqualObjects(weakTestObj, object, @"Object in block does not match observed object");
                       
                       id value = [change objectForKey:NSKeyValueChangeNewKey];
                       if ( [value isEqual:[NSNull null]] ) {
@@ -62,6 +64,7 @@
     RZKVOTestObject *testObj = [RZKVOTestObject new];
     RZKVOTestObject *observerObj = [RZKVOTestObject new];
     
+    __weak RZKVOTestObject *weakTestObj = testObj;
     __block BOOL called = NO;
 
     @autoreleasepool {
@@ -69,7 +72,9 @@
         [testObj rz_addObserver:observerObj
                      forKeyPath:@"aString"
                         options:NSKeyValueObservingOptionNew
-                      withBlock:^(NSDictionary *change) {
+                      withChangeBlock:^(id object, NSDictionary *change) {
+                          XCTAssertEqualObjects(weakTestObj, object, @"Object in block does not match observed object");
+
                           called = YES;
                       }];
     
