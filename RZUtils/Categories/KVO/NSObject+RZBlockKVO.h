@@ -28,7 +28,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^RZKVOBlock)(NSDictionary *change);
+typedef void (^RZKVOBlock)(id object, NSDictionary *change);
 
 /**
  *  Block-based KVO extensions. 
