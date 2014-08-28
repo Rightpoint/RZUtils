@@ -253,6 +253,11 @@
                                                         multiplier:multiplier
                                                           constant:0.0f];
     UIView *commonAncestorView = [[self class] rz_commonAncestorForViews:@[ self, view ]];
+    if ( commonAncestorView == nil ) {
+        NSString *exceptionString = [NSString stringWithFormat:@"Can't find a common ancestor for views: %@ and %@", self, view];
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:exceptionString userInfo:nil];
+    }
+
     [commonAncestorView addConstraint:w];
 
     return w;
@@ -287,6 +292,12 @@
                                                         multiplier:multiplier
                                                           constant:0.0f];
     UIView *commonAncestorView = [[self class] rz_commonAncestorForViews:@[ self, view ]];
+    if ( commonAncestorView == nil ) {
+        NSString *exceptionString = [NSString stringWithFormat:@"Can't find a common ancestor for views: %@ and %@", self, view];
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:exceptionString userInfo:nil];
+    }
+
+
     [commonAncestorView addConstraint:h];
 
     return h;
