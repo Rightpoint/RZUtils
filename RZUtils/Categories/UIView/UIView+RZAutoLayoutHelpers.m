@@ -30,11 +30,61 @@
 
 @implementation UIView (RZAutoLayoutHelpers)
 
+# pragma mark - Helpers
+
 - (BOOL)rz_constraintIsWithSuperview:(NSLayoutConstraint *)constraint
 {
     return ((constraint.firstItem == self && constraint.secondItem == self.superview) ||
             (constraint.firstItem == self.superview && constraint.secondItem == self));
 }
+
++ (UIView *)rz_commonAncestorForViews:(NSArray *)views
+{
+    NSParameterAssert([views count] > 0);
+
+    if ( [views count] == 1 ) {
+        return [views firstObject];
+    }
+
+    // First, build a list of view hierarchies, where each element is a list containing the hierarhcy all the way up from each view to the top
+    NSMutableArray *viewHierarchies = [[NSMutableArray alloc] initWithCapacity:[views count]];
+    for ( UIView *view in views ) {
+        NSMutableArray *viewHierarchy = [NSMutableArray array];
+
+        UIView *viewCursor = view;
+        while ( viewCursor != nil ) {
+            [viewHierarchy addObject:viewCursor];
+            viewCursor = [viewCursor superview];
+        }
+
+        [viewHierarchies addObject:viewHierarchy];
+    }
+
+    // Next, iterate through the view hierarchies. Find the first element that they all have in common. Note that this is n^2, but is quite unlikely this will ever hamper performance because view hierarchies should generally be quite shallow.
+    UIView *candidateCommonAncestor = nil;
+    NSArray *firstViewHierarchy = [viewHierarchies firstObject];
+    NSArray *otherViewHierarchies = [viewHierarchies subarrayWithRange:NSMakeRange(1, [viewHierarchies count] - 1)];
+
+    for ( UIView *view in firstViewHierarchy ) {
+        BOOL commonAncestorMatches = YES;
+
+        for ( NSArray *otherViewHierarchy in otherViewHierarchies ) {
+            if ( [otherViewHierarchy containsObject:view] == NO ) {
+                commonAncestorMatches = NO;
+                break;
+            }
+        }
+
+        if ( commonAncestorMatches ) {
+            candidateCommonAncestor = view;
+            break;
+        }
+    }
+
+    return candidateCommonAncestor;
+}
+
+# pragma mark - Constraint Accessors
 
 - (NSLayoutConstraint *)rz_pinnedWidthConstraint
 {
@@ -172,6 +222,8 @@
     return constraint;
 }
 
+# pragma mark - Constraint Creation
+
 - (NSLayoutConstraint *)rz_pinWidthTo:(CGFloat)width
 {
     NSLayoutConstraint *w = [NSLayoutConstraint constraintWithItem:self
@@ -200,7 +252,13 @@
                                                          attribute:NSLayoutAttributeWidth
                                                         multiplier:multiplier
                                                           constant:0.0f];
-    [self addConstraint:w];
+    UIView *commonAncestorView = [[self class] rz_commonAncestorForViews:@[ self, view ]];
+    if ( commonAncestorView == nil ) {
+        NSString *exceptionString = [NSString stringWithFormat:@"Can't find a common ancestor for views: %@ and %@", self, view];
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:exceptionString userInfo:nil];
+    }
+
+    [commonAncestorView addConstraint:w];
 
     return w;
 }
@@ -233,7 +291,14 @@
                                                          attribute:NSLayoutAttributeHeight
                                                         multiplier:multiplier
                                                           constant:0.0f];
-    [self addConstraint:h];
+    UIView *commonAncestorView = [[self class] rz_commonAncestorForViews:@[ self, view ]];
+    if ( commonAncestorView == nil ) {
+        NSString *exceptionString = [NSString stringWithFormat:@"Can't find a common ancestor for views: %@ and %@", self, view];
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:exceptionString userInfo:nil];
+    }
+
+
+    [commonAncestorView addConstraint:h];
 
     return h;
 }
@@ -469,6 +534,8 @@
 
     return constraints;
 }
+
+# pragma mark - Batch Alignment
 
 - (NSArray *)rz_spaceSubviews:(NSArray *)subviews vertically:(BOOL)vertically minimumItemSpacing:(CGFloat)itemSpacing
 {

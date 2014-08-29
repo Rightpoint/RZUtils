@@ -40,6 +40,15 @@
  */
 @interface UIView (RZAutoLayoutHelpers)
 
+/** @name Helpers */
+
+/**
+ *  Return the common ancestor shared by all the views passed in, if it exists.
+ *
+ *  @return The common ancestor.
+ */
++ (UIView *)rz_commonAncestorForViews:(NSArray *)views;
+
 /** @name Constraint Getters */
 
 /**
