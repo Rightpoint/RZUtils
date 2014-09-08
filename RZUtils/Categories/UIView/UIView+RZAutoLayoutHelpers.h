@@ -50,29 +50,29 @@
 - (NSLayoutConstraint*)rz_pinnedCenterYConstraint;
 
 // Pinning dimensions
-- (void)rz_pinWidthTo:(CGFloat)width;
-- (void)rz_pinWidthToView:(UIView *)view;
-- (void)rz_pinHeightTo:(CGFloat)height;
-- (void)rz_pinHeightToView:(UIView *)view;
-- (void)rz_pinSizeTo:(CGSize)size;
+- (NSLayoutConstraint *)rz_pinWidthTo:(CGFloat)width;
+- (NSLayoutConstraint *)rz_pinWidthToView:(UIView *)view;
+- (NSLayoutConstraint *)rz_pinHeightTo:(CGFloat)height;
+- (NSLayoutConstraint *)rz_pinHeightToView:(UIView *)view;
+- (NSLayoutConstraint *)rz_pinSizeTo:(CGSize)size;
 
 // Pinning sides
-- (void)rz_pinTopSpaceToSuperviewWithPadding:(CGFloat)padding;
-- (void)rz_pinLeftSpaceToSuperviewWithPadding:(CGFloat)padding;
-- (void)rz_pinBottomSpaceToSuperviewWithPadding:(CGFloat)padding;
-- (void)rz_pinRightSpaceToSuperviewWithPadding:(CGFloat)padding;
-- (void)rz_fillContainerWithInsets:(UIEdgeInsets)insets;
+- (NSLayoutConstraint *)rz_pinTopSpaceToSuperviewWithPadding:(CGFloat)padding;
+- (NSLayoutConstraint *)rz_pinLeftSpaceToSuperviewWithPadding:(CGFloat)padding;
+- (NSLayoutConstraint *)rz_pinBottomSpaceToSuperviewWithPadding:(CGFloat)padding;
+- (NSLayoutConstraint *)rz_pinRightSpaceToSuperviewWithPadding:(CGFloat)padding;
+- (NSArray *)rz_fillContainerWithInsets:(UIEdgeInsets)insets;
 
-- (void)rz_fillContainerHorizontallyWithPadding:(CGFloat)padding;
-- (void)rz_fillContainerHorizontallyWithMinimumPadding:(CGFloat)padding;
-- (void)rz_fillContainerVerticallyWithPadding:(CGFloat)padding;
-- (void)rz_fillContainerVerticallyWithMinimumPadding:(CGFloat)padding;
+- (NSArray *)rz_fillContainerHorizontallyWithPadding:(CGFloat)padding;
+- (NSArray *)rz_fillContainerHorizontallyWithMinimumPadding:(CGFloat)padding;
+- (NSArray *)rz_fillContainerVerticallyWithPadding:(CGFloat)padding;
+- (NSArray *)rz_fillContainerVerticallyWithMinimumPadding:(CGFloat)padding;
 
 // Centering
-- (void)rz_centerHorizontallyInContainer;
-- (void)rz_centerHorizontallyInContainerWithOffset:(CGFloat)offset;
-- (void)rz_centerVerticallyInContainer;
-- (void)rz_centerVerticallyInContainerWithOffset:(CGFloat)offset;
+- (NSLayoutConstraint *)rz_centerHorizontallyInContainer;
+- (NSLayoutConstraint *)rz_centerHorizontallyInContainerWithOffset:(CGFloat)offset;
+- (NSLayoutConstraint *)rz_centerVerticallyInContainer;
+- (NSLayoutConstraint *)rz_centerVerticallyInContainerWithOffset:(CGFloat)offset;
 
 // Batch alignment
 /**
@@ -82,8 +82,9 @@
  *  @param subviews    The array of views to space. The order of the array should reflect their spatial order.
  *  @param vertically  YES if the spaces should exist between views' top and bottom edges, NO if between left and right edges.
  *  @param itemSpacing The minimum amount of space that should exist between adjacent views.
+ *  @return An array containing the new NSLayoutConstraints created.
  */
-- (void)rz_spaceSubviews:(NSArray *)subviews vertically:(BOOL)vertically minimumItemSpacing:(CGFloat)itemSpacing __attribute__((deprecated("Use rz_spaceSubViews:vertically:itemSpacing:relation: instead.")));
+- (NSArray *)rz_spaceSubviews:(NSArray *)subviews vertically:(BOOL)vertically minimumItemSpacing:(CGFloat)itemSpacing __attribute__((deprecated("Use rz_spaceSubViews:vertically:itemSpacing:relation: instead.")));
 
 /**
  *  Create a vertical or horizontal space constraint between each adjacent pair of views in an array.
@@ -92,9 +93,10 @@
  *  @param vertically  YES if the spaces should exist between views' top and bottom edges, NO if between left and right edges.
  *  @param itemSpacing The amount (or minimum/maximum) of space that should exist between adjacent views.
  *  @param relation    Either NSLayoutRelationEqual, NSLayoutRelationEqualLessThanOrEqual, NSLayoutRelationGreaterThanOrEqual.
+ *  @return An array containing the new NSLayoutConstraints created.
  */
-- (void)rz_spaceSubviews:(NSArray *)subviews vertically:(BOOL)vertically itemSpacing:(CGFloat)itemSpacing relation:(NSLayoutRelation)relation;
-- (void)rz_distributeSubviews:(NSArray *)subviews vertically:(BOOL)vertically;
-- (void)rz_alignSubviews:(NSArray *)subviews byAttribute:(NSLayoutAttribute)attribute;
+- (NSArray *)rz_spaceSubviews:(NSArray *)subviews vertically:(BOOL)vertically itemSpacing:(CGFloat)itemSpacing relation:(NSLayoutRelation)relation;
+- (NSArray *)rz_distributeSubviews:(NSArray *)subviews vertically:(BOOL)vertically;
+- (NSArray *)rz_alignSubviews:(NSArray *)subviews byAttribute:(NSLayoutAttribute)attribute;
 
 @end
