@@ -5,15 +5,15 @@
 //  Copyright (c) 2014 Raizlabs. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
-typedef void (^RZAnimationBlock)(BOOL keyboardVisible, CGRect keyboardFrame);
-typedef void (^RZAnimationCompletionBlock)(BOOL finished);
+typedef void (^RZKeyboardAnimationBlock)(BOOL keyboardVisible, CGRect keyboardFrame);
+typedef void (^RZKeyboardAnimationCompletionBlock)(BOOL finished, BOOL keyboardVisible);
 
 @interface UIViewController (RZKeyboardWatcher)
 
-- (void)rz_watchKeyboardShowWithAnimations:(RZAnimationBlock)animations animated:(BOOL)animated;
-- (void)rz_watchKeyboardShowWithAnimations:(RZAnimationBlock)animations completion:(RZAnimationCompletionBlock)completion animated:(BOOL)animated;
+- (void)rz_watchKeyboardShowWithAnimations:(RZKeyboardAnimationBlock)animations animated:(BOOL)animated;
+- (void)rz_watchKeyboardShowWithAnimations:(RZKeyboardAnimationBlock)animations completion:(RZKeyboardAnimationCompletionBlock)completion animated:(BOOL)animated;
 - (void)rz_unwatchKeyboard;
 
 @end
