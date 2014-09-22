@@ -13,6 +13,7 @@
 		9A8D4DF6196335CC00AFAB21 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8D4DD5196335CC00AFAB21 /* UIKit.framework */; };
 		9A8D4DFE196335CC00AFAB21 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A8D4DFC196335CC00AFAB21 /* InfoPlist.strings */; };
 		9A8D4EB61963431900AFAB21 /* RZBlockKVOTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4EB51963431900AFAB21 /* RZBlockKVOTests.m */; };
+		D41237C319D0B61F004870D5 /* RZDBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D41237C219D0B61F004870D5 /* RZDBTests.m */; };
 		D4874DA119918C46003EEC4B /* RZAutoLayoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D4874DA019918C46003EEC4B /* RZAutoLayoutTests.m */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		9A8D4EB4196336C500AFAB21 /* RZUtilsTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RZUtilsTests-Prefix.pch"; sourceTree = "<group>"; };
 		9A8D4EB51963431900AFAB21 /* RZBlockKVOTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZBlockKVOTests.m; sourceTree = "<group>"; };
 		CFC331EF976D4DEC8CB9094C /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		D41237C219D0B61F004870D5 /* RZDBTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZDBTests.m; sourceTree = "<group>"; };
 		D4874DA019918C46003EEC4B /* RZAutoLayoutTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZAutoLayoutTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,6 +86,7 @@
 				9A8D4DFA196335CC00AFAB21 /* Supporting Files */,
 				9A8D4EB51963431900AFAB21 /* RZBlockKVOTests.m */,
 				D4874DA019918C46003EEC4B /* RZAutoLayoutTests.m */,
+				D41237C219D0B61F004870D5 /* RZDBTests.m */,
 			);
 			path = RZUtilsTests;
 			sourceTree = "<group>";
@@ -198,6 +201,7 @@
 			files = (
 				D4874DA119918C46003EEC4B /* RZAutoLayoutTests.m in Sources */,
 				9A8D4EB61963431900AFAB21 /* RZBlockKVOTests.m in Sources */,
+				D41237C319D0B61F004870D5 /* RZDBTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
