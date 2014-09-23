@@ -73,6 +73,8 @@ static void* const kRZDBKVOContext = (void *)&kRZDBKVOContext;
 @property (assign, nonatomic) SEL action;
 @property (copy, nonatomic) NSString *boundKey;
 
+@property (nonatomic, readonly) BOOL valid;
+
 - (instancetype)initWithObservedObject:(NSObject *)observedObject keyPath:(NSString *)keyPath observationOptions:(NSKeyValueObservingOptions)observingOptions;
 
 - (void)setTarget:(id)target action:(SEL)action boundKey:(NSString *)boundKey;
@@ -189,7 +191,7 @@ static void* const kRZDBKVOContext = (void *)&kRZDBKVOContext;
         
         BOOL allEqual = (targetsEqual && actionsEqual && boundKeysEqual && keyPathsEqual);
         
-        if ( allEqual ) {
+        if ( allEqual || !observer.valid ) {
             [[target _rz_dependentObservers] removeObserver:observer];
             [registeredObservers removeObject:observer];
         }
@@ -253,7 +255,7 @@ static void* const kRZDBKVOContext = (void *)&kRZDBKVOContext;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ( context == kRZDBKVOContext ) {
-        if ( self.target != nil && self.action != NULL ) {
+        if ( self.valid ) {
             NSMethodSignature *signature = [self.target methodSignatureForSelector:self.action];
             
             if ( signature.numberOfArguments > 2 ) {
@@ -300,6 +302,11 @@ static void* const kRZDBKVOContext = (void *)&kRZDBKVOContext;
     }
     
     return [changeDict copy];
+}
+
+- (BOOL)valid
+{
+    return (self.action != nil && self.target != NULL);
 }
 
 - (void)invalidate
