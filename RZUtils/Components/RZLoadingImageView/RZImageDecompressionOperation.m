@@ -49,6 +49,9 @@
 
 @implementation RZImageDecompressionOperation
 
+@synthesize finished = _finished;
+@synthesize executing = _executing;
+
 - (id)initWithFileURL:(NSURL*)fileUrl webUrl:(NSURL*)webUrl completion:(RZImageDecompressionCompletion)completion
 {
     return [self initWithFileURL:fileUrl webUrl:webUrl resizeToSize:CGSizeZero preserveAspectRatio:YES completion:completion];
