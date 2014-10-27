@@ -122,6 +122,7 @@
     otherTestObj.aString = @"yo";
 	
     XCTAssertTrue(secondBlockCalled, @"Second block should have been called. Removal as observer for first obj should not affect this one");
+	[otherTestObj rz_removeObserver:self keyPath:nil];
 }
 
 @end
