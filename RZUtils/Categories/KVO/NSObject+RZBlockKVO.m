@@ -71,7 +71,7 @@ static char kRZAssociatedObservationsKey;
 - (void)rz_removeObserver:(NSObject *)observer keyPath:(NSString *)keyPath
 {
     NSIndexSet *indexes = [[observer rz_blockObservations] indexesOfObjectsPassingTest:^BOOL(RZBlockObservation *obs, NSUInteger idx, BOOL *stop) {
-        return (([obs.observer isEqual:observer] || obs.observer == nil) && (keyPath == nil || [keyPath isEqualToString:obs.keyPath]));
+        return (([obs.observedObject isEqual:self] || obs.observedObject == nil) && (keyPath == nil || [keyPath isEqualToString:obs.keyPath]));
     }];
     
     if ( indexes.count > 0 ) {
