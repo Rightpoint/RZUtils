@@ -286,14 +286,27 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
 
 - (UIViewController *)viewControllerForKey:(NSString *)key
 {
+    UIViewController *ret = nil;
     if ( [key isEqualToString:UITransitionContextFromViewControllerKey] ) {
-        return self.fromVC;
+        ret = self.fromVC;
     }
     else if ( [key isEqualToString:UITransitionContextToViewControllerKey] ) {
-        return self.toVC;
+        ret = self.toVC;
     }
     
-    return nil;
+    return ret;
+}
+- (UIView *)viewForKey:(NSString *)key
+{
+    UIView *ret = nil;
+    if ( [key isEqualToString:UITransitionContextFromViewKey] ) {
+        ret = self.fromVC.view;
+    }
+    else if ( [key isEqualToString:UITransitionContextToViewKey] ) {
+        ret = self.toVC.view;
+    }
+
+    return ret;
 }
 
 - (CGRect)initialFrameForViewController:(UIViewController *)vc
@@ -314,6 +327,11 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
     
     // the "from" VC starts off-screen
     return CGRectZero;
+}
+
+- (CGAffineTransform)targetTransform
+{
+    return CGAffineTransformIdentity;
 }
 
 @end

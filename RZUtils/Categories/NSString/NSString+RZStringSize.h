@@ -29,6 +29,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import <CoreGraphics/CGGeometry.h>
 
 /**
  *  A set of methods that mirror the string sizing that was deprecated in iOS 7.

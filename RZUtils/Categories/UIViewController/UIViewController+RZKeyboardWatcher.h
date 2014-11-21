@@ -6,6 +6,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CGGeometry.h>
+#import <UIKit/UIKit.h>
 
 typedef void (^RZAnimationBlock)(BOOL keyboardVisible, CGRect keyboardFrame);
 typedef void (^RZAnimationCompletionBlock)(BOOL finished);
