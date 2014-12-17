@@ -53,7 +53,7 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
 
 @property (nonatomic, strong) NSMutableArray *viewLoadedBlocks;
 
-@property (weak, nonatomic) id viewControllerOnWhichWeCalledBegin;
+@property (weak, nonatomic) UIViewController *viewControllerOnWhichWeCalledBegin;
 
 @end
 
