@@ -53,6 +53,8 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
 
 @property (nonatomic, strong) NSMutableArray *viewLoadedBlocks;
 
+@property (weak, nonatomic) id viewControllerOnWhichWeCalledBegin;
+
 @end
 
 @implementation RZSingleChildContainerViewController
@@ -79,13 +81,22 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    // We want to make sure we don’t call endAppearanceTransition
+    // on an object where we never called beginAppearanceTransition:animated:,
+    // so keep track of which view controller we called this method on.
+    // Note: self.currentContentViewController may be nil here.
+    self.viewControllerOnWhichWeCalledBegin = self.currentContentViewController;
+
     [self.currentContentViewController beginAppearanceTransition:YES animated:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self.currentContentViewController endAppearanceTransition];
+    if ( self.viewControllerOnWhichWeCalledBegin == self.currentContentViewController ) {
+        [self.currentContentViewController endAppearanceTransition];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
