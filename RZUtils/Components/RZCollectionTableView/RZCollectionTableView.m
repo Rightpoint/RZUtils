@@ -424,7 +424,7 @@ NSString *const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableViewL
 
 - (CGFloat)headerHeightForSection:(NSInteger)section
 {
-    CGFloat height = 0.f;
+    CGFloat height = self.headerHeight;
     if ( [self.layoutDelegate respondsToSelector:@selector(collectionView:rzTableLayout:heightForHeaderInSection:)] ) {
         NSNumber *cachedHeight = [self.headerHeightCache objectForKey:@(section)];
         if ( cachedHeight != nil ) {
