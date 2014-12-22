@@ -696,6 +696,10 @@ NSString *const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableViewL
                 else {
                     // decrement and continue until we hit the first one
                     currentRowIdx--;
+                    if ( currentRowIdx == startRow ) {
+                        resultPath = [self indexPathForRawRowIndex:currentRowIdx];
+                        found      = YES;
+                    }
                 }
             }
             else {
