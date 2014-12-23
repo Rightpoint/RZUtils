@@ -194,9 +194,9 @@ NSString *const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableViewL
         if ( firstRowIndexPath != nil ) {
             NSInteger       startRowIndex = firstRowIndexPath.item;
             for ( NSInteger s             = firstRowIndexPath.section; s < [self.collectionView numberOfSections] && !outOfBounds; s++ ) {
-                for ( NSInteger i = startRowIndex; i < [self.collectionView numberOfItemsInSection:s] && !outOfBounds; i++ ) {
+                for ( NSInteger i = startRowIndex; i < [self.collectionView numberOfItemsInSection:s]; i++ ) {
                     RZCollectionTableViewCellAttributes *rowAttributes = (RZCollectionTableViewCellAttributes *)[self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:s]];
-                    outOfBounds = !CGRectIntersectsRect(rowAttributes.frame, rect);
+                    outOfBounds = !CGRectIntersectsRect(rowAttributes.frame, rect) && CGRectGetMaxY(rowAttributes.frame) > CGRectGetMinY(rect);
                     if ( !outOfBounds ) {
                         [newAttributes addObject:rowAttributes];
                     }
