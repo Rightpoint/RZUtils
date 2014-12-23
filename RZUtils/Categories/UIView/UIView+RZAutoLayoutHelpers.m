@@ -530,8 +530,6 @@
 
     NSArray *constraints = @[top, left, bottom, right];
 
-    [self.superview addConstraints:constraints];
-
     return constraints;
 }
 
