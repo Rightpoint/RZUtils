@@ -760,6 +760,11 @@ NSString *const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableViewL
     }
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@ sectionInsets %@ rowSpacing %.1f rowHeight %.1f headerHeight %.1f footerHeight %.1f", [super description],
+            NSStringFromUIEdgeInsets(self.sectionInsets), self.rowSpacing, self.rowHeight, self.headerHeight, self.footerHeight];
+}
+
 @end
 
 @implementation RZCollectionTableViewCellAttributes
