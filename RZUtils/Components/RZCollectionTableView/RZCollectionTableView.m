@@ -230,8 +230,9 @@ NSString *const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableViewL
                     if ( !CGRectEqualToRect(footerFrame, CGRectZero) ) {
                         if ( CGRectIntersectsRect(footerFrame, rect) ) {
                             footerVisible = YES;
-                            [newAttributes addObject:[self layoutAttributesForSupplementaryViewOfKind:RZCollectionTableViewLayoutFooterView
-                                                                                          atIndexPath:[NSIndexPath indexPathForItem:RZCVTL_FOOTER_ITEM inSection:s]]];
+                            UICollectionViewLayoutAttributes *newAttrs = [self layoutAttributesForSupplementaryViewOfKind:RZCollectionTableViewLayoutFooterView
+                                                                                                                atIndexPath:[NSIndexPath indexPathForItem:RZCVTL_FOOTER_ITEM inSection:s]];
+                            [newAttributes addObject:newAttrs];
                         }
                     }
 
@@ -253,8 +254,9 @@ NSString *const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableViewL
                     if ( !CGRectEqualToRect(headerFrame, CGRectZero) ) {
                         if ( CGRectIntersectsRect(headerFrame, rect) ) {
                             headerVisible = YES;
-                            [newAttributes addObject:[self layoutAttributesForSupplementaryViewOfKind:RZCollectionTableViewLayoutHeaderView
-                                                                                          atIndexPath:[NSIndexPath indexPathForItem:RZCVTL_HEADER_ITEM inSection:s]]];
+                            UICollectionViewLayoutAttributes *newAttrs = [self layoutAttributesForSupplementaryViewOfKind:RZCollectionTableViewLayoutHeaderView
+                                                                                                                         atIndexPath:[NSIndexPath indexPathForItem:RZCVTL_HEADER_ITEM inSection:s]];
+                            [newAttributes addObject:newAttrs];
                         }
                     }
 
@@ -264,8 +266,9 @@ NSString *const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableViewL
                     if ( !CGRectEqualToRect(footerFrame, CGRectZero) ) {
                         if ( CGRectIntersectsRect(footerFrame, rect) ) {
                             footerVisible = YES;
-                            [newAttributes addObject:[self layoutAttributesForSupplementaryViewOfKind:RZCollectionTableViewLayoutFooterView
-                                                                                          atIndexPath:[NSIndexPath indexPathForItem:RZCVTL_FOOTER_ITEM inSection:s]]];
+                            UICollectionViewLayoutAttributes *newAttrs = [self layoutAttributesForSupplementaryViewOfKind:RZCollectionTableViewLayoutFooterView
+                                                                                                                         atIndexPath:[NSIndexPath indexPathForItem:RZCVTL_FOOTER_ITEM inSection:s]];
+                            [newAttributes addObject:newAttrs];
                         }
                     }
 
