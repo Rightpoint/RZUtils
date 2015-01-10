@@ -427,6 +427,21 @@
     return c;
 }
 
+- (NSLayoutConstraint *)rz_pinTopSpaceToSuperviewWithPaddingGreaterThanOrEqualTo:(CGFloat)padding
+{
+    NSAssert(self.superview != nil, @"Must have superview");
+    
+    NSLayoutConstraint *c = [NSLayoutConstraint constraintWithItem:self
+                                                         attribute:NSLayoutAttributeTop
+                                                         relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                            toItem:self.superview
+                                                         attribute:NSLayoutAttributeTop
+                                                        multiplier:1.0f
+                                                          constant:padding];
+    [self.superview addConstraint:c];
+    
+    return c;
+}
 
 - (NSLayoutConstraint *)rz_pinLeftSpaceToSuperviewWithPadding:(CGFloat)padding
 {
@@ -441,6 +456,22 @@
                                                           constant:padding];
     [self.superview addConstraint:c];
 
+    return c;
+}
+
+- (NSLayoutConstraint *)rz_pinLeftSpaceToSuperviewWithPaddingGreaterThanOrEqualTo:(CGFloat)padding
+{
+    NSAssert(self.superview != nil, @"Must have superview");
+    
+    NSLayoutConstraint *c = [NSLayoutConstraint constraintWithItem:self
+                                                         attribute:NSLayoutAttributeLeft
+                                                         relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                            toItem:self.superview
+                                                         attribute:NSLayoutAttributeLeft
+                                                        multiplier:1.0f
+                                                          constant:padding];
+    [self.superview addConstraint:c];
+    
     return c;
 }
 
@@ -460,6 +491,22 @@
     return c;
 }
 
+- (NSLayoutConstraint *)rz_pinBottomSpaceToSuperviewWithPaddingGreaterThanOrEqualTo:(CGFloat)padding
+{
+    NSAssert(self.superview != nil, @"Must have superview");
+    
+    NSLayoutConstraint *c = [NSLayoutConstraint constraintWithItem:self
+                                                         attribute:NSLayoutAttributeBottom
+                                                         relatedBy:NSLayoutRelationLessThanOrEqual
+                                                            toItem:self.superview
+                                                         attribute:NSLayoutAttributeBottom
+                                                        multiplier:1.0f
+                                                          constant:-padding];
+    [self.superview addConstraint:c];
+    
+    return c;
+}
+
 - (NSLayoutConstraint *)rz_pinRightSpaceToSuperviewWithPadding:(CGFloat)padding
 {
     NSAssert(self.superview != nil, @"Must have superview");
@@ -476,6 +523,21 @@
     return c;
 }
 
+- (NSLayoutConstraint *)rz_pinRightSpaceToSuperviewWithPaddingGreaterThanOrEqualTo:(CGFloat)padding
+{
+    NSAssert(self.superview != nil, @"Must have superview");
+    
+    NSLayoutConstraint *c = [NSLayoutConstraint constraintWithItem:self
+                                                         attribute:NSLayoutAttributeRight
+                                                         relatedBy:NSLayoutRelationLessThanOrEqual
+                                                            toItem:self
+                                                         attribute:NSLayoutAttributeRight
+                                                        multiplier:1.0f
+                                                          constant:-padding];
+    [self.superview addConstraint:c];
+    
+    return c;
+}
 
 - (NSLayoutConstraint *)rz_centerHorizontallyInContainer
 {
