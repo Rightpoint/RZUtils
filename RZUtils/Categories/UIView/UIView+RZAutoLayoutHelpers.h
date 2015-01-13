@@ -196,9 +196,9 @@
 - (NSLayoutConstraint *)rz_pinWidthToView:(UIView *)view multiplier:(CGFloat)multiplier;
 
 /**
- *  Pin the receiver's width to a constant.
+ *  Pin the receiver's height to a constant.
  *
- *  @param width Deisred height.
+ *  @param height Deisred height.
  *
  *  @return The pinned height constraint that was added.
  */
