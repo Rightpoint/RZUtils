@@ -138,12 +138,16 @@
 /**
  *  Return the receiver's only bottom-to-top constraint.
  *
+ *  @warning The receiver is expected to have only one bottom-to-top constraint.
+ *
  *  @return The constraint or nil.
  */
 - (NSLayoutConstraint *)rz_onlyBottomToTopConstraint;
 
 /**
  *  Return the receiver's only top-to-bottom constraint.
+ *
+ *  @warning The receiver is expected to have only one bottom-to-top constraint.
  *
  *  @return The constraint or nil.
  */
@@ -152,12 +156,16 @@
 /**
  *  Return the receiver's only left-to-right constraint.
  *
+ *  @warning The receiver is expected to have only one bottom-to-top constraint.
+ *
  *  @return The constraint or nil.
  */
 - (NSLayoutConstraint *)rz_onlyLeftToRightConstraint;
 
 /**
  *  Return the receiver's only right-to-left constraint.
+ *
+ *  @warning The receiver is expected to have only one bottom-to-top constraint.
  *
  *  @return The constraint or nil.
  */
