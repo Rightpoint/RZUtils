@@ -5,7 +5,7 @@
 
 // Copyright 2014 Raizlabs and other contributors
 // http://raizlabs.com/
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
 // "Software"), to deal in the Software without restriction, including
@@ -13,10 +13,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -155,9 +155,9 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
     if ( self.isTransitioning ) {
         [NSException raise:NSInternalInconsistencyException format:@"%@: Cannot start a transition while a transition is already in place.", [self class]];
     }
-
+    
     __weak __typeof(self) wself = self;
-
+    
     // We need to set isTransitioning to NO once the transition completes.
     // Then we run the passed-in completion block if it is not nil.
     void (^compoundCompletion)(void) = ^{
@@ -166,22 +166,22 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
             completion();
         }
     };
-
+    
     [self performBlockWhenViewLoaded:^{
         self.isTransitioning = YES;
         UIViewController *currentChild = wself.currentContentViewController;
-
+        
         if ( animated ) {
-
+            
             [currentChild beginAppearanceTransition:NO animated:YES];
-
+            
             [currentChild willMoveToParentViewController:nil];
             [wself addChildViewController:viewController];
             viewController.view.frame = [wself childContentContainerView].bounds;
             viewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-
+            
             [viewController beginAppearanceTransition:YES animated:YES];
-
+            
             RZSingleChildContainerTransitionContext *ctx = [[RZSingleChildContainerTransitionContext alloc] initWithContainerVC:wself
                                                                                                                          fromVC:currentChild
                                                                                                                            toVC:viewController
@@ -198,7 +198,7 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
             [currentChild.view removeFromSuperview];
             [currentChild removeFromParentViewController];
             [currentChild endAppearanceTransition];
-
+            
             [wself addChildViewController:viewController];
             viewController.view.frame = [wself childContentContainerView].bounds;
             viewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -278,7 +278,7 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
         [self.toVC endAppearanceTransition];
     }
     [self.containerVC setNeedsStatusBarAppearanceUpdate];
-
+    
     if ( self.completionBlock ) {
         self.completionBlock();
     }
@@ -316,6 +316,23 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
     return CGRectZero;
 }
 
+- (CGAffineTransform)targetTransform
+{
+    return CGAffineTransformIdentity;
+}
+
+- (UIView *)viewForKey:(NSString *)key
+{
+    if ( [key isEqualToString:UITransitionContextFromViewKey] ) {
+        return self.fromVC.view;
+    }
+    else if ( [key isEqualToString:UITransitionContextToViewKey] ) {
+        return self.toVC.view;
+    }
+    
+    return nil;
+}
+
 @end
 
 @implementation RZSingleChildContainerAlphaTransitioner
@@ -328,7 +345,7 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
     
     toViewController.view.alpha = 0.0f;
     [container addSubview:toViewController.view];
-
+    
     [UIView animateWithDuration:[self transitionDuration:transitionContext]
                           delay:0.0
                         options:0

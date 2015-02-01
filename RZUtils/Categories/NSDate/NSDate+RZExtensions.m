@@ -3,7 +3,7 @@
 //
 //  Created by Nicholas Bonatsakis on 7/3/13.
 
-//  Copyright (c) 2013 RaizLabs. 
+//  Copyright (c) 2013 RaizLabs.
 //
 
 #import "NSDate+RZExtensions.h"
@@ -47,7 +47,7 @@ static NSCalendar * RZCachedCurrentCalendar()
     }
     
     NSDateComponents *components = [cal components:(NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond) fromDate:self];
-
+    
     [components setHour:0];
     [components setMinute:0];
     [components setSecond:0];
@@ -74,7 +74,12 @@ static NSCalendar * RZCachedCurrentCalendar()
         [calendar setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     }
     
+#ifdef __IPHONE_8_0
+    unsigned unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth |  NSCalendarUnitDay;
+#else
     unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
+#endif
+    
     NSDateComponents* comp1 = [calendar components:unitFlags fromDate:self];
     NSDateComponents* comp2 = [calendar components:unitFlags fromDate:date];
     
@@ -152,12 +157,12 @@ static NSCalendar * RZCachedCurrentCalendar()
 
 - (id)copyWithZone:(NSZone *)zone {
     RZDateRange *copy = [[[self class] allocWithZone:zone] init];
-
+    
     if (copy != nil) {
         copy.startDate = self.startDate;
         copy.endDate = self.endDate;
     }
-
+    
     return copy;
 }
 
@@ -166,7 +171,7 @@ static NSCalendar * RZCachedCurrentCalendar()
         return YES;
     if (!other || ![[other class] isEqual:[self class]])
         return NO;
-
+    
     return [self isEqualToRange:other];
 }
 
