@@ -1,11 +1,14 @@
 language: objective-c
 before_install: 
     - export LANG=en_US.UTF-8
+    - chmod a+x coveralls.rb
     - rake install
 script: 
     - rake clean:tests
     - rake test
     - rake analyze
+after_success:
+  - ./coveralls.rb --extension m --exclude-folder Tests
 notifications:
     email:
         recipients:
