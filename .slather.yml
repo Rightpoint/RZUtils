@@ -1,0 +1,7 @@
+# .slather.yml
+
+coverage_service: coveralls
+xcodeproj: Tests/Pods/Pods.xcodeproj
+source_directory: RZUtils
+ignore:
+  - Tests/*
