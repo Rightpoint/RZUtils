@@ -8,7 +8,7 @@ script:
     - rake clean:tests
     - rake test
     - rake analyze
-after_success: slather
+after_success: bundle exec slather
 notifications:
     email:
         recipients:
