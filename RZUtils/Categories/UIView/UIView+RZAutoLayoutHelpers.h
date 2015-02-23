@@ -147,7 +147,7 @@
 /**
  *  Return the receiver's only top-to-bottom constraint.
  *
- *  @warning The receiver is expected to have only one bottom-to-top constraint.
+ *  @warning The receiver is expected to have only one top-to-bottom constraint.
  *
  *  @return The constraint or nil.
  */
@@ -156,7 +156,7 @@
 /**
  *  Return the receiver's only left-to-right constraint.
  *
- *  @warning The receiver is expected to have only one bottom-to-top constraint.
+ *  @warning The receiver is expected to have only one left-to-right constraint.
  *
  *  @return The constraint or nil.
  */
@@ -165,7 +165,7 @@
 /**
  *  Return the receiver's only right-to-left constraint.
  *
- *  @warning The receiver is expected to have only one bottom-to-top constraint.
+ *  @warning The receiver is expected to have only one right-to-left constraint.
  *
  *  @return The constraint or nil.
  */
