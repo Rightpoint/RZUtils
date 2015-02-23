@@ -685,6 +685,7 @@
 {
     NSParameterAssert(view);
     NSAssert(self.superview != nil, @"Must have superview");
+    NSAssert(view.superview != nil, @"Must have superview");
 
     NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
                                                                   attribute:NSLayoutAttributeTop
@@ -701,6 +702,7 @@
 {
     NSParameterAssert(view);
     NSAssert(self.superview != nil, @"Must have superview");
+    NSAssert(view.superview != nil, @"Must have superview");
 
     NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
                                                                   attribute:NSLayoutAttributeBottom
@@ -717,6 +719,7 @@
 {
     NSParameterAssert(view);
     NSAssert(self.superview != nil, @"Must have superview");
+    NSAssert(view.superview != nil, @"Must have superview");
 
     NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
                                                                   attribute:NSLayoutAttributeLeft
@@ -733,6 +736,7 @@
 {
     NSParameterAssert(view);
     NSAssert(self.superview != nil, @"Must have superview");
+    NSAssert(view.superview != nil, @"Must have superview");
 
     NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
                                                                   attribute:NSLayoutAttributeRight
