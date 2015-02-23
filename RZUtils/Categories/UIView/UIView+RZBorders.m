@@ -33,6 +33,11 @@
 
 static char kRZBorderViewKey;
 
+// A 3x scale is causing bad math which causes bad hairline views. For a quick fix we
+// are just having a scale of 2 as the max. In the future we should go about adding borders
+// by using "hairline" views instead of drawing.
+static const CGFloat kRZBorderMaxScale = 2.0f;
+
 @interface RZBorderedImageView : UIImageView
 
 + (NSMutableDictionary *)maskingImageCache;
@@ -119,7 +124,7 @@ static char kRZBorderViewKey;
     if (self)
     {
         self.userInteractionEnabled = NO;
-        self.contentScaleFactor = [[UIScreen mainScreen] scale];
+        self.contentScaleFactor = fminf(kRZBorderMaxScale, [[UIScreen mainScreen] scale]);
     }
     return self;
 }
@@ -181,7 +186,7 @@ static char kRZBorderViewKey;
 - (UIImage *)maskingImageForMask:(RZViewBorderMask)mask width:(CGFloat)width
 {
     // must round the width to nearest pixel for current screen scale
-    CGFloat scale = [[UIScreen mainScreen] scale];
+    CGFloat scale = fminf(kRZBorderMaxScale, [[UIScreen mainScreen] scale]);
     width = round(width * scale) / scale;
     
     NSString *cacheKey = [NSString stringWithFormat:@"%lu_%.2f", (unsigned long)mask, width];
@@ -191,7 +196,7 @@ static char kRZBorderViewKey;
         CGFloat imgDim = ceilf(width * 3);
         CGSize imgSize = CGSizeMake(imgDim, imgDim);
 
-        UIGraphicsBeginImageContextWithOptions(imgSize, NO, [[UIScreen mainScreen] scale]);
+        UIGraphicsBeginImageContextWithOptions(imgSize, NO, fminf(kRZBorderMaxScale, [[UIScreen mainScreen] scale]));
         
         CGContextRef ctx = UIGraphicsGetCurrentContext();
 
@@ -258,7 +263,7 @@ static char kRZBorderViewKey;
 - (UIImage *)maskingImageForCornerRadius:(CGFloat)radius width:(CGFloat)width
 {
     // must round the width to nearest pixel for current screen scale
-    CGFloat scale = [[UIScreen mainScreen] scale];
+    CGFloat scale = fminf(kRZBorderMaxScale, [[UIScreen mainScreen] scale]);
     width = round(width * scale) / scale;
     
     NSString *cacheKey = [NSString stringWithFormat:@"%.2f_%.2f", radius, width];
@@ -362,7 +367,7 @@ static char kRZBorderViewKey;
     {
         CGSize imgSize = maskImage.size;
         
-        UIGraphicsBeginImageContextWithOptions(imgSize, NO, [[UIScreen mainScreen] scale]);
+        UIGraphicsBeginImageContextWithOptions(imgSize, NO, fminf(kRZBorderMaxScale, [[UIScreen mainScreen] scale]));
         
         CGContextRef ctx = UIGraphicsGetCurrentContext();
         
