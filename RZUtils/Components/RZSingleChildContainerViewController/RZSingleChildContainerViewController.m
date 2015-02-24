@@ -297,27 +297,27 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
 
 - (UIViewController *)viewControllerForKey:(NSString *)key
 {
-    UIViewController *ret = nil;
+    UIViewController *viewController = nil;
     if ( [key isEqualToString:UITransitionContextFromViewControllerKey] ) {
-        ret = self.fromVC;
+        viewController = self.fromVC;
     }
     else if ( [key isEqualToString:UITransitionContextToViewControllerKey] ) {
-        ret = self.toVC;
+        viewController = self.toVC;
     }
     
-    return ret;
+    return viewController;
 }
 - (UIView *)viewForKey:(NSString *)key
 {
-    UIView *ret = nil;
+    UIView *view = nil;
     if ( [key isEqualToString:UITransitionContextFromViewKey] ) {
-        ret = self.fromVC.view;
+        view = self.fromVC.view;
     }
     else if ( [key isEqualToString:UITransitionContextToViewKey] ) {
-        ret = self.toVC.view;
+        view = self.toVC.view;
     }
 
-    return ret;
+    return view;
 }
 
 - (CGRect)initialFrameForViewController:(UIViewController *)vc

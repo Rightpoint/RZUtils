@@ -128,16 +128,14 @@ NSString * const RZLocationServiceErrorDomain = @"RZLocationServiceErrorDomain";
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
     // if the status is Authorized and we were waiting for authorization, start the timeout timer. 
-    if ((status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) && self.fetchLocInProgress)
-    {
+    if ( (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) && self.fetchLocInProgress ) {
         [self scheduleTimeout];
     }
 }
 
 - (void)scheduleTimeout
 {
-    if (!self.timeoutTimer)
-    {
+    if ( !self.timeoutTimer ) {
         self.timeoutTimer = [NSTimer timerWithTimeInterval:self.locationFetchTimeout
                                                              target:self
                                                            selector:@selector(locationUpdateTimeout)
