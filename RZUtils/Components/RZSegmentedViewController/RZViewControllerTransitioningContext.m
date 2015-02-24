@@ -32,8 +32,9 @@
 
 @interface RZViewControllerTransitioningContext ()
 
-@property (nonatomic, strong) NSDictionary* viewControllerKeys;
-@property (nonatomic, strong) UIView* contentContainerView;
+@property (copy, nonatomic) NSDictionary *viewControllerKeys;
+@property (copy, nonatomic) NSDictionary *viewForKeys;
+@property (strong, nonatomic) UIView *contentContainerView;
 
 @end
 
@@ -42,13 +43,15 @@
 - (instancetype)initWithFromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC containerView:(UIView *)containerView
 {
     self = [super init];
-    if (self)
-    {
-        NSAssert(fromVC != nil, @"A from ViewController is Required");
-        NSAssert(toVC != nil, @"A to ViewController is Required");
-        NSAssert(containerView != nil, @"A Container view is requires for any transitions");
-        self.viewControllerKeys = @{UITransitionContextFromViewControllerKey: fromVC,
-                                    UITransitionContextToViewControllerKey: toVC};
+    if ( self ) {
+        NSAssert( fromVC != nil, @"A from ViewController is Required" );
+        NSAssert( toVC != nil, @"A to ViewController is Required" );
+        NSAssert( containerView != nil, @"A Container view is requires for any transitions" );
+
+        self.viewControllerKeys = @{ UITransitionContextFromViewControllerKey: fromVC,
+                                     UITransitionContextToViewControllerKey: toVC };
+        self.viewForKeys = @{ UITransitionContextToViewKey : toVC.view,
+                              UITransitionContextFromViewKey : fromVC.view };
         self.contentContainerView = containerView;
         self.animated = YES;
     }
@@ -57,7 +60,12 @@
 
 - (UIViewController *)viewControllerForKey:(NSString *)key
 {
-    return [self.viewControllerKeys objectForKey:key];
+    return self.viewControllerKeys[key];
+}
+
+- (UIView *)viewForKey:(NSString *)key
+{
+    return self.viewForKeys[key];
 }
 
 - (UIView *)containerView
@@ -72,13 +80,11 @@
     [oldVC.view removeFromSuperview];
     [oldVC removeFromParentViewController];
     
-    if (self.parentViewController != nil)
-    {
+    if ( self.parentViewController != nil ) {
         [newVC didMoveToParentViewController:self.parentViewController];
     }
     
-    if (self.completionBlock)
-    {
+    if ( self.completionBlock ) {
         self.completionBlock(didComplete, self);
     }
 }
@@ -114,9 +120,16 @@
 {
     return self.contentContainerView.bounds;
 }
+
 - (CGRect)finalFrameForViewController:(UIViewController *)vc
 {
     return self.contentContainerView.bounds;
+}
+
+// We are just returing the identity for now.
+- (CGAffineTransform)targetTransform
+{
+    return CGAffineTransformIdentity;
 }
 
 @end

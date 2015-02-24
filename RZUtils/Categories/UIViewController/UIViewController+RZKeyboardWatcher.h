@@ -27,6 +27,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CGGeometry.h>
+#import <UIKit/UIKit.h>
 
 /**
  *  The animation block for the keyboard showing.  Called using a standard UIView animation matching the 

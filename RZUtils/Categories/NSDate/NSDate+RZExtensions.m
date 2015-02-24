@@ -74,7 +74,7 @@ static NSCalendar * RZCachedCurrentCalendar()
         [calendar setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     }
     
-    unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
+    unsigned unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth |  NSCalendarUnitDay;
     NSDateComponents* comp1 = [calendar components:unitFlags fromDate:self];
     NSDateComponents* comp2 = [calendar components:unitFlags fromDate:date];
     
