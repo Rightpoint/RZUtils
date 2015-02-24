@@ -382,7 +382,7 @@ static const CGFloat kRZBorderMaxScale = 2.0f;
         CGContextDrawImage(ctx, fullRect, [maskImage CGImage]);
 
         UIEdgeInsets stretchInsets = UIEdgeInsetsMake(floor(imgSize.height * 0.5), floor(imgSize.width * 0.5), floor(imgSize.height * 0.5), floor(imgSize.width * 0.5));
-
+        
         borderImage = [UIGraphicsGetImageFromCurrentImageContext() resizableImageWithCapInsets:stretchInsets
                                                                                   resizingMode:UIImageResizingModeStretch];
         UIGraphicsEndImageContext();
