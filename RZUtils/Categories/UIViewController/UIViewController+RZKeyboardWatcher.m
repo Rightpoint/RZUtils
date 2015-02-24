@@ -93,14 +93,13 @@ static void *kRZKeyboardAnimationsDelegateKey = &kRZKeyboardAnimationsDelegateKe
         UIViewAnimationCurve animationCurve = [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue];
         double animationDuration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
         
-        __weak RZKeyboardAnimationDelegate *wSelf = self;
         [UIView animateWithDuration:animationDuration
                               delay:0.0
                             options:( animationCurve << 16 )
                          animations:^{
-                             if ( wSelf.animationBlock != nil ) {
-                                 wSelf.animationBlock(keyboardVisible, keyboardFrame);
-                                 [wSelf.viewController.view layoutIfNeeded];
+                             if ( self.animationBlock != nil ) {
+                                 self.animationBlock(keyboardVisible, keyboardFrame);
+                                 [self.viewController.view layoutIfNeeded];
                              }
                          }
                          completion:^(BOOL finished) {
