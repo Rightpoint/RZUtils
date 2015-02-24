@@ -62,7 +62,7 @@
         }
         va_end(argumentList);
     }
-    return [[NSAttributedString alloc] initWithAttributedString:string];
+    return [[[self class] alloc] initWithAttributedString:string];
 }
 
 @end

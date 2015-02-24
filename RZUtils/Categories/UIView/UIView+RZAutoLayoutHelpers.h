@@ -107,6 +107,70 @@
  */
 - (NSLayoutConstraint*)rz_pinnedCenterYConstraint;
 
+/**
+ *  Return the receiver's bottom-to-top constraints, if any exist.
+ *
+ *  @return The constraints or nil.
+ */
+- (NSArray *)rz_bottomToTopConstraints;
+
+/**
+ *  Return the receiver's top-to-bottom constraints, if any exist.
+ *
+ *  @return The constraints or nil.
+ */
+- (NSArray *)rz_topToBottomConstraints;
+
+/**
+ *  Return the receiver's left-to-right constraints, if any exist.
+ *
+ *  @return The constraints or nil.
+ */
+- (NSArray *)rz_leftToRightConstraints;
+
+/**
+ *  Return the receiver's right-to-left constraints, if any exist.
+ *
+ *  @return The constraints or nil.
+ */
+- (NSArray *)rz_rightToLeftConstraints;
+
+/**
+ *  Return the receiver's only bottom-to-top constraint.
+ *
+ *  @warning The receiver is expected to have only one bottom-to-top constraint.
+ *
+ *  @return The constraint or nil.
+ */
+- (NSLayoutConstraint *)rz_onlyBottomToTopConstraint;
+
+/**
+ *  Return the receiver's only top-to-bottom constraint.
+ *
+ *  @warning The receiver is expected to have only one top-to-bottom constraint.
+ *
+ *  @return The constraint or nil.
+ */
+- (NSLayoutConstraint *)rz_onlyTopToBottomConstraint;
+
+/**
+ *  Return the receiver's only left-to-right constraint.
+ *
+ *  @warning The receiver is expected to have only one left-to-right constraint.
+ *
+ *  @return The constraint or nil.
+ */
+- (NSLayoutConstraint *)rz_onlyLeftToRightConstraint;
+
+/**
+ *  Return the receiver's only right-to-left constraint.
+ *
+ *  @warning The receiver is expected to have only one right-to-left constraint.
+ *
+ *  @return The constraint or nil.
+ */
+- (NSLayoutConstraint *)rz_onlyRightToLeftConstraint;
+
 /** @name Constraint Creation */
 
 /**
@@ -140,9 +204,9 @@
 - (NSLayoutConstraint *)rz_pinWidthToView:(UIView *)view multiplier:(CGFloat)multiplier;
 
 /**
- *  Pin the receiver's width to a constant.
+ *  Pin the receiver's height to a constant.
  *
- *  @param width Deisred height.
+ *  @param height Deisred height.
  *
  *  @return The pinned height constraint that was added.
  */
@@ -190,6 +254,17 @@
 - (NSLayoutConstraint *)rz_pinTopSpaceToSuperviewWithPadding:(CGFloat)padding;
 
 /**
+ *  Pin the receiver's top space to its superview's top with a mimumum amount of padding.
+ *
+ *  @param padding The mimumum amount of padding between the top of the receiver and the superview.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The constraint that was added.
+ */
+- (NSLayoutConstraint *)rz_pinTopSpaceToSuperviewWithPaddingGreaterThanOrEqualTo:(CGFloat)padding;
+
+/**
  *  Pin the receiver's left space to its superview's left side with a fixed amount of padding.
  *
  *  @param padding The amount of padding between the left side of the receiver and the superview.
@@ -199,6 +274,17 @@
  *  @return The constraint that was added.
  */
 - (NSLayoutConstraint *)rz_pinLeftSpaceToSuperviewWithPadding:(CGFloat)padding;
+
+/**
+ *  Pin the receiver's left space to its superview's left side with a mimumum amount of padding.
+ *
+ *  @param padding The minimum amount of padding between the left side of the receiver and the superview.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The constraint that was added.
+ */
+- (NSLayoutConstraint *)rz_pinLeftSpaceToSuperviewWithPaddingGreaterThanOrEqualTo:(CGFloat)padding;
 
 /**
  *  Pin the receiver's bottom space to its superview's bottom with a fixed amount of padding.
@@ -212,6 +298,17 @@
 - (NSLayoutConstraint *)rz_pinBottomSpaceToSuperviewWithPadding:(CGFloat)padding;
 
 /**
+ *  Pin the receiver's bottom space to its superview's bottom with with a mimumum amount of padding.
+ *
+ *  @param padding The minumum amount of padding between the bottom of the receiver and the superview.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The constraint that was added.
+ */
+- (NSLayoutConstraint *)rz_pinBottomSpaceToSuperviewWithPaddingGreaterThanOrEqualTo:(CGFloat)padding;
+
+/**
  *  Pin the receiver's right space to its superview's right side with a fixed amount of padding.
  *
  *  @param padding The amount of padding between the right side of the receiver and the superview.
@@ -221,6 +318,73 @@
  *  @return The constraint that was added.
  */
 - (NSLayoutConstraint *)rz_pinRightSpaceToSuperviewWithPadding:(CGFloat)padding;
+
+/**
+ *  Pin the receiver's right space to its superview's right side with a mimumum amount of padding.
+ *
+ *  @param padding The minimum amount of padding between the right side of the receiver and the superview.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The constraint that was added.
+ */
+- (NSLayoutConstraint *)rz_pinRightSpaceToSuperviewWithPaddingGreaterThanOrEqualTo:(CGFloat)padding;
+
+/**
+ *  Attach the bottom of the receiver to the top of the given view with a
+ *  fixed amount of padding.
+ *
+ *  @param view    The view that the receiver will be on top of.
+ *  @param padding The amount of padding between the bottom of the receiver
+ *                 and the top of @c view.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The bottom-to-top constraint that was added.
+ */
+- (NSLayoutConstraint *)rz_attachBottomToTopOfView:(UIView *)view withPadding:(CGFloat)padding;
+
+/**
+ *  Attach the top of the receiver to the bottom of the given view with a
+ *  fixed amount of padding.
+ *
+ *  @param view    The view that the receiver will be below.
+ *  @param padding The amount of padding between the top of the receiver
+ *                 and the bottom of @c view.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The top-to-bottom constraint that was added.
+ */
+- (NSLayoutConstraint *)rz_attachTopToBottomOfView:(UIView *)view withPadding:(CGFloat)padding;
+
+/**
+ *  Attach the left side of the receiver to the right of the given view with a
+ *  fixed amount of padding.
+ *
+ *  @param view    The view that the receiver will be to the right of.
+ *  @param padding The amount of padding between the left side of the receiver
+ *                 and the right of @c view.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The left-to-right constraint that was added.
+ */
+- (NSLayoutConstraint *)rz_attachLeftToRightOfView:(UIView *)view withPadding:(CGFloat)padding;
+
+/**
+ *  Attach the right side of the receiver to the left of the given view with a
+ *  fixed amount of padding.
+ *
+ *  @param view    The view that the receiver will be to the left of.
+ *  @param padding The amount of padding between the right side of the receiver
+ *                 and the left of @c view.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The right-to-left constraint that was added.
+ */
+- (NSLayoutConstraint *)rz_attachRightToLeftOfView:(UIView *)view withPadding:(CGFloat)padding;
 
 /**
  *  Pin all sides of the receiver to its superview's sides with fixed insets.
