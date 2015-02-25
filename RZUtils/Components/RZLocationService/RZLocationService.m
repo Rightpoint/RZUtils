@@ -6,7 +6,7 @@
 
 // Copyright 2014 Raizlabs and other contributors
 // http://raizlabs.com/
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
 // "Software"), to deal in the Software without restriction, including
@@ -14,10 +14,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -57,7 +57,7 @@ NSString * const RZLocationServiceErrorDomain = @"RZLocationServiceErrorDomain";
     dispatch_once(&onceToken, ^{
         shared = [[RZLocationService alloc] init];
     });
-    
+
     return shared;
 }
 
@@ -74,7 +74,7 @@ NSString * const RZLocationServiceErrorDomain = @"RZLocationServiceErrorDomain";
         _successBlocks = [NSMutableArray array];
         _errorBlocks = [NSMutableArray array];
         _fetchLocInProgress = NO;
-    
+
         _locationFetchTimeout = kRZLDefaultUpdateTimeout;
         _desiredAccuracyMeters = kRZLAcceptableAccuracyMeters;
     }
@@ -88,61 +88,61 @@ NSString * const RZLocationServiceErrorDomain = @"RZLocationServiceErrorDomain";
 }
 
 - (void)locationWithCompletion:(RZLocationServiceSuccessBlock)successBlock
-                               error:(RZLocationServiceErrorBlock)errorBlock
+                         error:(RZLocationServiceErrorBlock)errorBlock
 {
-    if ([self locationServicesEnabled])
+    if ( ![CLLocationManager locationServicesEnabled] )
     {
-        // if we're already waiting for a fetch and we get called again, just add the blocks.
-        [self.successBlocks addObject:[successBlock copy]];
-        [self.errorBlocks addObject:[errorBlock copy]];
-        
-        if (!self.fetchLocInProgress)
-        {
-            self.updateAtempts = 0;
-            self.fetchLocInProgress = YES;
-            self.bestEffortAtLocation = nil;
-            [self.locationManager startUpdatingLocation];
-            
-            // Only schedule the timer if we are NOT waiting for authorization
-            if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusNotDetermined)
-            {
-                [self scheduleTimeout];
-            }
+        NSError *err = [NSError errorWithDomain:@"CLLocationErrorDomain" code:1 userInfo:@{ NSLocalizedDescriptionKey : @"Location services are not enabled"}];
+        for ( RZLocationServiceErrorBlock block in self.errorBlocks ) {
+            block(err);
         }
+        [self resetBlocks];
+        return;
     }
-    else
-    {
-        NSError *err = [NSError errorWithDomain:RZLocationServiceErrorDomain
-                                           code:RZLocationServiceErrorNotEnabled
-                                       userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Location services are not enabled.", nil)}];
-        errorBlock(err);
-    }
-}
 
-- (BOOL)locationServicesEnabled
-{
-    return ( ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedAlways || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse) || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined)
-            && [CLLocationManager locationServicesEnabled];
+    if ( [CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined ) {
+        [self.locationManager requestWhenInUseAuthorization];
+    }
+
+    [self.successBlocks addObject:[successBlock copy]];
+    [self.errorBlocks addObject:[errorBlock copy]];
+
+    if ( self.fetchLocInProgress ) {
+        return;
+    }
+
+    self.updateAtempts = 0;
+    self.fetchLocInProgress = YES;
+    self.bestEffortAtLocation = nil;
+    [self.locationManager startUpdatingLocation];
+
+    // Only schedule the timer if we are NOT waiting for authorization
+    if ( [CLLocationManager authorizationStatus] != kCLAuthorizationStatusNotDetermined )
+    {
+        [self performSelector:@selector(locationUpdateTimeout) withObject:nil afterDelay:kRZLDefaultUpdateTimeout];
+    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
-    // if the status is Authorized and we were waiting for authorization, start the timeout timer. 
-    if ( (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) && self.fetchLocInProgress ) {
-        [self scheduleTimeout];
+    // if the status is Authorized and we were waiting for authorization, start the timeout timer.
+    if ( (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) && self.fetchLocInProgress)
+    {
+        [self performSelector:@selector(locationUpdateTimeout) withObject:nil afterDelay:kRZLDefaultUpdateTimeout];
     }
 }
 
 - (void)scheduleTimeout
 {
-    if ( !self.timeoutTimer ) {
+    if (!self.timeoutTimer)
+    {
         self.timeoutTimer = [NSTimer timerWithTimeInterval:self.locationFetchTimeout
-                                                             target:self
-                                                           selector:@selector(locationUpdateTimeout)
-                                                           userInfo:nil
-                                                            repeats:NO];
+                                                    target:self
+                                                  selector:@selector(locationUpdateTimeout)
+                                                  userInfo:nil
+                                                   repeats:NO];
         [[NSRunLoop currentRunLoop] addTimer:self.timeoutTimer forMode:NSRunLoopCommonModes];
-        
+
     }
 }
 
@@ -158,7 +158,7 @@ NSString * const RZLocationServiceErrorDomain = @"RZLocationServiceErrorDomain";
 {
     self.updateAtempts++;
     CLLocation* newLocation = [locations lastObject];
-        
+
     // test the age of the location measurement to determine if the measurement is cached
     // in most cases you will not want to rely on cached measurements
     NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
@@ -166,19 +166,19 @@ NSString * const RZLocationServiceErrorDomain = @"RZLocationServiceErrorDomain";
     {
         return;
     }
-    
+
     // test that the horizontal accuracy does not indicate an invalid measurement
     if (newLocation.horizontalAccuracy < 0)
     {
         return;
     }
-    
+
     // test the measurement to see if it is more accurate than the previous measurement
     if (self.bestEffortAtLocation == nil || self.bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy)
     {
         // store the location as the "best effort"
         self.bestEffortAtLocation = newLocation;
-        
+
         // test the measurement to see if it meets the desired accuracy
         //
         // IMPORTANT!!! kCLLocationAccuracyBest should not be used for comparison with location coordinate or altitidue
@@ -219,7 +219,7 @@ NSString * const RZLocationServiceErrorDomain = @"RZLocationServiceErrorDomain";
         NSError* error = [NSError errorWithDomain:RZLocationServiceErrorDomain
                                              code:RZLocationServiceErrorTimeout
                                          userInfo:@{NSLocalizedDescriptionKey : @"Timed out waiting for location."}];
-        
+
         [self locationManager:self.locationManager didFailWithError:error];
     }
 }
@@ -245,27 +245,27 @@ NSString * const RZLocationServiceErrorDomain = @"RZLocationServiceErrorDomain";
 #pragma mark - Geocoding
 
 - (void)placemarkAtCurrentLocationWithCompletion:(RZLocationServiceSuccessBlock)successBlock
-                                                 error:(RZLocationServiceErrorBlock)errorBlock
+                                           error:(RZLocationServiceErrorBlock)errorBlock
 {
     __weak RZLocationService *weakSelf = self;
     [self locationWithCompletion:^(id result) {
         [weakSelf.geocoder reverseGeocodeLocation:result
-                            completionHandler:^(NSArray *placemarks, NSError *error) {
-                                if (error && errorBlock)
-                                {
-                                    errorBlock(error);
-                                }
-                                else
-                                {
-                                    CLPlacemark *placemark = placemarks.count > 1 ? placemarks[0] : nil;
-                                    weakSelf.lastPlacemark = placemark;
-                                    
-                                    if (successBlock)
+                                completionHandler:^(NSArray *placemarks, NSError *error) {
+                                    if ( error && errorBlock )
                                     {
-                                        successBlock(placemark);
+                                        errorBlock(error);
                                     }
-                                }
-                            }];
+                                    else
+                                    {
+                                        CLPlacemark *placemark = placemarks.count > 1 ? placemarks[0] : nil;
+                                        weakSelf.lastPlacemark = placemark;
+
+                                        if (successBlock)
+                                        {
+                                            successBlock(placemark);
+                                        }
+                                    }
+                                }];
     } error:^(NSError *error) {
         if (errorBlock)
         {
