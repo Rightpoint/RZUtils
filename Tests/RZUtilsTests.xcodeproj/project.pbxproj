@@ -7,52 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		142C60881AA2338100A89522 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 142C607D1AA2338100A89522 /* AppDelegate.m */; };
-		142C60891AA2338100A89522 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 142C607F1AA2338100A89522 /* LaunchScreen.xib */; };
-		142C608A1AA2338100A89522 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 142C60811AA2338100A89522 /* Main.storyboard */; };
-		142C608B1AA2338100A89522 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 142C60831AA2338100A89522 /* Images.xcassets */; };
-		142C608C1AA2338100A89522 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 142C60841AA2338100A89522 /* Info.plist */; };
-		142C608D1AA2338100A89522 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 142C60851AA2338100A89522 /* main.m */; };
-		142C60911AA2338800A89522 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 142C608F1AA2338800A89522 /* Info.plist */; };
-		142C60931AA233F500A89522 /* RZAutoLayoutHelpersTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 14E90DFF1A931CB10085702C /* RZAutoLayoutHelpersTest.m */; };
 		7A175505AE684DAFB8613F72 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22BAB0697B95400AAAD3740C /* libPods.a */; };
 		9A8D4DF4196335CC00AFAB21 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8D4DF3196335CC00AFAB21 /* XCTest.framework */; };
 		9A8D4DF5196335CC00AFAB21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8D4DD1196335CC00AFAB21 /* Foundation.framework */; };
 		9A8D4DF6196335CC00AFAB21 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8D4DD5196335CC00AFAB21 /* UIKit.framework */; };
 		9A8D4DFE196335CC00AFAB21 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A8D4DFC196335CC00AFAB21 /* InfoPlist.strings */; };
 		9A8D4EB61963431900AFAB21 /* RZBlockKVOTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8D4EB51963431900AFAB21 /* RZBlockKVOTests.m */; };
-		A52E683CC9AFCD909DF352B2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22BAB0697B95400AAAD3740C /* libPods.a */; };
 		D4874DA119918C46003EEC4B /* RZAutoLayoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D4874DA019918C46003EEC4B /* RZAutoLayoutTests.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		142C606B1AA232DE00A89522 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9A8D4DC6196335CC00AFAB21 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 142C60511AA232DE00A89522;
-			remoteInfo = RZUtilsTestApp;
-		};
-		142C60971AA236AA00A89522 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9A8D4DC6196335CC00AFAB21 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9A8D4DF1196335CC00AFAB21;
-			remoteInfo = RZUtilsTests;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		142C60521AA232DE00A89522 /* RZUtilsTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RZUtilsTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		142C606A1AA232DE00A89522 /* RZUtilsTestAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RZUtilsTestAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		142C607C1AA2338100A89522 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		142C607D1AA2338100A89522 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		142C60801AA2338100A89522 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = LaunchScreen.xib; sourceTree = "<group>"; };
-		142C60821AA2338100A89522 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
-		142C60831AA2338100A89522 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		142C60841AA2338100A89522 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		142C60851AA2338100A89522 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		142C608F1AA2338800A89522 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14E90DFF1A931CB10085702C /* RZAutoLayoutHelpersTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZAutoLayoutHelpersTest.m; sourceTree = "<group>"; };
 		1CFF0789A9F774D9B6D7E13D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		22BAB0697B95400AAAD3740C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,21 +36,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		142C604F1AA232DE00A89522 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A52E683CC9AFCD909DF352B2 /* libPods.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		142C60671AA232DE00A89522 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		9A8D4DEF196335CC00AFAB21 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -101,36 +50,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		142C607A1AA2333300A89522 /* RZUtilsTestApp */ = {
-			isa = PBXGroup;
-			children = (
-				142C607C1AA2338100A89522 /* AppDelegate.h */,
-				142C607D1AA2338100A89522 /* AppDelegate.m */,
-				142C607E1AA2338100A89522 /* Base.lproj */,
-				142C60831AA2338100A89522 /* Images.xcassets */,
-				142C60841AA2338100A89522 /* Info.plist */,
-				142C60851AA2338100A89522 /* main.m */,
-			);
-			path = RZUtilsTestApp;
-			sourceTree = "<group>";
-		};
-		142C607B1AA2333C00A89522 /* RZUtilsTestAppTests */ = {
-			isa = PBXGroup;
-			children = (
-				142C608F1AA2338800A89522 /* Info.plist */,
-			);
-			path = RZUtilsTestAppTests;
-			sourceTree = "<group>";
-		};
-		142C607E1AA2338100A89522 /* Base.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				142C607F1AA2338100A89522 /* LaunchScreen.xib */,
-				142C60811AA2338100A89522 /* Main.storyboard */,
-			);
-			path = Base.lproj;
-			sourceTree = "<group>";
-		};
 		1D20370BBD690B491DE2ED6F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,8 +74,6 @@
 			isa = PBXGroup;
 			children = (
 				9A8D4DF2196335CC00AFAB21 /* RZUtilsTests.xctest */,
-				142C60521AA232DE00A89522 /* RZUtilsTestApp.app */,
-				142C606A1AA232DE00A89522 /* RZUtilsTestAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -180,8 +97,6 @@
 				14E90DFF1A931CB10085702C /* RZAutoLayoutHelpersTest.m */,
 				D4874DA019918C46003EEC4B /* RZAutoLayoutTests.m */,
 				9A8D4EB51963431900AFAB21 /* RZBlockKVOTests.m */,
-				142C607A1AA2333300A89522 /* RZUtilsTestApp */,
-				142C607B1AA2333C00A89522 /* RZUtilsTestAppTests */,
 				9A8D4DFA196335CC00AFAB21 /* Supporting Files */,
 			);
 			path = RZUtilsTests;
@@ -200,44 +115,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		142C60511AA232DE00A89522 /* RZUtilsTestApp */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 142C60781AA232DE00A89522 /* Build configuration list for PBXNativeTarget "RZUtilsTestApp" */;
-			buildPhases = (
-				2D1E8057A4342000020E647E /* Check Pods Manifest.lock */,
-				142C604E1AA232DE00A89522 /* Sources */,
-				142C604F1AA232DE00A89522 /* Frameworks */,
-				142C60501AA232DE00A89522 /* Resources */,
-				F955B99AD281C15BA511A2A4 /* Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				142C60981AA236AA00A89522 /* PBXTargetDependency */,
-			);
-			name = RZUtilsTestApp;
-			productName = RZUtilsTestApp;
-			productReference = 142C60521AA232DE00A89522 /* RZUtilsTestApp.app */;
-			productType = "com.apple.product-type.application";
-		};
-		142C60691AA232DE00A89522 /* RZUtilsTestAppTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 142C60791AA232DE00A89522 /* Build configuration list for PBXNativeTarget "RZUtilsTestAppTests" */;
-			buildPhases = (
-				142C60661AA232DE00A89522 /* Sources */,
-				142C60671AA232DE00A89522 /* Frameworks */,
-				142C60681AA232DE00A89522 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				142C606C1AA232DE00A89522 /* PBXTargetDependency */,
-			);
-			name = RZUtilsTestAppTests;
-			productName = RZUtilsTestAppTests;
-			productReference = 142C606A1AA232DE00A89522 /* RZUtilsTestAppTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		9A8D4DF1196335CC00AFAB21 /* RZUtilsTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9A8D4E08196335CC00AFAB21 /* Build configuration list for PBXNativeTarget "RZUtilsTests" */;
@@ -266,15 +143,6 @@
 				CLASSPREFIX = RZ;
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = Raizlabs;
-				TargetAttributes = {
-					142C60511AA232DE00A89522 = {
-						CreatedOnToolsVersion = 6.0.1;
-					};
-					142C60691AA232DE00A89522 = {
-						CreatedOnToolsVersion = 6.0.1;
-						TestTargetID = 142C60511AA232DE00A89522;
-					};
-				};
 			};
 			buildConfigurationList = 9A8D4DC9196335CC00AFAB21 /* Build configuration list for PBXProject "RZUtilsTests" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -290,36 +158,15 @@
 			projectRoot = "";
 			targets = (
 				9A8D4DF1196335CC00AFAB21 /* RZUtilsTests */,
-				142C60511AA232DE00A89522 /* RZUtilsTestApp */,
-				142C60691AA232DE00A89522 /* RZUtilsTestAppTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		142C60501AA232DE00A89522 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		142C60681AA232DE00A89522 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		9A8D4DF0196335CC00AFAB21 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				142C608A1AA2338100A89522 /* Main.storyboard in Resources */,
-				142C608B1AA2338100A89522 /* Images.xcassets in Resources */,
-				142C60911AA2338800A89522 /* Info.plist in Resources */,
-				142C60891AA2338100A89522 /* LaunchScreen.xib in Resources */,
-				142C608C1AA2338100A89522 /* Info.plist in Resources */,
 				9A8D4DFE196335CC00AFAB21 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -327,21 +174,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2D1E8057A4342000020E647E /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 		DB328C2D17B7432F9AFBFA98 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -372,45 +204,13 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		F955B99AD281C15BA511A2A4 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		142C604E1AA232DE00A89522 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		142C60661AA232DE00A89522 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				142C60931AA233F500A89522 /* RZAutoLayoutHelpersTest.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		9A8D4DEE196335CC00AFAB21 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				142C608D1AA2338100A89522 /* main.m in Sources */,
-				142C60881AA2338100A89522 /* AppDelegate.m in Sources */,
 				D4874DA119918C46003EEC4B /* RZAutoLayoutTests.m in Sources */,
 				9A8D4EB61963431900AFAB21 /* RZBlockKVOTests.m in Sources */,
 			);
@@ -418,36 +218,7 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		142C606C1AA232DE00A89522 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 142C60511AA232DE00A89522 /* RZUtilsTestApp */;
-			targetProxy = 142C606B1AA232DE00A89522 /* PBXContainerItemProxy */;
-		};
-		142C60981AA236AA00A89522 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9A8D4DF1196335CC00AFAB21 /* RZUtilsTests */;
-			targetProxy = 142C60971AA236AA00A89522 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
-		142C607F1AA2338100A89522 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				142C60801AA2338100A89522 /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-		142C60811AA2338100A89522 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				142C60821AA2338100A89522 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		9A8D4DFC196335CC00AFAB21 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -459,125 +230,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		142C60721AA232DE00A89522 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7F351ABFC52A252FD16A17B2 /* Pods.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = RZUtilsTests/RZUtilsTestApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		142C60731AA232DE00A89522 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1CFF0789A9F774D9B6D7E13D /* Pods.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = RZUtilsTests/RZUtilsTestApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		142C60741AA232DE00A89522 /* Enterprise-QA */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6C14FC1B7EEB65A025DD17AB /* Pods.enterprise-qa.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = RZUtilsTests/RZUtilsTestApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = "Enterprise-QA";
-		};
-		142C60751AA232DE00A89522 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = RZUtilsTests/RZUtilsTestApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RZUtilsTestApp.app/RZUtilsTestApp";
-			};
-			name = Debug;
-		};
-		142C60761AA232DE00A89522 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = RZUtilsTests/RZUtilsTestApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RZUtilsTestApp.app/RZUtilsTestApp";
-			};
-			name = Release;
-		};
-		142C60771AA232DE00A89522 /* Enterprise-QA */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = RZUtilsTests/RZUtilsTestApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RZUtilsTestApp.app/RZUtilsTestApp";
-			};
-			name = "Enterprise-QA";
-		};
 		9A8D4E01196335CC00AFAB21 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -746,26 +398,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		142C60781AA232DE00A89522 /* Build configuration list for PBXNativeTarget "RZUtilsTestApp" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				142C60721AA232DE00A89522 /* Debug */,
-				142C60731AA232DE00A89522 /* Release */,
-				142C60741AA232DE00A89522 /* Enterprise-QA */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		142C60791AA232DE00A89522 /* Build configuration list for PBXNativeTarget "RZUtilsTestAppTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				142C60751AA232DE00A89522 /* Debug */,
-				142C60761AA232DE00A89522 /* Release */,
-				142C60771AA232DE00A89522 /* Enterprise-QA */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		9A8D4DC9196335CC00AFAB21 /* Build configuration list for PBXProject "RZUtilsTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
