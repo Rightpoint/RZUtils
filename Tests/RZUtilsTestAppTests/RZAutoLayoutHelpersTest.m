@@ -1,7 +1,7 @@
 //
 //  RZAutoLayoutHelpersTest.m
 //
-//  Created by Sean O'Shea on 2/17/15.
+//  Created by Sean O'Shea on 3/1/15.
 
 // Copyright 2014 Raizlabs and other contributors
 // http://raizlabs.com/
@@ -38,7 +38,7 @@
 
 @end
 
-@interface RZAutoLayoutHelpersTest : XCTestCase
+@interface RZUtilsTestAppTests : XCTestCase
 
 @property (nonatomic) RZAutoLayoutHelpersContainerView *containerView;
 @property (nonatomic) UIView *testViewOne;
@@ -52,7 +52,7 @@ static CGFloat RZAutoLayoutHelpersTestCenterOffset      = 22.0f;
 
 static CGFloat RZAutoLayoutHelpersTestAllowableDelta    = 1.0f;
 
-@implementation RZAutoLayoutHelpersTest
+@implementation RZUtilsTestAppTests
 
 - (void)setUp
 {
@@ -110,7 +110,7 @@ static CGFloat RZAutoLayoutHelpersTestAllowableDelta    = 1.0f;
     XCTAssert([self roundedEquals:frameOne.origin.y valueTwo:375.0f]);
     XCTAssert([self roundedEquals:frameOne.size.width valueTwo:250.0f]);
     XCTAssert([self roundedEquals:frameOne.size.height valueTwo:250.0f]);
-
+    
     XCTAssert([self roundedEquals:CGRectGetMidX(frameOne) valueTwo:500.0f]);
     XCTAssert([self roundedEquals:CGRectGetMidY(frameOne) valueTwo:500.0f]);
     
@@ -133,7 +133,7 @@ static CGFloat RZAutoLayoutHelpersTestAllowableDelta    = 1.0f;
     [self.testViewTwo rz_centerVerticallyInContainerWithOffset:RZAutoLayoutHelpersTestCenterOffset];
     
     [self forceConstraintsEvaluation];
-
+    
     XCTAssert([self.testViewOne rz_pinnedCenterXConstraint] != nil);
     XCTAssert([self.testViewOne rz_pinnedCenterYConstraint] != nil);
     XCTAssert([self.testViewTwo rz_pinnedCenterXConstraint] != nil);
@@ -189,9 +189,9 @@ static CGFloat RZAutoLayoutHelpersTestAllowableDelta    = 1.0f;
     XCTAssert([self roundedEquals:frameOne.origin.y valueTwo:0.0f]);
     XCTAssert([self roundedEquals:frameOne.size.width valueTwo:RZAutoLayoutHelpersTestContainerWidth]);
     XCTAssert([self roundedEquals:frameOne.size.height valueTwo:RZAutoLayoutHelpersTestContainerHeight]);
-
+    
     CGRect frameTwo = self.testViewTwo.frame;
-
+    
     XCTAssert([self roundedEquals:frameTwo.origin.x valueTwo:17.0f]);
     XCTAssert([self roundedEquals:frameTwo.origin.y valueTwo:21.0f]);
     XCTAssert([self roundedEquals:frameTwo.size.width valueTwo:962.0f]);

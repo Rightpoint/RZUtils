@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		14D21D6F1AA316CA000765B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D21D6E1AA316CA000765B6 /* main.m */; };
-		14D21D721AA316CA000765B6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D21D711AA316CA000765B6 /* AppDelegate.m */; };
+		14D21D721AA316CA000765B6 /* RZUtilsTestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D21D711AA316CA000765B6 /* RZUtilsTestAppDelegate.m */; };
 		14D21D781AA316CA000765B6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14D21D761AA316CA000765B6 /* Main.storyboard */; };
 		14D21D7A1AA316CA000765B6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14D21D791AA316CA000765B6 /* Images.xcassets */; };
 		14D21D7D1AA316CA000765B6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14D21D7B1AA316CA000765B6 /* LaunchScreen.xib */; };
-		14D21D891AA316CB000765B6 /* RZUtilsTestAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D21D881AA316CB000765B6 /* RZUtilsTestAppTests.m */; };
+		14D21D891AA316CB000765B6 /* RZAutoLayoutHelpersTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D21D881AA316CB000765B6 /* RZAutoLayoutHelpersTest.m */; };
 		7A175505AE684DAFB8613F72 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22BAB0697B95400AAAD3740C /* libPods.a */; };
 		9A8D4DF4196335CC00AFAB21 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8D4DF3196335CC00AFAB21 /* XCTest.framework */; };
 		9A8D4DF5196335CC00AFAB21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8D4DD1196335CC00AFAB21 /* Foundation.framework */; };
@@ -30,21 +30,27 @@
 			remoteGlobalIDString = 14D21D691AA316CA000765B6;
 			remoteInfo = RZUtilsTestApp;
 		};
+		14D21D931AA31A3F000765B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A8D4DC6196335CC00AFAB21 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9A8D4DF1196335CC00AFAB21;
+			remoteInfo = RZUtilsTests;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		14D21D6A1AA316CA000765B6 /* RZUtilsTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RZUtilsTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14D21D6D1AA316CA000765B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14D21D6E1AA316CA000765B6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		14D21D701AA316CA000765B6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		14D21D711AA316CA000765B6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		14D21D701AA316CA000765B6 /* RZUtilsTestAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZUtilsTestAppDelegate.h; sourceTree = "<group>"; };
+		14D21D711AA316CA000765B6 /* RZUtilsTestAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZUtilsTestAppDelegate.m; sourceTree = "<group>"; };
 		14D21D771AA316CA000765B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		14D21D791AA316CA000765B6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		14D21D7C1AA316CA000765B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		14D21D821AA316CA000765B6 /* RZUtilsTestAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RZUtilsTestAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		14D21D871AA316CB000765B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		14D21D881AA316CB000765B6 /* RZUtilsTestAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZUtilsTestAppTests.m; sourceTree = "<group>"; };
-		14E90DFF1A931CB10085702C /* RZAutoLayoutHelpersTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZAutoLayoutHelpersTest.m; sourceTree = "<group>"; };
+		14D21D881AA316CB000765B6 /* RZAutoLayoutHelpersTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZAutoLayoutHelpersTest.m; sourceTree = "<group>"; };
 		1CFF0789A9F774D9B6D7E13D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		22BAB0697B95400AAAD3740C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C14FC1B7EEB65A025DD17AB /* Pods.enterprise-qa.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods.enterprise-qa.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.enterprise-qa.xcconfig"; sourceTree = "<group>"; };
@@ -94,8 +100,8 @@
 		14D21D6B1AA316CA000765B6 /* RZUtilsTestApp */ = {
 			isa = PBXGroup;
 			children = (
-				14D21D701AA316CA000765B6 /* AppDelegate.h */,
-				14D21D711AA316CA000765B6 /* AppDelegate.m */,
+				14D21D701AA316CA000765B6 /* RZUtilsTestAppDelegate.h */,
+				14D21D711AA316CA000765B6 /* RZUtilsTestAppDelegate.m */,
 				14D21D761AA316CA000765B6 /* Main.storyboard */,
 				14D21D791AA316CA000765B6 /* Images.xcassets */,
 				14D21D7B1AA316CA000765B6 /* LaunchScreen.xib */,
@@ -116,7 +122,7 @@
 		14D21D851AA316CB000765B6 /* RZUtilsTestAppTests */ = {
 			isa = PBXGroup;
 			children = (
-				14D21D881AA316CB000765B6 /* RZUtilsTestAppTests.m */,
+				14D21D881AA316CB000765B6 /* RZAutoLayoutHelpersTest.m */,
 				14D21D861AA316CB000765B6 /* Supporting Files */,
 			);
 			path = RZUtilsTestAppTests;
@@ -178,7 +184,6 @@
 		9A8D4DF9196335CC00AFAB21 /* RZUtilsTests */ = {
 			isa = PBXGroup;
 			children = (
-				14E90DFF1A931CB10085702C /* RZAutoLayoutHelpersTest.m */,
 				D4874DA019918C46003EEC4B /* RZAutoLayoutTests.m */,
 				9A8D4EB51963431900AFAB21 /* RZBlockKVOTests.m */,
 				9A8D4DFA196335CC00AFAB21 /* Supporting Files */,
@@ -210,6 +215,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				14D21D941AA31A3F000765B6 /* PBXTargetDependency */,
 			);
 			name = RZUtilsTestApp;
 			productName = RZUtilsTestApp;
@@ -358,7 +364,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14D21D721AA316CA000765B6 /* AppDelegate.m in Sources */,
+				14D21D721AA316CA000765B6 /* RZUtilsTestAppDelegate.m in Sources */,
 				14D21D6F1AA316CA000765B6 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -367,7 +373,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14D21D891AA316CB000765B6 /* RZUtilsTestAppTests.m in Sources */,
+				14D21D891AA316CB000765B6 /* RZAutoLayoutHelpersTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,6 +393,11 @@
 			isa = PBXTargetDependency;
 			target = 14D21D691AA316CA000765B6 /* RZUtilsTestApp */;
 			targetProxy = 14D21D831AA316CB000765B6 /* PBXContainerItemProxy */;
+		};
+		14D21D941AA31A3F000765B6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9A8D4DF1196335CC00AFAB21 /* RZUtilsTests */;
+			targetProxy = 14D21D931AA31A3F000765B6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -420,6 +431,7 @@
 /* Begin XCBuildConfiguration section */
 		14D21D8B1AA316CB000765B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7F351ABFC52A252FD16A17B2 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -440,6 +452,7 @@
 		};
 		14D21D8C1AA316CB000765B6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1CFF0789A9F774D9B6D7E13D /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -456,6 +469,7 @@
 		};
 		14D21D8D1AA316CB000765B6 /* Enterprise-QA */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6C14FC1B7EEB65A025DD17AB /* Pods.enterprise-qa.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -472,6 +486,7 @@
 		};
 		14D21D8F1AA316CB000765B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7F351ABFC52A252FD16A17B2 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -496,6 +511,7 @@
 		};
 		14D21D901AA316CB000765B6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1CFF0789A9F774D9B6D7E13D /* Pods.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -516,6 +532,7 @@
 		};
 		14D21D911AA316CB000765B6 /* Enterprise-QA */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6C14FC1B7EEB65A025DD17AB /* Pods.enterprise-qa.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_WARN_UNREACHABLE_CODE = YES;
