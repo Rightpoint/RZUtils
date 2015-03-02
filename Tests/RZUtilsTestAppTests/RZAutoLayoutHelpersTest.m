@@ -30,11 +30,20 @@
 
 #import "UIView+RZAutoLayoutHelpers.h"
 
+static CGFloat RZAutoLayoutHelpersTestContainerWidth    = 1000.0f;
+static CGFloat RZAutoLayoutHelpersTestContainerHeight   = 1000.0f;
+static CGFloat RZAutoLayoutHelpersTestCenterOffset      = 22.0f;
+static CGFloat RZAutoLayoutHelpersTestAllowableDelta    = 0.5f;
+
 @interface RZAutoLayoutHelpersContainerView : UIView
 
 @end
 
 @implementation RZAutoLayoutHelpersContainerView
+
+- (CGSize)intrinsicContentSize {
+    return CGSizeMake(RZAutoLayoutHelpersTestContainerWidth, RZAutoLayoutHelpersTestContainerHeight);
+}
 
 @end
 
@@ -45,12 +54,6 @@
 @property (nonatomic) UIView *testViewTwo;
 
 @end
-
-static CGFloat RZAutoLayoutHelpersTestContainerWidth    = 1000.0f;
-static CGFloat RZAutoLayoutHelpersTestContainerHeight   = 1000.0f;
-static CGFloat RZAutoLayoutHelpersTestCenterOffset      = 22.0f;
-
-static CGFloat RZAutoLayoutHelpersTestAllowableDelta    = 1.0f;
 
 @implementation RZUtilsTestAppTests
 
