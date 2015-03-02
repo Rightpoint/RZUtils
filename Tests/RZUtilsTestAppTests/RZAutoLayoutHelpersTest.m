@@ -105,23 +105,23 @@ static CGFloat RZAutoLayoutHelpersTestAllowableDelta    = 1.0f;
     
     CGRect frameOne = self.testViewOne.frame;
     
-    XCTAssert([self roundedEquals:frameOne.origin.x valueTwo:375.0f]);
-    XCTAssert([self roundedEquals:frameOne.origin.y valueTwo:375.0f]);
-    XCTAssert([self roundedEquals:frameOne.size.width valueTwo:250.0f]);
-    XCTAssert([self roundedEquals:frameOne.size.height valueTwo:250.0f]);
+    XCTAssertEqualWithAccuracy(frameOne.origin.x, 375.0f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(frameOne.origin.y, 375.0f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(frameOne.size.width, 250.0f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(frameOne.size.height, 250.0f, RZAutoLayoutHelpersTestAllowableDelta);
     
-    XCTAssert([self roundedEquals:CGRectGetMidX(frameOne) valueTwo:500.0f]);
-    XCTAssert([self roundedEquals:CGRectGetMidY(frameOne) valueTwo:500.0f]);
+    XCTAssertEqualWithAccuracy(CGRectGetMidX(frameOne), 500.0f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(CGRectGetMidY(frameOne), 500.0f, RZAutoLayoutHelpersTestAllowableDelta);
     
     CGRect frameTwo = self.testViewTwo.frame;
     
-    XCTAssert([self roundedEquals:frameTwo.origin.x valueTwo:412.5f]);
-    XCTAssert([self roundedEquals:frameTwo.origin.y valueTwo:335.0f]);
-    XCTAssert([self roundedEquals:frameTwo.size.width valueTwo:175.0f]);
-    XCTAssert([self roundedEquals:frameTwo.size.height valueTwo:330.0f]);
+    XCTAssertEqualWithAccuracy(frameTwo.origin.x, 412.5f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(frameTwo.origin.y, 335.0f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(frameTwo.size.width, 175.0f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(frameTwo.size.height, 330.0f, RZAutoLayoutHelpersTestAllowableDelta);
     
-    XCTAssert([self roundedEquals:CGRectGetMidX(frameTwo) valueTwo:500.0f]);
-    XCTAssert([self roundedEquals:CGRectGetMidY(frameTwo) valueTwo:500.0f]);
+    XCTAssertEqualWithAccuracy(CGRectGetMidX(frameTwo), 500.0f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(CGRectGetMidY(frameTwo), 500.0f, RZAutoLayoutHelpersTestAllowableDelta);
 }
 
 - (void)testCenteringWithOffsetViews
@@ -140,23 +140,23 @@ static CGFloat RZAutoLayoutHelpersTestAllowableDelta    = 1.0f;
     
     CGRect frameOne = self.testViewOne.frame;
     
-    XCTAssert([self roundedEquals:frameOne.origin.x valueTwo:397.0f]);
-    XCTAssert([self roundedEquals:frameOne.origin.y valueTwo:397.0f]);
-    XCTAssert([self roundedEquals:frameOne.size.width valueTwo:250.0f]);
-    XCTAssert([self roundedEquals:frameOne.size.height valueTwo:250.0f]);
+    XCTAssertEqualWithAccuracy(frameOne.origin.x, 397.0f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(frameOne.origin.y, 397.0f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(frameOne.size.width, 250.0f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(frameOne.size.height, 250.0f, RZAutoLayoutHelpersTestAllowableDelta);
     
-    XCTAssert([self roundedEquals:CGRectGetMidX(frameOne) valueTwo:522.0f]);
-    XCTAssert([self roundedEquals:CGRectGetMidY(frameOne) valueTwo:522.0f]);
+    XCTAssertEqualWithAccuracy(CGRectGetMidX(frameOne), 522.0f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(CGRectGetMidY(frameOne), 522.0f, RZAutoLayoutHelpersTestAllowableDelta);
     
     CGRect frameTwo = self.testViewTwo.frame;
     
-    XCTAssert([self roundedEquals:frameTwo.origin.x valueTwo:434.5f]);
-    XCTAssert([self roundedEquals:frameTwo.origin.y valueTwo:357.0f]);
-    XCTAssert([self roundedEquals:frameTwo.size.width valueTwo:175.0f]);
-    XCTAssert([self roundedEquals:frameTwo.size.height valueTwo:330.0f]);
+    XCTAssertEqualWithAccuracy(frameTwo.origin.x, 434.5f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(frameTwo.origin.y, 357.0f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(frameTwo.size.width, 175.0f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(frameTwo.size.height, 330.0f, RZAutoLayoutHelpersTestAllowableDelta);
     
-    XCTAssert([self roundedEquals:CGRectGetMidX(frameTwo) valueTwo:522.0f]);
-    XCTAssert([self roundedEquals:CGRectGetMidY(frameTwo) valueTwo:522.0f]);
+    XCTAssertEqualWithAccuracy(CGRectGetMidX(frameTwo), 522.0f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(CGRectGetMidY(frameTwo), 522.0f, RZAutoLayoutHelpersTestAllowableDelta);
 }
 
 - (void)testPinningViews {
@@ -184,22 +184,19 @@ static CGFloat RZAutoLayoutHelpersTestAllowableDelta    = 1.0f;
     
     CGRect frameOne = self.testViewOne.frame;
     
-    XCTAssert([self roundedEquals:frameOne.origin.x valueTwo:0.0f]);
-    XCTAssert([self roundedEquals:frameOne.origin.y valueTwo:0.0f]);
-    XCTAssert([self roundedEquals:frameOne.size.width valueTwo:RZAutoLayoutHelpersTestContainerWidth]);
-    XCTAssert([self roundedEquals:frameOne.size.height valueTwo:RZAutoLayoutHelpersTestContainerHeight]);
+    XCTAssertEqualWithAccuracy(frameOne.origin.x, 0.0f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(frameOne.origin.y, 0.0f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(frameOne.size.width, RZAutoLayoutHelpersTestContainerWidth, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(frameOne.size.height, RZAutoLayoutHelpersTestContainerHeight, RZAutoLayoutHelpersTestAllowableDelta);
     
     CGRect frameTwo = self.testViewTwo.frame;
     
-    XCTAssert([self roundedEquals:frameTwo.origin.x valueTwo:17.0f]);
-    XCTAssert([self roundedEquals:frameTwo.origin.y valueTwo:21.0f]);
-    XCTAssert([self roundedEquals:frameTwo.size.width valueTwo:962.0f]);
-    XCTAssert([self roundedEquals:frameTwo.size.height valueTwo:962.0f]);
-}
-
-- (BOOL)roundedEquals:(CGFloat)valueOne valueTwo:(CGFloat)valueTwo {
-    // accommodates for rounding issues which happen when unit tests are run on an iPhone 6 Plus
-    return fabs((valueOne) - (valueTwo)) < RZAutoLayoutHelpersTestAllowableDelta;
+    XCTAssertEqualWithAccuracy(frameTwo.origin.x, 17.0f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(frameTwo.origin.y, 21.0f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(frameTwo.size.width, 962.0f, RZAutoLayoutHelpersTestAllowableDelta);
+    XCTAssertEqualWithAccuracy(frameTwo.size.height, 962.0f, RZAutoLayoutHelpersTestAllowableDelta);
+    
+    XCTAssertEqualWithAccuracy(frameTwo.origin.x, 17.0f, RZAutoLayoutHelpersTestAllowableDelta);
 }
 
 @end
