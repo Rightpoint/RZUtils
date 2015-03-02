@@ -86,7 +86,6 @@ static CGFloat RZAutoLayoutHelpersTestAllowableDelta    = 1.0f;
     for (UIView *subview in view.subviews) {
         [self forceConstraintsEvaluationForAllSubviewsOfView:subview];
     }
-    [view setNeedsLayout];
     [view layoutIfNeeded];
 }
 
