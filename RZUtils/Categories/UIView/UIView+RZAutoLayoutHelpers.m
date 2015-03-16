@@ -710,7 +710,7 @@
                                                                      toItem:view
                                                                   attribute:NSLayoutAttributeBottom
                                                                  multiplier:1.0f
-                                                                   constant:-padding];
+                                                                   constant:padding];
     [self.superview addConstraint:constraint];
     return constraint;
 }
