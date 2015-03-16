@@ -115,9 +115,9 @@ const NSTimeInterval kRZAccessibilityInvertColorsTransitionDuration = 0.2f;
         
         if ( accessibilityMaintainImageColors ) {
             
-            __weak typeof(self) weakSelf = self;
+            __weak __typeof(self) weakSelf = self;
             void (^accessibilityNotificationBlock)(NSNotification *note) = ^(NSNotification *note){
-                __strong typeof(self) strongSelf = weakSelf;
+                __strong __typeof(self) strongSelf = weakSelf;
                 [strongSelf rz_invertImageColorsForAccessibility];
             };
             
