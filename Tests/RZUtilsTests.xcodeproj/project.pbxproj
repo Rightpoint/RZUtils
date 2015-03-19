@@ -6,6 +6,21 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		14FB17091AA7CD95003FDDB8 /* RZUtilsAllTests */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 14FB170A1AA7CD95003FDDB8 /* Build configuration list for PBXAggregateTarget "RZUtilsAllTests" */;
+			buildPhases = (
+			);
+			dependencies = (
+				14FB170F1AA7CD9E003FDDB8 /* PBXTargetDependency */,
+				14FB17111AA7CD9E003FDDB8 /* PBXTargetDependency */,
+			);
+			name = RZUtilsAllTests;
+			productName = RZUtilsAllTests;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		14D21D6F1AA316CA000765B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D21D6E1AA316CA000765B6 /* main.m */; };
 		14D21D721AA316CA000765B6 /* RZUtilsTestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D21D711AA316CA000765B6 /* RZUtilsTestAppDelegate.m */; };
@@ -36,6 +51,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 9A8D4DF1196335CC00AFAB21;
 			remoteInfo = RZUtilsTests;
+		};
+		14FB170E1AA7CD9E003FDDB8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A8D4DC6196335CC00AFAB21 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9A8D4DF1196335CC00AFAB21;
+			remoteInfo = RZUtilsTests;
+		};
+		14FB17101AA7CD9E003FDDB8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A8D4DC6196335CC00AFAB21 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 14D21D811AA316CA000765B6;
+			remoteInfo = RZUtilsTestAppTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -276,6 +305,9 @@
 						CreatedOnToolsVersion = 6.0.1;
 						TestTargetID = 14D21D691AA316CA000765B6;
 					};
+					14FB17091AA7CD95003FDDB8 = {
+						CreatedOnToolsVersion = 6.0.1;
+					};
 				};
 			};
 			buildConfigurationList = 9A8D4DC9196335CC00AFAB21 /* Build configuration list for PBXProject "RZUtilsTests" */;
@@ -294,6 +326,7 @@
 				9A8D4DF1196335CC00AFAB21 /* RZUtilsTests */,
 				14D21D691AA316CA000765B6 /* RZUtilsTestApp */,
 				14D21D811AA316CA000765B6 /* RZUtilsTestAppTests */,
+				14FB17091AA7CD95003FDDB8 /* RZUtilsAllTests */,
 			);
 		};
 /* End PBXProject section */
@@ -398,6 +431,16 @@
 			isa = PBXTargetDependency;
 			target = 9A8D4DF1196335CC00AFAB21 /* RZUtilsTests */;
 			targetProxy = 14D21D931AA31A3F000765B6 /* PBXContainerItemProxy */;
+		};
+		14FB170F1AA7CD9E003FDDB8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9A8D4DF1196335CC00AFAB21 /* RZUtilsTests */;
+			targetProxy = 14FB170E1AA7CD9E003FDDB8 /* PBXContainerItemProxy */;
+		};
+		14FB17111AA7CD9E003FDDB8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 14D21D811AA316CA000765B6 /* RZUtilsTestAppTests */;
+			targetProxy = 14FB17101AA7CD9E003FDDB8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -548,6 +591,27 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RZUtilsTestApp.app/RZUtilsTestApp";
+			};
+			name = "Enterprise-QA";
+		};
+		14FB170B1AA7CD95003FDDB8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		14FB170C1AA7CD95003FDDB8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		14FB170D1AA7CD95003FDDB8 /* Enterprise-QA */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = "Enterprise-QA";
 		};
@@ -727,6 +791,7 @@
 				14D21D8D1AA316CB000765B6 /* Enterprise-QA */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		14D21D8E1AA316CB000765B6 /* Build configuration list for PBXNativeTarget "RZUtilsTestAppTests" */ = {
 			isa = XCConfigurationList;
@@ -734,6 +799,16 @@
 				14D21D8F1AA316CB000765B6 /* Debug */,
 				14D21D901AA316CB000765B6 /* Release */,
 				14D21D911AA316CB000765B6 /* Enterprise-QA */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		14FB170A1AA7CD95003FDDB8 /* Build configuration list for PBXAggregateTarget "RZUtilsAllTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				14FB170B1AA7CD95003FDDB8 /* Debug */,
+				14FB170C1AA7CD95003FDDB8 /* Release */,
+				14FB170D1AA7CD95003FDDB8 /* Enterprise-QA */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
