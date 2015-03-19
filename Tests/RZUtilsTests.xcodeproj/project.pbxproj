@@ -6,6 +6,21 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		14FB87F61ABB662E005ECA1D /* RZUtilsAllTests */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 14FB87FA1ABB662E005ECA1D /* Build configuration list for PBXAggregateTarget "RZUtilsAllTests" */;
+			buildPhases = (
+				14FB88011ABB6973005ECA1D /* ShellScript */,
+				14FB88021ABB6AAB005ECA1D /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = RZUtilsAllTests;
+			productName = RZUtilsAllTests;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		14D21D6F1AA316CA000765B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D21D6E1AA316CA000765B6 /* main.m */; };
 		14D21D721AA316CA000765B6 /* RZUtilsTestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D21D711AA316CA000765B6 /* RZUtilsTestAppDelegate.m */; };
@@ -276,6 +291,9 @@
 						CreatedOnToolsVersion = 6.0.1;
 						TestTargetID = 14D21D691AA316CA000765B6;
 					};
+					14FB87F61ABB662E005ECA1D = {
+						CreatedOnToolsVersion = 6.0.1;
+					};
 				};
 			};
 			buildConfigurationList = 9A8D4DC9196335CC00AFAB21 /* Build configuration list for PBXProject "RZUtilsTests" */;
@@ -294,6 +312,7 @@
 				9A8D4DF1196335CC00AFAB21 /* RZUtilsTests */,
 				14D21D691AA316CA000765B6 /* RZUtilsTestApp */,
 				14D21D811AA316CA000765B6 /* RZUtilsTestAppTests */,
+				14FB87F61ABB662E005ECA1D /* RZUtilsAllTests */,
 			);
 		};
 /* End PBXProject section */
@@ -327,6 +346,32 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		14FB88011ABB6973005ECA1D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "xctool -workspace RZUtilsTests.xcworkspace -scheme RZUtilsTests -sdk iphonesimulator test";
+		};
+		14FB88021ABB6AAB005ECA1D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "xctool -workspace RZUtilsTests.xcworkspace -scheme RZUtilsTestApp -sdk iphonesimulator test";
+		};
 		DB328C2D17B7432F9AFBFA98 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -551,6 +596,27 @@
 			};
 			name = "Enterprise-QA";
 		};
+		14FB87F71ABB662E005ECA1D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		14FB87F81ABB662E005ECA1D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		14FB87F91ABB662E005ECA1D /* Enterprise-QA */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = "Enterprise-QA";
+		};
 		9A8D4E01196335CC00AFAB21 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -738,6 +804,15 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		14FB87FA1ABB662E005ECA1D /* Build configuration list for PBXAggregateTarget "RZUtilsAllTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				14FB87F71ABB662E005ECA1D /* Debug */,
+				14FB87F81ABB662E005ECA1D /* Release */,
+				14FB87F91ABB662E005ECA1D /* Enterprise-QA */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		9A8D4DC9196335CC00AFAB21 /* Build configuration list for PBXProject "RZUtilsTests" */ = {
 			isa = XCConfigurationList;

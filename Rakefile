@@ -1,7 +1,7 @@
 
 TEST_PROJ_PATH="Tests/RZUtilsTests.xcodeproj"
 TEST_WORKSPACE_PATH="Tests/RZUtilsTests.xcworkspace"
-TEST_SCHEME="RZUtilsTestApp"
+TEST_SCHEME="RZUtilsAllTests"
 
 #
 # Install
@@ -32,7 +32,7 @@ end
 #
 
 task :test do
-  sh("xctool -workspace '#{TEST_WORKSPACE_PATH}' -scheme '#{TEST_SCHEME}' -sdk iphonesimulator build test") rescue nil
+  sh("xctool -workspace '#{TEST_WORKSPACE_PATH}' -scheme '#{TEST_SCHEME}' -sdk iphonesimulator build") rescue nil
   exit $?.exitstatus
 end
 
