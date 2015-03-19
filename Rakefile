@@ -1,7 +1,7 @@
 
 TEST_PROJ_PATH="Tests/RZUtilsTests.xcodeproj"
 TEST_WORKSPACE_PATH="Tests/RZUtilsTests.xcworkspace"
-TEST_SCHEME="RZUtilsAllTests"
+TEST_SCHEME="RZUtilsTestApp"
 
 #
 # Install

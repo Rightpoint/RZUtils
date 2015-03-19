@@ -47,11 +47,35 @@ static CGFloat RZAutoLayoutHelpersTestAllowableDelta    = 0.5f;
 
 @end
 
+@interface RZTestViewOne : UIView
+
+@end
+
+@implementation RZTestViewOne
+
+- (CGSize)intrinsicContentSize {
+    return CGSizeMake(250.0f, 250.0f);
+}
+
+@end
+
+@interface RZTestViewTwo : UIView
+
+@end
+
+@implementation RZTestViewTwo
+
+- (CGSize)intrinsicContentSize {
+    return CGSizeMake(175.0f, 330.0f);
+}
+
+@end
+
 @interface RZUtilsTestAppTests : XCTestCase
 
 @property (nonatomic) RZAutoLayoutHelpersContainerView *containerView;
-@property (nonatomic) UIView *testViewOne;
-@property (nonatomic) UIView *testViewTwo;
+@property (nonatomic) RZTestViewOne *testViewOne;
+@property (nonatomic) RZTestViewTwo *testViewTwo;
 
 @end
 
@@ -63,12 +87,10 @@ static CGFloat RZAutoLayoutHelpersTestAllowableDelta    = 0.5f;
     
     self.containerView = [[RZAutoLayoutHelpersContainerView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, RZAutoLayoutHelpersTestContainerWidth, RZAutoLayoutHelpersTestContainerHeight)];
     self.containerView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.testViewOne = [[UIView alloc] init];
-    self.testViewTwo = [[UIView alloc] init];
+    self.testViewOne = [[RZTestViewOne alloc] init];
+    self.testViewTwo = [[RZTestViewTwo alloc] init];
     self.testViewOne.translatesAutoresizingMaskIntoConstraints = NO;
     self.testViewTwo.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.testViewOne rz_pinSizeTo:CGSizeMake(250.0f, 250.0f)];
-    [self.testViewTwo rz_pinSizeTo:CGSizeMake(175.0f, 330.0f)];
     
     [self.containerView addSubview:self.testViewOne];
     [self.containerView addSubview:self.testViewTwo];
