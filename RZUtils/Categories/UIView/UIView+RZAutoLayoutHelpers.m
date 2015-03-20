@@ -688,10 +688,10 @@
     NSAssert(view.superview != nil, @"Must have superview");
 
     NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
-                                                                  attribute:NSLayoutAttributeTop
+                                                                  attribute:NSLayoutAttributeBottom
                                                                   relatedBy:NSLayoutRelationEqual
                                                                      toItem:view
-                                                                  attribute:NSLayoutAttributeBottom
+                                                                  attribute:NSLayoutAttributeTop
                                                                  multiplier:1.0f
                                                                    constant:padding];
     [self.superview addConstraint:constraint];
@@ -705,12 +705,12 @@
     NSAssert(view.superview != nil, @"Must have superview");
 
     NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
-                                                                  attribute:NSLayoutAttributeBottom
+                                                                  attribute:NSLayoutAttributeTop
                                                                   relatedBy:NSLayoutRelationEqual
                                                                      toItem:view
-                                                                  attribute:NSLayoutAttributeTop
+                                                                  attribute:NSLayoutAttributeBottom
                                                                  multiplier:1.0f
-                                                                   constant:-padding];
+                                                                   constant:padding];
     [self.superview addConstraint:constraint];
     return constraint;
 }
