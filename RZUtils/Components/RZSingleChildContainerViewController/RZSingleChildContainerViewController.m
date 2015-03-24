@@ -45,6 +45,7 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
 
 @end
 
+
 // -------
 
 @interface RZSingleChildContainerViewController ()
@@ -55,7 +56,7 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
 
 @property (weak, nonatomic) UIViewController *viewControllerOnWhichWeCalledBegin;
 
-@property (copy, nonatomic) RZSingleChildContainerViewControllerCompletionBlock pendingCompletionBlock;
+@property (strong, nonatomic) NSMutableArray *presentationQueue;
 
 @end
 
@@ -166,10 +167,19 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
 - (void)setContentViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(RZSingleChildContainerViewControllerCompletionBlock)completion
 {
     if ( self.isTransitioning ) {
-        self.pendingCompletionBlock = completion;
+        if ( self.presentationQueue == nil ) {
+            self.presentationQueue = [[NSMutableArray alloc] init];
+        }
+        
+        RZSingleChildContainerViewControllerQueuedPresentation *queuedPresentation = [[RZSingleChildContainerViewControllerQueuedPresentation alloc] init];
+        queuedPresentation.viewController = viewController;
+        queuedPresentation.animated = animated;
+        queuedPresentation.completionBlock = completion;
+        
+        [self.presentationQueue addObject:queuedPresentation];
+        
         return;
     }
-
     __weak __typeof(self) wself = self;
 
     // We need to set isTransitioning to NO once the transition completes.
@@ -179,9 +189,10 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
         if ( completion ) {
             completion();
         }
-        if ( self.pendingCompletionBlock != nil ) {
-            self.pendingCompletionBlock();
-            self.pendingCompletionBlock = nil;
+        if ( self.presentationQueue != nil && self.presentationQueue.count > 0 ) {
+            RZSingleChildContainerViewControllerQueuedPresentation *queuedPresentation = [self.presentationQueue firstObject];
+            [self.presentationQueue removeObjectAtIndex:0];
+            [self setContentViewController:queuedPresentation.viewController animated:queuedPresentation.animated completion:queuedPresentation.completionBlock];
         }
     };
 
@@ -384,3 +395,9 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
 }
 
 @end
+
+@implementation RZSingleChildContainerViewControllerQueuedPresentation
+
+@end
+
+

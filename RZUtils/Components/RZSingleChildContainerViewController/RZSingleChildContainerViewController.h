@@ -81,3 +81,14 @@ typedef void (^RZSingleChildContainerViewControllerCompletionBlock)(void);
 - (UIView *)childContentContainerView;
 
 @end
+
+@interface RZSingleChildContainerViewControllerQueuedPresentation : NSObject
+
+@property (copy, nonatomic) RZSingleChildContainerViewControllerCompletionBlock completionBlock;
+@property (assign, nonatomic) BOOL animated;
+@property (strong, nonatomic) UIViewController *viewController;
+
+@end
+
+
+
