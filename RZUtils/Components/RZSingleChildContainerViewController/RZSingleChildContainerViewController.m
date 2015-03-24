@@ -176,8 +176,7 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
         
         return;
     }
-
-
+    
     // We need to set isTransitioning to NO once the transition completes.
     // Then we run the passed-in completion block if it is not nil.
     void (^compoundCompletion)(void) = ^{
