@@ -56,7 +56,7 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
 
 @property (weak, nonatomic) UIViewController *viewControllerOnWhichWeCalledBegin;
 
-@property (strong, nonatomic) NSMutableArray *presentationQueue;
+@property (copy, nonatomic) void(^queuedPresentationBlock)();
 
 @end
 
@@ -166,21 +166,17 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
 
 - (void)setContentViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(RZSingleChildContainerViewControllerCompletionBlock)completion
 {
+    __weak __typeof(self) weakSelf = self
+    ;
     if ( self.isTransitioning ) {
-        if ( self.presentationQueue == nil ) {
-            self.presentationQueue = [[NSMutableArray alloc] init];
-        }
-        
-        RZSingleChildContainerViewControllerQueuedPresentation *queuedPresentation = [[RZSingleChildContainerViewControllerQueuedPresentation alloc] init];
-        queuedPresentation.viewController = viewController;
-        queuedPresentation.animated = animated;
-        queuedPresentation.completionBlock = completion;
-        
-        [self.presentationQueue addObject:queuedPresentation];
+      
+        self.queuedPresentationBlock = ^{
+            [weakSelf setContentViewController:viewController animated:animated completion:completion];
+        };
         
         return;
     }
-    __weak __typeof(self) wself = self;
+
 
     // We need to set isTransitioning to NO once the transition completes.
     // Then we run the passed-in completion block if it is not nil.
@@ -189,33 +185,32 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
         if ( completion ) {
             completion();
         }
-        if ( self.presentationQueue != nil && self.presentationQueue.count > 0 ) {
-            RZSingleChildContainerViewControllerQueuedPresentation *queuedPresentation = [self.presentationQueue firstObject];
-            [self.presentationQueue removeObjectAtIndex:0];
-            [self setContentViewController:queuedPresentation.viewController animated:queuedPresentation.animated completion:queuedPresentation.completionBlock];
+        if ( self.queuedPresentationBlock != nil ) {
+            self.queuedPresentationBlock();
+            self.queuedPresentationBlock = nil;
         }
     };
 
     [self performBlockWhenViewLoaded:^{
         self.isTransitioning = YES;
-        UIViewController *currentChild = wself.currentContentViewController;
+        UIViewController *currentChild = weakSelf.currentContentViewController;
 
         if ( animated ) {
 
             [currentChild beginAppearanceTransition:NO animated:YES];
 
             [currentChild willMoveToParentViewController:nil];
-            [wself addChildViewController:viewController];
-            viewController.view.frame = [wself childContentContainerView].bounds;
+            [weakSelf addChildViewController:viewController];
+            viewController.view.frame = [weakSelf childContentContainerView].bounds;
             viewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
             [viewController beginAppearanceTransition:YES animated:YES];
 
-            RZSingleChildContainerTransitionContext *ctx = [[RZSingleChildContainerTransitionContext alloc] initWithContainerVC:wself
+            RZSingleChildContainerTransitionContext *ctx = [[RZSingleChildContainerTransitionContext alloc] initWithContainerVC:weakSelf
                                                                                                                          fromVC:currentChild
                                                                                                                            toVC:viewController
                                                                                                                      completion:compoundCompletion];
-            [wself.contentVCAnimatedTransition animateTransition:ctx];
+            [weakSelf.contentVCAnimatedTransition animateTransition:ctx];
         }
         else {
             
@@ -228,14 +223,14 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
             [currentChild removeFromParentViewController];
             [currentChild endAppearanceTransition];
 
-            [wself addChildViewController:viewController];
-            viewController.view.frame = [wself childContentContainerView].bounds;
+            [weakSelf addChildViewController:viewController];
+            viewController.view.frame = [weakSelf childContentContainerView].bounds;
             viewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
             if ( hasWindow ) {
                 [viewController beginAppearanceTransition:YES animated:NO];
             }
-            [[wself childContentContainerView] addSubview:viewController.view];
-            [viewController didMoveToParentViewController:wself];
+            [[weakSelf childContentContainerView] addSubview:viewController.view];
+            [viewController didMoveToParentViewController:weakSelf];
             if ( hasWindow ) {
                 [viewController endAppearanceTransition];
             }
@@ -395,9 +390,3 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
 }
 
 @end
-
-@implementation RZSingleChildContainerViewControllerQueuedPresentation
-
-@end
-
-
