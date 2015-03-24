@@ -55,6 +55,8 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
 
 @property (weak, nonatomic) UIViewController *viewControllerOnWhichWeCalledBegin;
 
+@property (copy, nonatomic) RZSingleChildContainerViewControllerCompletionBlock pendingCompletionBlock;
+
 @end
 
 @implementation RZSingleChildContainerViewController
@@ -164,7 +166,8 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
 - (void)setContentViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(RZSingleChildContainerViewControllerCompletionBlock)completion
 {
     if ( self.isTransitioning ) {
-        [NSException raise:NSInternalInconsistencyException format:@"%@: Cannot start a transition while a transition is already in place.", [self class]];
+        self.pendingCompletionBlock = completion;
+        return;
     }
 
     __weak __typeof(self) wself = self;
@@ -175,6 +178,10 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
         self.isTransitioning = NO;
         if ( completion ) {
             completion();
+        }
+        if ( self.pendingCompletionBlock != nil ) {
+            self.pendingCompletionBlock();
+            self.pendingCompletionBlock = nil;
         }
     };
 
