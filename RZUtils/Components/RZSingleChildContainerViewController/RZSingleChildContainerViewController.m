@@ -53,6 +53,8 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
 
 @property (nonatomic, strong) NSMutableArray *viewLoadedBlocks;
 
+@property (weak, nonatomic) UIViewController *viewControllerOnWhichWeCalledBegin;
+
 @end
 
 @implementation RZSingleChildContainerViewController
@@ -79,13 +81,22 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    // We want to make sure we don’t call endAppearanceTransition
+    // on an object where we never called beginAppearanceTransition:animated:,
+    // so keep track of which view controller we called this method on.
+    // Note: self.currentContentViewController may be nil here.
+    self.viewControllerOnWhichWeCalledBegin = self.currentContentViewController;
+
     [self.currentContentViewController beginAppearanceTransition:YES animated:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self.currentContentViewController endAppearanceTransition];
+    if ( self.viewControllerOnWhichWeCalledBegin == self.currentContentViewController ) {
+        [self.currentContentViewController endAppearanceTransition];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -131,7 +142,7 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
 
 - (void)setContentVCAnimatedTransition:(id <UIViewControllerAnimatedTransitioning>)contentVCAnimatedTransition
 {
-    self.contentVCAnimatedTransition = contentVCAnimatedTransition ? contentVCAnimatedTransition : [[RZSingleChildContainerAlphaTransitioner alloc] init];
+    _contentVCAnimatedTransition = contentVCAnimatedTransition ?: [[RZSingleChildContainerAlphaTransitioner alloc] init];
 }
 
 - (void)performBlockWhenViewLoaded:(void (^)())block
@@ -286,14 +297,27 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
 
 - (UIViewController *)viewControllerForKey:(NSString *)key
 {
+    UIViewController *viewController = nil;
     if ( [key isEqualToString:UITransitionContextFromViewControllerKey] ) {
-        return self.fromVC;
+        viewController = self.fromVC;
     }
     else if ( [key isEqualToString:UITransitionContextToViewControllerKey] ) {
-        return self.toVC;
+        viewController = self.toVC;
     }
     
-    return nil;
+    return viewController;
+}
+- (UIView *)viewForKey:(NSString *)key
+{
+    UIView *view = nil;
+    if ( [key isEqualToString:UITransitionContextFromViewKey] ) {
+        view = self.fromVC.view;
+    }
+    else if ( [key isEqualToString:UITransitionContextToViewKey] ) {
+        view = self.toVC.view;
+    }
+
+    return view;
 }
 
 - (CGRect)initialFrameForViewController:(UIViewController *)vc
@@ -314,6 +338,11 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
     
     // the "from" VC starts off-screen
     return CGRectZero;
+}
+
+- (CGAffineTransform)targetTransform
+{
+    return CGAffineTransformIdentity;
 }
 
 @end

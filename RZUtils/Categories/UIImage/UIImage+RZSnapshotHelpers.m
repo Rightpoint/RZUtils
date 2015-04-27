@@ -103,6 +103,10 @@
 #import <float.h>
 #import "UIImage+RZSnapshotHelpers.h"
 
+@implementation RZSnapshotHelperSnapshots
+
+@end
+
 @implementation UIImage (RZSnapshotHelpers)
 
 static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRadius, UIColor * tintColor, CGFloat saturationDeltaFactor, CGFloat scale)
@@ -225,6 +229,30 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
     UIGraphicsEndImageContext();
     
     return outputImage;
+}
+
++ (RZSnapshotHelperSnapshots *)rz_unblurredAndblurredImagesByCapturingView:(UIView *)view afterScreenUpdate:(BOOL)waitForUpdate withRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor;
+{
+    UIImage *unblurredImage = nil;
+    UIImage *blurredImage = nil;
+    
+    CGRect imageRect = { CGPointZero, { CGRectGetWidth(view.bounds), CGRectGetHeight(view.bounds) } };
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    UIGraphicsBeginImageContextWithOptions(imageRect.size, NO, scale);
+    
+    BOOL success = [view drawViewHierarchyInRect:imageRect afterScreenUpdates:waitForUpdate];
+    if ( success ) {
+        unblurredImage = UIGraphicsGetImageFromCurrentImageContext();
+        blurredImage = RZBlurredImageInCurrentContext(imageRect, blurRadius, tintColor, saturationDeltaFactor, scale);
+    }
+    
+    UIGraphicsEndImageContext();
+    
+    RZSnapshotHelperSnapshots *outputImages = [[RZSnapshotHelperSnapshots alloc] init];
+    outputImages.unmodifiedSnapshot = unblurredImage;
+    outputImages.blurredSnapshot = blurredImage;
+    
+    return outputImages;
 }
 
 - (UIImage *)rz_blurredImageWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor

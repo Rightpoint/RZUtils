@@ -30,11 +30,61 @@
 
 @implementation UIView (RZAutoLayoutHelpers)
 
+# pragma mark - Helpers
+
 - (BOOL)rz_constraintIsWithSuperview:(NSLayoutConstraint *)constraint
 {
     return ((constraint.firstItem == self && constraint.secondItem == self.superview) ||
             (constraint.firstItem == self.superview && constraint.secondItem == self));
 }
+
++ (UIView *)rz_commonAncestorForViews:(NSArray *)views
+{
+    NSParameterAssert([views count] > 0);
+
+    if ( [views count] == 1 ) {
+        return [views firstObject];
+    }
+
+    // First, build a list of view hierarchies, where each element is a list containing the hierarhcy all the way up from each view to the top
+    NSMutableArray *viewHierarchies = [[NSMutableArray alloc] initWithCapacity:[views count]];
+    for ( UIView *view in views ) {
+        NSMutableArray *viewHierarchy = [NSMutableArray array];
+
+        UIView *viewCursor = view;
+        while ( viewCursor != nil ) {
+            [viewHierarchy addObject:viewCursor];
+            viewCursor = [viewCursor superview];
+        }
+
+        [viewHierarchies addObject:viewHierarchy];
+    }
+
+    // Next, iterate through the view hierarchies. Find the first element that they all have in common. Note that this is n^2, but is quite unlikely this will ever hamper performance because view hierarchies should generally be quite shallow.
+    UIView *candidateCommonAncestor = nil;
+    NSArray *firstViewHierarchy = [viewHierarchies firstObject];
+    NSArray *otherViewHierarchies = [viewHierarchies subarrayWithRange:NSMakeRange(1, [viewHierarchies count] - 1)];
+
+    for ( UIView *view in firstViewHierarchy ) {
+        BOOL commonAncestorMatches = YES;
+
+        for ( NSArray *otherViewHierarchy in otherViewHierarchies ) {
+            if ( [otherViewHierarchy containsObject:view] == NO ) {
+                commonAncestorMatches = NO;
+                break;
+            }
+        }
+
+        if ( commonAncestorMatches ) {
+            candidateCommonAncestor = view;
+            break;
+        }
+    }
+
+    return candidateCommonAncestor;
+}
+
+# pragma mark - Constraint Accessors
 
 - (NSLayoutConstraint *)rz_pinnedWidthConstraint
 {
@@ -172,6 +222,108 @@
     return constraint;
 }
 
+- (NSArray *)rz_bottomToTopConstraints
+{
+    if ( self.superview == nil ) {
+        return nil;
+    }
+
+    NSMutableArray *constraints = [NSMutableArray array];
+    for ( NSLayoutConstraint *c in self.superview.constraints ) {
+        if ((( c.firstItem == self && [c.secondItem superview] == self.superview ) && c.firstAttribute == NSLayoutAttributeBottom && c.secondAttribute == NSLayoutAttributeTop ) ||
+            (( c.secondItem == self && [c.firstItem superview] == self.superview ) && c.secondAttribute == NSLayoutAttributeBottom && c.firstAttribute == NSLayoutAttributeTop )) {
+
+            [constraints addObject:c];
+        }
+    }
+
+    return constraints.count ? [constraints copy] : nil;
+}
+
+- (NSArray *)rz_topToBottomConstraints
+{
+    if ( self.superview == nil ) {
+        return nil;
+    }
+
+    NSMutableArray *constraints = [NSMutableArray array];
+    for ( NSLayoutConstraint *c in self.superview.constraints ) {
+        if ((( c.firstItem == self && [c.secondItem superview] == self.superview ) && c.firstAttribute == NSLayoutAttributeTop && c.secondAttribute == NSLayoutAttributeBottom ) ||
+            (( c.secondItem == self && [c.firstItem superview] == self.superview ) && c.secondAttribute == NSLayoutAttributeTop && c.firstAttribute == NSLayoutAttributeBottom )) {
+
+            [constraints addObject:c];
+        }
+    }
+
+    return constraints.count ? [constraints copy] : nil;
+}
+
+- (NSArray *)rz_leftToRightConstraints
+{
+    if ( self.superview == nil ) {
+        return nil;
+    }
+
+    NSMutableArray *constraints = [NSMutableArray array];
+    for ( NSLayoutConstraint *c in self.superview.constraints ) {
+        if ((( c.firstItem == self && [c.secondItem superview] == self.superview ) && c.firstAttribute == NSLayoutAttributeLeft && c.secondAttribute == NSLayoutAttributeRight ) ||
+            (( c.secondItem == self && [c.firstItem superview] == self.superview ) && c.secondAttribute == NSLayoutAttributeRight && c.firstAttribute == NSLayoutAttributeLeft )) {
+
+            [constraints addObject:c];
+        }
+    }
+
+    return constraints.count ? [constraints copy] : nil;
+}
+
+- (NSArray *)rz_rightToLeftConstraints
+{
+    if ( self.superview == nil ) {
+        return nil;
+    }
+
+    NSMutableArray *constraints = [NSMutableArray array];
+    for ( NSLayoutConstraint *c in self.superview.constraints ) {
+        if ((( c.firstItem == self && [c.secondItem superview] == self.superview ) && c.firstAttribute == NSLayoutAttributeRight && c.secondAttribute == NSLayoutAttributeLeft ) ||
+            (( c.secondItem == self && [c.firstItem superview] == self.superview ) && c.secondAttribute == NSLayoutAttributeLeft && c.firstAttribute == NSLayoutAttributeRight )) {
+
+            [constraints addObject:c];
+        }
+    }
+
+    return constraints.count ? [constraints copy] : nil;
+}
+
+- (NSLayoutConstraint *)rz_onlyBottomToTopConstraint
+{
+    NSArray *constraints = [self rz_bottomToTopConstraints];
+    NSAssert(constraints.count == 1, @"More constraints than expected");
+    return [constraints lastObject];
+}
+
+- (NSLayoutConstraint *)rz_onlyTopToBottomConstraint
+{
+    NSArray *constraints = [self rz_topToBottomConstraints];
+    NSAssert(constraints.count == 1, @"More constraints than expected");
+    return [constraints lastObject];
+}
+
+- (NSLayoutConstraint *)rz_onlyLeftToRightConstraint
+{
+    NSArray *constraints = [self rz_leftToRightConstraints];
+    NSAssert(constraints.count == 1, @"More constraints than expected");
+    return [constraints lastObject];
+}
+
+- (NSLayoutConstraint *)rz_onlyRightToLeftConstraint
+{
+    NSArray *constraints = [self rz_rightToLeftConstraints];
+    NSAssert(constraints.count == 1, @"More constraints than expected");
+    return [constraints lastObject];
+}
+
+# pragma mark - Constraint Creation
+
 - (NSLayoutConstraint *)rz_pinWidthTo:(CGFloat)width
 {
     NSLayoutConstraint *w = [NSLayoutConstraint constraintWithItem:self
@@ -200,7 +352,13 @@
                                                          attribute:NSLayoutAttributeWidth
                                                         multiplier:multiplier
                                                           constant:0.0f];
-    [self addConstraint:w];
+    UIView *commonAncestorView = [[self class] rz_commonAncestorForViews:@[ self, view ]];
+    if ( commonAncestorView == nil ) {
+        NSString *exceptionString = [NSString stringWithFormat:@"Can't find a common ancestor for views: %@ and %@", self, view];
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:exceptionString userInfo:nil];
+    }
+
+    [commonAncestorView addConstraint:w];
 
     return w;
 }
@@ -233,7 +391,14 @@
                                                          attribute:NSLayoutAttributeHeight
                                                         multiplier:multiplier
                                                           constant:0.0f];
-    [self addConstraint:h];
+    UIView *commonAncestorView = [[self class] rz_commonAncestorForViews:@[ self, view ]];
+    if ( commonAncestorView == nil ) {
+        NSString *exceptionString = [NSString stringWithFormat:@"Can't find a common ancestor for views: %@ and %@", self, view];
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:exceptionString userInfo:nil];
+    }
+
+
+    [commonAncestorView addConstraint:h];
 
     return h;
 }
@@ -362,6 +527,21 @@
     return c;
 }
 
+- (NSLayoutConstraint *)rz_pinTopSpaceToSuperviewWithPaddingGreaterThanOrEqualTo:(CGFloat)padding
+{
+    NSAssert(self.superview != nil, @"Must have superview");
+    
+    NSLayoutConstraint *c = [NSLayoutConstraint constraintWithItem:self
+                                                         attribute:NSLayoutAttributeTop
+                                                         relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                            toItem:self.superview
+                                                         attribute:NSLayoutAttributeTop
+                                                        multiplier:1.0f
+                                                          constant:padding];
+    [self.superview addConstraint:c];
+    
+    return c;
+}
 
 - (NSLayoutConstraint *)rz_pinLeftSpaceToSuperviewWithPadding:(CGFloat)padding
 {
@@ -376,6 +556,22 @@
                                                           constant:padding];
     [self.superview addConstraint:c];
 
+    return c;
+}
+
+- (NSLayoutConstraint *)rz_pinLeftSpaceToSuperviewWithPaddingGreaterThanOrEqualTo:(CGFloat)padding
+{
+    NSAssert(self.superview != nil, @"Must have superview");
+    
+    NSLayoutConstraint *c = [NSLayoutConstraint constraintWithItem:self
+                                                         attribute:NSLayoutAttributeLeft
+                                                         relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                            toItem:self.superview
+                                                         attribute:NSLayoutAttributeLeft
+                                                        multiplier:1.0f
+                                                          constant:padding];
+    [self.superview addConstraint:c];
+    
     return c;
 }
 
@@ -395,6 +591,22 @@
     return c;
 }
 
+- (NSLayoutConstraint *)rz_pinBottomSpaceToSuperviewWithPaddingGreaterThanOrEqualTo:(CGFloat)padding
+{
+    NSAssert(self.superview != nil, @"Must have superview");
+    
+    NSLayoutConstraint *c = [NSLayoutConstraint constraintWithItem:self
+                                                         attribute:NSLayoutAttributeBottom
+                                                         relatedBy:NSLayoutRelationLessThanOrEqual
+                                                            toItem:self.superview
+                                                         attribute:NSLayoutAttributeBottom
+                                                        multiplier:1.0f
+                                                          constant:-padding];
+    [self.superview addConstraint:c];
+    
+    return c;
+}
+
 - (NSLayoutConstraint *)rz_pinRightSpaceToSuperviewWithPadding:(CGFloat)padding
 {
     NSAssert(self.superview != nil, @"Must have superview");
@@ -411,6 +623,21 @@
     return c;
 }
 
+- (NSLayoutConstraint *)rz_pinRightSpaceToSuperviewWithPaddingGreaterThanOrEqualTo:(CGFloat)padding
+{
+    NSAssert(self.superview != nil, @"Must have superview");
+    
+    NSLayoutConstraint *c = [NSLayoutConstraint constraintWithItem:self
+                                                         attribute:NSLayoutAttributeRight
+                                                         relatedBy:NSLayoutRelationLessThanOrEqual
+                                                            toItem:self
+                                                         attribute:NSLayoutAttributeRight
+                                                        multiplier:1.0f
+                                                          constant:-padding];
+    [self.superview addConstraint:c];
+    
+    return c;
+}
 
 - (NSLayoutConstraint *)rz_centerHorizontallyInContainer
 {
@@ -454,6 +681,74 @@
     return c;
 }
 
+- (NSLayoutConstraint *)rz_attachBottomToTopOfView:(UIView *)view withPadding:(CGFloat)padding
+{
+    NSParameterAssert(view);
+    NSAssert(self.superview != nil, @"Must have superview");
+    NSAssert(view.superview != nil, @"Must have superview");
+
+    NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
+                                                                  attribute:NSLayoutAttributeBottom
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:view
+                                                                  attribute:NSLayoutAttributeTop
+                                                                 multiplier:1.0f
+                                                                   constant:padding];
+    [self.superview addConstraint:constraint];
+    return constraint;
+}
+
+- (NSLayoutConstraint *)rz_attachTopToBottomOfView:(UIView *)view withPadding:(CGFloat)padding
+{
+    NSParameterAssert(view);
+    NSAssert(self.superview != nil, @"Must have superview");
+    NSAssert(view.superview != nil, @"Must have superview");
+
+    NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
+                                                                  attribute:NSLayoutAttributeTop
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:view
+                                                                  attribute:NSLayoutAttributeBottom
+                                                                 multiplier:1.0f
+                                                                   constant:padding];
+    [self.superview addConstraint:constraint];
+    return constraint;
+}
+
+- (NSLayoutConstraint *)rz_attachLeftToRightOfView:(UIView *)view withPadding:(CGFloat)padding
+{
+    NSParameterAssert(view);
+    NSAssert(self.superview != nil, @"Must have superview");
+    NSAssert(view.superview != nil, @"Must have superview");
+
+    NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
+                                                                  attribute:NSLayoutAttributeLeft
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:view
+                                                                  attribute:NSLayoutAttributeRight
+                                                                 multiplier:1.0f
+                                                                   constant:padding];
+    [self.superview addConstraint:constraint];
+    return constraint;
+}
+
+- (NSLayoutConstraint *)rz_attachRightToLeftOfView:(UIView *)view withPadding:(CGFloat)padding
+{
+    NSParameterAssert(view);
+    NSAssert(self.superview != nil, @"Must have superview");
+    NSAssert(view.superview != nil, @"Must have superview");
+
+    NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
+                                                                  attribute:NSLayoutAttributeRight
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:view
+                                                                  attribute:NSLayoutAttributeLeft
+                                                                 multiplier:1.0f
+                                                                   constant:-padding];
+    [self.superview addConstraint:constraint];
+    return constraint;
+}
+
 - (NSArray *)rz_fillContainerWithInsets:(UIEdgeInsets)insets
 {
     NSAssert(self.superview != nil, @"Must have superview");
@@ -465,10 +760,10 @@
 
     NSArray *constraints = @[top, left, bottom, right];
 
-    [self.superview addConstraints:constraints];
-
     return constraints;
 }
+
+# pragma mark - Batch Alignment
 
 - (NSArray *)rz_spaceSubviews:(NSArray *)subviews vertically:(BOOL)vertically minimumItemSpacing:(CGFloat)itemSpacing
 {

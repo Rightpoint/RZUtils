@@ -36,7 +36,9 @@
     [testObj rz_addObserver:self
                  forKeyPath:@"aString"
                     options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
-                  withBlock:^(id object, NSDictionary *change) {
+                  withChangeBlock:^(id object, NSDictionary *change) {
+                      
+                      XCTAssertEqualObjects(weakTestObj, object, @"Object in block does not match observed object");
                       
                       id value = [change objectForKey:NSKeyValueChangeNewKey];
                       if ( [value isEqual:[NSNull null]] ) {
@@ -53,7 +55,6 @@
     testObj.aString = @"yo";
     
     XCTAssertTrue(called, @"Block was not called on value change");
-    
     [testObj rz_removeObserver:self keyPath:nil];
 }
 
@@ -62,6 +63,7 @@
     RZKVOTestObject *testObj = [RZKVOTestObject new];
     RZKVOTestObject *observerObj = [RZKVOTestObject new];
     
+    __weak RZKVOTestObject *weakTestObj = testObj;
     __block BOOL called = NO;
 
     @autoreleasepool {
@@ -69,7 +71,8 @@
         [testObj rz_addObserver:observerObj
                      forKeyPath:@"aString"
                         options:NSKeyValueObservingOptionNew
-                      withBlock:^(id object, NSDictionary *change) {
+                      withChangeBlock:^(id object, NSDictionary *change) {
+                          XCTAssertEqualObjects(weakTestObj, object, @"Object in block does not match observed object");
                           called = YES;
                       }];
     
@@ -82,6 +85,44 @@
     called = NO;
     XCTAssertNoThrow(testObj.aString = @"Whaaat", @"KVO after dealloc of observer should not throw exception");
     XCTAssertFalse(called, @"Block should not be called after dealloc of observer");
+}
+
+- (void)testObserverRemoval
+{
+    RZKVOTestObject *testObj      = [RZKVOTestObject new];
+    RZKVOTestObject *otherTestObj = [RZKVOTestObject new];
+
+    __block BOOL firstBlockCalled = NO;
+    __block BOOL secondBlockCalled = NO;
+
+    [testObj rz_addObserver:self
+                 forKeyPath:@"aString"
+                    options:NSKeyValueObservingOptionNew
+            withChangeBlock:^(id object, NSDictionary *change) {
+                firstBlockCalled = YES;
+            }];
+    
+    [otherTestObj rz_addObserver:self
+                      forKeyPath:@"aString"
+                         options:NSKeyValueObservingOptionNew
+                 withChangeBlock:^(id object, NSDictionary *change) {
+                    secondBlockCalled = YES;
+                }];
+	
+    XCTAssertFalse(firstBlockCalled && secondBlockCalled, @"Neither block should have been called yet");
+    
+    testObj.aString = @"yo";
+    
+    XCTAssertTrue(firstBlockCalled, @"First block was not called on value change");
+    XCTAssertFalse(secondBlockCalled, @"Second block should not be called yet");
+	
+    firstBlockCalled = NO;
+    [testObj rz_removeObserver:self keyPath:nil];
+	
+    otherTestObj.aString = @"yo";
+	
+    XCTAssertTrue(secondBlockCalled, @"Second block should have been called. Removal as observer for first obj should not affect this one");
+	[otherTestObj rz_removeObserver:self keyPath:nil];
 }
 
 @end

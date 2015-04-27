@@ -35,6 +35,7 @@
 // ===============================================
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CGBase.h>
 
 /**
  *  If argument is nil, it will be converted to NSNull.
