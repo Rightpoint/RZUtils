@@ -12,7 +12,7 @@
  *
  *   RZCollectionTableView is a collection view with an accompanying layout
  *   designed to look and feel like a UITableView, in terms of visual appearance,
- *   touch interaction, and programming infterface. There are a few additional
+ *   touch interaction, and programming interface. There are a few additional
  *   useful capabilities thrown in for good measure, such as per-section insets
  *   and row spacing, and collection view attributes which indicate row position 
  *   (solo, top middle, bottom) for easier styling.
