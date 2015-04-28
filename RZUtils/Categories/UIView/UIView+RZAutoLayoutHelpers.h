@@ -176,7 +176,7 @@
 /**
  *  Pin the receiver's width to a constant.
  *
- *  @param width Deisred width.
+ *  @param width Desired width.
  *
  *  @return The pinned width constraint that was added.
  */
@@ -206,7 +206,7 @@
 /**
  *  Pin the receiver's height to a constant.
  *
- *  @param height Deisred height.
+ *  @param height Desired height.
  *
  *  @return The pinned height constraint that was added.
  */
