@@ -74,7 +74,12 @@ static NSCalendar * RZCachedCurrentCalendar()
         [calendar setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     }
     
+#ifdef __IPHONE_8_0
+    unsigned unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth |  NSCalendarUnitDay;
+#else
     unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
+#endif
+    
     NSDateComponents* comp1 = [calendar components:unitFlags fromDate:self];
     NSDateComponents* comp2 = [calendar components:unitFlags fromDate:date];
     

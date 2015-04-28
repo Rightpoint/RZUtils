@@ -236,7 +236,7 @@ static UIImage * RZBlurredImageInCurrentContext(CGRect imageRect, CGFloat blurRa
     UIImage *unblurredImage = nil;
     UIImage *blurredImage = nil;
     
-    CGRect imageRect = { CGPointZero, CGRectGetWidth(view.bounds), CGRectGetHeight(view.bounds) };
+    CGRect imageRect = { CGPointZero, { CGRectGetWidth(view.bounds), CGRectGetHeight(view.bounds) } };
     CGFloat scale = [[UIScreen mainScreen] scale];
     UIGraphicsBeginImageContextWithOptions(imageRect.size, NO, scale);
     
