@@ -254,6 +254,17 @@
 - (NSLayoutConstraint *)rz_pinTopSpaceToSuperviewWithPadding:(CGFloat)padding;
 
 /**
+ *  Pin the receiver's top space to its superview's top with a mimumum amount of padding.
+ *
+ *  @param padding The mimumum amount of padding between the top of the receiver and the superview.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The constraint that was added.
+ */
+- (NSLayoutConstraint *)rz_pinTopSpaceToSuperviewWithPaddingGreaterThanOrEqualTo:(CGFloat)padding;
+
+/**
  *  Pin the receiver's left space to its superview's left side with a fixed amount of padding.
  *
  *  @param padding The amount of padding between the left side of the receiver and the superview.
@@ -263,6 +274,17 @@
  *  @return The constraint that was added.
  */
 - (NSLayoutConstraint *)rz_pinLeftSpaceToSuperviewWithPadding:(CGFloat)padding;
+
+/**
+ *  Pin the receiver's left space to its superview's left side with a mimumum amount of padding.
+ *
+ *  @param padding The minimum amount of padding between the left side of the receiver and the superview.
+ *
+ *  @warning The receiver must have a superview when this method is called.
+ *
+ *  @return The constraint that was added.
+ */
+- (NSLayoutConstraint *)rz_pinLeftSpaceToSuperviewWithPaddingGreaterThanOrEqualTo:(CGFloat)padding;
 
 /**
  *  Pin the receiver's bottom space to its superview's bottom with a fixed amount of padding.
