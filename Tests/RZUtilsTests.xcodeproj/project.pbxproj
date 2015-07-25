@@ -23,7 +23,7 @@
 
 /* Begin PBXBuildFile section */
 		14D21D6F1AA316CA000765B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D21D6E1AA316CA000765B6 /* main.m */; };
-		14D21D721AA316CA000765B6 /* RZUtilsTestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D21D711AA316CA000765B6 /* RZUtilsTestAppDelegate.m */; };
+		14D21D721AA316CA000765B6 /* RZHostAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D21D711AA316CA000765B6 /* RZHostAppDelegate.m */; };
 		14D21D781AA316CA000765B6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14D21D761AA316CA000765B6 /* Main.storyboard */; };
 		14D21D7A1AA316CA000765B6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14D21D791AA316CA000765B6 /* Images.xcassets */; };
 		14D21D7D1AA316CA000765B6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14D21D7B1AA316CA000765B6 /* LaunchScreen.xib */; };
@@ -55,15 +55,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		14D21D6A1AA316CA000765B6 /* RZUtilsTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RZUtilsTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		14D21D6A1AA316CA000765B6 /* RZHostApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RZHostApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14D21D6D1AA316CA000765B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14D21D6E1AA316CA000765B6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		14D21D701AA316CA000765B6 /* RZUtilsTestAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZUtilsTestAppDelegate.h; sourceTree = "<group>"; };
-		14D21D711AA316CA000765B6 /* RZUtilsTestAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZUtilsTestAppDelegate.m; sourceTree = "<group>"; };
+		14D21D701AA316CA000765B6 /* RZHostAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZHostAppDelegate.h; sourceTree = "<group>"; };
+		14D21D711AA316CA000765B6 /* RZHostAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZHostAppDelegate.m; sourceTree = "<group>"; };
 		14D21D771AA316CA000765B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		14D21D791AA316CA000765B6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		14D21D7C1AA316CA000765B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		14D21D821AA316CA000765B6 /* RZUtilsTestAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RZUtilsTestAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		14D21D821AA316CA000765B6 /* RZHostAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RZHostAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		14D21D871AA316CB000765B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14D21D881AA316CB000765B6 /* RZAutoLayoutHelpersTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZAutoLayoutHelpersTest.m; sourceTree = "<group>"; };
 		1CFF0789A9F774D9B6D7E13D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -112,17 +112,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		14D21D6B1AA316CA000765B6 /* RZUtilsTestApp */ = {
+		14D21D6B1AA316CA000765B6 /* RZHostApp */ = {
 			isa = PBXGroup;
 			children = (
-				14D21D701AA316CA000765B6 /* RZUtilsTestAppDelegate.h */,
-				14D21D711AA316CA000765B6 /* RZUtilsTestAppDelegate.m */,
+				14D21D701AA316CA000765B6 /* RZHostAppDelegate.h */,
+				14D21D711AA316CA000765B6 /* RZHostAppDelegate.m */,
 				14D21D761AA316CA000765B6 /* Main.storyboard */,
 				14D21D791AA316CA000765B6 /* Images.xcassets */,
 				14D21D7B1AA316CA000765B6 /* LaunchScreen.xib */,
 				14D21D6C1AA316CA000765B6 /* Supporting Files */,
 			);
-			path = RZUtilsTestApp;
+			path = RZHostApp;
 			sourceTree = "<group>";
 		};
 		14D21D6C1AA316CA000765B6 /* Supporting Files */ = {
@@ -134,13 +134,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		14D21D851AA316CB000765B6 /* RZUtilsTestAppTests */ = {
+		14D21D851AA316CB000765B6 /* RZHostAppTests */ = {
 			isa = PBXGroup;
 			children = (
 				14D21D881AA316CB000765B6 /* RZAutoLayoutHelpersTest.m */,
 				14D21D861AA316CB000765B6 /* Supporting Files */,
 			);
-			path = RZUtilsTestAppTests;
+			path = RZHostAppTests;
 			sourceTree = "<group>";
 		};
 		14D21D861AA316CB000765B6 /* Supporting Files */ = {
@@ -165,8 +165,8 @@
 			isa = PBXGroup;
 			children = (
 				9A8D4DF9196335CC00AFAB21 /* RZUtilsTests */,
-				14D21D6B1AA316CA000765B6 /* RZUtilsTestApp */,
-				14D21D851AA316CB000765B6 /* RZUtilsTestAppTests */,
+				14D21D6B1AA316CA000765B6 /* RZHostApp */,
+				14D21D851AA316CB000765B6 /* RZHostAppTests */,
 				9A8D4DD0196335CC00AFAB21 /* Frameworks */,
 				9A8D4DCF196335CC00AFAB21 /* Products */,
 				1D20370BBD690B491DE2ED6F /* Pods */,
@@ -177,8 +177,8 @@
 			isa = PBXGroup;
 			children = (
 				9A8D4DF2196335CC00AFAB21 /* RZUtilsTests.xctest */,
-				14D21D6A1AA316CA000765B6 /* RZUtilsTestApp.app */,
-				14D21D821AA316CA000765B6 /* RZUtilsTestAppTests.xctest */,
+				14D21D6A1AA316CA000765B6 /* RZHostApp.app */,
+				14D21D821AA316CA000765B6 /* RZHostAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -219,9 +219,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		14D21D691AA316CA000765B6 /* RZUtilsTestApp */ = {
+		14D21D691AA316CA000765B6 /* RZHostApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 14D21D8A1AA316CB000765B6 /* Build configuration list for PBXNativeTarget "RZUtilsTestApp" */;
+			buildConfigurationList = 14D21D8A1AA316CB000765B6 /* Build configuration list for PBXNativeTarget "RZHostApp" */;
 			buildPhases = (
 				14D21D661AA316CA000765B6 /* Sources */,
 				14D21D671AA316CA000765B6 /* Frameworks */,
@@ -232,14 +232,14 @@
 			dependencies = (
 				14D21D941AA31A3F000765B6 /* PBXTargetDependency */,
 			);
-			name = RZUtilsTestApp;
+			name = RZHostApp;
 			productName = RZUtilsTestApp;
-			productReference = 14D21D6A1AA316CA000765B6 /* RZUtilsTestApp.app */;
+			productReference = 14D21D6A1AA316CA000765B6 /* RZHostApp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		14D21D811AA316CA000765B6 /* RZUtilsTestAppTests */ = {
+		14D21D811AA316CA000765B6 /* RZHostAppTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 14D21D8E1AA316CB000765B6 /* Build configuration list for PBXNativeTarget "RZUtilsTestAppTests" */;
+			buildConfigurationList = 14D21D8E1AA316CB000765B6 /* Build configuration list for PBXNativeTarget "RZHostAppTests" */;
 			buildPhases = (
 				14D21D7E1AA316CA000765B6 /* Sources */,
 				14D21D7F1AA316CA000765B6 /* Frameworks */,
@@ -250,9 +250,9 @@
 			dependencies = (
 				14D21D841AA316CB000765B6 /* PBXTargetDependency */,
 			);
-			name = RZUtilsTestAppTests;
+			name = RZHostAppTests;
 			productName = RZUtilsTestAppTests;
-			productReference = 14D21D821AA316CA000765B6 /* RZUtilsTestAppTests.xctest */;
+			productReference = 14D21D821AA316CA000765B6 /* RZHostAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		9A8D4DF1196335CC00AFAB21 /* RZUtilsTests */ = {
@@ -310,8 +310,8 @@
 			projectRoot = "";
 			targets = (
 				9A8D4DF1196335CC00AFAB21 /* RZUtilsTests */,
-				14D21D691AA316CA000765B6 /* RZUtilsTestApp */,
-				14D21D811AA316CA000765B6 /* RZUtilsTestAppTests */,
+				14D21D691AA316CA000765B6 /* RZHostApp */,
+				14D21D811AA316CA000765B6 /* RZHostAppTests */,
 				14FB87F61ABB662E005ECA1D /* RZUtilsAllTests */,
 			);
 		};
@@ -409,7 +409,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14D21D721AA316CA000765B6 /* RZUtilsTestAppDelegate.m in Sources */,
+				14D21D721AA316CA000765B6 /* RZHostAppDelegate.m in Sources */,
 				14D21D6F1AA316CA000765B6 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -436,7 +436,7 @@
 /* Begin PBXTargetDependency section */
 		14D21D841AA316CB000765B6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 14D21D691AA316CA000765B6 /* RZUtilsTestApp */;
+			target = 14D21D691AA316CA000765B6 /* RZHostApp */;
 			targetProxy = 14D21D831AA316CB000765B6 /* PBXContainerItemProxy */;
 		};
 		14D21D941AA31A3F000765B6 /* PBXTargetDependency */ = {
@@ -486,7 +486,7 @@
 					"$(inherited)",
 				);
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = RZUtilsTestApp/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/RZHostApp/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -503,7 +503,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = RZUtilsTestApp/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/RZHostApp/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -520,7 +520,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = RZUtilsTestApp/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/RZHostApp/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -545,12 +545,12 @@
 					"$(inherited)",
 				);
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = RZUtilsTestAppTests/Info.plist;
+				INFOPLIST_FILE = RZHostAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RZUtilsTestApp.app/RZUtilsTestApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RZHostApp.app/RZHostApp";
 			};
 			name = Debug;
 		};
@@ -566,12 +566,12 @@
 					"$(inherited)",
 				);
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = RZUtilsTestAppTests/Info.plist;
+				INFOPLIST_FILE = RZHostAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RZUtilsTestApp.app/RZUtilsTestApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RZHostApp.app/RZHostApp";
 			};
 			name = Release;
 		};
@@ -587,12 +587,12 @@
 					"$(inherited)",
 				);
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = RZUtilsTestAppTests/Info.plist;
+				INFOPLIST_FILE = RZHostAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RZUtilsTestApp.app/RZUtilsTestApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RZHostApp.app/RZHostApp";
 			};
 			name = "Enterprise-QA";
 		};
@@ -785,7 +785,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		14D21D8A1AA316CB000765B6 /* Build configuration list for PBXNativeTarget "RZUtilsTestApp" */ = {
+		14D21D8A1AA316CB000765B6 /* Build configuration list for PBXNativeTarget "RZHostApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				14D21D8B1AA316CB000765B6 /* Debug */,
@@ -795,7 +795,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		14D21D8E1AA316CB000765B6 /* Build configuration list for PBXNativeTarget "RZUtilsTestAppTests" */ = {
+		14D21D8E1AA316CB000765B6 /* Build configuration list for PBXNativeTarget "RZHostAppTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				14D21D8F1AA316CB000765B6 /* Debug */,
@@ -813,6 +813,7 @@
 				14FB87F91ABB662E005ECA1D /* Enterprise-QA */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9A8D4DC9196335CC00AFAB21 /* Build configuration list for PBXProject "RZUtilsTests" */ = {
 			isa = XCConfigurationList;

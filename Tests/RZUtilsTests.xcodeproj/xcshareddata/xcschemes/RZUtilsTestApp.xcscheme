@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "14D21D691AA316CA000765B6"
-               BuildableName = "RZUtilsTestApp.app"
-               BlueprintName = "RZUtilsTestApp"
+               BuildableName = "RZHostApp.app"
+               BlueprintName = "RZHostApp"
                ReferencedContainer = "container:RZUtilsTests.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,8 +29,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "14D21D811AA316CA000765B6"
-               BuildableName = "RZUtilsTestAppTests.xctest"
-               BlueprintName = "RZUtilsTestAppTests"
+               BuildableName = "RZHostAppTests.xctest"
+               BlueprintName = "RZHostAppTests"
                ReferencedContainer = "container:RZUtilsTests.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,8 +47,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "14D21D811AA316CA000765B6"
-               BuildableName = "RZUtilsTestAppTests.xctest"
-               BlueprintName = "RZUtilsTestAppTests"
+               BuildableName = "RZHostAppTests.xctest"
+               BlueprintName = "RZHostAppTests"
                ReferencedContainer = "container:RZUtilsTests.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -57,8 +57,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "14D21D691AA316CA000765B6"
-            BuildableName = "RZUtilsTestApp.app"
-            BlueprintName = "RZUtilsTestApp"
+            BuildableName = "RZHostApp.app"
+            BlueprintName = "RZHostApp"
             ReferencedContainer = "container:RZUtilsTests.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -72,12 +72,13 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "14D21D691AA316CA000765B6"
-            BuildableName = "RZUtilsTestApp.app"
-            BlueprintName = "RZUtilsTestApp"
+            BuildableName = "RZHostApp.app"
+            BlueprintName = "RZHostApp"
             ReferencedContainer = "container:RZUtilsTests.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -90,12 +91,13 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "14D21D691AA316CA000765B6"
-            BuildableName = "RZUtilsTestApp.app"
-            BlueprintName = "RZUtilsTestApp"
+            BuildableName = "RZHostApp.app"
+            BlueprintName = "RZHostApp"
             ReferencedContainer = "container:RZUtilsTests.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
