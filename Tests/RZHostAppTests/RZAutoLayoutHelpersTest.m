@@ -123,10 +123,10 @@ static CGFloat RZAutoLayoutHelpersTestAllowableDelta    = 0.5f;
     
     [self forceConstraintsEvaluation];
     
-    XCTAssert([self.testViewOne rz_pinnedCenterXConstraint] != nil);
-    XCTAssert([self.testViewOne rz_pinnedCenterYConstraint] != nil);
-    XCTAssert([self.testViewTwo rz_pinnedCenterXConstraint] != nil);
-    XCTAssert([self.testViewTwo rz_pinnedCenterYConstraint] != nil);
+    XCTAssertNotNil([self.testViewOne rz_pinnedCenterXConstraint]);
+    XCTAssertNotNil([self.testViewOne rz_pinnedCenterYConstraint]);
+    XCTAssertNotNil([self.testViewTwo rz_pinnedCenterXConstraint]);
+    XCTAssertNotNil([self.testViewTwo rz_pinnedCenterYConstraint]);
     
     CGRect frameOne = self.testViewOne.frame;
     
@@ -158,10 +158,10 @@ static CGFloat RZAutoLayoutHelpersTestAllowableDelta    = 0.5f;
     
     [self forceConstraintsEvaluation];
     
-    XCTAssert([self.testViewOne rz_pinnedCenterXConstraint] != nil);
-    XCTAssert([self.testViewOne rz_pinnedCenterYConstraint] != nil);
-    XCTAssert([self.testViewTwo rz_pinnedCenterXConstraint] != nil);
-    XCTAssert([self.testViewTwo rz_pinnedCenterYConstraint] != nil);
+    XCTAssertNotNil([self.testViewOne rz_pinnedCenterXConstraint]);
+    XCTAssertNotNil([self.testViewOne rz_pinnedCenterYConstraint]);
+    XCTAssertNotNil([self.testViewTwo rz_pinnedCenterXConstraint]);
+    XCTAssertNotNil([self.testViewTwo rz_pinnedCenterYConstraint]);
     
     CGRect frameOne = self.testViewOne.frame;
     
@@ -198,14 +198,14 @@ static CGFloat RZAutoLayoutHelpersTestAllowableDelta    = 0.5f;
     
     [self forceConstraintsEvaluation];
     
-    XCTAssert([self.testViewOne rz_pinnedTopConstraint] != nil);
-    XCTAssert([self.testViewOne rz_pinnedRightConstraint] != nil);
-    XCTAssert([self.testViewOne rz_pinnedBottomConstraint] != nil);
-    XCTAssert([self.testViewOne rz_pinnedLeftConstraint] != nil);
-    XCTAssert([self.testViewTwo rz_pinnedTopConstraint] != nil);
-    XCTAssert([self.testViewTwo rz_pinnedRightConstraint] != nil);
-    XCTAssert([self.testViewTwo rz_pinnedBottomConstraint] != nil);
-    XCTAssert([self.testViewTwo rz_pinnedLeftConstraint] != nil);
+    XCTAssertNotNil([self.testViewOne rz_pinnedTopConstraint]);
+    XCTAssertNotNil([self.testViewOne rz_pinnedRightConstraint]);
+    XCTAssertNotNil([self.testViewOne rz_pinnedBottomConstraint]);
+    XCTAssertNotNil([self.testViewOne rz_pinnedLeftConstraint]);
+    XCTAssertNotNil([self.testViewTwo rz_pinnedTopConstraint]);
+    XCTAssertNotNil([self.testViewTwo rz_pinnedRightConstraint]);
+    XCTAssertNotNil([self.testViewTwo rz_pinnedBottomConstraint]);
+    XCTAssertNotNil([self.testViewTwo rz_pinnedLeftConstraint]);
     
     CGRect frameOne = self.testViewOne.frame;
     
