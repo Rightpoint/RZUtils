@@ -126,7 +126,11 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
     return self.currentContentViewController;
 }
 
+#if defined(__IPHONE_9_0) &&  __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_9_0
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
+#else
 - (NSUInteger)supportedInterfaceOrientations
+#endif
 {
     return self.currentContentViewController.supportedInterfaceOrientations;
 }
