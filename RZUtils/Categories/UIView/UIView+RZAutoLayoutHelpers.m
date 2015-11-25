@@ -630,7 +630,7 @@
     NSLayoutConstraint *c = [NSLayoutConstraint constraintWithItem:self
                                                          attribute:NSLayoutAttributeRight
                                                          relatedBy:NSLayoutRelationLessThanOrEqual
-                                                            toItem:self
+                                                            toItem:self.superview
                                                          attribute:NSLayoutAttributeRight
                                                         multiplier:1.0f
                                                           constant:-padding];

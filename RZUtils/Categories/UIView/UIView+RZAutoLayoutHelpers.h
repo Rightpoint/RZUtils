@@ -434,7 +434,7 @@
 - (NSArray *)rz_fillContainerVerticallyWithPadding:(CGFloat)padding;
 
 /**
- *  Make the receiver fill its superview vertically with a fixed amount of padding.
+ *  Make the receiver fill its superview vertically with a minimum amount of padding.
  *  Equivalent to pinning top and bottom to superview with relation >=.
  *
  *  @param padding The vertical padding between the receiver and it superview.

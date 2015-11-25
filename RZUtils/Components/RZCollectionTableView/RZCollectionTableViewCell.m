@@ -356,7 +356,7 @@
         UIPanGestureRecognizer *pan = (UIPanGestureRecognizer *)gestureRecognizer;
         CGPoint                vel  = [pan velocityInView:self];
         // if it's more X than y
-        if ( fabsf(vel.x) > fabsf(vel.y) ) {
+        if ( fabs(vel.x) > fabs(vel.y) ) {
             // if it's more left than right
             shouldBegin = ( vel.x < 0 );
         }
