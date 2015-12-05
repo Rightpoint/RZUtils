@@ -1,14 +1,14 @@
 
 TEST_PROJ_PATH="Tests/RZUtilsTests.xcodeproj"
 TEST_WORKSPACE_PATH="Tests/RZUtilsTests.xcworkspace"
-TEST_SCHEME="RZUtilsTests"
+TEST_SCHEME="RZUtilsAllTests"
 
 #
 # Install
 #
 
 namespace :install do
-  
+
   task :tools do
     # don't care if this fails on travis
     sh("brew update") rescue nil
@@ -19,7 +19,7 @@ namespace :install do
   task :pods do
     sh("cd Tests && pod install")
   end
-  
+
 end
 
 task :install do
@@ -32,7 +32,7 @@ end
 #
 
 task :test do
-  sh("xctool -workspace '#{TEST_WORKSPACE_PATH}' -scheme '#{TEST_SCHEME}' -sdk iphonesimulator build test") rescue nil
+  sh("xctool -workspace '#{TEST_WORKSPACE_PATH}' -scheme '#{TEST_SCHEME}' -sdk iphonesimulator build") rescue nil
   exit $?.exitstatus
 end
 
@@ -50,17 +50,17 @@ end
 #
 
 namespace :clean do
-  
+
   task :pods do
     sh("rm -f Tests/Podfile.lock")
     sh "rm -rf Tests/Pods"
     sh("rm -rf Tests/*.xcworkspace")
   end
-  
+
   task :tests do
     sh("xctool -project '#{TEST_PROJ_PATH}' -scheme '#{TEST_SCHEME}' -sdk iphonesimulator clean") rescue nil
   end
-    
+
 end
 
 task :clean do

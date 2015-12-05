@@ -14,23 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9A8D4DCD196335CC00AFAB21"
-               BuildableName = "RZUtils.app"
-               BlueprintName = "RZUtils"
+               BlueprintIdentifier = "14D21D691AA316CA000765B6"
+               BuildableName = "RZHostApp.app"
+               BlueprintName = "RZHostApp"
                ReferencedContainer = "container:RZUtilsTests.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
-            buildForProfiling = "YES"
+            buildForProfiling = "NO"
             buildForArchiving = "NO"
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9A8D4DF1196335CC00AFAB21"
-               BuildableName = "RZUtilsTests.xctest"
-               BlueprintName = "RZUtilsTests"
+               BlueprintIdentifier = "14D21D811AA316CA000765B6"
+               BuildableName = "RZHostAppTests.xctest"
+               BlueprintName = "RZHostAppTests"
                ReferencedContainer = "container:RZUtilsTests.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,9 +46,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9A8D4DF1196335CC00AFAB21"
-               BuildableName = "RZUtilsTests.xctest"
-               BlueprintName = "RZUtilsTests"
+               BlueprintIdentifier = "14D21D811AA316CA000765B6"
+               BuildableName = "RZHostAppTests.xctest"
+               BlueprintName = "RZHostAppTests"
                ReferencedContainer = "container:RZUtilsTests.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -56,9 +56,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9A8D4DCD196335CC00AFAB21"
-            BuildableName = "RZUtils.app"
-            BlueprintName = "RZUtils"
+            BlueprintIdentifier = "14D21D691AA316CA000765B6"
+            BuildableName = "RZHostApp.app"
+            BlueprintName = "RZHostApp"
             ReferencedContainer = "container:RZUtilsTests.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -76,9 +76,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9A8D4DCD196335CC00AFAB21"
-            BuildableName = "RZUtils.app"
-            BlueprintName = "RZUtils"
+            BlueprintIdentifier = "14D21D691AA316CA000765B6"
+            BuildableName = "RZHostApp.app"
+            BlueprintName = "RZHostApp"
             ReferencedContainer = "container:RZUtilsTests.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -95,9 +95,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9A8D4DCD196335CC00AFAB21"
-            BuildableName = "RZUtils.app"
-            BlueprintName = "RZUtils"
+            BlueprintIdentifier = "14D21D691AA316CA000765B6"
+            BuildableName = "RZHostApp.app"
+            BlueprintName = "RZHostApp"
             ReferencedContainer = "container:RZUtilsTests.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
