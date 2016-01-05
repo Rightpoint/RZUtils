@@ -111,6 +111,29 @@
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - Sharing
+
+- (void)presentShareAppInController:(UIViewController *)viewController shareText:(NSString *)shareText shareURL:(NSURL *)shareURL
+{
+    [self presentShareAppInController:viewController shareText:shareText shareURL:shareURL anchorViewForPad:nil anchorFrame:CGRectNull];
+}
+
+- (void)presentShareAppInController:(UIViewController *)viewController shareText:(NSString *)shareText shareURL:(NSURL *)shareURL anchorViewForPad:(UIView *)anchorView anchorFrame:(CGRect)frame
+{
+    NSParameterAssert(viewController);
+    NSParameterAssert(shareText);
+    NSParameterAssert(shareURL);
+
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[shareText, shareURL] applicationActivities:nil];
+
+    if (anchorView) {
+        activityVC.popoverPresentationController.sourceView = anchorView;
+        activityVC.popoverPresentationController.sourceRect = frame;
+    }
+
+    [viewController presentViewController:activityVC animated:YES completion:nil];
+}
+
 #pragma mark - Built by RZ
 
 + (UIView *)RZLogoViewConstrainedToWidth:(CGFloat)maxWidth

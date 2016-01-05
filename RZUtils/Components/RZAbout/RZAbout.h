@@ -58,6 +58,30 @@ typedef void(^RZAboutSendFeedbackBlock)(MFMailComposeResult mailResult, NSError 
 - (void)presentSendFeedbackInController:(UIViewController *)viewController email:(NSString *)email tintColor:(UIColor *)tintColor completion:(RZAboutSendFeedbackBlock)completion;
 
 ///-----------------------------------------
+/// @name Share App
+///-----------------------------------------
+
+/**
+ *  Show a share sheet for sharing the app from the provided view controller.
+ *
+ *  @param viewController The view controller from which to present the sheet
+ *  @param shareText      The text of the share message
+ *  @param shareURL       The URL of the app, likely either the app store URL or a landing page
+ */
+- (void)presentShareAppInController:(UIViewController *)viewController shareText:(NSString *)shareText shareURL:(NSURL *)shareURL;
+
+/**
+ *  Show a share sheet for sharing the app from the provided view controller, allows for specifying iPad anchor and frame.
+ *
+ *  @param viewController The view controller from which to present the sheet
+ *  @param shareText      The text of the share message
+ *  @param shareURL       The URL of the app, likely either the app store URL or a landing page
+ *  @param anchorView     The view in which to present the sheet (iPad only)
+ *  @param frame          The frame in which to anchor the popover (iPad only)
+ */
+- (void)presentShareAppInController:(UIViewController *)viewController shareText:(NSString *)shareText shareURL:(NSURL *)shareURL anchorViewForPad:(UIView *)anchorView anchorFrame:(CGRect)frame;
+
+///-----------------------------------------
 /// @name Built By RZ
 ///-----------------------------------------
 
