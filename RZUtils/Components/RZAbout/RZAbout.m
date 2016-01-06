@@ -31,7 +31,7 @@
 
 @import UIKit;
 #import "RZAbout.h"
-#import <sys/utsname.h> // import it in your header or implementation file.
+#import <sys/utsname.h>
 #import "RZNavBarStyle.h"
 
 @interface RZAboutMailController : MFMailComposeViewController
@@ -171,7 +171,7 @@
 
 + (NSString *)systemVersion
 {
-    return [UIDevice currentDevice].systemVersion ?: @"Unknown";
+    return [UIDevice currentDevice].systemVersion ?: NSLocalizedString(@"Unknown", nil);
 }
 
 + (NSString *)appName
@@ -186,12 +186,12 @@
 
 + (NSString *)appBuild
 {
-    return [[NSBundle mainBundle] infoDictionary][(NSString *)kCFBundleVersionKey] ?: @"Unknown";
+    return [[NSBundle mainBundle] infoDictionary][(NSString *)kCFBundleVersionKey] ?: NSLocalizedString(@"Unknown", nil);
 }
 
 + (NSString *)deviceModel
 {
-    return deviceName() ?: @"Unknown";
+    return deviceName() ?: NSLocalizedString(@"Unknown", nil);
 }
 
 + (NSString *)appInfoText

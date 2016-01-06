@@ -100,7 +100,6 @@ Pod::Spec.new do |s|
     ss.subspec "RZAbout" do |sss|
       sss.source_files = "RZUtils/Components/RZAbout/*.{h,m}"
       sss.resources = "RZUtils/Resources/RZAbout/*.png"
-      #sss.resource_bundle = { 'RZAbout' => 'RZUtils/Resources/RZAbout/*.png"' }
     end
 
     ss.subspec "RZAnimatedCountingLabel" do |sss|

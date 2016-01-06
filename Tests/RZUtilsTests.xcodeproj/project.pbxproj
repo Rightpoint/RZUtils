@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0138200D1C3D6BCA004DCDB5 /* RZAboutTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0138200C1C3D6BCA004DCDB5 /* RZAboutTest.m */; };
 		7A175505AE684DAFB8613F72 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22BAB0697B95400AAAD3740C /* libPods.a */; };
 		9A8D4DF4196335CC00AFAB21 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8D4DF3196335CC00AFAB21 /* XCTest.framework */; };
 		9A8D4DF5196335CC00AFAB21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8D4DD1196335CC00AFAB21 /* Foundation.framework */; };
@@ -17,7 +18,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0138200C1C3D6BCA004DCDB5 /* RZAboutTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZAboutTest.m; sourceTree = "<group>"; };
+		087DB767739E547D6E567A77 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		22BAB0697B95400AAAD3740C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		33047E1D8FCDEC319BB9DEF4 /* Pods.enterprise-qa.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods.enterprise-qa.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.enterprise-qa.xcconfig"; sourceTree = "<group>"; };
 		9A8D4DD1196335CC00AFAB21 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9A8D4DD3196335CC00AFAB21 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		9A8D4DD5196335CC00AFAB21 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -28,7 +32,7 @@
 		9A8D4DFD196335CC00AFAB21 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9A8D4EB4196336C500AFAB21 /* RZUtilsTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RZUtilsTests-Prefix.pch"; sourceTree = "<group>"; };
 		9A8D4EB51963431900AFAB21 /* RZBlockKVOTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZBlockKVOTests.m; sourceTree = "<group>"; };
-		CFC331EF976D4DEC8CB9094C /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		C86DE61C73894A407437C1E8 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D4874DA019918C46003EEC4B /* RZAutoLayoutTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZAutoLayoutTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -53,7 +57,7 @@
 				9A8D4DF9196335CC00AFAB21 /* RZUtilsTests */,
 				9A8D4DD0196335CC00AFAB21 /* Frameworks */,
 				9A8D4DCF196335CC00AFAB21 /* Products */,
-				CFC331EF976D4DEC8CB9094C /* Pods.xcconfig */,
+				ABC79956273B53B426D5C890 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -84,6 +88,7 @@
 				9A8D4DFA196335CC00AFAB21 /* Supporting Files */,
 				9A8D4EB51963431900AFAB21 /* RZBlockKVOTests.m */,
 				D4874DA019918C46003EEC4B /* RZAutoLayoutTests.m */,
+				0138200C1C3D6BCA004DCDB5 /* RZAboutTest.m */,
 			);
 			path = RZUtilsTests;
 			sourceTree = "<group>";
@@ -98,6 +103,16 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		ABC79956273B53B426D5C890 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C86DE61C73894A407437C1E8 /* Pods.debug.xcconfig */,
+				087DB767739E547D6E567A77 /* Pods.release.xcconfig */,
+				33047E1D8FCDEC319BB9DEF4 /* Pods.enterprise-qa.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -110,6 +125,7 @@
 				9A8D4DEF196335CC00AFAB21 /* Frameworks */,
 				9A8D4DF0196335CC00AFAB21 /* Resources */,
 				DB328C2D17B7432F9AFBFA98 /* Copy Pods Resources */,
+				E748DB4172EBF66EEAD21F88 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -171,7 +187,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DFCEA1E42D714A99949F834D /* Check Pods Manifest.lock */ = {
@@ -189,6 +205,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		E748DB4172EBF66EEAD21F88 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -198,6 +229,7 @@
 			files = (
 				D4874DA119918C46003EEC4B /* RZAutoLayoutTests.m in Sources */,
 				9A8D4EB61963431900AFAB21 /* RZBlockKVOTests.m in Sources */,
+				0138200D1C3D6BCA004DCDB5 /* RZAboutTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,7 +359,7 @@
 		};
 		9A8D4E09196335CC00AFAB21 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CFC331EF976D4DEC8CB9094C /* Pods.xcconfig */;
+			baseConfigurationReference = C86DE61C73894A407437C1E8 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -349,7 +381,7 @@
 		};
 		9A8D4E0A196335CC00AFAB21 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CFC331EF976D4DEC8CB9094C /* Pods.xcconfig */;
+			baseConfigurationReference = 087DB767739E547D6E567A77 /* Pods.release.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -367,7 +399,7 @@
 		};
 		9A8D4E0B196335CC00AFAB21 /* Enterprise-QA */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CFC331EF976D4DEC8CB9094C /* Pods.xcconfig */;
+			baseConfigurationReference = 33047E1D8FCDEC319BB9DEF4 /* Pods.enterprise-qa.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
