@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "RZUtils"
-  s.version      = "2.5.1"
+  s.version      = "2.6.0"
   s.summary      = "Commonly used iOS categories and components from the Raizlabs development team"
 
   s.description  = <<-DESC
