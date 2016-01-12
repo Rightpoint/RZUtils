@@ -157,6 +157,10 @@ Simply copy the relevant file into your project. If the files import any framewo
 
 `UILabel` subclass that animates its text from one value to another with an optional custom formatting block.
 
+#### RZAbout
+
+A set of utilities for presenting various "About" elements such as the "Built by RZ" logo and feedback.
+
 #### RZAnimatedImageView
 
 Replacement for `UIImageView`-based animated .png sequences that calls a completion block when the animation is finished. Believe it or not, there is no way to do this otherwise.
