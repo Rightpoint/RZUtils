@@ -193,9 +193,7 @@
 {
     struct utsname systemInfo;
     uname(&systemInfo);
-
-    NSString *deviceName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
-    return deviceName ?: NSLocalizedString(@"Unknown", nil);
+    return @(systemInfo.machine) ?: NSLocalizedString(@"Unknown", nil);
 }
 
 + (NSString *)appInfoText
