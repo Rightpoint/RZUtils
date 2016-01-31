@@ -219,11 +219,6 @@
         }
 
         [newButtons addObject:button];
-
-        // update background color of container to match last button
-        if ( idx == self.editingButtons.count ) {
-            self.editingButtonsHostView.backgroundColor = item.bgColor;
-        }
     }];
 
     self.editingButtons = [NSArray arrayWithArray:newButtons];
