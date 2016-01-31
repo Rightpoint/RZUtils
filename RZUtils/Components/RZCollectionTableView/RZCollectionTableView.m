@@ -213,31 +213,30 @@ NSString *const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableViewL
             for ( NSInteger s = firstRowIndexPath.section; s >= 0 && !outOfBounds; s-- ) {
                 if ( CGRectIntersectsRect([self rectForSection:s estimated:YES], rect) ) {
                     // Header
-                    BOOL   headerVisible = NO;
                     CGRect headerFrame   = [self rectForHeaderInSection:s estimated:YES];
                     if ( !CGRectEqualToRect(headerFrame, CGRectZero) ) {
                         if ( CGRectIntersectsRect(headerFrame, rect) ) {
-                            headerVisible = YES;
                             UICollectionViewLayoutAttributes *newAttrs = [self layoutAttributesForSupplementaryViewOfKind:RZCollectionTableViewLayoutHeaderView
                                                                                                                 atIndexPath:[NSIndexPath indexPathForItem:RZCVTL_HEADER_ITEM inSection:s]];
                             [newAttributes addObject:newAttrs];
                         }
+                        else {
+                            outOfBounds = YES;
+                        }
                     }
 
                     // Footer
-                    BOOL   footerVisible = NO;
                     CGRect footerFrame   = [self rectForFooterInSection:s estimated:YES];
                     if ( !CGRectEqualToRect(footerFrame, CGRectZero) ) {
                         if ( CGRectIntersectsRect(footerFrame, rect) ) {
-                            footerVisible = YES;
                             UICollectionViewLayoutAttributes *newAttrs = [self layoutAttributesForSupplementaryViewOfKind:RZCollectionTableViewLayoutFooterView
                                                                                                                 atIndexPath:[NSIndexPath indexPathForItem:RZCVTL_FOOTER_ITEM inSection:s]];
                             [newAttributes addObject:newAttrs];
                         }
+                        else {
+                            outOfBounds = YES;
+                        }
                     }
-
-                    outOfBounds = !( headerVisible || footerVisible );
-
                 }
                 else {
                     outOfBounds = YES;
@@ -249,34 +248,93 @@ NSString *const RZCollectionTableViewLayoutFooterView = @"RZCollectionTableViewL
             for ( NSInteger s = firstRowIndexPath.section + 1; s < [self.collectionView numberOfSections] && !outOfBounds; s++ ) {
                 if ( CGRectIntersectsRect([self rectForSection:s estimated:YES], rect) ) {
                     // Header
-                    BOOL   headerVisible = NO;
                     CGRect headerFrame   = [self rectForHeaderInSection:s estimated:YES];
                     if ( !CGRectEqualToRect(headerFrame, CGRectZero) ) {
                         if ( CGRectIntersectsRect(headerFrame, rect) ) {
-                            headerVisible = YES;
                             UICollectionViewLayoutAttributes *newAttrs = [self layoutAttributesForSupplementaryViewOfKind:RZCollectionTableViewLayoutHeaderView
                                                                                                                          atIndexPath:[NSIndexPath indexPathForItem:RZCVTL_HEADER_ITEM inSection:s]];
                             [newAttributes addObject:newAttrs];
                         }
+                        else {
+                            outOfBounds = YES;
+                        }
                     }
 
                     // Footer
-                    BOOL   footerVisible = NO;
                     CGRect footerFrame   = [self rectForFooterInSection:s estimated:YES];
                     if ( !CGRectEqualToRect(footerFrame, CGRectZero) ) {
                         if ( CGRectIntersectsRect(footerFrame, rect) ) {
-                            footerVisible = YES;
                             UICollectionViewLayoutAttributes *newAttrs = [self layoutAttributesForSupplementaryViewOfKind:RZCollectionTableViewLayoutFooterView
                                                                                                                          atIndexPath:[NSIndexPath indexPathForItem:RZCVTL_FOOTER_ITEM inSection:s]];
                             [newAttributes addObject:newAttrs];
                         }
+                        else {
+                            outOfBounds = YES;
+                        }
                     }
-
-                    outOfBounds = !( headerVisible || footerVisible );
-
                 }
                 else {
                     outOfBounds = YES;
+                }
+            }
+        }
+        
+        // FLoating Headers
+        if ( self.allowsHeaderViewsToFloat ) {
+            CGPoint const contentOffset = self.collectionView.contentOffset;
+            
+            NSMutableIndexSet *missingSections = [NSMutableIndexSet indexSet];
+            for (UICollectionViewLayoutAttributes *layoutAttributes in newAttributes) {
+                if (layoutAttributes.representedElementCategory == UICollectionElementCategoryCell) {
+                    [missingSections addIndex:layoutAttributes.indexPath.section];
+                }
+            }
+            for (UICollectionViewLayoutAttributes *layoutAttributes in newAttributes) {
+                if ([layoutAttributes.representedElementKind isEqualToString:RZCollectionTableViewLayoutHeaderView]) {
+                    [missingSections removeIndex:layoutAttributes.indexPath.section];
+                }
+            }
+            
+            [missingSections enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+                
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:index];
+                
+                UICollectionViewLayoutAttributes *layoutAttributes = [self layoutAttributesForSupplementaryViewOfKind:RZCollectionTableViewLayoutHeaderView atIndexPath:indexPath];
+                
+                [newAttributes addObject:layoutAttributes];
+                
+            }];
+            
+            for (UICollectionViewLayoutAttributes *layoutAttributes in newAttributes) {
+                
+                if ([layoutAttributes.representedElementKind isEqualToString:RZCollectionTableViewLayoutHeaderView]) {
+                    
+                    NSInteger section = layoutAttributes.indexPath.section;
+                    NSInteger numberOfItemsInSection = [self.collectionView numberOfItemsInSection:section];
+                    
+                    NSIndexPath *firstCellIndexPath = [NSIndexPath indexPathForItem:0 inSection:section];
+                    NSIndexPath *lastCellIndexPath = [NSIndexPath indexPathForItem:MAX(0, (numberOfItemsInSection - 1)) inSection:section];
+                    
+                    UICollectionViewLayoutAttributes *firstCellAttrs = [self layoutAttributesForItemAtIndexPath:firstCellIndexPath];
+                    UICollectionViewLayoutAttributes *lastCellAttrs = [self layoutAttributesForItemAtIndexPath:lastCellIndexPath];
+                    
+                    CGFloat headerHeight = CGRectGetHeight(layoutAttributes.frame);
+                    CGFloat footerHeight = [self footerHeightForSection:section];
+                    
+                    CGPoint origin = layoutAttributes.frame.origin;
+                    origin.y = MIN(
+                                   MAX(
+                                       contentOffset.y,
+                                       (CGRectGetMinY(firstCellAttrs.frame) - headerHeight)
+                                       ),
+                                   (CGRectGetMaxY(lastCellAttrs.frame) + footerHeight - headerHeight)
+                                   );
+                    
+                    layoutAttributes.zIndex = 1024;
+                    layoutAttributes.frame = (CGRect){
+                        .origin = origin,
+                        .size = layoutAttributes.frame.size
+                    };
                 }
             }
         }
