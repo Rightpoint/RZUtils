@@ -191,7 +191,9 @@
 
 + (NSString *)deviceModel
 {
-    return deviceName() ?: NSLocalizedString(@"Unknown", nil);
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    return @(systemInfo.machine) ?: NSLocalizedString(@"Unknown", nil);
 }
 
 + (NSString *)appInfoText
@@ -201,15 +203,6 @@
     str = [str stringByAppendingFormat:NSLocalizedString(@"iOS Version: %@", nil), [self systemVersion]];
 
     return str;
-}
-
-NSString *deviceName()
-{
-    struct utsname systemInfo;
-    uname(&systemInfo);
-
-    return [NSString stringWithCString:systemInfo.machine
-                              encoding:NSUTF8StringEncoding];
 }
 
 @end
