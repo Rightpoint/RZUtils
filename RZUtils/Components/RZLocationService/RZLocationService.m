@@ -257,7 +257,7 @@ NSString * const RZLocationServiceErrorDomain = @"RZLocationServiceErrorDomain";
                                     }
                                     else
                                     {
-                                        CLPlacemark *placemark = placemarks.count > 1 ? placemarks[0] : nil;
+                                        CLPlacemark *placemark = placemarks.firstObject;
                                         weakSelf.lastPlacemark = placemark;
 
                                         if (successBlock)
