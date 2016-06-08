@@ -31,8 +31,22 @@
 
 @import Foundation;
 @import MessageUI;
+#import "RZNavBarStyle.h"
 
 typedef void(^RZAboutSendFeedbackBlock)(MFMailComposeResult mailResult, NSError *error);
+
+
+/**
+ *  An MFMailComposeViewController subclass that saves and restores nav bar state.
+ */
+@interface RZAboutMailController : MFMailComposeViewController
+
+/**
+ *  The nav bar state prior to showing the mail composse view controller
+ */
+@property (strong, nonatomic) RZNavBarStyle *savedNavBarStyle;
+
+@end
 
 @interface RZAbout : NSObject
 
