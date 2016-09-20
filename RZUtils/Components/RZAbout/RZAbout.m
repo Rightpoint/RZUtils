@@ -145,6 +145,8 @@
     logoImageView.backgroundColor = [UIColor clearColor];
     logoImageView.contentMode = UIViewContentModeCenter;
     logoImageView.accessibilityLabel = NSLocalizedString(@"Designed and developed by Raizlabs.", @"Indication that this app was designed and developed by Raizlabs");
+    logoImageView.isAccessibilityElement = YES;
+    logoImageView.accessibilityTraits = UIAccessibilityTraitNone;
 
     NSURL *imageURL = [[NSBundle bundleForClass:[self class]] URLForResource:@"logo-built-by-RZ" withExtension:@"png"];
     if (imageURL != nil) {
