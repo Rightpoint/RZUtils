@@ -161,6 +161,7 @@
     buildLabel.textColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.51 alpha:1];
     buildLabel.font =  [UIFont systemFontOfSize:15.0f];
     buildLabel.text = [NSString stringWithFormat:@"%@ (%@)", [[self class] appVersion], [[self class] appBuild]];
+    buildLabel.accessibilityLabel = [NSString stringWithFormat:NSLocalizedString(@"Version %@ build %@", @"Accessible version of app version and build number label"), [[self class] accessibleAppVersion], [[self class] appBuild]];
     [logoView addSubview:buildLabel];
 
     return logoView;
@@ -181,6 +182,16 @@
 + (NSString *)appVersion
 {
     return [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"] ?: @"Unknown";
+}
+
++ (NSString *)accessibleAppVersion
+{
+    if (UIAccessibilityIsVoiceOverRunning()) {
+        return [[[self appVersion] componentsSeparatedByString:@"."] componentsJoinedByString:NSLocalizedString(@" point ", @"The spelled out version of the “point” in version numbers, like 2 point 0 point 1, with spaces on either side")];
+    }
+    else {
+        return [self appVersion];
+    }
 }
 
 + (NSString *)appBuild
