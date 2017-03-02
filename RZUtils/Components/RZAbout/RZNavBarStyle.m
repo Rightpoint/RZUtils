@@ -37,6 +37,8 @@
 @property (assign, nonatomic) UIBarStyle appNavBarStyle;
 @property (copy, nonatomic) UIColor *appNavTintColor;
 @property (copy, nonatomic) NSDictionary *appNavTitleTextAttributes;
+@property (copy, nonatomic) UIImage *backgroundImage;
+@property (copy, nonatomic) UIImage *shadowImage;
 
 @end
 
@@ -48,6 +50,8 @@
     [UINavigationBar appearance].barStyle = UIBarStyleDefault;
     [UINavigationBar appearance].tintColor = nil;
     [UINavigationBar appearance].titleTextAttributes = nil;
+    [[UINavigationBar appearance] setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    [UINavigationBar appearance].shadowImage = nil;
 }
 
 + (instancetype)saveAppearanceState
@@ -58,6 +62,8 @@
     style.appNavBarStyle = [UINavigationBar appearance].barStyle;
     style.appNavTintColor = [UINavigationBar appearance].tintColor;
     style.appNavTitleTextAttributes = [UINavigationBar appearance].titleTextAttributes;
+    style.backgroundImage = [[UINavigationBar appearance] backgroundImageForBarMetrics:UIBarMetricsDefault];
+    style.shadowImage = [UINavigationBar appearance].shadowImage;
 
     return style;
 }
@@ -68,6 +74,8 @@
     [UINavigationBar appearance].barStyle = self.appNavBarStyle;
     [UINavigationBar appearance].tintColor = self.appNavTintColor;
     [UINavigationBar appearance].titleTextAttributes = self.appNavTitleTextAttributes;
+    [[UINavigationBar appearance] setBackgroundImage:self.backgroundImage forBarMetrics:UIBarMetricsDefault];
+    [UINavigationBar appearance].shadowImage = self.shadowImage;
 }
 
 

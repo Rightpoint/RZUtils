@@ -34,10 +34,6 @@
 #import <sys/utsname.h>
 #import "RZNavBarStyle.h"
 
-@interface RZAboutMailController : MFMailComposeViewController
-@property (strong, nonatomic) RZNavBarStyle *savedNavBarStyle;
-@end
-
 @implementation RZAboutMailController
 
 - (void)viewWillDisappear:(BOOL)animated
