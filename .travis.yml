@@ -1,11 +1,16 @@
 language: objective-c
-before_install: 
+before_install:
+    - rvm use $RVM_RUBY_VERSION
     - export LANG=en_US.UTF-8
     - rake install
-script: 
+install: bundle install --without=documentation --path ../travis_bundle_dir
+script:
     - rake clean:tests
+    - rake install
+    - bundle exec slather setup Tests/Pods/Pods.xcodeproj
     - rake test
     - rake analyze
+after_success: bundle exec slather
 notifications:
     email:
         recipients:
