@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^RZDelayedOperationBlock)();
+typedef void (^RZDelayedOperationBlock)(void);
 
 /**
  *   When started, the (concurrent) operation will schedule a timer on the main run loop to execute after a delay.

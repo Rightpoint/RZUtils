@@ -40,13 +40,13 @@
  *
  *  @param block Block to perform on main queue
  */
-OBJC_EXTERN void rz_dispatch_async_main(void(^block)());
+OBJC_EXTERN void rz_dispatch_async_main(void(^block)(void));
 
 /**
  *  Dispatch to main queue synchronously, regardless of current thread.
  *
  *  @param block Block to perform on main queue
  */
-OBJC_EXTERN void rz_dispatch_main_reentrant(void(^block)());
+OBJC_EXTERN void rz_dispatch_main_reentrant(void(^block)(void));
 
 #endif

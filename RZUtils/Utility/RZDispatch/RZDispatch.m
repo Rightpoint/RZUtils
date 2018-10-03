@@ -28,12 +28,12 @@
 
 #import "RZDispatch.h"
 
-void rz_dispatch_async_main(void(^block)())
+void rz_dispatch_async_main(void(^block)(void))
 {
     dispatch_async(dispatch_get_main_queue(), block);
 }
 
-void rz_dispatch_main_reentrant(void(^block)())
+void rz_dispatch_main_reentrant(void(^block)(void))
 {
     if ( block ) {
         if ( [NSThread isMainThread] ) {

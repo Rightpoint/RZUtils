@@ -33,7 +33,7 @@
 #define kRZAnimatedImageViewAnimKey         @"RZImageFrameAnimation"
 #define kRZAnimatedImageDefaultFrameTime    (1.f/30.f)
 
-@interface RZAnimatedImageView ()
+@interface RZAnimatedImageView () <CAAnimationDelegate>
 
 @property (nonatomic, weak) CALayer *imageLayer;
 @property (nonatomic, copy) RZAnimatedImageViewCompletion completion;

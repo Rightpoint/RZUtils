@@ -234,22 +234,14 @@
 }
 
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     if (nil == self.mainViewController)
     {
-        return UIInterfaceOrientationPortrait == interfaceOrientation;
+        return UIInterfaceOrientationMaskPortrait;
     }
     
     // Return YES for supported orientations
-    return [self.mainViewController shouldAutorotateToInterfaceOrientation:interfaceOrientation];
+    return self.mainViewController.supportedInterfaceOrientations;
 }
 
 - (void) addShadow
