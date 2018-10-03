@@ -119,7 +119,7 @@
     self.displayLink = nil;
 
     self.animationCompletion = completion;
-    self.initialNumber = self.currentNumber ? self.currentNumber : @0;
+    self.initialNumber = self.currentNumber != nil ? self.currentNumber : @0;
     
     self.animationDuration = duration;
     self.targetNumber = numberValue;
