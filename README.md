@@ -1,5 +1,10 @@
 # RZUtils
 
+[![Version](https://img.shields.io/cocoapods/v/RZUtils.svg?style=flat)](http://cocoadocs.org/docsets/RZUtils)
+[![CircleCI](https://img.shields.io/circleci/project/github/Raizlabs/RZUtils/master.svg)](https://circleci.com/gh/Raizlabs/RZUtils)
+[![License](https://img.shields.io/cocoapods/l/RZUtils.svg?style=flat)](http://cocoapods.org/pods/RZUtils)
+[![Platform](https://img.shields.io/cocoapods/p/RZUtils.svg?style=flat)](http://cocoapods.org/pods/RZUtils)
+
 A collection of helpful utilities and components for iOS development.
 
 ## Installation
