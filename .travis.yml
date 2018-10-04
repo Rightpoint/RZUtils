@@ -1,7 +1,0 @@
-language: objective-c
-osx_image: xcode10
-install: 
-    - bundle check || bundle install
-script: 
-    - bundle exec fastlane test
-    - bundle exec pod lib lint
