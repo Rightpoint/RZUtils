@@ -29,7 +29,7 @@
 
 #import "CAAnimation+RZBlocks.h"
 
-@interface RZCAAnimationBlockDelegate : NSObject
+@interface RZCAAnimationBlockDelegate : NSObject <CAAnimationDelegate>
 
 @property (nonatomic, copy) RZAnimationDidStartBlock startBlock;
 @property (nonatomic, copy) RZAnimationDidStopBlock stopBlock;
@@ -64,7 +64,7 @@
 
 - (void)rz_setAnimationDidStartBlock:(RZAnimationDidStartBlock)startBlock
 {
-    id delegate = self.delegate;
+    id<CAAnimationDelegate> delegate = self.delegate;
     if (delegate != nil && [delegate isKindOfClass:[RZCAAnimationBlockDelegate class]])
     {
         RZCAAnimationBlockDelegate *blockDelegate = delegate;
@@ -80,7 +80,7 @@
 
 - (void)rz_setAnimationDidStopBlock:(RZAnimationDidStopBlock)stopBlock
 {
-    id delegate = self.delegate;
+    id<CAAnimationDelegate> delegate = self.delegate;
     if (delegate != nil && [delegate isKindOfClass:[RZCAAnimationBlockDelegate class]])
     {
         RZCAAnimationBlockDelegate *blockDelegate = delegate;

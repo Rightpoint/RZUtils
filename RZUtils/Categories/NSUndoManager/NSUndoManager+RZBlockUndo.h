@@ -43,6 +43,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *  @param undoBlock A block that will be invoked when the undo stack reaches this action.
  *  @param redoBlock An optional block that will be invoked for a redo after an undo of this action.
  */
-- (void)rz_registerUndoWithBlock:(void(^)())undoBlock redoBlock:(void(^)())redoBlock;
+- (void)rz_registerUndoWithBlock:(void(^)(void))undoBlock redoBlock:(void(^)(void))redoBlock;
 
 @end

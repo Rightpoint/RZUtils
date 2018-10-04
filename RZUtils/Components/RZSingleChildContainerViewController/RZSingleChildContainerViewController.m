@@ -72,7 +72,7 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    for ( void(^block)() in self.viewLoadedBlocks ) {
+    for ( void(^block)(void) in self.viewLoadedBlocks ) {
         block();
     }
     [self.viewLoadedBlocks removeAllObjects];
@@ -126,7 +126,7 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
     return self.currentContentViewController;
 }
 
-- (NSUInteger)supportedInterfaceOrientations
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     return self.currentContentViewController.supportedInterfaceOrientations;
 }
@@ -145,7 +145,7 @@ static NSTimeInterval kRZSingleChildContainerAlphaTransitionerAnimationDuration 
     _contentVCAnimatedTransition = contentVCAnimatedTransition ?: [[RZSingleChildContainerAlphaTransitioner alloc] init];
 }
 
-- (void)performBlockWhenViewLoaded:(void (^)())block
+- (void)performBlockWhenViewLoaded:(void (^)(void))block
 {
     NSParameterAssert(block);
     if ( self.isViewLoaded ) {

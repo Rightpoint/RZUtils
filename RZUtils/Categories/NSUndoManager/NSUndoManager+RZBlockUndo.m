@@ -35,8 +35,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 @interface RZUndoRedoBlockAction : NSObject
 
-@property (nonatomic, copy) void (^undoBlock)();
-@property (nonatomic, copy) void (^redoBlock)();
+@property (nonatomic, copy) void (^undoBlock)(void);
+@property (nonatomic, copy) void (^redoBlock)(void);
 
 - (instancetype)invertedAction;
 
@@ -74,7 +74,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     }
 }
 
-- (void)rz_registerUndoWithBlock:(void (^)())undoBlock redoBlock:(void (^)())redoBlock
+- (void)rz_registerUndoWithBlock:(void (^)(void))undoBlock redoBlock:(void (^)(void))redoBlock
 {
     NSParameterAssert(undoBlock);
 

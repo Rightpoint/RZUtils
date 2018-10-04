@@ -1,5 +1,5 @@
 # Xcode
-.DS_Store
+#
 build/
 *.pbxuser
 !default.pbxuser
@@ -9,14 +9,32 @@ build/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
-*.xcworkspace
-!default.xcworkspace
 xcuserdata
-profile
+*.xccheckout
 *.moved-aside
 DerivedData
-.idea/
+*.hmap
+*.ipa
+*.xcuserstate
 
-# Pods
-Tests/Pods/
-Tests/Podfile.lock
+.DS_Store
+
+# CocoaPods
+#
+# We recommend against adding the Pods directory to your .gitignore. However
+# you should judge for yourself, the pros and cons are mentioned at:
+# http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control
+#
+# Pods/
+
+# fastlane specific
+fastlane/report.xml
+
+# deliver temporary files
+fastlane/Preview.html
+
+# snapshot generated screenshots
+fastlane/screenshots
+
+# scan temporary files
+fastlane/test_output

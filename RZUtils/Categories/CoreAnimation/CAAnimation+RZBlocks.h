@@ -32,7 +32,7 @@
 // NOTE: Do NOT set the delegate of the animation after setting a block, or the
 // block will not fire.
 
-typedef void (^RZAnimationDidStartBlock)();
+typedef void (^RZAnimationDidStartBlock)(void);
 typedef void (^RZAnimationDidStopBlock)(BOOL finished);
 
 @interface CAAnimation (RZBlocks)

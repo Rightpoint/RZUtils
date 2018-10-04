@@ -1,3 +1,6 @@
-platform :ios, '7.0'
-pod 'RZUtils', :path => '../'
-pod 'RZUtils/TestUtilities', :path => '../'
+platform :ios, '8.0'
+
+target 'RZUtilsTests' do
+  pod 'RZUtils', :path => '../'
+  pod 'RZUtils/TestUtilities', :path => '../'
+end

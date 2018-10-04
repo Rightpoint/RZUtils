@@ -76,6 +76,7 @@
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
     [self initializeSplitViewController];
 }
 
@@ -105,17 +106,6 @@
     [super viewWillAppear:animated];
     
     [self layoutViewsForCollapsed:self.collapsed animated:NO];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-	return YES;
 }
 
 #pragma mark - Property Accessor Overrides
