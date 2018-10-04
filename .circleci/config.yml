@@ -1,46 +1,93 @@
-version: 2
+version: 2.1
 
 jobs:
   test-xcode-10:
-    macos:
-      xcode: "10.0.0"
+    executor: xcode-10
     steps:
-      - checkout
-      - run:
-          name: Restore Ruby Gems
-          command: |
-            bundle check || bundle install
-      - run: bundle exec fastlane test
-      - run: bundle exec pod lib lint
+      - setup
+      - run-tests
 
   test-xcode-9:
-    macos:
-      xcode: "9.3.0"
+    executor: xcode-9
     steps:
-      - checkout
-      - run:
-          name: Restore Ruby Gems
-          command: |
-            bundle check || bundle install
-      - run: bundle exec fastlane test
+      - setup
+      - run-tests
+
+  check-podspec:
+    executor: xcode-10
+    steps:
+      - setup
+      - cocoapods-specs
       - run: bundle exec pod lib lint
 
   deploy-to-cocoapods:
-    macos:
-      xcode: "10.0.0"
+    executor: xcode-10
+    steps:
+      - setup
+      - cocoapods-specs
+      - run: bundle exec pod trunk push
+
+commands:
+  setup:
+    description: "Shared setup"
     steps:
       - checkout
+      - restore-gems
+
+  restore-gems:
+    description: "Restore Ruby Gems"
+    steps:
+      - restore_cache:
+          key: 1-gems-{{ checksum "Gemfile.lock" }}
+      - run: bundle check || bundle install --path vendor/bundle
+      - save_cache:
+          key: 1-gems-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+  cocoapods-specs:
+    description: "Fetch CocoaPods Specs"
+    steps:
       - run:
-          name: Install CocoaPods Specs Repo
+          name: Fetch CocoaPods Specs
           command: |
             curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
-      - run: bundle install
-      - run: bundle exec pod trunk push
+  run-tests:
+    description: "Runs the tests"
+    steps:
+      - run: bundle exec fastlane test
+      - store_test_results:
+          path: output/scan
+
+executors:
+  xcode-10:
+    working_directory: /Users/distiller/project
+    macos:
+      xcode: "10.0.0"
+    environment:
+      FL_OUTPUT_DIR: output
+      LC_ALL: en_US.UTF-8
+      LANG: en_US.UTF-8
+    shell: /bin/bash --login -o pipefail
+
+  xcode-9:
+    working_directory: /Users/distiller/project
+    macos:
+      xcode: "9.4.1"
+    environment:
+      FL_OUTPUT_DIR: output
+      LC_ALL: en_US.UTF-8
+      LANG: en_US.UTF-8
+    shell: /bin/bash --login -o pipefail
 
 workflows:
   version: 2
   build-test-deploy:
     jobs:
+      - check-podspec:
+          filters:
+            tags:
+              only: /.*/
       - test-xcode-10:
           filters:
             tags:
@@ -53,6 +100,7 @@ workflows:
           requires:
             - test-xcode-10
             - test-xcode-9
+            - check-podspec
           filters:
             tags:
               only: /\d+(\.\d+)*(-.*)*/
