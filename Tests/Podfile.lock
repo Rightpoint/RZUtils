@@ -1,0 +1,90 @@
+PODS:
+  - RZUtils (2.7.0):
+    - RZUtils/All (= 2.7.0)
+  - RZUtils/All (2.7.0):
+    - RZUtils/Categories
+    - RZUtils/Components
+    - RZUtils/Utilities
+  - RZUtils/Categories (2.7.0):
+    - RZUtils/Categories/CoreAnimation (= 2.7.0)
+    - RZUtils/Categories/KVO (= 2.7.0)
+    - RZUtils/Categories/NSDate (= 2.7.0)
+    - RZUtils/Categories/NSDictionary (= 2.7.0)
+    - RZUtils/Categories/NSString (= 2.7.0)
+    - RZUtils/Categories/NSUndoManager (= 2.7.0)
+    - RZUtils/Categories/UIAlertView (= 2.7.0)
+    - RZUtils/Categories/UIColor (= 2.7.0)
+    - RZUtils/Categories/UIFont (= 2.7.0)
+    - RZUtils/Categories/UIImage (= 2.7.0)
+    - RZUtils/Categories/UIImageView (= 2.7.0)
+    - RZUtils/Categories/UIView (= 2.7.0)
+    - RZUtils/Categories/UIViewController (= 2.7.0)
+  - RZUtils/Categories/CoreAnimation (2.7.0)
+  - RZUtils/Categories/KVO (2.7.0)
+  - RZUtils/Categories/NSDate (2.7.0)
+  - RZUtils/Categories/NSDictionary (2.7.0)
+  - RZUtils/Categories/NSString (2.7.0)
+  - RZUtils/Categories/NSUndoManager (2.7.0)
+  - RZUtils/Categories/UIAlertView (2.7.0)
+  - RZUtils/Categories/UIColor (2.7.0)
+  - RZUtils/Categories/UIFont (2.7.0)
+  - RZUtils/Categories/UIImage (2.7.0)
+  - RZUtils/Categories/UIImageView (2.7.0)
+  - RZUtils/Categories/UIView (2.7.0)
+  - RZUtils/Categories/UIViewController (2.7.0)
+  - RZUtils/Components (2.7.0):
+    - RZUtils/Components/RZAbout (= 2.7.0)
+    - RZUtils/Components/RZAnimatedCountingLabel (= 2.7.0)
+    - RZUtils/Components/RZAnimatedImageView (= 2.7.0)
+    - RZUtils/Components/RZButtonView (= 2.7.0)
+    - RZUtils/Components/RZCollectionTableView (= 2.7.0)
+    - RZUtils/Components/RZCollectionViewAnimationAssistant (= 2.7.0)
+    - RZUtils/Components/RZDelayedOperation (= 2.7.0)
+    - RZUtils/Components/RZLocationService (= 2.7.0)
+    - RZUtils/Components/RZProgressView (= 2.7.0)
+    - RZUtils/Components/RZRevealViewController (= 2.7.0)
+    - RZUtils/Components/RZSegmentedViewController (= 2.7.0)
+    - RZUtils/Components/RZSingleChildContainerViewController (= 2.7.0)
+    - RZUtils/Components/RZSplitViewController (= 2.7.0)
+    - RZUtils/Components/RZTelprompt (= 2.7.0)
+    - RZUtils/Components/RZViewFactory (= 2.7.0)
+    - RZUtils/Components/RZWebViewController (= 2.7.0)
+  - RZUtils/Components/RZAbout (2.7.0)
+  - RZUtils/Components/RZAnimatedCountingLabel (2.7.0)
+  - RZUtils/Components/RZAnimatedImageView (2.7.0)
+  - RZUtils/Components/RZButtonView (2.7.0)
+  - RZUtils/Components/RZCollectionTableView (2.7.0)
+  - RZUtils/Components/RZCollectionViewAnimationAssistant (2.7.0)
+  - RZUtils/Components/RZDelayedOperation (2.7.0)
+  - RZUtils/Components/RZLocationService (2.7.0)
+  - RZUtils/Components/RZProgressView (2.7.0)
+  - RZUtils/Components/RZRevealViewController (2.7.0)
+  - RZUtils/Components/RZSegmentedViewController (2.7.0)
+  - RZUtils/Components/RZSingleChildContainerViewController (2.7.0)
+  - RZUtils/Components/RZSplitViewController (2.7.0)
+  - RZUtils/Components/RZTelprompt (2.7.0)
+  - RZUtils/Components/RZViewFactory (2.7.0)
+  - RZUtils/Components/RZWebViewController (2.7.0)
+  - RZUtils/TestUtilities (2.7.0):
+    - RZUtils/TestUtilities/RZWaiter (= 2.7.0)
+  - RZUtils/TestUtilities/RZWaiter (2.7.0)
+  - RZUtils/Utilities (2.7.0):
+    - RZUtils/Utilities/RZCommonUtils (= 2.7.0)
+    - RZUtils/Utilities/RZDispatch (= 2.7.0)
+  - RZUtils/Utilities/RZCommonUtils (2.7.0)
+  - RZUtils/Utilities/RZDispatch (2.7.0)
+
+DEPENDENCIES:
+  - RZUtils (from `../`)
+  - RZUtils/TestUtilities (from `../`)
+
+EXTERNAL SOURCES:
+  RZUtils:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  RZUtils: fc2f5e9c308a0da23478cc91c9c6e4b47d645957
+
+PODFILE CHECKSUM: 90d92f6497ad96d40489a1c8d13b4c13f5ce7b25
+
+COCOAPODS: 1.5.3
